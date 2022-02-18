@@ -1,0 +1,33 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem;
+
+  ::placeholder {
+    color: var(--gray);
+  }
+
+  button {
+    width: 100%;
+    background-color: var(--primary);
+    transition: var(--transition);
+    margin-top: 1rem;
+
+    &:hover {
+      background-color: var(--primary-shade);
+    }
+
+    &.disabled {
+      background-color: var(--gray);
+    }
+  }
+}
+
+::ng-deep .mat-form-field-label {
+  color: var(--gray);
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-underline::before {
+  background-color: var(--dark-two);
+}

@@ -9,7 +9,7 @@ import {AuthType} from "../../../model/auth-interface";
 
 export class AuthContainerComponent {
   @Input() public authImg: AuthType;
-  public authType = AuthType;
+  authType = AuthType;
 
   constructor() {
     this.authImg = AuthType.Login
