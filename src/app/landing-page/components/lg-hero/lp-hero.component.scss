@@ -30,6 +30,15 @@
 
 }
 
+.lp-hero-img {
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 50vw;
+  }
+}
+
 @media screen and (min-width: 992px) {
   .lp-hero-box {
     width: 100%;
@@ -49,6 +58,13 @@
       line-height: 90px;
       font-weight: 700;
       margin-bottom: var(--s-l);
+    }
+  }
+
+  .lp-hero-img {
+
+    img {
+      width: 100%;
     }
   }
 }

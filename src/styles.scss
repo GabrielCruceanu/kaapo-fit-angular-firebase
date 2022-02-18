@@ -35,15 +35,6 @@ $kaapo-fit-theme: mat.define-light-theme((
 /* You can add global styles to this file, and also import other style files */
 @import "styles/variables";
 
-html, body {
-  height: 100%;
-  background-color: #1C1C1E;
-}
-
-body {
-  margin: 0;
-  font-family: 'Inter', "Helvetica Neue", sans-serif;
-}
 
 
 /*
@@ -66,7 +57,10 @@ body {
   line-height: 1.5;
   font-size: 16px;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
+
 ul {
   list-style-type: none;
 }
