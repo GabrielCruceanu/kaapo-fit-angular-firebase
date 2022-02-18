@@ -1,0 +1,102 @@
+/*
+===============
+Variables
+===============
+*/
+:root {
+  --primary: #00b39a;
+  --primary-rgb: 0, 179, 154;
+  --primary-contrast: #ffffff;
+  --primary-contrast-rgb: 255, 255, 255;
+  --primary-shade: #009e88;
+  --primary-tint: #1abba4;
+
+  --secondary: #60bff4;
+  --secondary-rgb: 96, 191, 244;
+  --secondary-contrast: #000000;
+  --secondary-contrast-rgb: 0, 0, 0;
+  --secondary-shade: #54a8d7;
+  --secondary-tint: #70c5f5;
+
+  --tertiary: #f6a800;
+  --tertiary-rgb: 246, 168, 0;
+  --tertiary-contrast: #000000;
+  --tertiary-contrast-rgb: 0, 0, 0;
+  --tertiary-shade: #d89400;
+  --tertiary-tint: #f7b11a;
+
+  --success: #2dd36f;
+  --success-rgb: 45, 211, 111;
+  --success-contrast: #000000;
+  --success-contrast-rgb: 0, 0, 0;
+  --success-shade: #28ba62;
+  --success-tint: #42d77d;
+
+  --warning: #ffc409;
+  --warning-rgb: 255, 196, 9;
+  --warning-contrast: #000000;
+  --warning-contrast-rgb: 0, 0, 0;
+  --warning-shade: #e0ac08;
+  --warning-tint: #ffca22;
+
+  --danger: #eb445a;
+  --danger-rgb: 235, 68, 90;
+  --danger-contrast: #ffffff;
+  --danger-contrast-rgb: 255, 255, 255;
+  --danger-shade: #cf3c4f;
+  --danger-tint: #ed576b;
+
+  --gray: #505050;
+  --gray-rgb: 80, 80, 80;
+  --gray-contrast: #ffffff;
+  --gray-contrast-rgb: 255, 255, 255;
+  --gray-shade: #464646;
+  --gray-tint: #626262;
+
+  --soft: #B5B5B5;
+
+  --white: #f4f5f8;
+  --white-rgb: 244, 245, 248;
+  --white-contrast: #000000;
+  --white-contrast-rgb: 0, 0, 0;
+  --white-shade: #d7d8da;
+  --white-tint: #f5f6f9;
+
+  --dark-one: #1c1c1e;
+  --dark-two: #2c2c2e;
+  --dark-three: #3a3a3c;
+
+  --background-color: var(--dark-one);
+
+  --linearDark: linear-gradient(
+      to bottom,
+      rgba(28, 28, 30, 0.1) 0%,
+      rgba(28, 28, 30, 0.75) 60%,
+      rgba(28, 28, 30, 1) 100%
+  );
+
+  --transition: all 0.3s linear;
+  --spacing: 0.1rem;
+  --white-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  --max-width: 1170px;
+  --fixed-width: 620px;
+
+  /* Radius */
+  --radius: 16px;
+  --radiusL: 48px;
+
+  /* Sizes */
+  --s-xs: 5px;
+  --s-s: 10px;
+  --s-m: 16px;
+  --s-l: 32px;
+  --s-xl: 50px;
+
+  /* Breakpoints */
+  --bp-sm: 576px;
+  --bp-md: 768px;
+  --bp-lg: 992px;
+  --bp-xl: 1200px;
+  --bp-xxl: 1400px;
+}

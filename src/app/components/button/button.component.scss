@@ -1,0 +1,41 @@
+.button {
+  color: var(--white);
+  background-color: transparent;
+  padding: 15px 30px;
+  text-decoration: none;
+  transition: var(--transition);
+  font-size: 1.063rem;
+  line-height: 22px;
+  font-weight: 600;
+  border-radius: var(--s-xs);
+  display: block;
+  width: fit-content;
+}
+
+.PRIMARY {
+  background-color: var(--primary);
+
+  &:hover {
+    background-color: var(--primary-shade);
+  }
+}
+
+.SECONDARY {
+  background-color: var(--gray);
+
+  &:hover {
+    background-color: var(--gray-shade);
+  }
+}
+
+.LINK {
+  padding: 0;
+  margin: 0;
+  text-decoration: underline 1px solid var(--primary);
+
+  &:hover {
+    color: var(--primary);
+    text-decoration: underline 1px solid transparent;
+  }
+
+}
