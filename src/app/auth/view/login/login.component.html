@@ -1,5 +1,5 @@
 <app-auth-container [authImg]="authType.Login">
-  <form (ngSubmit)="onSubmit()" class="form" [formGroup]="loginFormGroup">
+  <form (ngSubmit)="onSubmit(loginFormGroup)" class="form" [formGroup]="loginFormGroup">
     <mat-form-field class="form-control"  appearance="fill">
       <mat-label>Email</mat-label>
       <input type="email" matInput placeholder="Ex. jhon@mail.com" name="email" formControlName="email">

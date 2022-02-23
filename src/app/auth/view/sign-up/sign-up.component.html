@@ -1,5 +1,5 @@
 <app-auth-container [authImg]="authType.SignUp">
-  <form (ngSubmit)="onSubmit()" class="form" [formGroup]="signUpFormGroup">
+  <form (ngSubmit)="onSubmit(signUpFormGroup)" class="form" [formGroup]="signUpFormGroup">
     <mat-form-field class="form-control"  appearance="fill">
       <mat-label>Email</mat-label>
       <input type="email" matInput placeholder="Ex. jhon@mail.com" name="email" formControlName="email">
