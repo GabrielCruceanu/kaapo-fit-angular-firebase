@@ -1,64 +1,59 @@
-import {Component, OnInit, Optional} from "@angular/core";
-import {AuthType} from "../../../model/auth-interface";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Auth, authState, signInWithEmailAndPassword, User} from "@angular/fire/auth";
-import {EMPTY, map, Observable, Subscription} from "rxjs";
-import {traceUntilFirst} from "@angular/fire/performance";
+import { Component, Input, OnDestroy, OnInit, Optional } from '@angular/core';
+import { AuthType } from '../../../model/auth-interface';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Auth } from '@angular/fire/auth';
+import { Store } from '@ngrx/store';
+import * as fromAuth from '../../reducers';
+import { LoginPageActions } from '../../actions';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-login', templateUrl: './login.component.html', styleUrls: ['./login.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   authType = AuthType;
-  public user: Observable<User | null | undefined>;
-  showLoginButton = false;
-  showLogoutButton = false;
+  getLoginPagePendingSub: Subscription | undefined;
   loginFormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)])
-  })
-  private userDisposable: Subscription | undefined;
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
+  });
 
-  constructor(@Optional() private auth: Auth) {
-    this.user = EMPTY
-  }
+  constructor(
+    @Optional() private auth: Auth,
+    private store: Store<fromAuth.State>
+  ) {}
 
   ngOnInit() {
-    if (this.auth) {
-      this.user = authState(this.auth);
-      this.userDisposable = authState(this.auth).pipe(
-        traceUntilFirst('auth'),
-        map(u => !!u)
-      ).subscribe(isLoggedIn => {
-        this.showLoginButton = !isLoggedIn;
-        this.showLogoutButton = isLoggedIn;
+    this.getLoginPagePendingSub = this.store
+      .select(fromAuth.getLoginPagePending)
+      .subscribe((isPending: boolean) => {
+        console.log('isPending', isPending);
+        if (isPending) {
+          this.loginFormGroup.disable();
+        } else {
+          this.loginFormGroup.enable();
+        }
       });
-    }
-
-    console.log('this.user', this.user)
   }
 
-  onSubmit(form: FormGroup) {
-    console.log('form', form)
-    const {email, password} = form.value;
-    console.log('email', email)
-    console.log('password', password)
+  onSubmit() {
+    if (this.loginFormGroup.valid) {
+      console.log('this.loginFormGroup.valid', this.loginFormGroup.valid);
+      console.log('this.loginFormGroup.value', this.loginFormGroup.value);
+      this.store.dispatch(
+        LoginPageActions.login({ credentials: this.loginFormGroup.value })
+      );
+    }
+  }
 
-    signInWithEmailAndPassword(this.auth, email, password).then((userCredential) => {
-      const user = userCredential.user
-      console.log('User logat', user)
-    })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log('Error with code', errorCode, 'and message:', errorMessage)
-      });
-
-    this.loginFormGroup.reset({
-      email: '', password: ''
-    })
-    this.loginFormGroup.clearValidators()
-    this.loginFormGroup.markAsUntouched()
+  ngOnDestroy() {
+    if (this.getLoginPagePendingSub) {
+      this.getLoginPagePendingSub.unsubscribe();
+    }
   }
 }
