@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {AuthType} from "../../../model/auth-interface";
+import {AuthType} from "../../model/AuthResponseData.model";
 
 @Component({
   selector: 'app-auth-container',
@@ -9,7 +9,7 @@ import {AuthType} from "../../../model/auth-interface";
 
 export class AuthContainerComponent {
   @Input() public authImg: AuthType;
-  public authType = AuthType;
+  authType = AuthType;
 
   constructor() {
     this.authImg = AuthType.Login
