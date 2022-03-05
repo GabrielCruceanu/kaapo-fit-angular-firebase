@@ -1,11 +1,16 @@
-import { Component, Input, OnDestroy, OnInit, Optional } from '@angular/core';
-import { AuthType } from '../../../model/auth-interface';
+import { Component, OnDestroy, OnInit, Optional } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth } from '@angular/fire/auth';
 import { Store } from '@ngrx/store';
-import * as fromAuth from '../../reducers';
-import { LoginPageActions } from '../../actions';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { AppState } from '../../../store/app.state';
+import { loginStart } from '../../store/auth.actions';
+import { AuthType } from '../../model/AuthResponseData.model';
+import { setLoadingSpinner } from '../../../store/shared/shared.actions';
+import {
+  getErrorMessage,
+  getLoading,
+} from '../../../store/shared/shared.selector';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +19,9 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   authType = AuthType;
-  getLoginPagePendingSub: Subscription | undefined;
+  getLoadingSpinnerSub: Subscription | undefined;
+  errorMessage$: Observable<any> | undefined;
+
   loginFormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
@@ -23,37 +30,34 @@ export class LoginComponent implements OnInit, OnDestroy {
     ]),
   });
 
-  constructor(
-    @Optional() private auth: Auth,
-    private store: Store<fromAuth.State>
-  ) {}
+  constructor(@Optional() private auth: Auth, private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.getLoginPagePendingSub = this.store
-      .select(fromAuth.getLoginPagePending)
-      .subscribe((isPending: boolean) => {
-        console.log('isPending', isPending);
-        if (isPending) {
+    this.getLoadingSpinnerSub = this.store
+      .select(getLoading)
+      .subscribe((isLoading: boolean) => {
+        console.log('isLoading', isLoading);
+        if (isLoading) {
           this.loginFormGroup.disable();
         } else {
           this.loginFormGroup.enable();
         }
       });
+
+    this.errorMessage$ = this.store.select(getErrorMessage);
   }
 
   onSubmit() {
     if (this.loginFormGroup.valid) {
-      console.log('this.loginFormGroup.valid', this.loginFormGroup.valid);
-      console.log('this.loginFormGroup.value', this.loginFormGroup.value);
-      this.store.dispatch(
-        LoginPageActions.login({ credentials: this.loginFormGroup.value })
-      );
+      const { email, password } = this.loginFormGroup.value;
+      this.store.dispatch(setLoadingSpinner({ status: true }));
+      this.store.dispatch(loginStart({ email, password }));
     }
   }
 
   ngOnDestroy() {
-    if (this.getLoginPagePendingSub) {
-      this.getLoginPagePendingSub.unsubscribe();
+    if (this.getLoadingSpinnerSub) {
+      this.getLoadingSpinnerSub.unsubscribe();
     }
   }
 }

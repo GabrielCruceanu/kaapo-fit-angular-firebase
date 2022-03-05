@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {AuthType} from "../../../model/auth-interface";
+import {AuthType} from "../../model/AuthResponseData.model";
 
 @Component({
   selector: 'app-auth-container',

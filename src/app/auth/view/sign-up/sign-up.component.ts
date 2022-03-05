@@ -1,59 +1,71 @@
-import {Component, OnInit, Optional} from "@angular/core";
-import {AuthType} from "../../../model/auth-interface";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Auth, createUserWithEmailAndPassword} from "@angular/fire/auth";
+import { Component, OnInit, Optional } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Auth } from '@angular/fire/auth';
+import { AuthType } from '../../model/AuthResponseData.model';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/app.state';
+import { setLoadingSpinner } from '../../../store/shared/shared.actions';
+import { signupStart } from '../../store/auth.actions';
+import { Observable, Subscription } from 'rxjs';
+import {
+  getErrorMessage,
+  getLoading,
+} from '../../../store/shared/shared.selector';
 
 @Component({
-  selector: 'app-sign-up', templateUrl: './sign-up.component.html', styleUrls: ['./sign-up.component.scss']
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss'],
 })
-
 export class SignUpComponent implements OnInit {
   authType = AuthType;
   passwordDontMatch: boolean;
+  getLoadingSpinnerSub: Subscription | undefined;
+  errorMessage$: Observable<any> | undefined;
 
   signUpFormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
-  })
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
+    confirmPassword: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
+  });
 
-  constructor(@Optional() private auth: Auth) {
+  constructor(@Optional() private auth: Auth, private store: Store<AppState>) {
     this.passwordDontMatch = true;
   }
 
   ngOnInit() {
-    // this.checkPasswordMatch(this.signUpFormGroup.controls['password'].value, this.signUpFormGroup.controls['confirmPassword'].value)
+    this.getLoadingSpinnerSub = this.store
+      .select(getLoading)
+      .subscribe((isLoading) => {
+        if (isLoading) {
+          this.signUpFormGroup.disable();
+        } else {
+          this.signUpFormGroup.enable();
+        }
+      });
+
+    this.errorMessage$ = this.store.select(getErrorMessage);
   }
 
   checkPasswordMatch(pass?: string, confirmPass?: string) {
-    console.log('pass', pass)
-    console.log('confirmPass', confirmPass)
     if (pass && confirmPass) {
-      pass === confirmPass ? this.passwordDontMatch = true : this.passwordDontMatch = false;
+      pass === confirmPass
+        ? (this.passwordDontMatch = true)
+        : (this.passwordDontMatch = false);
     } else {
       this.passwordDontMatch = true;
     }
-
-    console.log('passwordDontMatch', this.passwordDontMatch)
   }
 
   onSubmit(form: FormGroup) {
-    const {email, password} = form.value;
-    console.log('signUpFormGroup', this.signUpFormGroup)
-    createUserWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user
-        console.log('User logat', user)
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log('Error with code', errorCode, 'and message:', errorMessage)
-      });
-    this.signUpFormGroup.reset({
-      email: '', password: ''
-    })
-    this.signUpFormGroup.clearValidators()
-    this.signUpFormGroup.markAsUntouched()
+    const { email, password } = form.value;
+    this.store.dispatch(setLoadingSpinner({ status: true }));
+    this.store.dispatch(signupStart({ email, password }));
   }
 }

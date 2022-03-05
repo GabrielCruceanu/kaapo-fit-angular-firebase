@@ -4,9 +4,14 @@ import { SignUpComponent } from './view/sign-up/sign-up.component';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent},
-  { path: 'sign-up', component: SignUpComponent},
+  {
+    path: '',
+    children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent },
+      { path: 'sign-up', component: SignUpComponent },
+    ],
+  },
 ];
 
 @NgModule({

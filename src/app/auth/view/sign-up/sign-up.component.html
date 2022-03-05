@@ -34,6 +34,10 @@
       </mat-error>
     </mat-form-field>
     <div class="form-footer">
+      <mat-error *ngIf="errorMessage$ | async as errorMessage">
+        {{ errorMessage }}
+      </mat-error>
+
       <button mat-button [class.disabled]="!signUpFormGroup.valid">Create account</button>
     </div>
   </form>

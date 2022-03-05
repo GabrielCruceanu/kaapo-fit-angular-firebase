@@ -25,6 +25,7 @@
     "@ngrx/effects": "^13.0.2",
     "@ngrx/router-store": "^13.0.2",
     "@ngrx/store": "^13.0.2",
+    "@ngrx/store-devtools": "^13.0.2",
     "firebase": "^9.6.7",
     "ngrx-store-freeze": "^0.2.4",
     "rxfire": "^6.0.0",

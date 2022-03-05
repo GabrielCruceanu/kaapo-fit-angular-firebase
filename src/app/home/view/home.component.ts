@@ -1,22 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AuthActions } from '../../auth/actions';
-import * as fromAuth from '../../auth/reducers'
-import {User} from "@angular/fire/auth";
+import { autoLogout, logout } from '../../auth/store/auth.actions';
+import { getUser } from '../../auth/store/auth.selector';
+import { User } from '../../auth/model/user.model';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
-  user: User | null | undefined;
+export class HomeComponent implements OnInit {
+  user$: Observable<User | null>;
   constructor(private store: Store) {
-    this.store.select(fromAuth.selectUser).subscribe((user) => this.user = user);
+    this.user$ = of(null);
+  }
+  ngOnInit() {
+    this.user$ = this.store.select(getUser);
   }
 
-  logout() {
-    console.log('logout')
-    this.store.dispatch(AuthActions.logout());
+  logout(event: Event) {
+    console.log('logout');
+    event.preventDefault();
+    this.store.dispatch(autoLogout());
   }
 }

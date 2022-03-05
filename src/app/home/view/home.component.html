@@ -1,5 +1,5 @@
 <h1>Home</h1>
 
 <h2>User</h2>
-<pre>{{user | json}}</pre>
-<button (click)="logout()">Logout</button>
+<pre>{{(user$ |async) | json}}</pre>
+<button (click)="logout($event)">Logout</button>

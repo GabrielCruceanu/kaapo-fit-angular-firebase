@@ -1,9 +1,9 @@
 import * as fromRouter from '@ngrx/router-store';
 
 /**
- * storeFreeze prevents state from being mutated. When mutation occurs, an
+ * storeFreeze prevents store from being mutated. When mutation occurs, an
  * exception will be thrown. This is useful during development mode to
- * ensure that none of the reducers accidentally mutates the state.
+ * ensure that none of the reducers accidentally mutates the store.
  */
 import { storeFreeze } from 'ngrx-store-freeze';
 import {ActionReducer, MetaReducer} from '@ngrx/store';
@@ -11,7 +11,7 @@ import {environment} from "../../environments/environment";
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
- * our top level state interface is just a map of keys to inner state types.
+ * our top level store interface is just a map of keys to inner store types.
  */
 export interface State {
   router: fromRouter.RouterReducerState;
@@ -22,9 +22,9 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
   return (state, action) => {
     const result = reducer(state, action);
     console.groupCollapsed(action.type);
-    console.log('prev state', state);
+    console.log('prev store', state);
     console.log('action', action);
-    console.log('next state', result);
+    console.log('next store', result);
     console.groupEnd();
 
     return result;

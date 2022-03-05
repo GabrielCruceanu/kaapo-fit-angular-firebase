@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {BtnType} from "../../../core/model/button-interface";
+import {BtnType} from "../../../shared/model/button-interface";
 
 @Component({
   selector: 'app-lp-hero',
