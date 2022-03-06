@@ -1,0 +1,16 @@
+<div class="tabs-container">
+  <div class="tabs-box">
+    <ul class="tabs">
+      <li class="tab" *ngFor="let tab of tabs">
+        <div class="tab-icon">
+          <mat-icon
+            aria-hidden="false"
+            class="icon"
+            [svgIcon]="tab.icon"
+          ></mat-icon>
+        </div>
+        <a [routerLink]="tab.link">{{ tab.name }}</a>
+      </li>
+    </ul>
+  </div>
+</div>

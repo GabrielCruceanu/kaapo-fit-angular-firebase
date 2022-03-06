@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { autoLogout, logout } from '../../auth/store/auth.actions';
+import { autoLogout } from '../../auth/store/auth.actions';
 import { getUser } from '../../auth/store/auth.selector';
 import { User } from '../../auth/model/user.model';
 import { Observable, of } from 'rxjs';

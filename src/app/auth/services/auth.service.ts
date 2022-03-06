@@ -7,14 +7,18 @@ import { AppState } from '../../store/app.state';
 import { autoLogout } from '../store/auth.actions';
 import { AuthResponseData } from '../model/AuthResponseData.model';
 import { Observable } from 'rxjs';
-import {Router} from "@angular/router";
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   timeoutInterval: any;
-  constructor(private http: HttpClient, private store: Store<AppState>, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private store: Store<AppState>,
+    private router: Router
+  ) {}
 
   onLogin(email: string, password: string): Observable<AuthResponseData> {
     return this.http.post<AuthResponseData>(
@@ -27,6 +31,13 @@ export class AuthService {
     return this.http.post<AuthResponseData>(
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.FIREBASE_API_KEY}`,
       { email, password, returnSecureToken: true }
+    );
+  }
+
+  onResetPassword(email: string) {
+    return this.http.post(
+      `https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=${environment.FIREBASE_API_KEY}`,
+      { email, requestType: 'PASSWORD_RESET', returnSecureToken: true  }
     );
   }
 

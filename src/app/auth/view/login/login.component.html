@@ -48,7 +48,7 @@
       <mat-error *ngIf="errorMessage$ | async as errorMessage">
         {{ errorMessage }}
       </mat-error>
-
+      <a routerLink="/auth/reset-password" mat-button class="reset-link">Reset Password</a>
       <button mat-button [class.disabled]="!loginFormGroup.valid" type="submit">
         Login
       </button>

@@ -4,7 +4,10 @@ import { Auth } from '@angular/fire/auth';
 import { AuthType } from '../../model/AuthResponseData.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { setLoadingSpinner } from '../../../store/shared/shared.actions';
+import {
+  setErrorMessage,
+  setLoadingSpinner,
+} from '../../../store/shared/shared.actions';
 import { signupStart } from '../../store/auth.actions';
 import { Observable, Subscription } from 'rxjs';
 import {
@@ -37,6 +40,7 @@ export class SignUpComponent implements OnInit {
 
   constructor(@Optional() private auth: Auth, private store: Store<AppState>) {
     this.passwordDontMatch = true;
+    this.store.dispatch(setErrorMessage({ message: '' }));
   }
 
   ngOnInit() {

@@ -10,4 +10,5 @@ export interface AuthResponseData {
 export enum AuthType {
   Login = 'login',
   SignUp = 'sign-up',
+  ResetPassword = 'reset-password',
 }

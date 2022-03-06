@@ -6,7 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../../../store/app.state';
 import { loginStart } from '../../store/auth.actions';
 import { AuthType } from '../../model/AuthResponseData.model';
-import { setLoadingSpinner } from '../../../store/shared/shared.actions';
+import {setErrorMessage, setLoadingSpinner} from '../../../store/shared/shared.actions';
 import {
   getErrorMessage,
   getLoading,
@@ -30,13 +30,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     ]),
   });
 
-  constructor(@Optional() private auth: Auth, private store: Store<AppState>) {}
+  constructor(@Optional() private auth: Auth, private store: Store<AppState>) {
+    this.store.dispatch(setErrorMessage({message: ''}))
+  }
 
   ngOnInit() {
     this.getLoadingSpinnerSub = this.store
       .select(getLoading)
       .subscribe((isLoading: boolean) => {
-        console.log('isLoading', isLoading);
         if (isLoading) {
           this.loginFormGroup.disable();
         } else {
