@@ -16,7 +16,54 @@
   max-width: 720px;
   background-color: var(--background-color);
   box-shadow: var(--dark-shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .tabs {
   display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  width: 100%;
+  max-width: 50px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+
+  &.active-link {
+    border-bottom: 1px solid var(--primary);
+
+    .mat-icon {
+      color: var(--primary);
+    }
+
+    a {
+      color: var(--white);
+    }
+  }
+
+  a {
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--gray);
+    font-weight: 500;
+  }
+}
+
+.mat-icon {
+  color: var(--gray);
+}
+
+@media screen and (min-width: 1080px) {
+  .tabs-container {
+    max-height: 15vh;
+  }
 }

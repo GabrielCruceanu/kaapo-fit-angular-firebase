@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 .app-box {
@@ -15,9 +15,15 @@
   background-color: var(--background-color);
   box-shadow: var(--dark-shadow);
   margin: auto;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 1080px) {
+  .app-container {
+    max-height: 85vh;
+    padding: 1rem;
+  }
+
   .app-box {
     width: 90vw;
     max-height: 850px;

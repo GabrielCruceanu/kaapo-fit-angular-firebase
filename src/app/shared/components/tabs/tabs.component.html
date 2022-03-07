@@ -1,15 +1,20 @@
 <div class="tabs-container">
   <div class="tabs-box">
     <ul class="tabs">
-      <li class="tab" *ngFor="let tab of tabs">
-        <div class="tab-icon">
+      <li
+        class="tab"
+        *ngFor="let tab of tabs"
+        routerLinkActive="active-link"
+        [routerLink]="tab.link"
+      >
+        <div class="tab-icon-box">
           <mat-icon
-            aria-hidden="false"
-            class="icon"
+            aria-hidden="true"
+            class="tab-icon"
             [svgIcon]="tab.icon"
           ></mat-icon>
         </div>
-        <a [routerLink]="tab.link">{{ tab.name }}</a>
+        <a>{{ tab.name }}</a>
       </li>
     </ul>
   </div>

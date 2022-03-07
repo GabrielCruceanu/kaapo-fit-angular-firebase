@@ -1,11 +1,11 @@
-
 <!--  <div class="main-container">-->
 <!--  </div>-->
 <!--  <div class="main-tabs">-->
 <!--  </div>-->
-  <main>
-<app-loading-spinner *ngIf="showLoading | async"></app-loading-spinner>
-<router-outlet></router-outlet>
-<app-tabs></app-tabs>
-
-  </main>
+<main>
+  <app-loading-spinner *ngIf="showLoading$ | async"></app-loading-spinner>
+  <app-container>
+    <router-outlet></router-outlet>
+  </app-container>
+  <app-tabs *ngIf="isAuthenticated$ | async"></app-tabs>
+</main>
