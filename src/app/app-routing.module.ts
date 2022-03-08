@@ -12,7 +12,24 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'add-info',
+    path: 'profile',
+    loadChildren: () =>
+      import('./profile/profile.module').then((m) => m.ProfileModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'progress',
+    loadChildren: () =>
+      import('./progress/progress.module').then((m) => m.ProgressModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'add',
     loadChildren: () =>
       import('./add-informations/add-informations.module').then(
         (m) => m.AddInformationsModule
@@ -20,8 +37,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+    path: 'nutrition',
+    loadChildren: () =>
+      import('./nutrition/nutrition.module').then((m) => m.NutritionModule),
     canActivate: [AuthGuard],
   },
   {

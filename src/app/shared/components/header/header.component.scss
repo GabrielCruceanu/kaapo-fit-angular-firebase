@@ -1,7 +1,7 @@
 nav {
   display: flex;
   justify-content: center;
-  padding: 1rem;
+  padding: 10px 1rem;
   border-bottom: 1px solid var(--primary);
 }
 
@@ -63,6 +63,18 @@ nav {
     li:nth-child(2) {
       margin-left: 1rem;
     }
+
+    .mat-icon {
+      fill: var(--gray);
+      transition: var(--transition);
+    }
+
+    li:hover {
+      cursor: pointer;
+      .mat-icon {
+        fill: var(--primary);
+      }
+    }
   }
 }
 
@@ -88,7 +100,6 @@ nav {
   img {
     width: 100%;
     height: auto;
-
   }
 }
 

@@ -3,11 +3,17 @@
     <div class="header-profile">
       <div class="header-profile-picture-box">
         <div class="header-profile-picture">
-          <img *ngIf="userDetails.profilePicture" [src]="userDetails.profilePicture" [alt]="userDetails.firstName + userDetails.lastName + 'picture'">
+          <img
+            *ngIf="userDetails.profilePicture"
+            [src]="userDetails.profilePicture"
+            [alt]="userDetails.firstName + userDetails.lastName + 'picture'"
+          />
         </div>
       </div>
       <div class="header-profile-name">
-        <a routerLink="/home">{{userDetails.firstName}} {{userDetails.lastName}}</a>
+        <a routerLink="/profile"
+          >{{ userDetails.firstName }} {{ userDetails.lastName }}</a
+        >
       </div>
     </div>
 
