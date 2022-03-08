@@ -7,28 +7,30 @@
   align-items: center;
   overflow: hidden;
   margin: auto;
+
+  &.isNotAuth {
+    max-height: 100vh;
+  }
 }
 
-.app-box {
+.app-wrap {
   width: 100%;
   height: 100%;
-  max-width: var(--bp-xxl);
   background-color: var(--background-color);
   box-shadow: var(--dark-shadow);
   margin: auto;
-  overflow: hidden;
+  overflow: scroll;
+  padding: 0 !important;
 }
-
 @media screen and (min-width: 1080px) {
   .app-container {
     max-height: 85vh;
     padding: 1rem;
   }
 
-  .app-box {
+  .app-wrap {
     width: 90vw;
     max-height: 850px;
     border-radius: 16px;
-    overflow: hidden;
   }
 }

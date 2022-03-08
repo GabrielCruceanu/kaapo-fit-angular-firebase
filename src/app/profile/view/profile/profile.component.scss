@@ -1,0 +1,46 @@
+.profile-container {
+  overflow: scroll;
+}
+
+.app-title {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.profile-header {
+  display: flex;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture-box {
+  border: 2px solid var(--primary);
+  border-radius: 100%;
+  padding: 12px;
+  position: relative;
+}
+
+.profile-picture {
+  border-radius: 100%;
+  overflow: hidden;
+  img {
+    display: block;
+  }
+}
+
+.profile-name {
+  h3 {
+    font-size: 36px;
+    line-height: 43px;
+    font-weight: 300;
+    color: var(--gray);
+    margin: 0 1rem;
+
+    strong {
+      color: var(--white);
+    }
+  }
+}

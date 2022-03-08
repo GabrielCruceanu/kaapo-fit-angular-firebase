@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-add-informations',
-  templateUrl: './add-informations.component.html',
-  styleUrls: ['./add-informations.component.scss']
+  selector: 'app-add-information',
+  templateUrl: './add-information.component.html',
+  styleUrls: ['./add-information.component.scss']
 })
-export class AddInformationsComponent implements OnInit {
+export class AddInformationComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   isOptional = false;

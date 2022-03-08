@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProgressComponent } from './view/progress/progress.component';
+
 const routes: Routes = [
   {
     path: '',
