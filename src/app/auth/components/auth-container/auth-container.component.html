@@ -1,22 +1,29 @@
-<app-container>
-  <div class="auth-container">
-    <div class="auth-img">
-      <div class="auth-img-overlay"></div>
-      <img alt="{{authImg}}" src="assets/images/auth/{{authImg}}.jpg">
-    </div>
-    <div class="auth-body">
-      <div class="auth-body-box">
-        <h1>{{authImg === authType.Login ? 'Welcome back' : 'Hello newbie'}}</h1>
-        <ul class="auth-tabs">
-          <li [class.active]="authImg === authType.Login">
-            <a routerLink="/auth/login">Login</a>
-          </li>
-          <li [class.active]="authImg === authType.SignUp">
-            <a routerLink="/auth/sign-up">Sign Up</a>
-          </li>
-        </ul>
-        <ng-content></ng-content>
-      </div>
+<div class="auth-container">
+  <div class="auth-img">
+    <div class="auth-img-overlay"></div>
+    <img alt="{{ authImg }}" src="assets/images/auth/{{ authImg }}.jpg" />
+  </div>
+  <div class="auth-body">
+    <div class="auth-body-box">
+      <ng-container
+        *ngIf="authImg === authType.ResetPassword; else loginOrSignUp"
+      >
+        <h1>Reset your password</h1>
+      </ng-container>
+      <ng-template #loginOrSignUp>
+        <h1>
+          {{ authImg === authType.Login ? "Welcome back" : "Hello newbie" }}
+        </h1>
+      </ng-template>
+      <ul class="auth-tabs">
+        <li [class.active]="authImg === authType.Login">
+          <a routerLink="/auth/login">Login</a>
+        </li>
+        <li [class.active]="authImg === authType.SignUp">
+          <a routerLink="/auth/sign-up">Sign Up</a>
+        </li>
+      </ul>
+      <ng-content></ng-content>
     </div>
   </div>
-</app-container>
+</div>

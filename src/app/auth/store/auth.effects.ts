@@ -3,10 +3,10 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
   autoLogin,
   autoLogout,
-  loginFail,
   loginStart,
   loginSuccess,
-  logout,
+  resetStart,
+  resetSuccess,
   signupStart,
   signupSuccess,
 } from './auth.actions';
@@ -82,7 +82,25 @@ export class AuthEffects {
       })
     );
   });
-
+  resetPassword$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(resetStart),
+      exhaustMap((action) => {
+        return this.authService.onResetPassword(action.email).pipe(
+          map((data) => {
+            return resetSuccess({ redirect: false });
+          }),
+          catchError((errResp) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            const errorMessage = this.authService.getErrorMessage(
+              errResp.error.error.message
+            );
+            return of(setErrorMessage({ message: errorMessage }));
+          })
+        );
+      })
+    );
+  });
   autoLogin$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(autoLogin),
@@ -91,7 +109,7 @@ export class AuthEffects {
         if (user) {
           return of(loginSuccess({ user, redirect: false }));
         } else {
-          return of(logout());
+          return of(autoLogout());
         }
       })
     );

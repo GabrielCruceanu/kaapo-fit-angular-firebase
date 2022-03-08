@@ -1,0 +1,57 @@
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/app.state';
+import {
+  KAAPO_FIT_LOGO,
+  LOGOUT_ICON,
+  NOTIFICATION_ICON,
+} from '../../../../content/icons';
+import { isAuthenticated } from '../../../auth/store/auth.selector';
+import { autoLogout } from '../../../auth/store/auth.actions';
+import { Observable, of } from 'rxjs';
+import {getUserDataMock, UserDetails} from "../../../../data/user.details";
+
+@Component({
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
+})
+export class HeaderComponent implements OnInit {
+  isAuthenticate: Observable<boolean>;
+  hasNotifications: Observable<boolean>;
+  userDetails: UserDetails;
+
+  constructor(
+    private domSanitizer: DomSanitizer,
+    private matIconRegistry: MatIconRegistry,
+    private store: Store<AppState>
+  ) {
+    this.matIconRegistry.addSvgIconLiteral(
+      'kaapo-fit-logo',
+      this.domSanitizer.bypassSecurityTrustHtml(KAAPO_FIT_LOGO)
+    );
+    this.matIconRegistry.addSvgIconLiteral(
+      'notification',
+      this.domSanitizer.bypassSecurityTrustHtml(NOTIFICATION_ICON)
+    );
+    this.matIconRegistry.addSvgIconLiteral(
+      'log-out',
+      this.domSanitizer.bypassSecurityTrustHtml(LOGOUT_ICON)
+    );
+
+    this.isAuthenticate = of(false);
+    this.hasNotifications = of(true);
+    this.userDetails = getUserDataMock();
+  }
+
+  ngOnInit(): void {
+    this.isAuthenticate = this.store.select(isAuthenticated);
+  }
+
+  onLogout(event: Event) {
+    event.preventDefault();
+    this.store.dispatch(autoLogout());
+  }
+}

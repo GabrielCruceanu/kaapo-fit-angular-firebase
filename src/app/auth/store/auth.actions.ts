@@ -6,9 +6,12 @@ export const LOGIN_FAIL = '[auth page] login Fail';
 
 export const SIGNUP_START = '[auth page] signup start';
 export const SIGNUP_SUCCESS = '[auth page] signup success';
+
+export const RESET_START = '[auth page] reset start';
+export const RESET_SUCCESS = '[auth page] reset success';
+
 export const AUTO_LOGIN_ACTION = '[auth page] auto login';
 export const AUTO_LOGOUT_ACTION = '[auth page] auto logout';
-export const LOGOUT_ACTION = '[auth page] logout';
 
 export const loginStart = createAction(
   LOGIN_START,
@@ -22,17 +25,22 @@ export const loginFail = createAction(
   LOGIN_FAIL,
   props<{ redirect: boolean }>()
 );
+
 export const signupStart = createAction(
   SIGNUP_START,
   props<{ email: string; password: string }>()
 );
-
 export const signupSuccess = createAction(
   SIGNUP_SUCCESS,
   props<{ user: User; redirect: boolean }>()
 );
 
+export const resetStart = createAction(RESET_START, props<{ email: string }>());
+export const resetSuccess = createAction(
+  RESET_SUCCESS,
+  props<{ redirect: boolean }>()
+);
+
 export const autoLogin = createAction(AUTO_LOGIN_ACTION);
 export const autoLogout = createAction(AUTO_LOGOUT_ACTION);
-export const logout = createAction(LOGOUT_ACTION);
 export const dummyAction = createAction('[dummy action]');

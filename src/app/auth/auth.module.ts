@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogoutConfirmationDialogComponent } from './components/logout-confirmation-dialog/logout-confirmation-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ResetPasswordComponent } from './view/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     LoginComponent,
     SignUpComponent,
     LogoutConfirmationDialogComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     CommonModule,
