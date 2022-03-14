@@ -3,6 +3,11 @@ export interface UserGalleryPicture {
   imgSrc: string;
 }
 
+export interface UserInfo {
+  type: string;
+  number: string;
+}
+
 export interface UserDetails {
   firstName: string;
   lastName: string;
@@ -19,6 +24,7 @@ export interface UserDetails {
   hip: string;
   ass: string;
   thigh: string;
+  info: UserInfo[];
   gallery: UserGalleryPicture[];
 }
 
@@ -38,6 +44,48 @@ export const UserDataMockup: UserDetails = {
   hip: '175',
   ass: '175',
   thigh: '125',
+  info: [
+    {
+      type: 'Age',
+      number: '25 years',
+    },
+    {
+      type: 'Weight',
+      number: '56 Kg',
+    },
+    {
+      type: 'Neck',
+      number: '60 cm',
+    },
+    {
+      type: 'Shoulders',
+      number: '144 cm',
+    },
+    {
+      type: 'Chest',
+      number: '124 cm',
+    },
+    {
+      type: 'Arm',
+      number: '75 cm',
+    },
+    {
+      type: 'Waist',
+      number: '125 cm',
+    },
+    {
+      type: 'Hip',
+      number: '175 cm',
+    },
+    {
+      type: 'Ass',
+      number: '175 cm',
+    },
+    {
+      type: 'Thigh',
+      number: '125 cm',
+    },
+  ],
   gallery: [
     {
       perspective: 'Front',
@@ -54,6 +102,6 @@ export const UserDataMockup: UserDetails = {
   ],
 };
 
-export function getUserDataMock(): UserDetails{
+export function getUserDataMock(): UserDetails {
   return UserDataMockup;
 }

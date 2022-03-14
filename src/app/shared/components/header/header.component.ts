@@ -19,7 +19,7 @@ import {getUserDataMock, UserDetails} from "../../../../data/user.details";
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  isAuthenticate: Observable<boolean>;
+  isAuthenticated$: Observable<boolean>;
   hasNotifications: Observable<boolean>;
   userDetails: UserDetails;
 
@@ -41,13 +41,13 @@ export class HeaderComponent implements OnInit {
       this.domSanitizer.bypassSecurityTrustHtml(LOGOUT_ICON)
     );
 
-    this.isAuthenticate = of(false);
+    this.isAuthenticated$ = of(false);
     this.hasNotifications = of(true);
     this.userDetails = getUserDataMock();
   }
 
   ngOnInit(): void {
-    this.isAuthenticate = this.store.select(isAuthenticated);
+    this.isAuthenticated$ = this.store.select(isAuthenticated);
   }
 
   onLogout(event: Event) {

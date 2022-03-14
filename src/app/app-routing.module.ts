@@ -31,8 +31,8 @@ const routes: Routes = [
   {
     path: 'add',
     loadChildren: () =>
-      import('./add-informations/add-informations.module').then(
-        (m) => m.AddInformationsModule
+      import('./add-information/add-information.module').then(
+        (m) => m.AddInformationModule
       ),
     canActivate: [AuthGuard],
   },
@@ -40,6 +40,12 @@ const routes: Routes = [
     path: 'nutrition',
     loadChildren: () =>
       import('./nutrition/nutrition.module').then((m) => m.NutritionModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'workout',
+    loadChildren: () =>
+      import('./workout/workout.module').then((m) => m.WorkoutModule),
     canActivate: [AuthGuard],
   },
   {

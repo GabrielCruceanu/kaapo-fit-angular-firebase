@@ -1,6 +1,7 @@
-<div class="app-container">
-  <div class="app-box">
+<div class="app-container" [class.isNotAuth]="!(isAuthenticated$ | async)">
+  <div class="app-wrap container">
     <app-header></app-header>
+
     <ng-content></ng-content>
   </div>
 </div>
