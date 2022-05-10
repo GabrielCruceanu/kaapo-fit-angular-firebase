@@ -26,31 +26,33 @@
     </div>
 
     <div class="header-links">
+      <ul>
+        <li class="notification-box">
+          <span *ngIf="hasNotifications | async"></span>
+          <mat-icon
+            aria-hidden="false"
+            class="icon"
+            svgIcon="notification"
+            matBadge="15"
+            matBadgeColor="warn"
+          ></mat-icon>
+        </li>
+        <li>
+          <mat-icon
+            class="icon"
+            aria-hidden="false"
+            [matMenuTriggerFor]="appMenu"
+            aria-label="Icon button for menu"
+            >more_vert
+          </mat-icon>
+        </li>
+      </ul>
       <mat-menu #appMenu="matMenu" xPosition="before">
         <ng-template matMenuContent>
-          <!--          <ul>-->
-          <!--            <li class="notification-box" mat-menu-item>-->
-          <!--              <span *ngIf="hasNotifications | async"></span>-->
-          <!--              <mat-icon-->
-          <!--                aria-hidden="false"-->
-          <!--                class="icon"-->
-          <!--                svgIcon="notification"-->
-          <!--                matBadge="15"-->
-          <!--                matBadgeColor="warn"-->
-          <!--              ></mat-icon>-->
-          <!--            </li>-->
-          <!--            <li (click)="onLogout($event)" mat-menu-item>-->
-          <!--              <mat-icon-->
-          <!--                aria-hidden="false"-->
-          <!--                class="icon"-->
-          <!--                svgIcon="log-out"-->
-          <!--              ></mat-icon>-->
-          <!--            </li>-->
-          <!--          </ul> -->
           <button mat-menu-item>
             <mat-icon matBadge="15" matBadgeColor="primary"
-              >notifications</mat-icon
-            >
+              >notifications
+            </mat-icon>
             <span>Notifications</span>
           </button>
           <button mat-menu-item (click)="onLogout($event)">
@@ -59,14 +61,6 @@
           </button>
         </ng-template>
       </mat-menu>
-
-      <button
-        mat-icon-button
-        [matMenuTriggerFor]="appMenu"
-        aria-label="Icon button for menu"
-      >
-        <mat-icon>more_vert</mat-icon>
-      </button>
     </div>
   </div>
 </nav>
