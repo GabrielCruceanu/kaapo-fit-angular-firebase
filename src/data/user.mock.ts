@@ -8,7 +8,7 @@ export interface UserInfo {
   number: string;
 }
 
-export interface UserDetails {
+export interface UserMock {
   firstName: string;
   lastName: string;
   joined: string;
@@ -28,7 +28,7 @@ export interface UserDetails {
   gallery: UserGalleryPicture[];
 }
 
-export const UserDataMockup: UserDetails = {
+export const UserDataMockup: UserMock = {
   firstName: 'Cristina',
   lastName: 'Cruceanu',
   joined: '2 mon',
@@ -102,6 +102,6 @@ export const UserDataMockup: UserDetails = {
   ],
 };
 
-export function getUserDataMock(): UserDetails {
-  return UserDataMockup;
-}
+export const getUserDataMock = (): UserMock => ({
+  ...UserDataMockup,
+});

@@ -76,6 +76,9 @@
   .auth-container {
     flex-direction: row;
     height: 100%;
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .auth-img {

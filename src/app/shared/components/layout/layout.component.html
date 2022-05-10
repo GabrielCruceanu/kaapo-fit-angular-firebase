@@ -1,0 +1,12 @@
+<app-loading-spinner *ngIf="showLoading$ | async"></app-loading-spinner>
+<div class="app-wrap">
+  <div class="app-header" *ngIf="isAuthenticated$ | async">
+    <app-header></app-header>
+  </div>
+  <main [class.m-lg-auto]="!(isAuthenticated$ | async)">
+    <ng-content></ng-content>
+  </main>
+  <div class="app-tabs" *ngIf="isAuthenticated$ | async">
+    <app-tabs></app-tabs>
+  </div>
+</div>

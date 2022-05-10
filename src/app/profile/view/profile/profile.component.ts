@@ -1,7 +1,7 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {getUserDataMock, UserDetails} from "../../../../data/user.details";
+import { Component, ViewEncapsulation } from '@angular/core';
+import { getUserDataMock, UserMock } from '../../../../data/user.mock';
 
-import SwiperCore, {EffectFade, Swiper} from 'swiper';
+import SwiperCore, { EffectFade, Swiper } from 'swiper';
 
 SwiperCore.use([EffectFade]);
 
@@ -13,9 +13,9 @@ SwiperCore.use([EffectFade]);
 })
 export class ProfileComponent {
   title: string = 'My Profile';
-  profile: UserDetails
+  profile: UserMock;
 
   constructor() {
-    this.profile = getUserDataMock()
+    this.profile = getUserDataMock();
   }
 }

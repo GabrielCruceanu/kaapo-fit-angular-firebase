@@ -1,6 +1,6 @@
-<nav *ngIf="isAuthenticated$ | async">
-  <div class="header-wrap">
-    <div class="header-profile">
+<nav>
+  <div class="header-wrap container">
+    <div class="header-profile" *ngIf="isAuthenticated$ | async">
       <div class="header-profile-picture-box">
         <div class="header-profile-picture">
           <img
@@ -11,13 +11,13 @@
         </div>
       </div>
       <div class="header-profile-name">
-        <a routerLink="/profile"
-          >{{ userDetails.firstName }} {{ userDetails.lastName }}</a
-        >
+        <a routerLink="/profile">
+          {{ userDetails.firstName }} {{ userDetails.lastName }}
+        </a>
       </div>
     </div>
 
-    <div class="header-brand">
+    <div class="header-brand" [class.show-brand]="!(isAuthenticated$ | async)">
       <mat-icon
         aria-hidden="false"
         class="icon"
@@ -26,23 +26,47 @@
     </div>
 
     <div class="header-links">
-      <ul>
-        <li class="notification-box">
-          <span *ngIf="hasNotifications | async"></span>
-          <mat-icon
-            aria-hidden="false"
-            class="icon"
-            svgIcon="notification"
-          ></mat-icon>
-        </li>
-        <li (click)="onLogout($event)">
-          <mat-icon
-            aria-hidden="false"
-            class="icon"
-            svgIcon="log-out"
-          ></mat-icon>
-        </li>
-      </ul>
+      <mat-menu #appMenu="matMenu" xPosition="before">
+        <ng-template matMenuContent>
+          <!--          <ul>-->
+          <!--            <li class="notification-box" mat-menu-item>-->
+          <!--              <span *ngIf="hasNotifications | async"></span>-->
+          <!--              <mat-icon-->
+          <!--                aria-hidden="false"-->
+          <!--                class="icon"-->
+          <!--                svgIcon="notification"-->
+          <!--                matBadge="15"-->
+          <!--                matBadgeColor="warn"-->
+          <!--              ></mat-icon>-->
+          <!--            </li>-->
+          <!--            <li (click)="onLogout($event)" mat-menu-item>-->
+          <!--              <mat-icon-->
+          <!--                aria-hidden="false"-->
+          <!--                class="icon"-->
+          <!--                svgIcon="log-out"-->
+          <!--              ></mat-icon>-->
+          <!--            </li>-->
+          <!--          </ul> -->
+          <button mat-menu-item>
+            <mat-icon matBadge="15" matBadgeColor="primary"
+              >notifications</mat-icon
+            >
+            <span>Notifications</span>
+          </button>
+          <button mat-menu-item (click)="onLogout($event)">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </ng-template>
+      </mat-menu>
+
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="appMenu"
+        aria-label="Icon button for menu"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
     </div>
   </div>
 </nav>

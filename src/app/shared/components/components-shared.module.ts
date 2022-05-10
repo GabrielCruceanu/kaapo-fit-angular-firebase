@@ -7,12 +7,23 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { HeaderComponent } from './header/header.component';
 import {MatIconModule} from "@angular/material/icon";
 import { TabsComponent } from './tabs/tabs.component';
+import { MatMenuModule } from "@angular/material/menu";
 
 @NgModule({
-  declarations: [ButtonComponent, ContainerComponent, LoadingSpinnerComponent, HeaderComponent, TabsComponent],
-    exports: [ButtonComponent, ContainerComponent, LoadingSpinnerComponent, TabsComponent],
-    imports: [CommonModule, RouterModule, MatIconModule]
+  declarations: [
+    ButtonComponent,
+    ContainerComponent,
+    LoadingSpinnerComponent,
+    HeaderComponent,
+    TabsComponent,
+  ],
+  exports: [
+    ButtonComponent,
+    ContainerComponent,
+    LoadingSpinnerComponent,
+    TabsComponent,
+    HeaderComponent,
+  ],
+  imports: [CommonModule, RouterModule, MatIconModule, MatMenuModule],
 })
-
-export class ComponentsSharedModule {
-}
+export class ComponentsSharedModule {}

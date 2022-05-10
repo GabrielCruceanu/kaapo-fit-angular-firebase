@@ -1,8 +1,9 @@
 nav {
   display: flex;
   justify-content: center;
-  padding: 10px 1rem;
+  padding: 10px 0;
   border-bottom: 1px solid var(--primary);
+  height: 100%;
 }
 
 .header-wrap {
@@ -26,7 +27,12 @@ nav {
   display: none;
   width: 100%;
   justify-content: center;
-
+  &.show-brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
   mat-icon {
     overflow: visible;
     width: 100%;
