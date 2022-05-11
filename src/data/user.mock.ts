@@ -7,13 +7,21 @@ export interface UserInfo {
   type: string;
   number: string;
 }
-
+export enum UserStatus {
+  Client = 'CLIENT',
+  Nutrition = 'NUTRITION',
+  Trainer = 'TRAINER',
+  Gym = 'GYM',
+}
 export interface UserMock {
   firstName: string;
   lastName: string;
   joined: string;
   profilePicture: string;
   isPro: boolean;
+  status: UserStatus;
+  country: string;
+  city: string;
   age: string;
   weight: string;
   neck: string;
@@ -34,6 +42,9 @@ export const UserDataMockup: UserMock = {
   joined: '2 mon',
   profilePicture: './assets/images/mock/profile-mock.jpg',
   isPro: true,
+  status: UserStatus.Client,
+  city: 'Focsani',
+  country: 'Romania',
   age: '25',
   weight: '56',
   neck: '60',
