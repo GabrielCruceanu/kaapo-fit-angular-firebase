@@ -12,12 +12,28 @@
         <br />
         {{ profile.lastName }}
       </h3>
+      <div class="profile-status-detail">
+        <div class="profile-icon-box">
+          <mat-icon
+            class="icon"
+            aria-hidden="false"
+            aria-label="Icon for profile country"
+          >
+            map
+          </mat-icon>
+          <span>{{ profile.country }} / {{ profile.city }}</span>
+        </div>
+        <div class="profile-icon-box">
+          <mat-icon
+            class="icon"
+            aria-hidden="false"
+            aria-label="Icon for profile status"
+          >
+            badge
+          </mat-icon>
+          <span>{{ profile.status }}</span>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="profile-joined">
-    <p>
-      <small>Joined</small>
-      {{ profile.joined }} ago
-    </p>
   </div>
 </div>
