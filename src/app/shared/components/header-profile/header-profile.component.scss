@@ -1,0 +1,38 @@
+.header-profile {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.header-profile-picture-box {
+  border: 1px solid var(--gray-tint);
+  padding: 5px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.header-profile-picture {
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  background-color: var(--gray-tint);
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.header-profile-name {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+
+  a {
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 16px;
+    color: var(--white);
+  }
+}

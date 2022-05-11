@@ -1,0 +1,14 @@
+<div class="header-profile">
+  <div class="header-profile-picture-box" routerLink="/profile">
+    <div class="header-profile-picture">
+      <img
+        *ngIf="userDetails"
+        [src]="userDetails.profilePicture"
+        [alt]="userDetails.firstName + userDetails.lastName + 'picture'"
+      />
+    </div>
+  </div>
+  <div class="header-profile-name">
+    <a routerLink="/profile">Profile</a>
+  </div>
+</div>
