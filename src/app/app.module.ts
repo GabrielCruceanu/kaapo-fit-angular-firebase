@@ -24,6 +24,7 @@ import { AuthTokenInterceptor } from './auth/services/AuthToken.interceptor';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-serializer';
+import { LayoutModule } from "./shared/components/layout/layout.module";
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -58,6 +59,7 @@ export const firebaseConfig = environment.firebaseConfig;
       serializer: CustomSerializer,
     }),
     MatCardModule,
+    LayoutModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },

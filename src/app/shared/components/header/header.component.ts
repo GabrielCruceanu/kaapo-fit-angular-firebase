@@ -11,7 +11,7 @@ import {
 import { isAuthenticated } from '../../../auth/store/auth.selector';
 import { autoLogout } from '../../../auth/store/auth.actions';
 import { Observable, of } from 'rxjs';
-import {getUserDataMock, UserDetails} from "../../../../data/user.details";
+import { getUserDataMock, UserMock } from '../../../../data/user.mock';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +21,7 @@ import {getUserDataMock, UserDetails} from "../../../../data/user.details";
 export class HeaderComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
   hasNotifications: Observable<boolean>;
-  userDetails: UserDetails;
+  userDetails: UserMock;
 
   constructor(
     private domSanitizer: DomSanitizer,

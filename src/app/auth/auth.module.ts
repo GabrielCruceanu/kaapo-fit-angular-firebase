@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogoutConfirmationDialogComponent } from './components/logout-confirmation-dialog/logout-confirmation-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordComponent } from './view/reset-password/reset-password.component';
+import { LayoutModule } from "../shared/components/layout/layout.module";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ResetPasswordComponent } from './view/reset-password/reset-password.com
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
+    LayoutModule,
   ],
 })
 export class AuthModule {}

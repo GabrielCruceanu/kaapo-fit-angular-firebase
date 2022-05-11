@@ -8,13 +8,12 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {RouterModule, Routes} from "@angular/router";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
+import { LayoutModule } from "../shared/components/layout/layout.module";
 
 const routes: Routes = [{path: '', component: AddInformationComponent}]
 
 @NgModule({
-  declarations: [
-    AddInformationComponent
-  ],
+  declarations: [AddInformationComponent],
   imports: [
     CommonModule,
     ComponentsSharedModule,
@@ -23,7 +22,8 @@ const routes: Routes = [{path: '', component: AddInformationComponent}]
     MatFormFieldModule,
     RouterModule.forChild(routes),
     MatInputModule,
-    MatButtonModule
-  ]
+    MatButtonModule,
+    LayoutModule,
+  ],
 })
-export class AddInformationModule { }
+export class AddInformationModule {}
