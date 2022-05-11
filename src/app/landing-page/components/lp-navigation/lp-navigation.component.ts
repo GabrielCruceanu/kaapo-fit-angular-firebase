@@ -7,6 +7,7 @@ import { AppState } from '../../../store/app.state';
 import { Observable } from 'rxjs';
 import { isAuthenticated } from '../../../auth/store/auth.selector';
 import { autoLogout } from '../../../auth/store/auth.actions';
+import { getUserDataMock, UserMock } from '../../../../data/user.mock';
 
 @Component({
   selector: 'app-lp-navigation',
@@ -15,6 +16,8 @@ import { autoLogout } from '../../../auth/store/auth.actions';
 })
 export class LpNavigationComponent implements OnInit {
   isAuthenticate?: Observable<boolean>;
+  userDetails: UserMock;
+
   constructor(
     private domSanitizer: DomSanitizer,
     private matIconRegistry: MatIconRegistry,
@@ -24,6 +27,8 @@ export class LpNavigationComponent implements OnInit {
       'kaapo-fit-logo',
       this.domSanitizer.bypassSecurityTrustHtml(KAAPO_FIT_LOGO)
     );
+
+    this.userDetails = getUserDataMock();
   }
   ngOnInit() {
     this.isAuthenticate = this.store.select(isAuthenticated);

@@ -1,0 +1,59 @@
+<!--<ul class="profile-details-images">-->
+<!--  <li *ngFor="let image of profile.gallery" class="profile-details-image">-->
+<!--    <h3 class="profile-details-image-name">{{ image.perspective }}</h3>-->
+<!--    <div class="profile-details-image-overlay"></div>-->
+<!--    <img [src]="image.imgSrc" alt="" />-->
+<!--  </li>-->
+<!--</ul>-->
+
+<div class="mobile-profile-details-images">
+  <!--  <mat-icon-->
+  <!--    (click)="slidePrev()"-->
+  <!--    class="mobile-profile-details-images__left-button"-->
+  <!--    aria-hidden="false"-->
+  <!--    aria-label="Icon button for menu"-->
+  <!--  >-->
+  <!--    navigate_before-->
+  <!--  </mat-icon>-->
+
+  <swiper
+    #swiper
+    [watchSlidesProgress]="true"
+    [config]="config"
+    [virtual]="true"
+    [effect]="'cards'"
+    [navigation]="true"
+    [grabCursor]="true"
+    [breakpoints]="{
+      '@0.00': {
+        slidesPerView: 1,
+        spaceBetween: 10
+      },
+      '@0.75': {
+        slidesPerView: 1,
+        spaceBetween: 10
+      }
+    }"
+  >
+    <ng-container *ngFor="let image of profile.gallery; index as i">
+      <ng-template swiperSlide let-data>
+        <div class="profile-details-image">
+          <h3 class="profile-details-image-name">
+            {{ image.perspective }}
+          </h3>
+          <div class="profile-details-image-overlay"></div>
+          <img [src]="image.imgSrc" alt="" />
+        </div>
+      </ng-template>
+    </ng-container>
+  </swiper>
+
+  <!--  <mat-icon-->
+  <!--    class="mobile-profile-details-images__right-button"-->
+  <!--    aria-hidden="false"-->
+  <!--    aria-label="Icon button for menu"-->
+  <!--    (click)="slideNext()"-->
+  <!--  >-->
+  <!--    navigate_next-->
+  <!--  </mat-icon>-->
+</div>

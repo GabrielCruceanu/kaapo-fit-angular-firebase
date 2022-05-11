@@ -1,23 +1,13 @@
 <nav>
   <div class="header-wrap container">
-    <div class="header-profile" *ngIf="isAuthenticated$ | async">
-      <div class="header-profile-picture-box">
-        <div class="header-profile-picture">
-          <img
-            *ngIf="userDetails.profilePicture"
-            [src]="userDetails.profilePicture"
-            [alt]="userDetails.firstName + userDetails.lastName + 'picture'"
-          />
-        </div>
-      </div>
-      <div class="header-profile-name">
-        <a routerLink="/profile">
-          {{ userDetails.firstName }} {{ userDetails.lastName }}
-        </a>
-      </div>
+    <div class="header-profile-container">
+      <app-header-profile
+        *ngIf="isAuthenticated$ | async"
+        [userDetails]="userDetails"
+      ></app-header-profile>
     </div>
 
-    <div class="header-brand" [class.show-brand]="!(isAuthenticated$ | async)">
+    <div class="header-brand" routerLink="/">
       <mat-icon
         aria-hidden="false"
         class="icon"
@@ -27,33 +17,41 @@
 
     <div class="header-links">
       <ul>
-        <li class="notification-box">
-          <span *ngIf="hasNotifications | async"></span>
-          <mat-icon
-            aria-hidden="false"
-            class="icon"
-            svgIcon="notification"
-            matBadge="15"
-            matBadgeColor="warn"
-          ></mat-icon>
-        </li>
+        <!--        <li class="notification-box">-->
+        <!--          <span *ngIf="hasNotifications | async"></span>-->
+        <!--          <mat-icon-->
+        <!--            aria-hidden="false"-->
+        <!--            class="icon"-->
+        <!--            svgIcon="notification"-->
+        <!--            matBadge="15"-->
+        <!--            matBadgeColor="warn"-->
+        <!--          ></mat-icon>-->
+        <!--        </li>-->
         <li>
           <mat-icon
             class="icon"
             aria-hidden="false"
             [matMenuTriggerFor]="appMenu"
             aria-label="Icon button for menu"
-            >more_vert
+            >dehaze
           </mat-icon>
         </li>
       </ul>
       <mat-menu #appMenu="matMenu" xPosition="before">
         <ng-template matMenuContent>
           <button mat-menu-item>
-            <mat-icon matBadge="15" matBadgeColor="primary"
-              >notifications
-            </mat-icon>
+            <mat-icon aria-hidden="false" class="icon" svgIcon="notification">
+              <span *ngIf="hasNotifications | async"></span
+            ></mat-icon>
             <span>Notifications</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>storefront</mat-icon>
+            <span>Shop</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>feed</mat-icon>
+            <span>Blog</span>
           </button>
           <button mat-menu-item (click)="onLogout($event)">
             <mat-icon>logout</mat-icon>

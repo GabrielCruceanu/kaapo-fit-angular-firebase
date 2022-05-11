@@ -1,6 +1,6 @@
 <nav>
-  <div class="nav-wrap">
-    <div class="nav-brand">
+  <div class="nav-wrap container">
+    <div class="nav-brand" routerLink="/">
       <mat-icon
         aria-hidden="false"
         class="icon"
@@ -9,16 +9,19 @@
     </div>
 
     <div class="nav-profile">
-      <ul>
-        <ng-container *ngIf="isAuthenticate | async; else isNotAuthenticate">
-          <li><a routerLink="/" (click)="onLogout($event)">Logout</a></li>
-        </ng-container>
-        <ng-template #isNotAuthenticate>
+      <ng-container *ngIf="isAuthenticate | async; else isNotAuthenticate">
+        <app-header-profile
+          [userDetails]="userDetails"
+          [end]="true"
+        ></app-header-profile>
+      </ng-container>
+      <ng-template #isNotAuthenticate>
+        <ul>
           <li><a routerLink="auth/login">Login</a></li>
           <li>/</li>
           <li><a routerLink="auth/sign-up">Sign Up</a></li>
-        </ng-template>
-      </ul>
+        </ul>
+      </ng-template>
     </div>
   </div>
 </nav>

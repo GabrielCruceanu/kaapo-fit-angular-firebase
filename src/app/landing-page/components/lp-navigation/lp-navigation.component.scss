@@ -1,8 +1,10 @@
 nav {
   display: flex;
   justify-content: center;
-  padding: 1rem;
+  padding: 10px 0;
   border-bottom: 1px solid var(--primary);
+  height: 100%;
+  min-height: 57px;
 }
 
 .nav-wrap {
@@ -15,19 +17,24 @@ nav {
 
 .nav-brand {
   display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 
   mat-icon {
     overflow: visible;
     width: 100%;
     height: 100%;
     max-width: 141px;
-    max-height: 30px;
+    max-height: 25.55px;
   }
 }
 
 .nav-profile {
   display: flex;
   align-items: center;
+  justify-content: end;
+  width: 100%;
 
   ul {
     display: flex;
@@ -35,14 +42,14 @@ nav {
     li:nth-child(2) {
       margin: 0 0.3rem;
     }
-  }
 
-  a {
-    color: var(--white);
-    transition: var(--transition);
+    li a {
+      color: var(--white);
+      transition: var(--transition);
 
-    &:hover {
-      color: var(--primary);
+      &:hover {
+        color: var(--primary) !important;
+      }
     }
   }
 }

@@ -1,0 +1,23 @@
+<div class="profile">
+  <div class="profile-picture-name">
+    <div class="profile-picture-box">
+      <div class="profile-picture-couture"></div>
+      <div class="profile-picture">
+        <img [src]="profile.profilePicture" alt="profile picture" />
+      </div>
+    </div>
+    <div class="profile-name">
+      <h3>
+        <strong>{{ profile.firstName }}</strong>
+        <br />
+        {{ profile.lastName }}
+      </h3>
+    </div>
+  </div>
+  <div class="profile-joined">
+    <p>
+      <small>Joined</small>
+      {{ profile.joined }} ago
+    </p>
+  </div>
+</div>

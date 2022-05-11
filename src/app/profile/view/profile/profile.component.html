@@ -1,82 +1,28 @@
 <app-layout>
   <section class="profile-container container">
-    <h1 class="app-title">{{ title }}</h1>
+    <!--    <h1 class="app-title">{{ title }}</h1>-->
     <!--   Profile Header-->
-    <div class="profile-header">
-      <!-- Profile Picture and Name-->
-      <div class="profile">
-        <div class="profile-picture-name">
-          <div class="profile-picture-box">
-            <div class="profile-picture-couture"></div>
-            <div class="profile-picture">
-              <img [src]="profile.profilePicture" alt="profile picture" />
-            </div>
-          </div>
-          <div class="profile-name">
-            <h3>
-              <strong>{{ profile.firstName }}</strong>
-              <br />
-              {{ profile.lastName }}
-            </h3>
-          </div>
-        </div>
-        <div class="profile-joined">
-          <p>
-            <small>Joined</small>
-            {{ profile.joined }} ago
-          </p>
-        </div>
+    <div class="row align-items-center justify-content-center my-4 my-md-5">
+      <div class="col-md-6 col-lg-4">
+        <!-- Profile Picture and Name-->
+        <app-user-profile></app-user-profile>
       </div>
-
-      <!-- Profile PRO -->
-      <div class="pro-container">
-        <div class="pro">
-          <div class="pro-text">
-            <div class="pro-badge">PRO</div>
-            <h3>Upgrade to Premium</h3>
-            <h6>This subscription is auto-renewable</h6>
-          </div>
-          <div class="pro-action">
-            <a href="/home">></a>
-          </div>
-        </div>
+      <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
+        <!-- Profile PRO -->
+        <app-pro-container></app-pro-container>
       </div>
     </div>
 
     <!-- Profile Details -->
-    <div class="profile-details">
+    <div class="row justify-content-center mb-4 mb-md-0">
       <!-- Profile Details Text-->
-      <ul class="profile-details-text">
-        <li *ngFor="let item of profile.info">
-          <h4>
-            <span>{{ item.type }}:</span> {{ item.number }}
-          </h4>
-        </li>
-      </ul>
-
+      <div class="col-lg-4 mb-4 mb-md-5">
+        <app-user-profile-details></app-user-profile-details>
+      </div>
       <!-- Profile Details Images-->
-      <!--      <ul class="profile-details-image">-->
-      <!--        <li *ngFor="let image of profile.gallery">-->
-      <!--          <h3 class="profile-details-image-name">{{ image.perspective }}</h3>-->
-      <!--          <div class="profile-details-image-overlay"></div>-->
-      <!--          <img [src]="image.imgSrc" alt="" />-->
-      <!--        </li>-->
-      <!--      </ul>-->
-      <swiper
-        [centeredSlides]="true"
-        [pagination]="{
-          clickable: true
-        }"
-        [slidesPerView]="4"
-        [spaceBetween]="30"
-        class="mySwiper profile-details-image"
-      >
-        <ng-template swiperSlide *ngFor="let image of profile.gallery">
-          <h3 class="profile-details-image-name">{{ image.perspective }}</h3>
-          <div class="profile-details-image-overlay"></div>
-          <img [src]="image.imgSrc" alt="" />
-        </ng-template>
-      </swiper>
+      <div class="col-lg-4">
+        <app-user-profile-images></app-user-profile-images>
+      </div>
     </div>
   </section>
 </app-layout>

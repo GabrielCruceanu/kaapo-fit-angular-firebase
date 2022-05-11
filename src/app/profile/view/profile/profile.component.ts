@@ -12,8 +12,8 @@ SwiperCore.use([EffectFade]);
   encapsulation: ViewEncapsulation.None,
 })
 export class ProfileComponent {
-  title: string = 'My Profile';
-  profile: UserMock;
+  public title: string = 'My Profile';
+  public profile: UserMock;
 
   constructor() {
     this.profile = getUserDataMock();
