@@ -1,11 +1,12 @@
 {
-  "name": "kaapo-fit",
-  "short_name": "kaapo-fit",
+  "name": "Kaapo.fit",
+  "short_name": "Kaapo.fit",
   "theme_color": "#1c1c1e",
-  "background_color": "#fafafa",
+  "background_color": "#1c1c1e",
+  "display_override": ["window-control-overlay", "minimal-ui"],
   "display": "standalone",
-  "scope": "./",
-  "start_url": "./",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
