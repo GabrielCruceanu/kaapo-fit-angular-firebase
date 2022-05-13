@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   timeoutInterval: any;
+
   constructor(
     private http: HttpClient,
     private store: Store<AppState>,
@@ -37,7 +38,7 @@ export class AuthService {
   onResetPassword(email: string) {
     return this.http.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=${environment.FIREBASE_API_KEY}`,
-      { email, requestType: 'PASSWORD_RESET', returnSecureToken: true  }
+      { email, requestType: 'PASSWORD_RESET', returnSecureToken: true }
     );
   }
 
@@ -46,9 +47,9 @@ export class AuthService {
       new Date().getTime() + +data.expiresIn * 1000
     );
     const user = new User(
+      data.localId,
       data.email,
       data.idToken,
-      data.localId,
       expirationDate
     );
     return user;
@@ -89,12 +90,14 @@ export class AuthService {
   getUserFromLocalStorage() {
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
+      console.log('userDataString', userDataString);
       const userData = JSON.parse(userDataString);
+      console.log('userData', userData);
       const expirationDate = new Date(userData.expirationDate);
       const user = new User(
+        userData.id,
         userData.email,
-        userData.token,
-        userData.localId,
+        userData._token,
         expirationDate
       );
       this.runTimeoutInterval(user);

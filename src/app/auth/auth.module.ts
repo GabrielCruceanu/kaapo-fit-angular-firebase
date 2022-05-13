@@ -12,7 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogoutConfirmationDialogComponent } from './components/logout-confirmation-dialog/logout-confirmation-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordComponent } from './view/reset-password/reset-password.component';
-import { LayoutModule } from "../shared/components/layout/layout.module";
+import { LayoutModule } from '../shared/components/layout/layout.module';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -34,5 +35,6 @@ import { LayoutModule } from "../shared/components/layout/layout.module";
     MatDialogModule,
     LayoutModule,
   ],
+  providers: [AuthService],
 })
 export class AuthModule {}

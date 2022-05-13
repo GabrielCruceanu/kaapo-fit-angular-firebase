@@ -1,7 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { getUserDataMock, UserMock } from '../../../../data/user.mock';
+import { getUserDataMock } from '../../../../data/userDetails';
 
-import SwiperCore, { EffectFade, Swiper } from 'swiper';
+import SwiperCore, { EffectFade } from 'swiper';
+import { ClientDetails } from '../../model/profile-interface';
+import { initializeApp } from '@angular/fire/app';
+import { firebaseConfig } from '../../../app.module';
+import { collection, getFirestore, query } from '@angular/fire/firestore';
+import { collectionData } from 'rxfire/firestore';
 
 SwiperCore.use([EffectFade]);
 
@@ -13,7 +18,7 @@ SwiperCore.use([EffectFade]);
 })
 export class ProfileComponent {
   public title: string = 'My Profile';
-  public profile: UserMock;
+  public profile: ClientDetails;
 
   constructor() {
     this.profile = getUserDataMock();

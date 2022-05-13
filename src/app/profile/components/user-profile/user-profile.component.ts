@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { getUserDataMock, UserMock } from '../../../../data/user.mock';
+import { getUserDataMock } from '../../../../data/userDetails';
+import { ClientDetails } from '../../model/profile-interface';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,7 +9,7 @@ import { getUserDataMock, UserMock } from '../../../../data/user.mock';
 })
 export class UserProfileComponent implements OnInit {
   @Input()
-  public profile: UserMock;
+  public profile: ClientDetails;
 
   constructor() {
     this.profile = getUserDataMock();

@@ -7,3 +7,22 @@ h1.app-title {
   text-align: center;
   margin: 1rem 0;
 }
+
+.get-finish-profile-banner {
+  background: var(--warning);
+  color: var(--dark-one);
+  padding: 10px;
+
+  button {
+    background: var(--dark-one);
+    color: var(--white);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .get-finish-profile-container {
+    max-width: 1330px;
+    display: flex;
+    align-items: center;
+  }
+}

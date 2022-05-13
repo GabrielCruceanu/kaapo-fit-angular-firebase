@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UserMock } from '../../../../data/user.mock';
+import { ClientDetails } from '../../../profile/model/profile-interface';
 
 @Component({
   selector: 'app-header-profile',
@@ -8,7 +8,7 @@ import { UserMock } from '../../../../data/user.mock';
 })
 export class HeaderProfileComponent implements OnInit {
   @Input()
-  userDetails: UserMock | undefined;
+  userDetails: ClientDetails | undefined;
   @Input()
   end: boolean | undefined;
   constructor() {}
