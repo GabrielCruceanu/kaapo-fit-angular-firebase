@@ -1,7 +1,32 @@
 <ul class="profile-details-text">
-  <li *ngFor="let item of profile.info">
-    <p>
-      <span>{{ item.type }}:</span> {{ item.number }}
-    </p>
+  <li *ngIf="profile.age">
+    <p><span>Age:</span> {{ profile.age }} years</p>
+  </li>
+  <li *ngIf="profile.weight">
+    <p><span>Weight:</span> {{ profile.weight }} Kg</p>
+  </li>
+  <li *ngIf="profile.neck">
+    <p><span>Neck:</span> {{ profile.neck }} cm</p>
+  </li>
+  <li *ngIf="profile.shoulders">
+    <p><span>Shoulders:</span> {{ profile.shoulders }} cm</p>
+  </li>
+  <li *ngIf="profile.chest">
+    <p><span>Chest:</span> {{ profile.chest }} cm</p>
+  </li>
+  <li *ngIf="profile.arm">
+    <p><span>Arm:</span> {{ profile.arm }} cm</p>
+  </li>
+  <li *ngIf="profile.waist">
+    <p><span>Waist:</span> {{ profile.waist }} cm</p>
+  </li>
+  <li *ngIf="profile.hip">
+    <p><span>Hip:</span> {{ profile.hip }} cm</p>
+  </li>
+  <li *ngIf="profile.ass">
+    <p><span>Ass:</span> {{ profile.ass }} cm</p>
+  </li>
+  <li *ngIf="profile.thigh">
+    <p><span>Thigh:</span> {{ profile.thigh }} cm</p>
   </li>
 </ul>

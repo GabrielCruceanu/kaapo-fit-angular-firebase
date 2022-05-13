@@ -7,7 +7,8 @@ import { AppState } from '../../../store/app.state';
 import { Observable } from 'rxjs';
 import { isAuthenticated } from '../../../auth/store/auth.selector';
 import { autoLogout } from '../../../auth/store/auth.actions';
-import { getUserDataMock, UserMock } from '../../../../data/user.mock';
+import { getUserDataMock } from '../../../../data/userDetails';
+import { ClientDetails } from '../../../profile/model/profile-interface';
 
 @Component({
   selector: 'app-lp-navigation',
@@ -16,7 +17,7 @@ import { getUserDataMock, UserMock } from '../../../../data/user.mock';
 })
 export class LpNavigationComponent implements OnInit {
   isAuthenticate?: Observable<boolean>;
-  userDetails: UserMock;
+  userDetails: ClientDetails;
 
   constructor(
     private domSanitizer: DomSanitizer,

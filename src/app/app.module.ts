@@ -24,7 +24,18 @@ import { AuthTokenInterceptor } from './auth/services/AuthToken.interceptor';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-serializer';
-import { LayoutModule } from "./shared/components/layout/layout.module";
+import { LayoutModule } from './shared/components/layout/layout.module';
+import {
+  connectFirestoreEmulator,
+  enableMultiTabIndexedDbPersistence,
+  getFirestore,
+  provideFirestore,
+} from '@angular/fire/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { ProfileService } from './profile/profile.service';
+import { AuthService } from './auth/services/auth.service';
+import { ProfileModule } from './profile/profile.module';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -44,11 +55,11 @@ export const firebaseConfig = environment.firebaseConfig;
     provideAuth(() => {
       return getAuth();
     }),
-    AuthModule,
+    AngularFireDatabaseModule,
+    AngularFirestoreModule,
     MatButtonModule,
     MatBadgeModule,
     ComponentsSharedModule,
-    HomeModule,
     HttpClientModule,
     EffectsModule.forRoot([AuthEffects]),
     StoreModule.forRoot(appReducer),
@@ -59,6 +70,9 @@ export const firebaseConfig = environment.firebaseConfig;
       serializer: CustomSerializer,
     }),
     MatCardModule,
+    AuthModule,
+    HomeModule,
+    ProfileModule,
     LayoutModule,
   ],
   providers: [

@@ -9,6 +9,16 @@ import { ProContainerComponent } from './components/pro-container/pro-container.
 import { UserProfileDetailsComponent } from './components/user-profile-details/user-profile-details.component';
 import { UserProfileImagesComponent } from './components/user-profile-images/user-profile-images.component';
 import { MatIconModule } from '@angular/material/icon';
+import { AddProfileComponent } from './components/add-profile/add-profile.component';
+import { ProfileService } from './profile.service';
+import { MatStepperModule } from '@angular/material/stepper';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { AddClientProfileComponent } from './components/add-client-profile/add-client-profile.component';
+import { AddProfessionalProfileComponent } from './components/add-professional-profile/add-professional-profile.component';
+import { AddGymProfileComponent } from './components/add-gym-profile/add-gym-profile.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +27,10 @@ import { MatIconModule } from '@angular/material/icon';
     ProContainerComponent,
     UserProfileDetailsComponent,
     UserProfileImagesComponent,
+    AddProfileComponent,
+    AddClientProfileComponent,
+    AddProfessionalProfileComponent,
+    AddGymProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -24,6 +38,12 @@ import { MatIconModule } from '@angular/material/icon';
     SwiperModule,
     LayoutModule,
     MatIconModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
   ],
+  providers: [ProfileService],
 })
 export class ProfileModule {}
