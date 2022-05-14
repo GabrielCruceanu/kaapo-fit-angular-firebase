@@ -29,7 +29,7 @@
     "firebase": "^9.6.7",
     "ngrx-store-freeze": "^0.2.4",
     "rxfire": "^6.0.0",
-    "rxjs": "~7.5.0",
+    "rxjs": "^7.5.5",
     "swiper": "^8.0.7",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

@@ -1,0 +1,183 @@
+<app-layout>
+  <div class="container">
+    <div class="row my-4">
+      <div class="col-12">
+        <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h1 class="app-title">Add client profile</h1>
+      </div>
+    </div>
+
+    <form
+      (ngSubmit)="onSubmit()"
+      class="row form justify-content-center"
+      [formGroup]="userFormGroup"
+    >
+      <div class="col-lg-8">
+        <!--   Details     -->
+        <div class="row">
+          <div class="col-12"><h3>Details</h3></div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <mat-form-field class="form-control col-md-6" appearance="fill">
+              <mat-label>Firstname</mat-label>
+              <input
+                matInput
+                placeholder="Jon"
+                name="firstname"
+                formControlName="firstname"
+              />
+              <mat-error
+                *ngIf="userFormGroup.controls['firstname'].hasError('required')"
+              >
+                Firstname is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <mat-form-field class="form-control" appearance="fill">
+              <mat-label>Lastname</mat-label>
+              <input
+                type="text"
+                matInput
+                placeholder="Doe"
+                name="lastname"
+                formControlName="lastname"
+              />
+              <mat-error
+                *ngIf="userFormGroup.controls['lastname'].hasError('required')"
+              >
+                Lastname is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <mat-form-field class="form-control" appearance="fill">
+              <mat-label>Age</mat-label>
+              <input
+                type="text"
+                matInput
+                placeholder="34"
+                name="age"
+                formControlName="age"
+              />
+              <mat-error
+                *ngIf="userFormGroup.controls['age'].hasError('required')"
+              >
+                Age is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <mat-form-field class="form-control" appearance="fill">
+              <mat-label>Gender</mat-label>
+
+              <mat-select>
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female">Female</mat-option>
+                <mat-option value="other">Other</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="userFormGroup.controls['gender'].hasError('required')"
+              >
+                Gender is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <!--    Contact    -->
+        <div class="row">
+          <div class="col-12"><h3>Contact</h3></div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <mat-form-field class="form-control col-md-6" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input
+                type="email"
+                matInput
+                placeholder="Email@email.com"
+                name="email"
+                formControlName="email"
+              />
+              <mat-error
+                *ngIf="userFormGroup.controls['email'].hasError('required')"
+              >
+                Email is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <mat-form-field class="form-control" appearance="fill">
+              <mat-label>Phone Number</mat-label>
+              <input
+                type="text"
+                matInput
+                placeholder="+40770121949"
+                name="phone"
+                formControlName="phone"
+              />
+              <mat-error
+                *ngIf="userFormGroup.controls['phone'].hasError('required')"
+              >
+                Phone number is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <mat-form-field class="form-control" appearance="fill">
+              <mat-label>Age</mat-label>
+              <input
+                type="text"
+                matInput
+                placeholder="Romania"
+                name="country"
+                formControlName="country"
+              />
+              <mat-error
+                *ngIf="userFormGroup.controls['country'].hasError('required')"
+              >
+                Country is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <mat-form-field class="form-control" appearance="fill">
+              <mat-label>City</mat-label>
+              <input
+                type="text"
+                matInput
+                placeholder="Focsani"
+                name="city"
+                formControlName="city"
+              />
+              <mat-error
+                *ngIf="userFormGroup.controls['city'].hasError('required')"
+              >
+                City is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="form-footer col-12 col-md-5 mt-4">
+        <mat-error *ngIf="errorMessage$ | async as errorMessage">
+          {{ errorMessage }}
+        </mat-error>
+        <button
+          mat-button
+          [class.disabled]="!userFormGroup.valid"
+          type="submit"
+        >
+          Update Profile
+        </button>
+      </div>
+    </form>
+  </div>
+</app-layout>

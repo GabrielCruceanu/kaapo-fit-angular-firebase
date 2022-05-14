@@ -1,0 +1,38 @@
+<app-layout>
+  <div class="container">
+    <div class="row my-4">
+      <div class="col-12">
+        <mat-progress-bar mode="determinate" value="10"></mat-progress-bar>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h1 class="app-title">Add profile</h1>
+      </div>
+      <div class="col-12">
+        <div class="chose-profile-container">
+          <h3>Select your profile type:</h3>
+          <ul class="chose-profile-list">
+            <li
+              *ngFor="let profile of profiles"
+              [routerLink]="profile.link"
+              [queryParams]="{ mode: profile.mode }"
+              queryParamsHandling="merge"
+            >
+              <div class="chose-profile-item">
+                <div class="chose-profile-icon-box">
+                  <mat-icon
+                    aria-hidden="true"
+                    class="chose-profile-icon"
+                    [svgIcon]="profile.icon"
+                  ></mat-icon>
+                </div>
+                <p>{{ profile.name }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-layout>

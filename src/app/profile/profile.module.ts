@@ -19,6 +19,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { AddClientProfileComponent } from './components/add-client-profile/add-client-profile.component';
 import { AddProfessionalProfileComponent } from './components/add-professional-profile/add-professional-profile.component';
 import { AddGymProfileComponent } from './components/add-gym-profile/add-gym-profile.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { AddGymProfileComponent } from './components/add-gym-profile/add-gym-pro
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatProgressBarModule,
+    MatSelectModule,
   ],
   providers: [ProfileService],
 })
