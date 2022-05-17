@@ -22,8 +22,8 @@ import { AddGymProfileComponent } from './components/add-gym-profile/add-gym-pro
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
-import { GoogleMapsModule } from '@angular/google-maps';
-import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgxMatIntlTelInputModule } from 'ngx-mat-intl-tel-input';
 
 @NgModule({
   declarations: [
@@ -51,9 +51,9 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
     MatProgressBarModule,
     MatSelectModule,
     GooglePlaceModule,
-    GoogleMapsModule,
     FormsModule,
-    MatGoogleMapsAutocompleteModule,
+    MatAutocompleteModule,
+    NgxMatIntlTelInputModule,
   ],
   providers: [ProfileService],
 })

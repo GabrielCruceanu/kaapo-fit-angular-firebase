@@ -1,111 +1,107 @@
 <app-auth-container [authImg]="authType.SignUp">
-  <div class="container">
-    <form
-      (ngSubmit)="onSubmit(signUpFormGroup)"
-      class="form row"
-      [formGroup]="signUpFormGroup"
-    >
-      <div class="col-12">
-        <mat-form-field class="form-control" appearance="fill">
-          <mat-label>Email</mat-label>
-          <input
-            type="email"
-            matInput
-            placeholder="Ex. jhon@mail.com"
-            name="email"
-            formControlName="email"
-          />
-          <mat-error
-            *ngIf="
-              signUpFormGroup.controls['email'].hasError('email') &&
-              !signUpFormGroup.controls['email'].hasError('required')
-            "
-          >
-            Please enter a valid email address
-          </mat-error>
-          <mat-error
-            *ngIf="signUpFormGroup.controls['email'].hasError('required')"
-          >
-            Email is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-12">
-        <mat-form-field class="form-control" appearance="fill">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            type="password"
-            name="password"
-            formControlName="password"
-          />
-          <mat-error
-            *ngIf="
-              signUpFormGroup.controls['password'].hasError('minlength') &&
-              !signUpFormGroup.controls['password'].hasError('required')
-            "
-          >
-            Password need to contain minimum 8 characters
-          </mat-error>
-          <mat-error
-            *ngIf="signUpFormGroup.controls['password'].hasError('required')"
-          >
-            Password is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-12">
-        <mat-form-field class="form-control" appearance="fill">
-          <mat-label>Confirm Password</mat-label>
-          <input
-            matInput
-            type="password"
-            name="confirmPassword"
-            formControlName="confirmPassword"
-            (keyup)="
-              checkPasswordMatch(
-                signUpFormGroup.controls['password'].value,
-                signUpFormGroup.controls['confirmPassword'].value
-              )
-            "
-          />
-          <mat-error
-            *ngIf="
-              signUpFormGroup.controls['confirmPassword'].hasError(
-                'minlength'
-              ) &&
-              !signUpFormGroup.controls['confirmPassword'].hasError('required')
-            "
-          >
-            Password need to contain minimum 8 characters
-          </mat-error>
-          <mat-error
-            *ngIf="
-              signUpFormGroup.controls['confirmPassword'].hasError('required')
-            "
-          >
-            Confirm password is <strong>required</strong>
-          </mat-error>
-          <mat-error
-            *ngIf="
-              passwordDontMatch &&
-              !signUpFormGroup.controls['confirmPassword'].hasError('required')
-            "
-          >
-            Confirm password doesn't match with Password
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="form-footer col-12">
-        <mat-error *ngIf="errorMessage$ | async as errorMessage">
-          {{ errorMessage }}
+  <form
+    (ngSubmit)="onSubmit(signUpFormGroup)"
+    class="form row"
+    [formGroup]="signUpFormGroup"
+  >
+    <div class="col-12">
+      <mat-form-field class="form-control" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          placeholder="Ex. jhon@mail.com"
+          name="email"
+          formControlName="email"
+        />
+        <mat-error
+          *ngIf="
+            signUpFormGroup.controls['email'].hasError('email') &&
+            !signUpFormGroup.controls['email'].hasError('required')
+          "
+        >
+          Please enter a valid email address
         </mat-error>
+        <mat-error
+          *ngIf="signUpFormGroup.controls['email'].hasError('required')"
+        >
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-12">
+      <mat-form-field class="form-control" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          name="password"
+          formControlName="password"
+        />
+        <mat-error
+          *ngIf="
+            signUpFormGroup.controls['password'].hasError('minlength') &&
+            !signUpFormGroup.controls['password'].hasError('required')
+          "
+        >
+          Password need to contain minimum 8 characters
+        </mat-error>
+        <mat-error
+          *ngIf="signUpFormGroup.controls['password'].hasError('required')"
+        >
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-12">
+      <mat-form-field class="form-control" appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          matInput
+          type="password"
+          name="confirmPassword"
+          formControlName="confirmPassword"
+          (keyup)="
+            checkPasswordMatch(
+              signUpFormGroup.controls['password'].value,
+              signUpFormGroup.controls['confirmPassword'].value
+            )
+          "
+        />
+        <mat-error
+          *ngIf="
+            signUpFormGroup.controls['confirmPassword'].hasError('minlength') &&
+            !signUpFormGroup.controls['confirmPassword'].hasError('required')
+          "
+        >
+          Password need to contain minimum 8 characters
+        </mat-error>
+        <mat-error
+          *ngIf="
+            signUpFormGroup.controls['confirmPassword'].hasError('required')
+          "
+        >
+          Confirm password is <strong>required</strong>
+        </mat-error>
+        <mat-error
+          *ngIf="
+            passwordDontMatch &&
+            !signUpFormGroup.controls['confirmPassword'].hasError('required')
+          "
+        >
+          Confirm password doesn't match with Password
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-        <button mat-button [class.disabled]="!signUpFormGroup.valid">
-          Create account
-        </button>
-      </div>
-    </form>
-  </div>
+    <div class="form-footer col-12">
+      <mat-error *ngIf="errorMessage$ | async as errorMessage">
+        {{ errorMessage }}
+      </mat-error>
+
+      <button mat-button [class.disabled]="!signUpFormGroup.valid">
+        Create account
+      </button>
+    </div>
+  </form>
 </app-auth-container>

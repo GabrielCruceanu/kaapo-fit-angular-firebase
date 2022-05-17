@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <h1 class="app-title">Add client profile</h1>
+        <h1 class="app-title">Update client profile</h1>
       </div>
     </div>
     <form
@@ -13,9 +13,8 @@
       <div class="col-lg-8">
         <!--   Details     -->
         <div class="row">
-          <div class="col-12"><h3>Details</h3></div>
           <div class="col-12 col-md-6 col-lg-3">
-            <mat-form-field class="form-control col-md-6" appearance="fill">
+            <mat-form-field class="form-control col-md-6" appearance="outline">
               <mat-label>Firstname</mat-label>
               <input
                 matInput
@@ -32,7 +31,7 @@
           </div>
 
           <div class="col-md-6 col-lg-3">
-            <mat-form-field class="form-control" appearance="fill">
+            <mat-form-field class="form-control" appearance="outline">
               <mat-label>Lastname</mat-label>
               <input
                 type="text"
@@ -49,8 +48,8 @@
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-3">
-            <mat-form-field class="form-control" appearance="fill">
+          <div class="col-6 col-lg-3">
+            <mat-form-field class="form-control" appearance="outline">
               <mat-label>Age</mat-label>
               <input
                 type="text"
@@ -67,8 +66,8 @@
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-3">
-            <mat-form-field class="form-control" appearance="fill">
+          <div class="col-6 col-lg-3">
+            <mat-form-field class="form-control" appearance="outline">
               <mat-label>Gender</mat-label>
 
               <mat-select formControlName="gender">
@@ -86,9 +85,8 @@
         </div>
         <!--    Contact    -->
         <div class="row">
-          <div class="col-12"><h3>Contact</h3></div>
-          <div class="col-12 col-md-6 col-lg-3">
-            <mat-form-field class="form-control col-md-6" appearance="fill">
+          <div class="col-12 col-md-6 col-lg-4">
+            <mat-form-field class="form-control col-md-6" appearance="outline">
               <mat-label>Email</mat-label>
               <input
                 type="email"
@@ -105,63 +103,46 @@
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-3">
-            <mat-form-field class="form-control" appearance="fill">
+          <div class="col-md-6 col-lg-4">
+            <mat-form-field class="form-control" appearance="outline">
               <mat-label>Phone Number</mat-label>
-              <input
-                type="text"
-                matInput
-                placeholder="+40770121949"
-                name="phone"
+              <ngx-mat-intl-tel-input
+                [required]="true"
                 formControlName="phone"
-              />
+                [enablePlaceholder]="true"
+                [enableSearch]="true"
+                name="phone"
+              >
+              </ngx-mat-intl-tel-input>
               <mat-error
                 *ngIf="userFormGroup.controls['phone'].hasError('required')"
               >
                 Phone number is <strong>required</strong>
               </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-6 col-lg-3">
-            <mat-form-field class="form-control" appearance="fill">
-              <mat-label>Country</mat-label>
-              <input
-                type="text"
-                matInput
-                placeholder="Romania"
-                name="country"
-                formControlName="country"
-              />
               <mat-error
-                *ngIf="userFormGroup.controls['country'].hasError('required')"
+                *ngIf="
+                  userFormGroup.controls['phone'].errors &&
+                  !userFormGroup.controls['phone'].hasError('required')
+                "
               >
-                Country is <strong>required</strong>
+                Phone number need to have 10 character
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-3">
-            <mat-form-field class="form-control" appearance="fill">
+          <div class="col-md-6 col-lg-4">
+            <mat-form-field class="form-control" appearance="outline">
               <mat-label>City</mat-label>
               <input
                 type="text"
                 matInput
-                name="city"
                 formControlName="city"
+                placeholder="Enter places"
                 ngx-google-places-autocomplete
-                (onAddressChange)="AddressChange($event)"
-                placeholder="Enter places"
+                (onAddressChange)="handleAddressChange($event)"
+                [options]="options"
               />
-              <input
-                type="text"
-                matInput
-                name="city"
-                formControlName="city"
-                matGoogleMapsAutocomplete
-                placeholder="Enter places"
-                (onAutocompleteSelected)="onAutocompleteSelected($event)"
-              />
+
               <mat-error
                 *ngIf="userFormGroup.controls['city'].hasError('required')"
               >
@@ -175,6 +156,10 @@
         <mat-error *ngIf="errorMessage$ | async as errorMessage">
           {{ errorMessage }}
         </mat-error>
+        <p>Address: {{ userAddress }}</p>
+        <p>Latitude: {{ userLatitude }}</p>
+        <p>Longitude: {{ userLongitude }}</p>
+
         <button
           mat-button
           [class.disabled]="!userFormGroup.valid"

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AuthType } from '../../../auth/model/AuthResponseData.model';
 import { Observable, Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -13,8 +13,8 @@ import {
   getLoading,
 } from '../../../store/shared/shared.selector';
 import { ProfileService } from '../../profile.service';
-import { Appearance } from '@angular-material-extensions/google-maps-autocomplete';
-import PlaceResult = google.maps.places.PlaceResult;
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
+import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
 
 @Component({
   selector: 'app-add-client-profile',
@@ -22,14 +22,18 @@ import PlaceResult = google.maps.places.PlaceResult;
   styleUrls: ['./add-client-profile.component.scss'],
 })
 export class AddClientProfileComponent implements OnInit, OnDestroy {
+  // @ts-ignore
+  @ViewChild('places') places: GooglePlaceDirective;
   authType = AuthType;
   getLoadingSpinnerSub: Subscription | undefined;
   errorMessage$: Observable<any> | undefined;
-
-  public appearance = Appearance;
-  public zoom: number;
-  public latitude: number;
-  public longitude: number;
+  options: Options = <Options>{
+    fields: ['formatted_address', 'geometry', 'name'],
+    types: ['(cities)'],
+  };
+  userAddress: string = '';
+  userLatitude: string = '';
+  userLongitude: string = '';
 
   userFormGroup = new FormGroup({
     firstname: new FormControl('', [Validators.required]),
@@ -38,7 +42,6 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
     gender: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required]),
-    country: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
   });
 
@@ -47,10 +50,6 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
     private profileService: ProfileService
   ) {
     this.store.dispatch(setErrorMessage({ message: '' }));
-
-    this.zoom = 10;
-    this.latitude = 52.520008;
-    this.longitude = 13.404954;
   }
 
   ngOnInit(): void {
@@ -75,23 +74,15 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  public AddressChange(address: any) {
-    //setting address from API to local variable
+  handleAddressChange(address: any) {
+    this.userAddress = address.formatted_address;
+    this.userLatitude = address.geometry.location.lat();
+    this.userLongitude = address.geometry.location.lng();
   }
 
   ngOnDestroy() {
     if (this.getLoadingSpinnerSub) {
       this.getLoadingSpinnerSub.unsubscribe();
     }
-  }
-
-  public onAutocompleteSelected(result: PlaceResult) {
-    console.log('onAutocompleteSelected: ', result);
-  }
-
-  public onLocationSelected(location: Location) {
-    console.log('onLocationSelected: ', location);
-    // this.latitude = location.latitude;
-    // this.longitude = location.longitude;
   }
 }

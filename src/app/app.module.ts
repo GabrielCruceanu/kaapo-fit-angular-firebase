@@ -29,6 +29,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { ProfileModule } from './profile/profile.module';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 export const firebaseConfig = environment.firebase;
 
@@ -51,6 +52,7 @@ export const firebaseConfig = environment.firebase;
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    GooglePlaceModule,
     AppRoutingModule,
     MatButtonModule,
     MatBadgeModule,
