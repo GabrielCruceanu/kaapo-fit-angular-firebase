@@ -5,9 +5,10 @@ import { AddProfileComponent } from './components/add-profile/add-profile.compon
 import { AddClientProfileComponent } from './components/add-client-profile/add-client-profile.component';
 import { AddProfessionalProfileComponent } from './components/add-professional-profile/add-professional-profile.component';
 import { AddGymProfileComponent } from './components/add-gym-profile/add-gym-profile.component';
+import { ProfileGuard } from './services/profile-guard.service';
 
 const routes: Routes = [
-  { path: '', component: ProfileComponent },
+  { path: '', component: ProfileComponent, canActivate: [ProfileGuard] },
   { path: 'add', component: AddProfileComponent },
   { path: 'add-client', component: AddClientProfileComponent },
   { path: 'add-professional', component: AddProfessionalProfileComponent },

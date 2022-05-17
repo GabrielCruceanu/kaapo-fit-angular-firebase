@@ -3,6 +3,11 @@ h1.app-title {
   margin: 1rem 0;
 }
 
+p.app-description {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
 .chose-profile-container {
   display: flex;
   flex-direction: column;
@@ -57,6 +62,12 @@ h1.app-title {
 }
 
 @media screen and (min-width: 768px) {
+  .chose-profile-container {
+    h4 {
+      margin-bottom: 0;
+    }
+  }
+
   .chose-profile-list {
     li {
       margin-top: 2rem;

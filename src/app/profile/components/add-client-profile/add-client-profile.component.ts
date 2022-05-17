@@ -12,7 +12,7 @@ import {
   getErrorMessage,
   getLoading,
 } from '../../../store/shared/shared.selector';
-import { ProfileService } from '../../profile.service';
+import { ProfileService } from '../../services/profile.service';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
 

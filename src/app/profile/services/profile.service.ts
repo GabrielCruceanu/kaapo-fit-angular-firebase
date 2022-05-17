@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { AppState } from '../store/app.state';
-import { getToken } from '../auth/store/auth.selector';
+import { AppState } from '../../store/app.state';
+import { getToken } from '../../auth/store/auth.selector';
 import { switchMap, take } from 'rxjs';
-import { ClientDetails, CollectionsType } from './model/profile-interface';
+import { ClientDetails, CollectionsType } from '../model/profile-interface';
 import { Firestore } from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root',
