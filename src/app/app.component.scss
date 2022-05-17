@@ -3,11 +3,6 @@
 // ******************
 
 ::ng-deep .form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 1rem;
-
   ::placeholder {
     color: var(--gray);
   }
@@ -29,7 +24,6 @@
     width: 100%;
     background-color: var(--primary);
     transition: var(--transition);
-    margin-top: 1rem;
 
     &:hover {
       background-color: var(--primary-shade);
@@ -41,8 +35,35 @@
   }
 }
 
+::ng-deep .mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-select-value {
+  color: var(--white);
+}
+
 ::ng-deep .mat-form-field-label {
-  color: var(--gray);
+  color: var(--soft);
+}
+
+::ng-deep .mat-select-panel {
+  background-color: var(--dark-one);
+}
+
+::ng-deep .mat-option.mat-active {
+  color: var(--white);
+}
+::ng-deep form .country-selector {
+  background: transparent !important;
+  color: var(--white) !important;
+}
+::ng-deep .mat-option {
+  color: var(--soft);
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: var(--soft);
 }
 
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-underline::before {

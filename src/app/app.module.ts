@@ -25,23 +25,24 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-serializer';
 import { LayoutModule } from './shared/components/layout/layout.module';
-import {
-  connectFirestoreEmulator,
-  enableMultiTabIndexedDbPersistence,
-  getFirestore,
-  provideFirestore,
-} from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-import { ProfileService } from './profile/profile.service';
-import { AuthService } from './auth/services/auth.service';
 import { ProfileModule } from './profile/profile.module';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
-export const firebaseConfig = environment.firebaseConfig;
+export const firebaseConfig = environment.firebase;
 
 @NgModule({
   declarations: [AppComponent, NotFoundPageComponent],
   imports: [
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideAuth(() => {
+      return getAuth();
+    }),
+    provideFirestore(() => getFirestore()),
+    AngularFirestoreModule,
+    AngularFireDatabaseModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -51,12 +52,8 @@ export const firebaseConfig = environment.firebaseConfig;
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideAuth(() => {
-      return getAuth();
-    }),
-    AngularFireDatabaseModule,
-    AngularFirestoreModule,
+    GooglePlaceModule,
+    AppRoutingModule,
     MatButtonModule,
     MatBadgeModule,
     ComponentsSharedModule,

@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /bazel-out
+.angular
 
 # Node
 /node_modules
@@ -42,3 +43,8 @@ testem.log
 Thumbs.db
 package-lock.json
 yarn.lock
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

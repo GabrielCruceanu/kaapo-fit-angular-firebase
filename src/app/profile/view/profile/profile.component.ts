@@ -3,11 +3,6 @@ import { getUserDataMock } from '../../../../data/userDetails';
 
 import SwiperCore, { EffectFade } from 'swiper';
 import { ClientDetails } from '../../model/profile-interface';
-import { initializeApp } from '@angular/fire/app';
-import { firebaseConfig } from '../../../app.module';
-import { collection, getFirestore, query } from '@angular/fire/firestore';
-import { collectionData } from 'rxfire/firestore';
-
 SwiperCore.use([EffectFade]);
 
 @Component({

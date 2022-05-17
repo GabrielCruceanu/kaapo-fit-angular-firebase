@@ -2,22 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.state';
-import { getToken, getUser } from '../auth/store/auth.selector';
-import { of, switchMap, take } from 'rxjs';
-import {
-  ClientDetailsHistory,
-  GenderType,
-  GymDetails,
-  ProfessionalDetails,
-  ClientGalleryPicture,
-  UserType,
-  ClientDetails,
-  CollectionsType,
-} from './model/profile-interface';
-import { Client } from './model/client.model';
-import { doc, Firestore, setDoc } from '@angular/fire/firestore';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-
+import { getToken } from '../auth/store/auth.selector';
+import { switchMap, take } from 'rxjs';
+import { ClientDetails, CollectionsType } from './model/profile-interface';
+import { Firestore } from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root',
 })
@@ -25,7 +13,7 @@ export class ProfileService {
   constructor(
     private store: Store<AppState>,
     private http: HttpClient,
-    private firestore: AngularFirestore
+    private firestore: Firestore
   ) {}
 
   uploadImage(image: File) {
@@ -45,6 +33,7 @@ export class ProfileService {
   }
 
   public addClient(client: ClientDetails) {
-    return this.firestore.collection(CollectionsType.clients).add(client);
+    console.log('client', client);
+    // return this.firestore.collection(CollectionsType.clients).add(client);
   }
 }

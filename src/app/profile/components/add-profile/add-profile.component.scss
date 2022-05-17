@@ -1,0 +1,65 @@
+h1.app-title {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.chose-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chose-profile-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  li {
+    min-width: 50%;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.chose-profile-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--soft);
+  transition: var(--transition);
+  width: 100%;
+  height: 100%;
+  min-width: 150px;
+  min-height: 150px;
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 100%;
+
+  &:hover {
+    background: var(--primary);
+  }
+  p {
+    margin-bottom: 0;
+    color: var(--dark-three);
+  }
+}
+
+.mat-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--gray);
+  transition: var(--transition);
+}
+
+@media screen and (min-width: 768px) {
+  .chose-profile-list {
+    li {
+      margin-top: 2rem;
+    }
+  }
+}

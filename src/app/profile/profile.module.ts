@@ -12,13 +12,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { AddProfileComponent } from './components/add-profile/add-profile.component';
 import { ProfileService } from './profile.service';
 import { MatStepperModule } from '@angular/material/stepper';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AddClientProfileComponent } from './components/add-client-profile/add-client-profile.component';
 import { AddProfessionalProfileComponent } from './components/add-professional-profile/add-professional-profile.component';
 import { AddGymProfileComponent } from './components/add-gym-profile/add-gym-profile.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgxMatIntlTelInputModule } from 'ngx-mat-intl-tel-input';
 
 @NgModule({
   declarations: [
@@ -43,6 +48,12 @@ import { AddGymProfileComponent } from './components/add-gym-profile/add-gym-pro
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatProgressBarModule,
+    MatSelectModule,
+    GooglePlaceModule,
+    FormsModule,
+    MatAutocompleteModule,
+    NgxMatIntlTelInputModule,
   ],
   providers: [ProfileService],
 })
