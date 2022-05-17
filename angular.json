@@ -40,7 +40,10 @@
             ],
             "scripts": [],
             "serviceWorker": true,
-            "ngswConfigPath": "ngsw-config.json"
+            "ngswConfigPath": "ngsw-config.json",
+            "allowedCommonJsDependencies": [
+              "ngx-google-places-autocomplete"
+            ]
           },
           "configurations": {
             "production": {
@@ -112,6 +115,16 @@
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "kaapo-fit:build:production",
+            "firebaseProject": "kaapo-fit",
+            "firebaseHostingSite": "kaapo-fit"
           }
         }
       }

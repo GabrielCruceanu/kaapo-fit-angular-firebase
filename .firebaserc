@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "kaapo-fit"
+  },
+  "targets": {
+    "kaapo-fit": {
+      "hosting": {
+        "kaapo-fit": [
+          "kaapo-fit"
+        ]
+      }
+    }
   }
 }

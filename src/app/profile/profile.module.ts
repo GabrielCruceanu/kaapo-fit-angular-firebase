@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AddProfileComponent } from './components/add-profile/add-profile.component';
 import { ProfileService } from './profile.service';
 import { MatStepperModule } from '@angular/material/stepper';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,6 +21,9 @@ import { AddProfessionalProfileComponent } from './components/add-professional-p
 import { AddGymProfileComponent } from './components/add-gym-profile/add-gym-profile.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatProgressBarModule,
     MatSelectModule,
+    GooglePlaceModule,
+    GoogleMapsModule,
+    FormsModule,
+    MatGoogleMapsAutocompleteModule,
   ],
   providers: [ProfileService],
 })

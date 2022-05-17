@@ -1,4 +1,15 @@
 export const environment = {
+  firebase: {
+    projectId: 'kaapo-fit',
+    appId: '1:269213411233:web:4db52810dd5e9b23d50de0',
+    databaseURL: 'https://kaapo-fit-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'kaapo-fit.appspot.com',
+    locationId: 'europe-central2',
+    apiKey: 'AIzaSyAtFNJKfF4ATlWsOCjKMT-8MKm73qIbOO0',
+    authDomain: 'kaapo-fit.firebaseapp.com',
+    messagingSenderId: '269213411233',
+    measurementId: 'G-WLRKZBQ1GK',
+  },
   useEmulators: false,
   production: true,
   firebaseConfig: {
