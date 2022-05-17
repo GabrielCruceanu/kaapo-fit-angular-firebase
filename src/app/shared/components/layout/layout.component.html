@@ -3,7 +3,10 @@
   <div class="app-header" *ngIf="isAuthenticated$ | async">
     <app-header></app-header>
   </div>
-  <main [class.m-lg-auto]="!(isAuthenticated$ | async)">
+  <main
+    [class.m-lg-auto]="!(isAuthenticated$ | async)"
+    [class.isAuth]="!(isAuthenticated$ | async)"
+  >
     <ng-content></ng-content>
   </main>
   <div class="app-tabs" *ngIf="isAuthenticated$ | async">

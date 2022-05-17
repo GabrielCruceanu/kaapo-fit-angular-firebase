@@ -10,7 +10,7 @@ import { UserProfileDetailsComponent } from './components/user-profile-details/u
 import { UserProfileImagesComponent } from './components/user-profile-images/user-profile-images.component';
 import { MatIconModule } from '@angular/material/icon';
 import { AddProfileComponent } from './components/add-profile/add-profile.component';
-import { ProfileService } from './profile.service';
+import { ProfileService } from './services/profile.service';
 import { MatStepperModule } from '@angular/material/stepper';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';

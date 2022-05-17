@@ -17,6 +17,10 @@ main {
   width: 100%;
   overflow: auto;
   padding-bottom: 40px;
+
+  &.isAuth {
+    height: 100vh;
+  }
 }
 
 .app-tabs {
@@ -41,6 +45,9 @@ main {
   main {
     height: calc(100vh - 177px);
     width: 100%;
+    &.isAuth {
+      height: calc(100vh - 177px);
+    }
   }
 
   .app-tabs {
