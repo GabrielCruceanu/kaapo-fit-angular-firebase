@@ -17,7 +17,7 @@ export const UserDataMockup: ClientDetails = {
   gender: GenderType.Female,
   city: 'Focsani',
   country: 'Romania',
-  age: '25',
+  birth: { date: 13, month: 4, year: 1993 },
   weight: '56',
   neck: '60',
   shoulders: '144',

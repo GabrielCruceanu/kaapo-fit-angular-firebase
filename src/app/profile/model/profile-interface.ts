@@ -34,6 +34,12 @@ export interface ProfessionalGalleryPicture {
   alt: string;
 }
 
+export interface Birth {
+  date: number;
+  month: number;
+  year: number;
+}
+
 export enum UserType {
   Client = 'Client',
   Nutritionist = 'Nutritionist',
@@ -66,7 +72,6 @@ export enum GymType {
 
 export interface ClientDetailsHistory {
   date: Date;
-  age: string;
   weight: string;
   neck: string;
   shoulders: string;
@@ -84,7 +89,7 @@ export interface ClientDetails {
   gender: GenderType;
   firstName: string;
   lastName: string;
-  age: string;
+  birth: Birth;
   email: string;
   phone: string;
   country: string;
@@ -122,7 +127,7 @@ export interface ProfessionalDetails {
   gender: GenderType;
   country: string;
   city: string;
-  age: string;
+  birth: Birth;
   shortDescription: string;
   longDescription: string;
   contact: Contact;
@@ -142,7 +147,7 @@ export interface GymDetails {
   gymType: GymType;
   country: string;
   city: string;
-  age: string;
+  birth: Birth;
   shortDescription: string;
   longDescription: string;
   contact: Contact;

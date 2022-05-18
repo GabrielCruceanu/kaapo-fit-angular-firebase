@@ -32,8 +32,8 @@ export class ProfileService {
     );
   }
 
-  public addClient(client: ClientDetails) {
-    console.log('client', client);
+  public addClient({ birth }: ClientDetails) {
+    console.log('client', birth);
     // return this.firestore.collection(CollectionsType.clients).add(client);
   }
 }
