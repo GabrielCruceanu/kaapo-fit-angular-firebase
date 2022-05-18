@@ -56,24 +56,28 @@
 ::ng-deep .mat-option.mat-active {
   color: var(--white);
 }
+
 ::ng-deep form .country-selector {
   background: transparent !important;
   color: var(--white) !important;
 }
+
 ::ng-deep form .country-list-button {
   color: var(--white) !important;
 }
 
 ::ng-deep .cdk-overlay-pane {
-  max-height: 500px;
-  top: 50%;
+  max-height: 700px;
+  top: 30%;
 }
 
 ::ng-deep .cdk-overlay-connected-position-bounding-box {
   max-width: 280px;
 }
+
 ::ng-deep #mat-menu-panel-0 {
   padding-top: 45px;
+
   input {
     position: absolute;
     top: 0;
@@ -81,8 +85,23 @@
     width: 100%;
   }
 }
-::ng-deep .mat-option {
+
+::ng-deep .mat-hint {
   color: var(--soft);
+}
+
+::ng-deep .mat-datepicker-content {
+  background-color: var(--dark-one);
+  color: var(--white);
+}
+
+::ng-deep .mat-option,
+::ng-deep .mat-datepicker-content .mat-calendar-next-button,
+::ng-deep .mat-datepicker-content .mat-calendar-previous-button,
+::ng-deep .mat-calendar-table-header,
+::ng-deep .mat-calendar-body-label,
+::ng-deep .mat-calendar-body-cell-content {
+  color: var(--white);
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {

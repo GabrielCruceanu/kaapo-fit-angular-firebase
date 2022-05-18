@@ -38,9 +38,8 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   userFormGroup = new FormGroup({
     firstname: new FormControl('', [Validators.required]),
     lastname: new FormControl('', [Validators.required]),
-    age: new FormControl('', [Validators.required]),
+    birth: new FormControl('', [Validators.required]),
     gender: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
   });
@@ -69,8 +68,12 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   onSubmit() {
     console.log('this.userFormGroup', this.userFormGroup);
     if (this.userFormGroup.valid) {
-      this.profileService.addClient(this.userFormGroup.value);
-      this.store.dispatch(setLoadingSpinner({ status: true }));
+      const { firstname, lastname, gender, email, phone, city } =
+        this.userFormGroup.value;
+      const birth = this.userFormGroup.value.birth;
+      console.log('birth', birth);
+      // this.profileService.addClient(this.userFormGroup.value);
+      // this.store.dispatch(setLoadingSpinner({ status: true }));
     }
   }
 

@@ -24,6 +24,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgxMatIntlTelInputModule } from 'ngx-mat-intl-tel-input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,9 @@ import { NgxMatIntlTelInputModule } from 'ngx-mat-intl-tel-input';
     FormsModule,
     MatAutocompleteModule,
     NgxMatIntlTelInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMomentDateModule,
   ],
   providers: [ProfileService],
 })
