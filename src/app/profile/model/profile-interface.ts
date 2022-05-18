@@ -69,7 +69,14 @@ export enum GymType {
   Bootcamp = 'Bootcamp',
   RockClimbing = 'Rock climbing',
 }
-
+export interface UserDetails {
+  id: string;
+  email: string;
+  hasProfile: boolean;
+  dayJoined: number;
+  monthJoined: number;
+  yearJoined: number;
+}
 export interface ClientDetailsHistory {
   date: Date;
   weight: string;

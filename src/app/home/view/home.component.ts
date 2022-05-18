@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { autoLogout } from '../../auth/store/auth.actions';
-import { getUser } from '../../auth/store/auth.selector';
-import { User } from '../../auth/model/user.model';
+import { getUserAuth } from '../../auth/store/auth.selector';
+import { UserAuth } from '../../auth/model/userAuth.model';
 import { Observable, of } from 'rxjs';
 
 @Component({
@@ -11,16 +11,17 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  user$: Observable<User | null>;
+  userAuth$: Observable<UserAuth | null>;
+
   constructor(private store: Store) {
-    this.user$ = of(null);
+    this.userAuth$ = of(null);
   }
+
   ngOnInit() {
-    this.user$ = this.store.select(getUser);
+    this.userAuth$ = this.store.select(getUserAuth);
   }
 
   logout(event: Event) {
-    console.log('logout');
     event.preventDefault();
     this.store.dispatch(autoLogout());
   }

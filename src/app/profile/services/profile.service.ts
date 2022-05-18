@@ -4,8 +4,23 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { getToken } from '../../auth/store/auth.selector';
 import { switchMap, take } from 'rxjs';
-import { ClientDetails, CollectionsType } from '../model/profile-interface';
-import { Firestore } from '@angular/fire/firestore';
+import { ClientDetails, UserDetails } from '../model/profile-interface';
+import {
+  doc,
+  docData,
+  Firestore,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from '@angular/fire/firestore';
+import { traceUntilFirst } from '@angular/fire/performance';
+
+export const _filer = (opt: string[], value: string): string[] => {
+  const filterValue = value.toLowerCase();
+
+  return opt.filter((item) => item.toLowerCase().includes(filterValue));
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -32,8 +47,30 @@ export class ProfileService {
     );
   }
 
-  public addClient({ birth }: ClientDetails) {
-    console.log('client', birth);
-    // return this.firestore.collection(CollectionsType.clients).add(client);
+  public setUserProfileInDb(userProfile: UserDetails) {
+    const ref = doc(this.firestore, 'users', userProfile.id);
+    setDoc(ref, {
+      ...userProfile,
+    });
+  }
+
+  public updateUserProfileInDb(userProfile: UserDetails) {
+    const ref = doc(this.firestore, 'users', userProfile.id);
+    updateDoc(ref, {
+      ...userProfile,
+    });
+  }
+
+  public getUserProfileFromDb(idProfile: string) {
+    const docRef = doc(this.firestore, 'users', idProfile);
+
+    return docData(docRef).pipe(traceUntilFirst('firestore'));
+  }
+
+  public setClient(clientProfile: ClientDetails) {
+    const ref = doc(this.firestore, 'clients', clientProfile.userId);
+    setDoc(ref, {
+      ...clientProfile,
+    });
   }
 }

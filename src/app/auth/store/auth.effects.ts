@@ -19,6 +19,11 @@ import {
   setErrorMessage,
   setLoadingSpinner,
 } from '../../store/shared/shared.actions';
+import { ProfileService } from '../../profile/services/profile.service';
+import {
+  createUserProfileStart,
+  getUserProfileStart,
+} from '../../profile/store/profile.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -28,12 +33,14 @@ export class AuthEffects {
       exhaustMap((action) => {
         return this.authService.onLogin(action.email, action.password).pipe(
           map((data) => {
-            console.log('login data', data);
-            this.store.dispatch(setLoadingSpinner({ status: false }));
             this.store.dispatch(setErrorMessage({ message: '' }));
-            const user = this.authService.formatUser(data);
-            this.authService.setUserInLocalStorage(user);
-            return loginSuccess({ user, redirect: true });
+            const userAuth = this.authService.formatUser(data);
+            this.authService.setUserInLocalStorage(userAuth);
+            this.store.dispatch(
+              getUserProfileStart({ userProfileId: userAuth.id })
+            );
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            return loginSuccess({ userAuth: userAuth, redirect: true });
           }),
           catchError((errResp) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
@@ -47,30 +54,27 @@ export class AuthEffects {
     );
   });
 
-  loginRedirect$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(...[loginSuccess, signupSuccess]),
-        tap((action) => {
-          this.store.dispatch(setErrorMessage({ message: '' }));
-          if (action.redirect) {
-            this.router.navigate(['/home']);
-          }
-        })
-      );
-    },
-    { dispatch: false }
-  );
+  loginSuccess$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(loginSuccess),
+      map((action) => {
+        return getUserProfileStart({ userProfileId: action.userAuth.id });
+      })
+    );
+  });
+
   signUp$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(signupStart),
       exhaustMap((action) => {
         return this.authService.onSignUp(action.email, action.password).pipe(
           map((data) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            const user = this.authService.formatUser(data);
-            this.authService.setUserInLocalStorage(user);
-            return signupSuccess({ user, redirect: true });
+            // Define the user
+            const userAuth = this.authService.formatUser(data);
+
+            //Save user local and in Firestore
+            this.authService.setUserInLocalStorage(userAuth);
+            return signupSuccess({ userAuth: userAuth, redirect: true });
           }),
           catchError((errResp) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
@@ -83,6 +87,24 @@ export class AuthEffects {
       })
     );
   });
+
+  signupSuccess$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(signupSuccess),
+      map((action) => {
+        const userProfile = this.authService.formatUserProfileForDb(
+          action.userAuth,
+          false,
+          new Date().getUTCDay(),
+          new Date().getUTCMonth(),
+          new Date().getUTCFullYear()
+        );
+
+        return createUserProfileStart({ userProfile: userProfile });
+      })
+    );
+  });
+
   resetPassword$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(resetStart),
@@ -106,9 +128,9 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(autoLogin),
       mergeMap((action) => {
-        const user = this.authService.getUserFromLocalStorage();
-        if (user) {
-          return of(loginSuccess({ user, redirect: false }));
+        const userAuth = this.authService.getUserFromLocalStorage();
+        if (userAuth) {
+          return of(loginSuccess({ userAuth: userAuth, redirect: false }));
         } else {
           return of(autoLogout());
         }
@@ -131,6 +153,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private profileService: ProfileService,
     private store: Store<AppState>,
     private router: Router
   ) {}

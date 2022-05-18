@@ -4,17 +4,17 @@ import { Observable, Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import {
-  setErrorMessage,
-  setLoadingSpinner,
-} from '../../../store/shared/shared.actions';
+import { setErrorMessage } from '../../../store/shared/shared.actions';
 import {
   getErrorMessage,
   getLoading,
 } from '../../../store/shared/shared.selector';
-import { ProfileService } from '../../services/profile.service';
+import { _filer, ProfileService } from '../../services/profile.service';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
+import { UserAuth } from '../../../auth/model/userAuth.model';
+import { getUserAuth } from '../../../auth/store/auth.selector';
+import { CountriesData } from '../../../../data/country';
 
 @Component({
   selector: 'app-add-client-profile',
@@ -25,8 +25,11 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   // @ts-ignore
   @ViewChild('places') places: GooglePlaceDirective;
   authType = AuthType;
+  userAuth: UserAuth | null | undefined;
+  userAuthSub: Subscription | undefined;
   getLoadingSpinnerSub: Subscription | undefined;
   errorMessage$: Observable<any> | undefined;
+  countries = CountriesData;
   options: Options = <Options>{
     fields: ['formatted_address', 'geometry', 'name'],
     types: ['(cities)'],
@@ -41,6 +44,8 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
     birth: new FormControl('', [Validators.required]),
     gender: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required]),
+    country: new FormControl('', [Validators.required]),
+    state: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
   });
 
@@ -61,6 +66,10 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
           this.userFormGroup.enable();
         }
       });
+
+    this.userAuthSub = this.store.select(getUserAuth).subscribe((userAuth) => {
+      this.userAuth = userAuth;
+    });
 
     this.errorMessage$ = this.store.select(getErrorMessage);
   }

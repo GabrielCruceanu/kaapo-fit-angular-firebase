@@ -30,6 +30,9 @@ import { ProfileModule } from './profile/profile.module';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { ProfileEffects } from './profile/store/profile.effects';
+import { AuthService } from './auth/services/auth.service';
+import { ProfileService } from './profile/services/profile.service';
 
 export const firebaseConfig = environment.firebase;
 
@@ -58,7 +61,7 @@ export const firebaseConfig = environment.firebase;
     MatBadgeModule,
     ComponentsSharedModule,
     HttpClientModule,
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, ProfileEffects]),
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,
@@ -74,6 +77,8 @@ export const firebaseConfig = environment.firebase;
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },
+    AuthService,
+    ProfileService,
   ],
   bootstrap: [AppComponent],
 })
