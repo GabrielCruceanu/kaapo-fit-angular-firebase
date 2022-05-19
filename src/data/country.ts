@@ -1,17 +1,17 @@
-export interface County {
+export interface State {
   name: string;
   cities: string[];
 }
 
 export interface Country {
   name: string;
-  counties: County[];
+  states: State[];
 }
 
 export const CountriesData: Country[] = [
   {
     name: 'Romania',
-    counties: [
+    states: [
       {
         name: 'Bucharest',
         cities: ['Bucharest'],
@@ -24,7 +24,7 @@ export const CountriesData: Country[] = [
   },
   {
     name: 'Germany',
-    counties: [
+    states: [
       {
         name: 'Baden-Württemberg',
         cities: [

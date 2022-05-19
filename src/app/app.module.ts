@@ -33,6 +33,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { ProfileEffects } from './profile/store/profile.effects';
 import { AuthService } from './auth/services/auth.service';
 import { ProfileService } from './profile/services/profile.service';
+import { CountryService } from './shared/services/country.service';
 
 export const firebaseConfig = environment.firebase;
 
@@ -79,6 +80,7 @@ export const firebaseConfig = environment.firebase;
     { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },
     AuthService,
     ProfileService,
+    CountryService,
   ],
   bootstrap: [AppComponent],
 })

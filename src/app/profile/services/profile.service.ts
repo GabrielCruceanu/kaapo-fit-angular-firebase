@@ -73,4 +73,10 @@ export class ProfileService {
       ...clientProfile,
     });
   }
+
+  public disableInput(formGroup: any, disableInput: string, input: string) {
+    formGroup.controls[input].valid
+      ? formGroup.controls[disableInput].enable()
+      : formGroup.controls[disableInput].disable();
+  }
 }

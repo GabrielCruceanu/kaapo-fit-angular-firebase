@@ -1,7 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AuthType } from '../../../auth/model/AuthResponseData.model';
-import { Observable, Subscription } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { map, Observable, of, startWith, Subscription } from 'rxjs';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { setErrorMessage } from '../../../store/shared/shared.actions';
@@ -14,7 +21,8 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
 import { UserAuth } from '../../../auth/model/userAuth.model';
 import { getUserAuth } from '../../../auth/store/auth.selector';
-import { CountriesData } from '../../../../data/country';
+import { CountriesData, Country, State } from '../../../../data/country';
+import { CountryService } from '../../../shared/services/country.service';
 
 @Component({
   selector: 'app-add-client-profile',
@@ -22,21 +30,20 @@ import { CountriesData } from '../../../../data/country';
   styleUrls: ['./add-client-profile.component.scss'],
 })
 export class AddClientProfileComponent implements OnInit, OnDestroy {
-  // @ts-ignore
-  @ViewChild('places') places: GooglePlaceDirective;
   authType = AuthType;
   userAuth: UserAuth | null | undefined;
   userAuthSub: Subscription | undefined;
   getLoadingSpinnerSub: Subscription | undefined;
   errorMessage$: Observable<any> | undefined;
-  countries = CountriesData;
-  options: Options = <Options>{
-    fields: ['formatted_address', 'geometry', 'name'],
-    types: ['(cities)'],
-  };
-  userAddress: string = '';
-  userLatitude: string = '';
-  userLongitude: string = '';
+  onlyCountries = this.countryService.mapCountriesData();
+  filteredCountries: Observable<string[]> | undefined;
+  selectedCountry: string = '';
+  onlyStates = this.countryService.mapStatesData();
+  filteredStates: Observable<string[]> | undefined;
+  selectedState: string = '';
+  onlyCities = this.countryService.mapCitiesData();
+  filteredCities: Observable<string[]> | undefined;
+  selectedCity: string = '';
 
   userFormGroup = new FormGroup({
     firstname: new FormControl('', [Validators.required]),
@@ -44,14 +51,21 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
     birth: new FormControl('', [Validators.required]),
     gender: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required]),
-    country: new FormControl('', [Validators.required]),
-    state: new FormControl('', [Validators.required]),
+    country: new FormControl('', [
+      Validators.required,
+      countryInputValidation(this.onlyCountries),
+    ]),
+    state: new FormControl('', [
+      Validators.required,
+      stateInputValidation(this.onlyStates),
+    ]),
     city: new FormControl('', [Validators.required]),
   });
 
   constructor(
     private store: Store<AppState>,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private countryService: CountryService
   ) {
     this.store.dispatch(setErrorMessage({ message: '' }));
   }
@@ -71,6 +85,42 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       this.userAuth = userAuth;
     });
 
+    this.filteredCountries = this.userFormGroup.controls[
+      'country'
+    ].valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        this.selectedCountry = value;
+        this.onlyStates =
+          this.countryService.mapStateFromSelectedCountryData(value);
+
+        return this.countryService._filterData(value, this.onlyCountries);
+      })
+    );
+
+    this.filteredStates = this.userFormGroup.controls[
+      'state'
+    ].valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        this.selectedState = value;
+        return this.countryService._filterData(value, this.onlyStates);
+      })
+    );
+
+    this.filteredCities = this.userFormGroup.controls['city'].valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        this.selectedCity = value;
+        this.onlyCities = this.countryService.mapCityFromSelectedCountryData(
+          this.selectedCountry,
+          this.selectedState
+        );
+
+        return this.countryService._filterData(value, this.onlyCities);
+      })
+    );
+
     this.errorMessage$ = this.store.select(getErrorMessage);
   }
 
@@ -86,10 +136,8 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleAddressChange(address: any) {
-    this.userAddress = address.formatted_address;
-    this.userLatitude = address.geometry.location.lat();
-    this.userLongitude = address.geometry.location.lng();
+  public onDisableInput(disableInput: string, input: string) {
+    this.profileService.disableInput(this.userFormGroup, disableInput, input);
   }
 
   ngOnDestroy() {
@@ -97,4 +145,32 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       this.getLoadingSpinnerSub.unsubscribe();
     }
   }
+}
+
+export function countryInputValidation(countries: string[]): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+
+    if (!value) {
+      return null;
+    }
+
+    const countryValue = countries.find((country) => country === value);
+
+    return !countryValue ? { isNotCountryFromList: true } : null;
+  };
+}
+
+export function stateInputValidation(states: string[]): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+
+    if (!value) {
+      return null;
+    }
+
+    const sateValue = states.find((state) => state === value);
+
+    return !sateValue ? { isNotStateFromList: true } : null;
+  };
 }

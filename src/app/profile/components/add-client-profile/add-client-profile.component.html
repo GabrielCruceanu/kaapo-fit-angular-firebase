@@ -13,7 +13,7 @@
       <div class="col-lg-8">
         <!--   Details     -->
         <div class="row">
-          <div class="col-12 col-md-6 col-lg-4 mt-3">
+          <div class="col-12 col-md-6 col-lg-6 mt-3">
             <mat-form-field class="form-control col-md-6" appearance="outline">
               <mat-label>Firstname</mat-label>
               <input
@@ -30,7 +30,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-4 mt-3">
+          <div class="col-md-6 col-lg-6 mt-3">
             <mat-form-field class="form-control" appearance="outline">
               <mat-label>Lastname</mat-label>
               <input
@@ -57,7 +57,6 @@
                 formControlName="birth"
                 name="birth"
               />
-              <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle
                 matSuffix
                 [for]="picker"
@@ -117,18 +116,94 @@
 
           <div class="col-md-6 col-lg-4 mt-3">
             <mat-form-field class="form-control" appearance="outline">
+              <mat-label>Country</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="country"
+                placeholder="Pick one"
+                aria-label="Country"
+                [matAutocomplete]="countries"
+                (ngModelChange)="onDisableInput('state', 'country')"
+              />
+              <mat-autocomplete #countries="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of filteredCountries | async"
+                  [value]="option"
+                  >{{ option }}</mat-option
+                >
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="userFormGroup.controls['country'].hasError('required')"
+              >
+                Country is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  userFormGroup.controls['country'].hasError(
+                    'isNotCountryFromList'
+                  ) && !userFormGroup.controls['country'].hasError('required')
+                "
+              >
+                Pick a country from the list
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>State</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="state"
+                placeholder="Pick one"
+                aria-label="State"
+                [matAutocomplete]="states"
+                (ngModelChange)="onDisableInput('city', 'state')"
+              />
+              <mat-autocomplete #states="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of filteredStates | async"
+                  [value]="option"
+                  >{{ option }}</mat-option
+                >
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="userFormGroup.controls['country'].hasError('required')"
+              >
+                State is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  userFormGroup.controls['state'].hasError(
+                    'isNotStateFromList'
+                  ) && !userFormGroup.controls['state'].hasError('required')
+                "
+              >
+                Pick a state from the list
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
               <mat-label>City</mat-label>
               <input
                 type="text"
                 matInput
                 formControlName="city"
-                placeholder="Enter places"
-                ngx-google-places-autocomplete
-                [(ngModel)]="userAddress"
-                (onAddressChange)="handleAddressChange($event)"
-                [options]="options"
+                placeholder="Pick one"
+                aria-label="City"
+                [matAutocomplete]="cities"
               />
-
+              <mat-autocomplete #cities="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of filteredCities | async"
+                  [value]="option"
+                  >{{ option }}</mat-option
+                >
+              </mat-autocomplete>
               <mat-error
                 *ngIf="userFormGroup.controls['city'].hasError('required')"
               >
