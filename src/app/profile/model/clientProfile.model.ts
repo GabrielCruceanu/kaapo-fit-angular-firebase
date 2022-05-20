@@ -9,7 +9,7 @@ import {
 
 export class ClientProfile {
   constructor(
-    public userId: string,
+    public id: string,
     public status: UserType,
     public firstName: string,
     public lastName: string,

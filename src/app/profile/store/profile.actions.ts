@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { UserProfile } from '../model/userProfile.model';
 import { ClientProfile } from '../model/clientProfile.model';
+import { GymProfile } from '../model/gym.model';
 
 export const CREATE_USER_PROFILE_START =
   '[profile page] create user profile start';
@@ -20,6 +21,11 @@ export const CREATE_CLIENT_PROFILE_START =
   '[profile page] create client profile start';
 export const CREATE_CLIENT_PROFILE_SUCCESS =
   '[profile page] create client profile Success';
+
+export const CREATE_GYM_PROFILE_START =
+  '[profile page] create gym profile start';
+export const CREATE_GYM_PROFILE_SUCCESS =
+  '[profile page] create gym profile Success';
 
 export const createUserProfileStart = createAction(
   CREATE_USER_PROFILE_START,
@@ -59,4 +65,14 @@ export const createClientProfileStart = createAction(
 export const createClientProfileSuccess = createAction(
   CREATE_CLIENT_PROFILE_SUCCESS,
   props<{ clientProfile: ClientProfile; redirect: boolean }>()
+);
+
+export const createGymProfileStart = createAction(
+  CREATE_GYM_PROFILE_START,
+  props<{ gymProfile: GymProfile }>()
+);
+
+export const createGymProfileSuccess = createAction(
+  CREATE_GYM_PROFILE_SUCCESS,
+  props<{ gymProfile: GymProfile; redirect: boolean }>()
 );

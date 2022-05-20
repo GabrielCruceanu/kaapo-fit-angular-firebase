@@ -23,10 +23,9 @@ export interface Location {
 export interface Contact {
   phone: string;
   email: string;
-  facebook?: string;
-  twitter?: string;
-  instagram?: string;
-  location: Location;
+  facebook: string | null;
+  twitter: string | null;
+  instagram: string | null;
 }
 
 export interface ProfessionalGalleryPicture {
@@ -68,6 +67,7 @@ export enum GymType {
   Pilates = 'Pilates',
   Bootcamp = 'Bootcamp',
   RockClimbing = 'Rock climbing',
+  Other = 'Other',
 }
 export interface UserDetails {
   id: string;

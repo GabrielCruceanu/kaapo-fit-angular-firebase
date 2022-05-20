@@ -64,11 +64,11 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
     phone: new FormControl('', [Validators.required]),
     country: new FormControl('', [
       Validators.required,
-      countryInputValidation(this.onlyCountries),
+      this.onCountryInputValidation(this.onlyCountries),
     ]),
     state: new FormControl('', [
       Validators.required,
-      stateInputValidation(this.onlyStates),
+      this.onStateInputValidation(this.onlyStates),
     ]),
     city: new FormControl('', [Validators.required]),
   });
@@ -143,7 +143,7 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
     this.errorMessage$ = this.store.select(getErrorMessage);
   }
 
-  onSubmit() {
+  onClientSubmit() {
     if (this.userFormGroup.valid && this.userAuth && this.userProfile) {
       const {
         firstname,
@@ -169,11 +169,11 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       };
 
       const clientProfile = new ClientProfile(
-        this.userAuth?.id,
+        this.userAuth.id,
         UserType.Client,
         firstname,
         lastname,
-        this.userAuth?.email,
+        this.userAuth.email,
         phone,
         gender,
         country,
@@ -210,6 +210,14 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
     this.profileService.disableInput(this.userFormGroup, disableInput, input);
   }
 
+  public onCountryInputValidation(countries: string[]): ValidatorFn {
+    return this.profileService.countryInputValidation(countries);
+  }
+
+  public onStateInputValidation(states: string[]): ValidatorFn {
+    return this.profileService.stateInputValidation(states);
+  }
+
   ngOnDestroy() {
     if (this.getLoadingSpinnerSub) {
       this.getLoadingSpinnerSub.unsubscribe();
@@ -219,32 +227,4 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       this.userProfileSub.unsubscribe();
     }
   }
-}
-
-export function countryInputValidation(countries: string[]): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value;
-
-    if (!value) {
-      return null;
-    }
-
-    const countryValue = countries.find((country) => country === value);
-
-    return !countryValue ? { isNotCountryFromList: true } : null;
-  };
-}
-
-export function stateInputValidation(states: string[]): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value;
-
-    if (!value) {
-      return null;
-    }
-
-    const sateValue = states.find((state) => state === value);
-
-    return !sateValue ? { isNotStateFromList: true } : null;
-  };
 }

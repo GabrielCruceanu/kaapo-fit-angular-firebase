@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import {
   createClientProfileStart,
   createClientProfileSuccess,
+  createGymProfileStart,
+  createGymProfileSuccess,
   createUserProfileStart,
   createUserProfileSuccess,
   getUserProfileStart,
@@ -96,15 +98,30 @@ export class ProfileEffects {
     );
   });
 
+  createGymProfileStart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(createGymProfileStart),
+      map((action) => {
+        this.profileService.createGymProfileInDb(action.gymProfile);
+
+        this.store.dispatch(setLoadingSpinner({ status: false }));
+
+        return createGymProfileSuccess({
+          gymProfile: action.gymProfile,
+          redirect: true,
+        });
+      })
+    );
+  });
+
   profileRedirect$ = createEffect(
     () => {
       return this.actions$.pipe(
         ofType(
           ...[
-            createUserProfileSuccess,
             updateUserProfileSuccess,
-            getUserProfileSuccess,
             createClientProfileSuccess,
+            createGymProfileSuccess,
           ]
         ),
         tap((action) => {

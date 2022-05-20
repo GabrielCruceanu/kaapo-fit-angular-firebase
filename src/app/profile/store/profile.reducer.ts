@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { initialState } from './profile.state';
 import {
   createClientProfileSuccess,
+  createGymProfileSuccess,
   createUserProfileSuccess,
   getUserProfileSuccess,
 } from './profile.actions';
@@ -24,6 +25,12 @@ const _profileReducer = createReducer(
     return {
       ...state,
       clientProfile: action.clientProfile,
+    };
+  }),
+  on(createGymProfileSuccess, (state, action) => {
+    return {
+      ...state,
+      gymProfile: action.gymProfile,
     };
   })
 );

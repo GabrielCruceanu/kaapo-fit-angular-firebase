@@ -126,8 +126,16 @@ export class AuthEffects {
           this.profileService.getUserProfileFromLocalStorage();
 
         if (userAuth && !userProfile) {
+          this.store.dispatch(
+            getUserProfileStart({ userProfileId: userAuth.id })
+          );
+
           return of(loginSuccess({ userAuth: userAuth, redirect: false }));
         } else if (userAuth && userProfile) {
+          this.store.dispatch(
+            getUserProfileStart({ userProfileId: userProfile.id })
+          );
+
           this.store.dispatch(
             getUserProfileSuccess({ userProfile: userProfile, redirect: true })
           );
@@ -159,7 +167,7 @@ export class AuthEffects {
         tap((action) => {
           this.store.dispatch(setErrorMessage({ message: '' }));
           if (action.redirect) {
-            this.router.navigate(['/profile']);
+            this.router.navigate(['/home']);
           }
         })
       );

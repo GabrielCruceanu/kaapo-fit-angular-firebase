@@ -1,4 +1,5 @@
 import {
+  Birth,
   ClientDetails,
   Contact,
   GymType,
@@ -8,24 +9,25 @@ import {
   UserType,
 } from './profile-interface';
 
-export class Gym {
+export class GymProfile {
   constructor(
-    public userId: string,
-    public name: string,
-    public joined: Date,
-    public profilePicture: string,
-    public hasProPremium: boolean,
+    public id: string,
     public status: UserType.Gym,
+    public name: string,
+    public joined: Birth,
+    public hasProPremium: boolean,
     public gymType: GymType,
     public country: string,
+    public state: string,
     public city: string,
-    public age: string,
-    public shortDescription: string,
-    public longDescription: string,
+    public street: string,
+    public strNo: string,
     public contact: Contact,
-    public gallery?: ProfessionalGalleryPicture[],
-    public reviews?: Review[],
-    public personal?: ProfessionalDetails[],
-    public activeClients?: ClientDetails[]
+    public shortDescription: string | null,
+    public longDescription: string | null,
+    public profilePicture: string | null,
+    public gallery: ProfessionalGalleryPicture[] | null,
+    public reviews: Review[] | null,
+    public personal: ProfessionalDetails[] | null
   ) {}
 }

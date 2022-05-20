@@ -1,1 +1,265 @@
-<p>add-gym-profile works!</p>
+<app-layout>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="app-title">Gym profile</h1>
+      </div>
+    </div>
+    <form
+      (ngSubmit)="onGymSubmit()"
+      class="row form justify-content-center"
+      [formGroup]="gymFormGroup"
+    >
+      <div class="col-lg-8">
+        <!--   Details     -->
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-6 mt-3">
+            <mat-form-field class="form-control col-md-6" appearance="outline">
+              <mat-label>Name</mat-label>
+              <input
+                matInput
+                placeholder="Kaapo Gym"
+                name="name"
+                formControlName="name"
+              />
+              <mat-error
+                *ngIf="gymFormGroup.controls['name'].hasError('required')"
+              >
+                Gym name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-6 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>Gym Type</mat-label>
+              <input
+                type="text"
+                matInput
+                placeholder="Pick one"
+                aria-label="Calisthenic"
+                name="gymType"
+                formControlName="gymType"
+                [matAutocomplete]="gymType"
+              />
+              <mat-autocomplete #gymType="matAutocomplete">
+                <mat-option *ngFor="let option of gymTypes" [value]="option"
+                  >{{ option }}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="gymFormGroup.controls['gymType'].hasError('required')"
+              >
+                Gym type is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>Country</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="country"
+                placeholder="Pick one"
+                aria-label="Country"
+                [matAutocomplete]="countries"
+                (ngModelChange)="onDisableInput('state', 'country')"
+              />
+              <mat-autocomplete #countries="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of filteredCountries | async"
+                  [value]="option"
+                  >{{ option }}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="gymFormGroup.controls['country'].hasError('required')"
+              >
+                Country is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  gymFormGroup.controls['country'].hasError(
+                    'isNotCountryFromList'
+                  ) && !gymFormGroup.controls['country'].hasError('required')
+                "
+              >
+                Pick a country from the list
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>State</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="state"
+                placeholder="Pick one"
+                aria-label="State"
+                [matAutocomplete]="states"
+                (ngModelChange)="onDisableInput('city', 'state')"
+              />
+              <mat-autocomplete #states="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of filteredStates | async"
+                  [value]="option"
+                  >{{ option }}</mat-option
+                >
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="gymFormGroup.controls['country'].hasError('required')"
+              >
+                State is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  gymFormGroup.controls['state'].hasError(
+                    'isNotStateFromList'
+                  ) && !gymFormGroup.controls['state'].hasError('required')
+                "
+              >
+                Pick a state from the list
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>City</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="city"
+                placeholder="Pick one"
+                aria-label="City"
+                [matAutocomplete]="cities"
+              />
+              <mat-autocomplete #cities="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of filteredCities | async"
+                  [value]="option"
+                  >{{ option }}</mat-option
+                >
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="gymFormGroup.controls['city'].hasError('required')"
+              >
+                City is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-6 mt-3">
+            <mat-form-field class="form-control col-md-6" appearance="outline">
+              <mat-label>Street</mat-label>
+              <input
+                matInput
+                placeholder="Longinescu"
+                name="street"
+                formControlName="street"
+              />
+              <mat-error
+                *ngIf="gymFormGroup.controls['street'].hasError('required')"
+              >
+                Street name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-6 mt-3">
+            <mat-form-field class="form-control col-md-6" appearance="outline">
+              <mat-label>Street Number</mat-label>
+              <input
+                matInput
+                placeholder="12"
+                name="strNo"
+                formControlName="strNo"
+              />
+              <mat-error
+                *ngIf="gymFormGroup.controls['strNo'].hasError('required')"
+              >
+                Street number is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-6 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>Phone Number</mat-label>
+              <ngx-mat-intl-tel-input
+                [required]="true"
+                formControlName="phone"
+                [enablePlaceholder]="true"
+                [enableSearch]="true"
+                name="phone"
+                class="phone-search-control"
+              >
+              </ngx-mat-intl-tel-input>
+              <mat-error
+                *ngIf="gymFormGroup.controls['phone'].hasError('required')"
+              >
+                Phone number is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  gymFormGroup.controls['phone'].errors &&
+                  !gymFormGroup.controls['phone'].hasError('required')
+                "
+              >
+                Phone number need to have 10 character
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-6 mt-3">
+            <mat-form-field class="form-control col-md-6" appearance="outline">
+              <mat-label>Facebook</mat-label>
+              <input
+                matInput
+                placeholder="Facebook link"
+                name="facebook"
+                formControlName="facebook"
+              />
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-6 mt-3">
+            <mat-form-field class="form-control col-md-6" appearance="outline">
+              <mat-label>Twitter</mat-label>
+              <input
+                matInput
+                placeholder="Twitter link"
+                name="twitter"
+                formControlName="twitter"
+              />
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-6 mt-3">
+            <mat-form-field class="form-control col-md-6" appearance="outline">
+              <mat-label>Instagram</mat-label>
+              <input
+                matInput
+                placeholder="Instagram link"
+                name="instagram"
+                formControlName="instagram"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="form-footer col-12 col-md-5 mt-4">
+        <mat-error *ngIf="errorMessage$ | async as errorMessage">
+          {{ errorMessage }}
+        </mat-error>
+        <button mat-button [class.disabled]="!gymFormGroup.valid" type="submit">
+          Save Profile
+        </button>
+      </div>
+    </form>
+  </div>
+</app-layout>

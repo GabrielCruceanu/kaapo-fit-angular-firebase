@@ -14,6 +14,8 @@ import {
 import { traceUntilFirst } from '@angular/fire/performance';
 import { ClientProfile } from '../model/clientProfile.model';
 import { UserProfile } from '../model/userProfile.model';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { GymProfile } from '../model/gym.model';
 
 export const _filer = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -90,9 +92,16 @@ export class ProfileService {
   }
 
   public createClientProfileInDb(clientProfile: ClientProfile) {
-    const ref = doc(this.firestore, 'clients', clientProfile.userId);
+    const ref = doc(this.firestore, 'clients', clientProfile.id);
     setDoc(ref, {
       ...clientProfile,
+    });
+  }
+
+  public createGymProfileInDb(gymProfile: GymProfile) {
+    const ref = doc(this.firestore, 'gyms', gymProfile.id);
+    setDoc(ref, {
+      ...gymProfile,
     });
   }
 
@@ -100,5 +109,33 @@ export class ProfileService {
     formGroup.controls[input].valid
       ? formGroup.controls[disableInput].enable()
       : formGroup.controls[disableInput].disable();
+  }
+
+  public countryInputValidation(countries: string[]): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+
+      if (!value) {
+        return null;
+      }
+
+      const countryValue = countries.find((country) => country === value);
+
+      return !countryValue ? { isNotCountryFromList: true } : null;
+    };
+  }
+
+  public stateInputValidation(states: string[]): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+
+      if (!value) {
+        return null;
+      }
+
+      const sateValue = states.find((state) => state === value);
+
+      return !sateValue ? { isNotStateFromList: true } : null;
+    };
   }
 }
