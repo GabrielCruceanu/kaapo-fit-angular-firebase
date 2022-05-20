@@ -1,5 +1,6 @@
 export const GymData: string[] = [
   'Powerlifting',
+  'Calisthenic',
   'Fitness',
   'Yoga',
   'Spin',

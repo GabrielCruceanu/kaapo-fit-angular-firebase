@@ -16,6 +16,7 @@ import { ClientProfile } from '../model/clientProfile.model';
 import { UserProfile } from '../model/userProfile.model';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { GymProfile } from '../model/gym.model';
+import { TrainerProfile } from '../model/trainerProfile.model';
 
 export const _filer = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -64,7 +65,8 @@ export class ProfileService {
         userData.hasProfile,
         userData.dayJoined,
         userData.monthJoined,
-        userData.yearJoined
+        userData.yearJoined,
+        userData.userType
       );
       return userProfile;
     }
@@ -102,6 +104,13 @@ export class ProfileService {
     const ref = doc(this.firestore, 'gyms', gymProfile.id);
     setDoc(ref, {
       ...gymProfile,
+    });
+  }
+
+  public createTrainerProfileInDb(trainerProfile: TrainerProfile) {
+    const ref = doc(this.firestore, 'trainers', trainerProfile.id);
+    setDoc(ref, {
+      ...trainerProfile,
     });
   }
 

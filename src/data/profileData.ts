@@ -3,19 +3,17 @@ import { ProfileData } from '../app/profile/model/profileData.model';
 export const ProfilesData: ProfileData[] = [
   {
     name: 'Client',
-    link: '/profile/add-client',
+    link: '/profile/client',
     icon: 'client',
   },
   {
     name: 'Nutritionist',
-    link: '/profile/add-professional',
-    mode: 'nutrition',
+    link: '/profile/nutrition',
     icon: 'nutrition',
   },
   {
     name: 'Trainer',
-    link: '/profile/add-professional',
-    mode: 'trainer',
+    link: '/profile/trainer',
     icon: 'trainer',
   },
   {

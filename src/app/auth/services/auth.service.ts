@@ -8,6 +8,7 @@ import { autoLogout } from '../store/auth.actions';
 import { AuthResponseData } from '../model/AuthResponseData.model';
 import { Observable } from 'rxjs';
 import { UserProfile } from '../../profile/model/userProfile.model';
+import { UserType } from '../../profile/model/profile-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -56,7 +57,8 @@ export class AuthService {
     hasProfile: boolean,
     dayJoined: number,
     monthJoined: number,
-    yearJoined: number
+    yearJoined: number,
+    userType: UserType | null
   ) {
     const { id, email } = user;
 
@@ -66,7 +68,8 @@ export class AuthService {
       hasProfile,
       dayJoined,
       monthJoined,
-      yearJoined
+      yearJoined,
+      userType
     );
 
     return userDb;

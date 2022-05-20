@@ -89,7 +89,8 @@ export class AuthEffects {
           false,
           new Date().getUTCDate(),
           new Date().getUTCMonth() + 1,
-          new Date().getUTCFullYear()
+          new Date().getUTCFullYear(),
+          null
         );
 
         return createUserProfileStart({ userProfile: userProfile });

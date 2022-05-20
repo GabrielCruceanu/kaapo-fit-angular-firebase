@@ -9,6 +9,8 @@ import {
   createClientProfileSuccess,
   createGymProfileStart,
   createGymProfileSuccess,
+  createTrainerProfileStart,
+  createTrainerProfileSuccess,
   createUserProfileStart,
   createUserProfileSuccess,
   getUserProfileStart,
@@ -114,14 +116,30 @@ export class ProfileEffects {
     );
   });
 
+  createTrainerProfileStart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(createTrainerProfileStart),
+      map((action) => {
+        this.profileService.createTrainerProfileInDb(action.trainerProfile);
+
+        this.store.dispatch(setLoadingSpinner({ status: false }));
+
+        return createTrainerProfileSuccess({
+          trainerProfile: action.trainerProfile,
+          redirect: true,
+        });
+      })
+    );
+  });
+
   profileRedirect$ = createEffect(
     () => {
       return this.actions$.pipe(
         ofType(
           ...[
-            updateUserProfileSuccess,
             createClientProfileSuccess,
             createGymProfileSuccess,
+            createTrainerProfileSuccess,
           ]
         ),
         tap((action) => {

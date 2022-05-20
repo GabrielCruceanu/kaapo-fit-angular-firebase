@@ -2,10 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthType } from '../../../auth/model/AuthResponseData.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
-  ValidationErrors,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
@@ -31,7 +29,6 @@ import {
   createClientProfileStart,
   updateUserProfileStart,
 } from '../../store/profile.actions';
-import firebase from 'firebase/compat';
 
 @Component({
   selector: 'app-add-client-profile',
@@ -195,7 +192,8 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
         true,
         this.userProfile.dayJoined,
         this.userProfile.monthJoined,
-        this.userProfile.yearJoined
+        this.userProfile.yearJoined,
+        UserType.Client
       );
 
       this.store.dispatch(setLoadingSpinner({ status: true }));

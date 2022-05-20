@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserAuth } from '../../../auth/model/userAuth.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
+import { AuthType } from '../../../auth/model/AuthResponseData.model';
+import { UserAuth } from '../../../auth/model/userAuth.model';
 import { UserProfile } from '../../model/userProfile.model';
 import {
   FormControl,
@@ -24,18 +25,22 @@ import { getUserAuth } from '../../../auth/store/auth.selector';
 import { getUserProfile } from '../../store/profile.selector';
 import { Contact, UserType } from '../../model/profile-interface';
 import {
-  createGymProfileStart,
+  createTrainerProfileStart,
   updateUserProfileStart,
 } from '../../store/profile.actions';
-import { GymProfile } from '../../model/gym.model';
-import { GymData } from '../../../../data/gymData';
+import { TrainerProfile } from '../../model/trainerProfile.model';
+import {
+  TrainerData,
+  TrainerExperienceData,
+} from '../../../../data/trainerData';
 
 @Component({
-  selector: 'app-add-gym-profile',
-  templateUrl: './add-gym-profile.component.html',
-  styleUrls: ['./add-gym-profile.component.scss'],
+  selector: 'app-add-trainer-profile',
+  templateUrl: './add-trainer-profile.component.html',
+  styleUrls: ['./add-trainer-profile.component.scss'],
 })
-export class AddGymProfileComponent implements OnInit, OnDestroy {
+export class AddTrainerProfileComponent implements OnInit, OnDestroy {
+  authType = AuthType;
   userAuth: UserAuth | null | undefined;
   userAuthSub: Subscription | undefined;
   userProfile: UserProfile | null | undefined;
@@ -51,11 +56,17 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
   onlyCities = this.countryService.mapCitiesData();
   filteredCities: Observable<string[]> | undefined;
   selectedCity: string = '';
-  gymTypes = GymData;
+  trainersType = TrainerData;
+  trainerExperience = TrainerExperienceData;
 
-  gymFormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    gymType: new FormControl('', [Validators.required]),
+  trainerFormGroup = new FormGroup({
+    firstname: new FormControl('', [Validators.required]),
+    lastname: new FormControl('', [Validators.required]),
+    trainerType: new FormControl('', [Validators.required]),
+    birth: new FormControl('', [Validators.required]),
+    gender: new FormControl('', [Validators.required]),
+    experience: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required]),
     country: new FormControl('', [
       Validators.required,
       this.onCountryInputValidation(this.onlyCountries),
@@ -65,9 +76,6 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
       this.onStateInputValidation(this.onlyStates),
     ]),
     city: new FormControl('', [Validators.required]),
-    street: new FormControl('', [Validators.required]),
-    strNo: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
     facebook: new FormControl('', []),
     twitter: new FormControl('', []),
     instagram: new FormControl('', []),
@@ -86,9 +94,9 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
       .select(getLoading)
       .subscribe((isLoading: boolean) => {
         if (isLoading) {
-          this.gymFormGroup.disable();
+          this.trainerFormGroup.disable();
         } else {
-          this.gymFormGroup.enable();
+          this.trainerFormGroup.enable();
         }
       });
 
@@ -102,7 +110,7 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         this.userProfile = userProfile;
       });
 
-    this.filteredCountries = this.gymFormGroup.controls[
+    this.filteredCountries = this.trainerFormGroup.controls[
       'country'
     ].valueChanges.pipe(
       startWith(''),
@@ -115,8 +123,10 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.gymFormGroup.controls['state'].disable();
-    this.filteredStates = this.gymFormGroup.controls['state'].valueChanges.pipe(
+    this.trainerFormGroup.controls['state'].disable();
+    this.filteredStates = this.trainerFormGroup.controls[
+      'state'
+    ].valueChanges.pipe(
       startWith(''),
       map((value) => {
         this.selectedState = value;
@@ -124,8 +134,10 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.gymFormGroup.controls['city'].disable();
-    this.filteredCities = this.gymFormGroup.controls['city'].valueChanges.pipe(
+    this.trainerFormGroup.controls['city'].disable();
+    this.filteredCities = this.trainerFormGroup.controls[
+      'city'
+    ].valueChanges.pipe(
       startWith(''),
       map((value) => {
         this.selectedCity = value;
@@ -141,21 +153,29 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
     this.errorMessage$ = this.store.select(getErrorMessage);
   }
 
-  onGymSubmit() {
-    if (this.gymFormGroup.valid && this.userAuth && this.userProfile) {
+  onTrainerSubmit() {
+    if (this.trainerFormGroup.valid && this.userAuth && this.userProfile) {
       const {
-        name,
-        gymType,
-        phone,
+        firstname,
+        lastname,
+        trainerType,
+        birth,
+        gender,
+        experience,
         country,
         state,
         city,
-        street,
-        strNo,
+        phone,
         facebook,
         twitter,
         instagram,
-      } = this.gymFormGroup.value;
+      } = this.trainerFormGroup.value;
+
+      const birthFinal = {
+        date: birth.date(),
+        month: birth.month() + 1,
+        year: birth.year(),
+      };
 
       const joinedFinal = {
         date: this.userProfile.dayJoined,
@@ -171,19 +191,23 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         instagram: instagram,
       };
 
-      const gymProfile = new GymProfile(
+      const trainerProfile = new TrainerProfile(
         this.userAuth.id,
-        UserType.Gym,
-        name,
+        UserType.Trainer,
+        firstname,
+        lastname,
+        trainerType,
+        gender,
         joinedFinal,
+        birthFinal,
         false,
-        gymType,
+        false,
+        experience,
         country,
         state,
         city,
-        street,
-        strNo,
         contactFinal,
+        null,
         null,
         null,
         null,
@@ -199,19 +223,23 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         this.userProfile.dayJoined,
         this.userProfile.monthJoined,
         this.userProfile.yearJoined,
-        UserType.Gym
+        UserType.Trainer
       );
 
       this.store.dispatch(setLoadingSpinner({ status: true }));
 
       this.store.dispatch(updateUserProfileStart({ userProfile }));
 
-      this.store.dispatch(createGymProfileStart({ gymProfile }));
+      this.store.dispatch(createTrainerProfileStart({ trainerProfile }));
     }
   }
 
   public onDisableInput(disableInput: string, input: string) {
-    this.profileService.disableInput(this.gymFormGroup, disableInput, input);
+    this.profileService.disableInput(
+      this.trainerFormGroup,
+      disableInput,
+      input
+    );
   }
 
   public onCountryInputValidation(countries: string[]): ValidatorFn {

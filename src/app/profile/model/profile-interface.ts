@@ -58,8 +58,9 @@ export enum GenderType {
   Female = 'Female',
   Other = 'Other',
 }
-export enum GymType {
+export enum TrainerType {
   Powerlifting = 'Powerlifting',
+  Calisthenic = 'Calisthenic',
   Fitness = 'Fitness',
   Yoga = 'Yoga',
   Spin = 'Spin',
@@ -69,6 +70,20 @@ export enum GymType {
   RockClimbing = 'Rock climbing',
   Other = 'Other',
 }
+
+export enum GymType {
+  Powerlifting = 'Powerlifting',
+  Calisthenic = 'Calisthenic',
+  Fitness = 'Fitness',
+  Yoga = 'Yoga',
+  Spin = 'Spin',
+  Barre = 'Barre',
+  Pilates = 'Pilates',
+  Bootcamp = 'Bootcamp',
+  RockClimbing = 'Rock climbing',
+  Other = 'Other',
+}
+
 export interface UserDetails {
   id: string;
   email: string;
