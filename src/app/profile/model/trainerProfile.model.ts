@@ -1,0 +1,38 @@
+import {
+  Birth,
+  Contact,
+  GenderType,
+  ProfessionalGalleryPicture,
+  Review,
+  TrainerType,
+  UserType,
+} from './profile-interface';
+import { ClientProfile } from './clientProfile.model';
+
+export class TrainerProfile {
+  constructor(
+    public id: string,
+    public status: UserType.Trainer,
+    public firstName: string,
+    public lastName: string,
+    public name: null,
+    public trainerType: TrainerType,
+    public gender: GenderType,
+    public joined: Birth,
+    public birth: Birth,
+    public hasProPremium: boolean,
+    public certificate: boolean,
+    public experience: number,
+    public country: string,
+    public state: string,
+    public city: string,
+    public contact: Contact,
+    public shortDescription: string | null,
+    public longDescription: string | null,
+    public completedClients: number | null,
+    public profilePicture: string | null,
+    public activeClients: ClientProfile[] | null,
+    public gallery: ProfessionalGalleryPicture[] | null,
+    public reviews: Review[] | null
+  ) {}
+}

@@ -1,9 +1,9 @@
-import {User} from "../model/user.model";
+import { UserAuth } from '../model/userAuth.model';
 
 export interface AuthState {
-  user: User | null;
+  userAuth: UserAuth | null;
 }
 
 export const initialState: AuthState = {
-  user: null,
+  userAuth: null,
 };

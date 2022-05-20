@@ -23,10 +23,9 @@ export interface Location {
 export interface Contact {
   phone: string;
   email: string;
-  facebook?: string;
-  twitter?: string;
-  instagram?: string;
-  location: Location;
+  facebook: string | null;
+  twitter: string | null;
+  instagram: string | null;
 }
 
 export interface ProfessionalGalleryPicture {
@@ -59,8 +58,9 @@ export enum GenderType {
   Female = 'Female',
   Other = 'Other',
 }
-export enum GymType {
+export enum TrainerType {
   Powerlifting = 'Powerlifting',
+  Calisthenic = 'Calisthenic',
   Fitness = 'Fitness',
   Yoga = 'Yoga',
   Spin = 'Spin',
@@ -68,6 +68,29 @@ export enum GymType {
   Pilates = 'Pilates',
   Bootcamp = 'Bootcamp',
   RockClimbing = 'Rock climbing',
+  Other = 'Other',
+}
+
+export enum GymType {
+  Powerlifting = 'Powerlifting',
+  Calisthenic = 'Calisthenic',
+  Fitness = 'Fitness',
+  Yoga = 'Yoga',
+  Spin = 'Spin',
+  Barre = 'Barre',
+  Pilates = 'Pilates',
+  Bootcamp = 'Bootcamp',
+  RockClimbing = 'Rock climbing',
+  Other = 'Other',
+}
+
+export interface UserDetails {
+  id: string;
+  email: string;
+  hasProfile: boolean;
+  dayJoined: number;
+  monthJoined: number;
+  yearJoined: number;
 }
 
 export interface ClientDetailsHistory {

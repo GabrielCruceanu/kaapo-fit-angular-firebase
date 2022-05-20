@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { User } from '../model/user.model';
+import { UserAuth } from '../model/userAuth.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { autoLogout } from '../store/auth.actions';
 import { AuthResponseData } from '../model/AuthResponseData.model';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { UserProfile } from '../../profile/model/userProfile.model';
+import { UserType } from '../../profile/model/profile-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +16,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   timeoutInterval: any;
 
-  constructor(
-    private http: HttpClient,
-    private store: Store<AppState>,
-    private router: Router
-  ) {}
+  constructor(private http: HttpClient, private store: Store<AppState>) {}
 
   onLogin(email: string, password: string): Observable<AuthResponseData> {
     return this.http.post<AuthResponseData>(
@@ -46,13 +43,36 @@ export class AuthService {
     const expirationDate = new Date(
       new Date().getTime() + +data.expiresIn * 1000
     );
-    const user = new User(
+    const user = new UserAuth(
       data.localId,
       data.email,
       data.idToken,
       expirationDate
     );
     return user;
+  }
+
+  formatUserProfileForDb(
+    user: UserAuth,
+    hasProfile: boolean,
+    dayJoined: number,
+    monthJoined: number,
+    yearJoined: number,
+    userType: UserType | null
+  ) {
+    const { id, email } = user;
+
+    const userDb = new UserProfile(
+      id,
+      email,
+      hasProfile,
+      dayJoined,
+      monthJoined,
+      yearJoined,
+      userType
+    );
+
+    return userDb;
   }
 
   getErrorMessage(message: string) {
@@ -70,15 +90,15 @@ export class AuthService {
     }
   }
 
-  setUserInLocalStorage(user: User) {
-    localStorage.setItem('userData', JSON.stringify(user));
+  setUserAuthInLocalStorage(userAuth: UserAuth) {
+    localStorage.setItem('userAuthData', JSON.stringify(userAuth));
 
-    this.runTimeoutInterval(user);
+    this.runTimeoutIntervalForUserAuth(userAuth);
   }
 
-  runTimeoutInterval(user: User) {
+  runTimeoutIntervalForUserAuth(userAuth: UserAuth) {
     const todayDate = new Date().getTime();
-    const expirationDate = user.expireDate.getTime();
+    const expirationDate = userAuth.expireDate.getTime();
     const timeInterval = expirationDate - todayDate;
 
     this.timeoutInterval = setTimeout(() => {
@@ -87,27 +107,27 @@ export class AuthService {
     }, timeInterval);
   }
 
-  getUserFromLocalStorage() {
-    const userDataString = localStorage.getItem('userData');
-    if (userDataString) {
-      console.log('userDataString', userDataString);
-      const userData = JSON.parse(userDataString);
-      console.log('userData', userData);
+  getUserAuthFromLocalStorage() {
+    const userAuthDataString = localStorage.getItem('userAuthData');
+    if (userAuthDataString) {
+      const userData = JSON.parse(userAuthDataString);
+
       const expirationDate = new Date(userData.expirationDate);
-      const user = new User(
+      const userAuth = new UserAuth(
         userData.id,
         userData.email,
         userData._token,
         expirationDate
       );
-      this.runTimeoutInterval(user);
-      return user;
+      this.runTimeoutIntervalForUserAuth(userAuth);
+      return userAuth;
     }
     return null;
   }
 
   onLogout() {
-    localStorage.removeItem('userData');
+    localStorage.removeItem('userAuthData');
+    localStorage.removeItem('userProfileData');
     if (this.timeoutInterval) {
       clearTimeout(this.timeoutInterval);
       this.timeoutInterval = null;

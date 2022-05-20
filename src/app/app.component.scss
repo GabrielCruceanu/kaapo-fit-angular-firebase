@@ -71,6 +71,10 @@
   top: 30%;
 }
 
+::ng-deep #mat-menu-panel-3 {
+  max-height: 400px;
+}
+
 ::ng-deep .cdk-overlay-connected-position-bounding-box {
   max-width: 280px;
 }
@@ -90,9 +94,23 @@
   color: var(--soft);
 }
 
-::ng-deep .mat-datepicker-content {
+::ng-deep .mat-datepicker-content,
+::ng-deep .mat-autocomplete-panel {
   background-color: var(--dark-one);
   color: var(--white);
+}
+
+::ng-deep .mat-option {
+  font-size: 1rem;
+}
+::ng-deep
+  .mat-form-field-appearance-outline.mat-form-field-disabled
+  .mat-form-field-outline,
+::ng-deep .mat-input-element:disabled,
+::ng-deep
+  .mat-form-field-appearance-outline.mat-form-field-disabled
+  .mat-form-field-label {
+  color: var(--gray);
 }
 
 ::ng-deep .mat-option,
@@ -104,8 +122,9 @@
   color: var(--white);
 }
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: var(--soft);
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline,
+::ng-deep .country-list-button {
+  color: var(--soft) !important;
 }
 
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-underline::before {

@@ -1,34 +1,36 @@
 import {
   Birth,
   Contact,
-  GymType,
-  ProfessionalDetails,
+  GenderType,
   ProfessionalGalleryPicture,
   Review,
   UserType,
 } from './profile-interface';
+import { ClientProfile } from './clientProfile.model';
 
-export class GymProfile {
+export class NutritionistProfile {
   constructor(
     public id: string,
-    public status: UserType.Gym,
-    public firstName: null,
-    public lastName: null,
-    public name: string,
+    public status: UserType.Nutritionist,
+    public firstName: string,
+    public lastName: string,
+    public name: null,
+    public gender: GenderType,
     public joined: Birth,
+    public birth: Birth,
     public hasProPremium: boolean,
-    public gymType: GymType,
+    public certificate: boolean,
+    public experience: number,
     public country: string,
     public state: string,
     public city: string,
-    public street: string,
-    public strNo: string,
     public contact: Contact,
     public shortDescription: string | null,
     public longDescription: string | null,
+    public completedClients: number | null,
     public profilePicture: string | null,
+    public activeClients: ClientProfile[] | null,
     public gallery: ProfessionalGalleryPicture[] | null,
-    public reviews: Review[] | null,
-    public personal: ProfessionalDetails[] | null
+    public reviews: Review[] | null
   ) {}
 }

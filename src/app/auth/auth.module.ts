@@ -35,6 +35,6 @@ import { AuthService } from './services/auth.service';
     MatDialogModule,
     LayoutModule,
   ],
-  providers: [AuthService],
+  providers: [],
 })
 export class AuthModule {}

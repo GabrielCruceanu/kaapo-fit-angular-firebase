@@ -12,19 +12,19 @@ const _authReducer = createReducer(
   on(loginSuccess, (state, action) => {
     return {
       ...state,
-      user: action.user,
+      userAuth: action.userAuth,
     };
   }),
   on(signupSuccess, (state, action) => {
     return {
       ...state,
-      user: action.user,
+      userAuth: action.userAuth,
     };
   }),
   on(autoLogout, (state) => {
     return {
       ...state,
-      user: null,
+      userAuth: null,
     };
   })
 );
