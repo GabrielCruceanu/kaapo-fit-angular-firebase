@@ -1,0 +1,323 @@
+<app-layout>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="app-title">Nutritionist profile</h1>
+      </div>
+    </div>
+    <form
+      (ngSubmit)="onNutritionistSubmit()"
+      class="row form justify-content-center"
+      [formGroup]="nutritionistFormGroup"
+    >
+      <div class="col-lg-8">
+        <!--   Details     -->
+        <div class="row">
+          <div class="col-md-6 mt-3">
+            <mat-form-field class="form-control col-md-6" appearance="outline">
+              <mat-label>Firstname</mat-label>
+              <input
+                matInput
+                placeholder="Jon"
+                name="firstname"
+                formControlName="firstname"
+              />
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['firstname'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Firstname is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>Lastname</mat-label>
+              <input
+                type="text"
+                matInput
+                placeholder="Doe"
+                name="lastname"
+                formControlName="lastname"
+              />
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['lastname'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Lastname is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>Experience</mat-label>
+              <input
+                type="text"
+                matInput
+                placeholder="Experience in years"
+                aria-label="20"
+                name="experience"
+                formControlName="experience"
+                [matAutocomplete]="experience"
+              />
+              <mat-autocomplete #experience="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of trainerExperience"
+                  [value]="option"
+                  >{{ option }}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['experience'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Experience is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mt-3">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Birth</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="birth"
+                name="birth"
+                (click)="picker.open()"
+              />
+              <!--              <mat-datepicker-toggle-->
+              <!--                matSuffix-->
+              <!--                [for]="picker"-->
+              <!--              ></mat-datepicker-toggle>-->
+              <mat-datepicker touchUi #picker></mat-datepicker>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['birth'].hasError('required')
+                "
+              >
+                Birth is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>Gender</mat-label>
+
+              <mat-select formControlName="gender">
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female">Female</mat-option>
+                <mat-option value="other">Other</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['gender'].hasError('required')
+                "
+              >
+                Gender is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>Country</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="country"
+                placeholder="Pick one"
+                aria-label="Country"
+                [matAutocomplete]="countries"
+                (ngModelChange)="onDisableInput('state', 'country')"
+              />
+              <mat-autocomplete #countries="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of filteredCountries | async"
+                  [value]="option"
+                  >{{ option }}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['country'].hasError('required')
+                "
+              >
+                Country is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['country'].hasError(
+                    'isNotCountryFromList'
+                  ) &&
+                  !nutritionistFormGroup.controls['country'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Pick a country from the list
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>State</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="state"
+                placeholder="Pick one"
+                aria-label="State"
+                [matAutocomplete]="states"
+                (ngModelChange)="onDisableInput('city', 'state')"
+              />
+              <mat-autocomplete #states="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of filteredStates | async"
+                  [value]="option"
+                  >{{ option }}</mat-option
+                >
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['country'].hasError('required')
+                "
+              >
+                State is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['state'].hasError(
+                    'isNotStateFromList'
+                  ) &&
+                  !nutritionistFormGroup.controls['state'].hasError('required')
+                "
+              >
+                Pick a state from the list
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>City</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="city"
+                placeholder="Pick one"
+                aria-label="City"
+                [matAutocomplete]="cities"
+              />
+              <mat-autocomplete #cities="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of filteredCities | async"
+                  [value]="option"
+                  >{{ option }}</mat-option
+                >
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['city'].hasError('required')
+                "
+              >
+                City is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-lg-6 mt-3">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>Phone Number</mat-label>
+              <ngx-mat-intl-tel-input
+                [required]="true"
+                formControlName="phone"
+                [enablePlaceholder]="true"
+                [enableSearch]="true"
+                name="phone"
+                class="phone-search-control"
+              >
+              </ngx-mat-intl-tel-input>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['phone'].hasError('required')
+                "
+              >
+                Phone number is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['phone'].errors &&
+                  !nutritionistFormGroup.controls['phone'].hasError('required')
+                "
+              >
+                Phone number need to have 10 character
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-6 mt-3">
+            <mat-form-field class="form-control col-md-6" appearance="outline">
+              <mat-label>Facebook</mat-label>
+              <input
+                matInput
+                placeholder="Facebook link"
+                name="facebook"
+                formControlName="facebook"
+              />
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-6 mt-3">
+            <mat-form-field class="form-control col-md-6" appearance="outline">
+              <mat-label>Twitter</mat-label>
+              <input
+                matInput
+                placeholder="Twitter link"
+                name="twitter"
+                formControlName="twitter"
+              />
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-6 mt-3">
+            <mat-form-field class="form-control col-md-6" appearance="outline">
+              <mat-label>Instagram</mat-label>
+              <input
+                matInput
+                placeholder="Instagram link"
+                name="instagram"
+                formControlName="instagram"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="form-footer col-12 col-md-5 mt-4">
+        <mat-error *ngIf="errorMessage$ | async as errorMessage">
+          {{ errorMessage }}
+        </mat-error>
+        <button
+          mat-button
+          [class.disabled]="!nutritionistFormGroup.valid"
+          type="submit"
+        >
+          Save Profile
+        </button>
+      </div>
+    </form>
+  </div>
+</app-layout>

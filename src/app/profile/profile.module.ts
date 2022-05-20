@@ -27,6 +27,7 @@ import { NgxMatIntlTelInputModule } from 'ngx-mat-intl-tel-input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { AddNutritionistProfileComponent } from './view/add-nutritionist-profile/add-nutritionist-profile.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     AddClientProfileComponent,
     AddTrainerProfileComponent,
     AddGymProfileComponent,
+    AddNutritionistProfileComponent,
   ],
   imports: [
     CommonModule,

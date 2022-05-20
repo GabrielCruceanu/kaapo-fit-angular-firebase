@@ -9,6 +9,8 @@ import {
   createClientProfileSuccess,
   createGymProfileStart,
   createGymProfileSuccess,
+  createNutritionistProfileStart,
+  createNutritionistProfileSuccess,
   createTrainerProfileStart,
   createTrainerProfileSuccess,
   createUserProfileStart,
@@ -132,6 +134,24 @@ export class ProfileEffects {
     );
   });
 
+  createNutritionistProfileStart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(createNutritionistProfileStart),
+      map((action) => {
+        this.profileService.createNutritionistProfileInDb(
+          action.nutritionistProfile
+        );
+
+        this.store.dispatch(setLoadingSpinner({ status: false }));
+
+        return createNutritionistProfileSuccess({
+          nutritionistProfile: action.nutritionistProfile,
+          redirect: true,
+        });
+      })
+    );
+  });
+
   profileRedirect$ = createEffect(
     () => {
       return this.actions$.pipe(
@@ -140,12 +160,13 @@ export class ProfileEffects {
             createClientProfileSuccess,
             createGymProfileSuccess,
             createTrainerProfileSuccess,
+            createNutritionistProfileSuccess,
           ]
         ),
         tap((action) => {
           this.store.dispatch(setErrorMessage({ message: '' }));
           if (action.redirect) {
-            this.router.navigate(['/profile']);
+            this.router.navigateByUrl('/home');
           }
         })
       );

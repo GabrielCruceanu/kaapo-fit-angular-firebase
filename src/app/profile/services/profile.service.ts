@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { getToken } from '../../auth/store/auth.selector';
-import { switchMap, take } from 'rxjs';
+import { Subscription, switchMap, take } from 'rxjs';
 import {
   doc,
   docData,
@@ -17,6 +17,9 @@ import { UserProfile } from '../model/userProfile.model';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
+import { NutritionistProfile } from '../model/nutritionistProfile.model';
+import { getUserProfile } from '../store/profile.selector';
+import { Router } from '@angular/router';
 
 export const _filer = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -27,12 +30,22 @@ export const _filer = (opt: string[], value: string): string[] => {
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileService {
+export class ProfileService implements OnDestroy {
+  userProfile?: UserProfile | null;
+  userProfileSub: Subscription | undefined;
+
   constructor(
     private store: Store<AppState>,
     private http: HttpClient,
-    private firestore: Firestore
-  ) {}
+    private firestore: Firestore,
+    private router: Router
+  ) {
+    this.userProfileSub = this.store
+      .select(getUserProfile)
+      .subscribe((userProfile) => {
+        this.userProfile = userProfile;
+      });
+  }
 
   uploadImage(image: File) {
     const uploadData = new FormData();
@@ -114,6 +127,15 @@ export class ProfileService {
     });
   }
 
+  public createNutritionistProfileInDb(
+    nutritionistProfile: NutritionistProfile
+  ) {
+    const ref = doc(this.firestore, 'nutritionists', nutritionistProfile.id);
+    setDoc(ref, {
+      ...nutritionistProfile,
+    });
+  }
+
   public disableInput(formGroup: any, disableInput: string, input: string) {
     formGroup.controls[input].valid
       ? formGroup.controls[disableInput].enable()
@@ -146,5 +168,19 @@ export class ProfileService {
 
       return !sateValue ? { isNotStateFromList: true } : null;
     };
+  }
+
+  public checkIfUserHasProfile(): boolean {
+    console.log(
+      '!!this.userProfile?.hasProfile',
+      !!this.userProfile?.hasProfile
+    );
+    return !!this.userProfile?.hasProfile;
+  }
+
+  ngOnDestroy() {
+    if (this.userProfileSub) {
+      this.userProfileSub.unsubscribe();
+    }
   }
 }

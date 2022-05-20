@@ -8,7 +8,7 @@ export const ProfilesData: ProfileData[] = [
   },
   {
     name: 'Nutritionist',
-    link: '/profile/nutrition',
+    link: '/profile/nutritionist',
     icon: 'nutrition',
   },
   {
@@ -18,7 +18,7 @@ export const ProfilesData: ProfileData[] = [
   },
   {
     name: 'Gym',
-    link: '/profile/add-gym',
+    link: '/profile/gym',
     icon: 'workout',
   },
 ];

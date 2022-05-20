@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { Router } from '@angular/router';
 import { getUserProfile } from '../../store/profile.selector';
+import { ProfileService } from '../../services/profile.service';
 SwiperCore.use([EffectFade]);
 
 @Component({
@@ -23,20 +24,27 @@ export class ProfileComponent implements OnInit, OnDestroy {
   userProfile: UserProfile | null | undefined;
   userProfileSub: Subscription | undefined;
 
-  constructor(private store: Store<AppState>, private router: Router) {
+  constructor(
+    private store: Store<AppState>,
+    private profileService: ProfileService,
+    private router: Router
+  ) {
     this.profile = getUserDataMock();
   }
 
   ngOnInit() {
-    this.userProfileSub = this.store
-      .select(getUserProfile)
-      .subscribe((userProfile) => {
-        this.userProfile = userProfile;
-        if (!userProfile?.hasProfile) {
-          this.router.navigate(['/profile/add']);
-          console.log('this.userProfile', this.userProfile);
-        }
-      });
+    // this.userProfileSub = this.store
+    //   .select(getUserProfile)
+    //   .subscribe((userProfile) => {
+    //     this.userProfile = userProfile;
+    //     if (!userProfile?.hasProfile) {
+    //       this.router.navigate(['/profile/add']);
+    //       console.log('this.userProfile', this.userProfile);
+    //     }
+    //   });
+    if (!this.profileService.checkIfUserHasProfile()) {
+      this.router.navigate(['/profile/add']);
+    }
   }
 
   ngOnDestroy() {
