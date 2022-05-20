@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -6,14 +6,18 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
+import { UserProfile } from '../model/userProfile.model';
+import { getUserProfile } from '../store/profile.selector';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileGuard implements CanActivate {
+export class ProfileGuard implements CanActivate, OnDestroy {
+  userProfileSub: Subscription | undefined;
+
   constructor(private store: Store<AppState>, private router: Router) {}
 
   canActivate(
@@ -24,6 +28,19 @@ export class ProfileGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    return this.router.createUrlTree(['profile/add']);
+    this.userProfileSub = this.store
+      .select(getUserProfile)
+      .subscribe((userProfile) => {
+        if (!userProfile?.hasProfile) {
+          this.router.createUrlTree(['/profile/add']);
+        }
+      });
+    return true;
+  }
+
+  ngOnDestroy() {
+    if (this.userProfileSub) {
+      this.userProfileSub.unsubscribe();
+    }
   }
 }

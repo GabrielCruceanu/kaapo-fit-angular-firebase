@@ -1,8 +1,14 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { getUserDataMock } from '../../../../data/userDetails';
 
 import SwiperCore, { EffectFade } from 'swiper';
 import { ClientDetails } from '../../model/profile-interface';
+import { UserProfile } from '../../model/userProfile.model';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/app.state';
+import { Router } from '@angular/router';
+import { getUserProfile } from '../../store/profile.selector';
 SwiperCore.use([EffectFade]);
 
 @Component({
@@ -11,11 +17,31 @@ SwiperCore.use([EffectFade]);
   styleUrls: ['profile.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit, OnDestroy {
   public title: string = 'My Profile';
   public profile: ClientDetails;
+  userProfile: UserProfile | null | undefined;
+  userProfileSub: Subscription | undefined;
 
-  constructor() {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.profile = getUserDataMock();
+  }
+
+  ngOnInit() {
+    this.userProfileSub = this.store
+      .select(getUserProfile)
+      .subscribe((userProfile) => {
+        this.userProfile = userProfile;
+        if (!userProfile?.hasProfile) {
+          this.router.navigate(['/profile/add']);
+          console.log('this.userProfile', this.userProfile);
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.userProfileSub) {
+      this.userProfileSub.unsubscribe();
+    }
   }
 }

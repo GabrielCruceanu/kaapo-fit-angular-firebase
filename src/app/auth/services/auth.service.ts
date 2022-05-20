@@ -87,15 +87,15 @@ export class AuthService {
     }
   }
 
-  setUserInLocalStorage(user: UserAuth) {
-    localStorage.setItem('userData', JSON.stringify(user));
+  setUserAuthInLocalStorage(userAuth: UserAuth) {
+    localStorage.setItem('userAuthData', JSON.stringify(userAuth));
 
-    this.runTimeoutInterval(user);
+    this.runTimeoutIntervalForUserAuth(userAuth);
   }
 
-  runTimeoutInterval(user: UserAuth) {
+  runTimeoutIntervalForUserAuth(userAuth: UserAuth) {
     const todayDate = new Date().getTime();
-    const expirationDate = user.expireDate.getTime();
+    const expirationDate = userAuth.expireDate.getTime();
     const timeInterval = expirationDate - todayDate;
 
     this.timeoutInterval = setTimeout(() => {
@@ -104,26 +104,27 @@ export class AuthService {
     }, timeInterval);
   }
 
-  getUserFromLocalStorage() {
-    const userDataString = localStorage.getItem('userData');
-    if (userDataString) {
-      const userData = JSON.parse(userDataString);
+  getUserAuthFromLocalStorage() {
+    const userAuthDataString = localStorage.getItem('userAuthData');
+    if (userAuthDataString) {
+      const userData = JSON.parse(userAuthDataString);
 
       const expirationDate = new Date(userData.expirationDate);
-      const user = new UserAuth(
+      const userAuth = new UserAuth(
         userData.id,
         userData.email,
         userData._token,
         expirationDate
       );
-      this.runTimeoutInterval(user);
-      return user;
+      this.runTimeoutIntervalForUserAuth(userAuth);
+      return userAuth;
     }
     return null;
   }
 
   onLogout() {
-    localStorage.removeItem('userData');
+    localStorage.removeItem('userAuthData');
+    localStorage.removeItem('userProfileData');
     if (this.timeoutInterval) {
       clearTimeout(this.timeoutInterval);
       this.timeoutInterval = null;

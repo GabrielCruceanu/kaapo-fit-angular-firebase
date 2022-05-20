@@ -4,16 +4,16 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { getToken } from '../../auth/store/auth.selector';
 import { switchMap, take } from 'rxjs';
-import { ClientDetails, UserDetails } from '../model/profile-interface';
 import {
   doc,
   docData,
   Firestore,
-  getDoc,
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
 import { traceUntilFirst } from '@angular/fire/performance';
+import { ClientProfile } from '../model/clientProfile.model';
+import { UserProfile } from '../model/userProfile.model';
 
 export const _filer = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -47,14 +47,36 @@ export class ProfileService {
     );
   }
 
-  public setUserProfileInDb(userProfile: UserDetails) {
+  setUserProfileInLocalStorage(userProfile: UserProfile) {
+    localStorage.setItem('userProfileData', JSON.stringify(userProfile));
+  }
+
+  getUserProfileFromLocalStorage() {
+    const userProfileDataString = localStorage.getItem('userProfileData');
+    if (userProfileDataString) {
+      const userData = JSON.parse(userProfileDataString);
+
+      const userProfile = new UserProfile(
+        userData.id,
+        userData.email,
+        userData.hasProfile,
+        userData.dayJoined,
+        userData.monthJoined,
+        userData.yearJoined
+      );
+      return userProfile;
+    }
+    return null;
+  }
+
+  public createUserProfileInDb(userProfile: UserProfile) {
     const ref = doc(this.firestore, 'users', userProfile.id);
     setDoc(ref, {
       ...userProfile,
     });
   }
 
-  public updateUserProfileInDb(userProfile: UserDetails) {
+  public updateUserProfileInDb(userProfile: UserProfile) {
     const ref = doc(this.firestore, 'users', userProfile.id);
     updateDoc(ref, {
       ...userProfile,
@@ -67,7 +89,7 @@ export class ProfileService {
     return docData(docRef).pipe(traceUntilFirst('firestore'));
   }
 
-  public setClient(clientProfile: ClientDetails) {
+  public createClientProfileInDb(clientProfile: ClientProfile) {
     const ref = doc(this.firestore, 'clients', clientProfile.userId);
     setDoc(ref, {
       ...clientProfile,

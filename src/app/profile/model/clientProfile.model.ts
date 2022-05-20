@@ -1,6 +1,5 @@
 import {
   Birth,
-  ClientDetailsHistory,
   ClientGalleryPicture,
   GenderType,
   GymDetails,
@@ -11,18 +10,29 @@ import {
 export class ClientProfile {
   constructor(
     public userId: string,
-    public gender: GenderType,
+    public status: UserType,
     public firstName: string,
     public lastName: string,
-    public birth: Birth,
     public email: string,
     public phone: string,
+    public gender: GenderType,
     public country: string,
+    public state: string,
     public city: string,
-    public joined: Date,
-    public profilePicture: string,
     public hasPremium: boolean,
-    public status: UserType,
+    public birth: Birth,
+    public joined: Birth,
+    public profilePicture: string | null,
+    public history: ClientPhysicalDetails[] | null,
+    public nutritionist: ProfessionalDetails | null,
+    public trainer: ProfessionalDetails | null,
+    public gym: GymDetails | null
+  ) {}
+}
+
+export class ClientPhysicalDetails {
+  constructor(
+    public date: Birth,
     public weight: string,
     public neck: string,
     public shoulders: string,
@@ -32,10 +42,6 @@ export class ClientProfile {
     public hip: string,
     public ass: string,
     public thigh: string,
-    public gallery: ClientGalleryPicture[],
-    public history?: ClientDetailsHistory[],
-    public nutritionist?: ProfessionalDetails,
-    public trainer?: ProfessionalDetails,
-    public gym?: GymDetails
+    public gallery: ClientGalleryPicture[]
   ) {}
 }

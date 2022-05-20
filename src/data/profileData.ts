@@ -1,11 +1,6 @@
-export interface ProfileModel {
-  name: string;
-  link: string;
-  mode?: string;
-  icon: string;
-}
+import { ProfileData } from '../app/profile/model/profileData.model';
 
-export const ProfilesData: ProfileModel[] = [
+export const ProfilesData: ProfileData[] = [
   {
     name: 'Client',
     link: '/profile/add-client',
@@ -30,6 +25,6 @@ export const ProfilesData: ProfileModel[] = [
   },
 ];
 
-export function getProfilesData(): ProfileModel[] {
+export function getProfilesData(): ProfileData[] {
   return ProfilesData;
 }

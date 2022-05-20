@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { UserProfile } from '../model/userProfile.model';
+import { ClientProfile } from '../model/clientProfile.model';
 
 export const CREATE_USER_PROFILE_START =
   '[profile page] create user profile start';
@@ -52,10 +53,10 @@ export const getUserProfileSuccess = createAction(
 
 export const createClientProfileStart = createAction(
   CREATE_CLIENT_PROFILE_START,
-  props<{ userProfile: UserProfile }>()
+  props<{ clientProfile: ClientProfile }>()
 );
 
 export const createClientProfileSuccess = createAction(
   CREATE_CLIENT_PROFILE_SUCCESS,
-  props<{ userProfile: UserProfile; redirect: boolean }>()
+  props<{ clientProfile: ClientProfile; redirect: boolean }>()
 );

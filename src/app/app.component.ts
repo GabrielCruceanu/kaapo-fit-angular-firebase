@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './store/app.state';
-import { autoLogin } from './auth/store/auth.actions';
+import { autoLogin, autoLogout } from './auth/store/auth.actions';
 import { getUserProfile } from './profile/store/profile.selector';
 import {
   createUserProfileStart,
@@ -32,6 +32,9 @@ export class AppComponent implements OnInit {
     ]).subscribe(([userAuth, userProfile]) => {
       console.log('userAuth', userAuth);
       console.log('userProfile', userProfile);
+      if (!userAuth) {
+        console.log('reload');
+      }
     });
   }
 }

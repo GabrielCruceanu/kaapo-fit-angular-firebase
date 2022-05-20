@@ -77,6 +77,7 @@ export interface UserDetails {
   monthJoined: number;
   yearJoined: number;
 }
+
 export interface ClientDetailsHistory {
   date: Date;
   weight: string;

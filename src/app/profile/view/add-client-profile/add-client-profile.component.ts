@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthType } from '../../../auth/model/AuthResponseData.model';
-import { map, Observable, of, startWith, Subscription } from 'rxjs';
+import { map, Observable, startWith, Subscription } from 'rxjs';
 import {
   AbstractControl,
   FormControl,
@@ -11,18 +11,27 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { setErrorMessage } from '../../../store/shared/shared.actions';
+import {
+  setErrorMessage,
+  setLoadingSpinner,
+} from '../../../store/shared/shared.actions';
 import {
   getErrorMessage,
   getLoading,
 } from '../../../store/shared/shared.selector';
-import { _filer, ProfileService } from '../../services/profile.service';
-import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
-import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
+import { ProfileService } from '../../services/profile.service';
 import { UserAuth } from '../../../auth/model/userAuth.model';
 import { getUserAuth } from '../../../auth/store/auth.selector';
-import { CountriesData, Country, State } from '../../../../data/country';
 import { CountryService } from '../../../shared/services/country.service';
+import { ClientProfile } from '../../model/clientProfile.model';
+import { UserType } from '../../model/profile-interface';
+import { UserProfile } from '../../model/userProfile.model';
+import { getUserProfile } from '../../store/profile.selector';
+import {
+  createClientProfileStart,
+  updateUserProfileStart,
+} from '../../store/profile.actions';
+import firebase from 'firebase/compat';
 
 @Component({
   selector: 'app-add-client-profile',
@@ -33,6 +42,8 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   authType = AuthType;
   userAuth: UserAuth | null | undefined;
   userAuthSub: Subscription | undefined;
+  userProfile: UserProfile | null | undefined;
+  userProfileSub: Subscription | undefined;
   getLoadingSpinnerSub: Subscription | undefined;
   errorMessage$: Observable<any> | undefined;
   onlyCountries = this.countryService.mapCountriesData();
@@ -85,6 +96,12 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       this.userAuth = userAuth;
     });
 
+    this.userProfileSub = this.store
+      .select(getUserProfile)
+      .subscribe((userProfile) => {
+        this.userProfile = userProfile;
+      });
+
     this.filteredCountries = this.userFormGroup.controls[
       'country'
     ].valueChanges.pipe(
@@ -98,6 +115,7 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       })
     );
 
+    this.userFormGroup.controls['state'].disable();
     this.filteredStates = this.userFormGroup.controls[
       'state'
     ].valueChanges.pipe(
@@ -108,6 +126,7 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       })
     );
 
+    this.userFormGroup.controls['city'].disable();
     this.filteredCities = this.userFormGroup.controls['city'].valueChanges.pipe(
       startWith(''),
       map((value) => {
@@ -125,14 +144,65 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log('this.userFormGroup', this.userFormGroup);
-    if (this.userFormGroup.valid) {
-      const { firstname, lastname, gender, email, phone, city } =
-        this.userFormGroup.value;
-      const birth = this.userFormGroup.value.birth;
-      console.log('birth', birth);
-      // this.profileService.addClient(this.userFormGroup.value);
-      // this.store.dispatch(setLoadingSpinner({ status: true }));
+    if (this.userFormGroup.valid && this.userAuth && this.userProfile) {
+      const {
+        firstname,
+        lastname,
+        birth,
+        gender,
+        phone,
+        country,
+        state,
+        city,
+      } = this.userFormGroup.value;
+
+      const birthFinal = {
+        date: birth.date(),
+        month: birth.month() + 1,
+        year: birth.year(),
+      };
+
+      const joinedFinal = {
+        date: this.userProfile.dayJoined,
+        month: this.userProfile.monthJoined,
+        year: this.userProfile.yearJoined,
+      };
+
+      const clientProfile = new ClientProfile(
+        this.userAuth?.id,
+        UserType.Client,
+        firstname,
+        lastname,
+        this.userAuth?.email,
+        phone,
+        gender,
+        country,
+        state,
+        city,
+        false,
+        birthFinal,
+        joinedFinal,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
+
+      const userProfile = new UserProfile(
+        this.userProfile.id,
+        this.userProfile.email,
+        true,
+        this.userProfile.dayJoined,
+        this.userProfile.monthJoined,
+        this.userProfile.yearJoined
+      );
+
+      this.store.dispatch(setLoadingSpinner({ status: true }));
+
+      this.store.dispatch(updateUserProfileStart({ userProfile }));
+
+      this.store.dispatch(createClientProfileStart({ clientProfile }));
     }
   }
 
@@ -143,6 +213,10 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.getLoadingSpinnerSub) {
       this.getLoadingSpinnerSub.unsubscribe();
+    } else if (this.userAuthSub) {
+      this.userAuthSub.unsubscribe();
+    } else if (this.userProfileSub) {
+      this.userProfileSub.unsubscribe();
     }
   }
 }

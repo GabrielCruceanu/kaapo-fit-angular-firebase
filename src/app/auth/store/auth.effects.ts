@@ -23,6 +23,7 @@ import { ProfileService } from '../../profile/services/profile.service';
 import {
   createUserProfileStart,
   getUserProfileStart,
+  getUserProfileSuccess,
 } from '../../profile/store/profile.actions';
 
 @Injectable()
@@ -35,7 +36,7 @@ export class AuthEffects {
           map((data) => {
             this.store.dispatch(setErrorMessage({ message: '' }));
             const userAuth = this.authService.formatUser(data);
-            this.authService.setUserInLocalStorage(userAuth);
+            this.authService.setUserAuthInLocalStorage(userAuth);
             this.store.dispatch(
               getUserProfileStart({ userProfileId: userAuth.id })
             );
@@ -54,15 +55,6 @@ export class AuthEffects {
     );
   });
 
-  loginSuccess$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(loginSuccess),
-      map((action) => {
-        return getUserProfileStart({ userProfileId: action.userAuth.id });
-      })
-    );
-  });
-
   signUp$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(signupStart),
@@ -73,7 +65,7 @@ export class AuthEffects {
             const userAuth = this.authService.formatUser(data);
 
             //Save user local and in Firestore
-            this.authService.setUserInLocalStorage(userAuth);
+            this.authService.setUserAuthInLocalStorage(userAuth);
             return signupSuccess({ userAuth: userAuth, redirect: true });
           }),
           catchError((errResp) => {
@@ -95,8 +87,8 @@ export class AuthEffects {
         const userProfile = this.authService.formatUserProfileForDb(
           action.userAuth,
           false,
-          new Date().getUTCDay(),
-          new Date().getUTCMonth(),
+          new Date().getUTCDate(),
+          new Date().getUTCMonth() + 1,
           new Date().getUTCFullYear()
         );
 
@@ -124,12 +116,22 @@ export class AuthEffects {
       })
     );
   });
+
   autoLogin$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(autoLogin),
       mergeMap((action) => {
-        const userAuth = this.authService.getUserFromLocalStorage();
-        if (userAuth) {
+        const userAuth = this.authService.getUserAuthFromLocalStorage();
+        const userProfile =
+          this.profileService.getUserProfileFromLocalStorage();
+
+        if (userAuth && !userProfile) {
+          return of(loginSuccess({ userAuth: userAuth, redirect: false }));
+        } else if (userAuth && userProfile) {
+          this.store.dispatch(
+            getUserProfileSuccess({ userProfile: userProfile, redirect: true })
+          );
+
           return of(loginSuccess({ userAuth: userAuth, redirect: false }));
         } else {
           return of(autoLogout());
@@ -144,6 +146,21 @@ export class AuthEffects {
         ofType(autoLogout),
         map((action) => {
           this.router.navigate(['/']).then((r) => this.authService.onLogout());
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
+  authRedirect$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(...[loginSuccess, signupSuccess]),
+        tap((action) => {
+          this.store.dispatch(setErrorMessage({ message: '' }));
+          if (action.redirect) {
+            this.router.navigate(['/profile']);
+          }
         })
       );
     },

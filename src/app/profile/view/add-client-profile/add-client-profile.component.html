@@ -56,11 +56,12 @@
                 [matDatepicker]="picker"
                 formControlName="birth"
                 name="birth"
+                (click)="picker.open()"
               />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="picker"
-              ></mat-datepicker-toggle>
+              <!--              <mat-datepicker-toggle-->
+              <!--                matSuffix-->
+              <!--                [for]="picker"-->
+              <!--              ></mat-datepicker-toggle>-->
               <mat-datepicker touchUi #picker></mat-datepicker>
               <mat-error
                 *ngIf="userFormGroup.controls['birth'].hasError('required')"
@@ -96,6 +97,7 @@
                 [enablePlaceholder]="true"
                 [enableSearch]="true"
                 name="phone"
+                class="phone-search-control"
               >
               </ngx-mat-intl-tel-input>
               <mat-error
@@ -130,8 +132,8 @@
                 <mat-option
                   *ngFor="let option of filteredCountries | async"
                   [value]="option"
-                  >{{ option }}</mat-option
-                >
+                  >{{ option }}
+                </mat-option>
               </mat-autocomplete>
               <mat-error
                 *ngIf="userFormGroup.controls['country'].hasError('required')"

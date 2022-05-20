@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { initialState } from './profile.state';
 import {
+  createClientProfileSuccess,
   createUserProfileSuccess,
   getUserProfileSuccess,
 } from './profile.actions';
@@ -17,6 +18,12 @@ const _profileReducer = createReducer(
     return {
       ...state,
       userProfile: action.userProfile,
+    };
+  }),
+  on(createClientProfileSuccess, (state, action) => {
+    return {
+      ...state,
+      clientProfile: action.clientProfile,
     };
   })
 );

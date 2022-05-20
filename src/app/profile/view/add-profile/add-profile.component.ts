@@ -9,7 +9,8 @@ import {
   TRAINER_ICON,
   WORKOUT_ICON,
 } from '../../../../content/icons';
-import { getProfilesData, ProfileModel } from './profile.data';
+import { getProfilesData } from '../../../../data/profileData';
+import { ProfileData } from '../../model/profileData.model';
 
 @Component({
   selector: 'app-add-profile',
@@ -17,7 +18,7 @@ import { getProfilesData, ProfileModel } from './profile.data';
   styleUrls: ['./add-profile.component.scss'],
 })
 export class AddProfileComponent {
-  profiles: ProfileModel[];
+  profiles: ProfileData[];
 
   constructor(
     private domSanitizer: DomSanitizer,

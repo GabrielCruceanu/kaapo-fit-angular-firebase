@@ -5,6 +5,8 @@ import { ProfileService } from '../services/profile.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import {
+  createClientProfileStart,
+  createClientProfileSuccess,
   createUserProfileStart,
   createUserProfileSuccess,
   getUserProfileStart,
@@ -26,8 +28,10 @@ export class ProfileEffects {
     return this.actions$.pipe(
       ofType(createUserProfileStart),
       map((action) => {
+        this.profileService.setUserProfileInLocalStorage(action.userProfile);
+        this.profileService.createUserProfileInDb(action.userProfile);
+
         this.store.dispatch(setLoadingSpinner({ status: false }));
-        this.profileService.setUserProfileInDb(action.userProfile);
 
         return createUserProfileSuccess({
           userProfile: action.userProfile,
@@ -41,7 +45,9 @@ export class ProfileEffects {
     return this.actions$.pipe(
       ofType(updateUserProfileStart),
       map((action) => {
+        this.profileService.setUserProfileInLocalStorage(action.userProfile);
         this.profileService.updateUserProfileInDb(action.userProfile);
+
         this.store.dispatch(setLoadingSpinner({ status: false }));
 
         return updateUserProfileSuccess({
@@ -62,6 +68,7 @@ export class ProfileEffects {
             map((data) => {
               const userProfile = data as UserProfile;
 
+              this.profileService.setUserProfileInLocalStorage(userProfile);
               this.store.dispatch(setLoadingSpinner({ status: false }));
               return getUserProfileSuccess({
                 userProfile: userProfile,
@@ -69,6 +76,22 @@ export class ProfileEffects {
               });
             })
           );
+      })
+    );
+  });
+
+  createClientProfileStart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(createClientProfileStart),
+      map((action) => {
+        this.profileService.createClientProfileInDb(action.clientProfile);
+
+        this.store.dispatch(setLoadingSpinner({ status: false }));
+
+        return createClientProfileSuccess({
+          clientProfile: action.clientProfile,
+          redirect: true,
+        });
       })
     );
   });
@@ -81,6 +104,7 @@ export class ProfileEffects {
             createUserProfileSuccess,
             updateUserProfileSuccess,
             getUserProfileSuccess,
+            createClientProfileSuccess,
           ]
         ),
         tap((action) => {
