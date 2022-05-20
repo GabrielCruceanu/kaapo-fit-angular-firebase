@@ -15,6 +15,8 @@ import {
   createTrainerProfileSuccess,
   createUserProfileStart,
   createUserProfileSuccess,
+  getClientProfileStart,
+  getClientProfileSuccess,
   getUserProfileStart,
   getUserProfileSuccess,
   updateUserProfileStart,
@@ -27,6 +29,7 @@ import {
 } from '../../store/shared/shared.actions';
 import { AuthService } from '../../auth/services/auth.service';
 import { UserProfile } from '../model/userProfile.model';
+import { ClientProfile } from '../model/clientProfile.model';
 
 @Injectable()
 export class ProfileEffects {
@@ -78,6 +81,28 @@ export class ProfileEffects {
               this.store.dispatch(setLoadingSpinner({ status: false }));
               return getUserProfileSuccess({
                 userProfile: userProfile,
+                redirect: true,
+              });
+            })
+          );
+      })
+    );
+  });
+
+  getClientProfileStart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getClientProfileStart),
+      exhaustMap((action) => {
+        return this.profileService
+          .getUserProfileFromDb(action.clientProfileId)
+          .pipe(
+            map((data) => {
+              const clientProfile = data as ClientProfile;
+
+              this.profileService.setClientProfileInLocalStorage(clientProfile);
+              this.store.dispatch(setLoadingSpinner({ status: false }));
+              return getClientProfileSuccess({
+                clientProfile: clientProfile,
                 redirect: true,
               });
             })

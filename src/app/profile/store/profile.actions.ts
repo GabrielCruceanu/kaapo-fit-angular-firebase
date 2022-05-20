@@ -24,20 +24,38 @@ export const CREATE_CLIENT_PROFILE_START =
 export const CREATE_CLIENT_PROFILE_SUCCESS =
   '[profile page] create client profile Success';
 
+export const GET_CLIENT_PROFILE_START =
+  '[profile page] get client profile start';
+export const GET_CLIENT_PROFILE_SUCCESS =
+  '[profile page] get client profile Success';
+
 export const CREATE_GYM_PROFILE_START =
   '[profile page] create gym profile start';
 export const CREATE_GYM_PROFILE_SUCCESS =
   '[profile page] create gym profile Success';
+
+export const GET_GYM_PROFILE_START = '[profile page] get gym profile start';
+export const GET_GYM_PROFILE_SUCCESS = '[profile page] get gym profile Success';
 
 export const CREATE_TRAINER_PROFILE_START =
   '[profile page] create trainer profile start';
 export const CREATE_TRAINER_PROFILE_SUCCESS =
   '[profile page] create trainer profile Success';
 
+export const GET_TRAINER_PROFILE_START =
+  '[profile page] get trainer profile start';
+export const GET_TRAINER_PROFILE_SUCCESS =
+  '[profile page] get trainer profile Success';
+
 export const CREATE_NUTRITIONIST_PROFILE_START =
   '[profile page] create nutritionist profile start';
 export const CREATE_NUTRITIONIST_PROFILE_SUCCESS =
   '[profile page] create nutritionist profile Success';
+
+export const GET_NUTRITIONIST_PROFILE_START =
+  '[profile page] get nutritionist profile start';
+export const GET_NUTRITIONIST_PROFILE_SUCCESS =
+  '[profile page] get nutritionist profile Success';
 
 export const createUserProfileStart = createAction(
   CREATE_USER_PROFILE_START,
@@ -79,6 +97,16 @@ export const createClientProfileSuccess = createAction(
   props<{ clientProfile: ClientProfile; redirect: boolean }>()
 );
 
+export const getClientProfileStart = createAction(
+  GET_CLIENT_PROFILE_START,
+  props<{ clientProfileId: string }>()
+);
+
+export const getClientProfileSuccess = createAction(
+  GET_CLIENT_PROFILE_SUCCESS,
+  props<{ clientProfile: ClientProfile; redirect: boolean }>()
+);
+
 export const createGymProfileStart = createAction(
   CREATE_GYM_PROFILE_START,
   props<{ gymProfile: GymProfile }>()
@@ -86,6 +114,16 @@ export const createGymProfileStart = createAction(
 
 export const createGymProfileSuccess = createAction(
   CREATE_GYM_PROFILE_SUCCESS,
+  props<{ gymProfile: GymProfile; redirect: boolean }>()
+);
+
+export const getGymProfileStart = createAction(
+  GET_GYM_PROFILE_START,
+  props<{ gymProfileId: string }>()
+);
+
+export const getGymProfileSuccess = createAction(
+  GET_GYM_PROFILE_SUCCESS,
   props<{ gymProfile: GymProfile; redirect: boolean }>()
 );
 
@@ -99,6 +137,16 @@ export const createTrainerProfileSuccess = createAction(
   props<{ trainerProfile: TrainerProfile; redirect: boolean }>()
 );
 
+export const getTrainerProfileStart = createAction(
+  GET_TRAINER_PROFILE_START,
+  props<{ trainerProfileId: string }>()
+);
+
+export const getTrainerProfileSuccess = createAction(
+  GET_TRAINER_PROFILE_SUCCESS,
+  props<{ trainerProfile: TrainerProfile; redirect: boolean }>()
+);
+
 export const createNutritionistProfileStart = createAction(
   CREATE_NUTRITIONIST_PROFILE_START,
   props<{ nutritionistProfile: NutritionistProfile }>()
@@ -106,5 +154,15 @@ export const createNutritionistProfileStart = createAction(
 
 export const createNutritionistProfileSuccess = createAction(
   CREATE_NUTRITIONIST_PROFILE_SUCCESS,
+  props<{ nutritionistProfile: NutritionistProfile; redirect: boolean }>()
+);
+
+export const getNutritionistProfileStart = createAction(
+  GET_NUTRITIONIST_PROFILE_START,
+  props<{ nutritionistProfileId: string }>()
+);
+
+export const getNutritionistProfileSuccess = createAction(
+  GET_NUTRITIONIST_PROFILE_SUCCESS,
   props<{ nutritionistProfile: NutritionistProfile; redirect: boolean }>()
 );

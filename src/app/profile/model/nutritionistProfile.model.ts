@@ -14,6 +14,7 @@ export class NutritionistProfile {
     public status: UserType.Nutritionist,
     public firstName: string,
     public lastName: string,
+    public name: null,
     public gender: GenderType,
     public joined: Birth,
     public birth: Birth,

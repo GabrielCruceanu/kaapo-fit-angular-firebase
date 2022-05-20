@@ -3,6 +3,7 @@ import { initialState } from './profile.state';
 import {
   createClientProfileSuccess,
   createGymProfileSuccess,
+  createNutritionistProfileSuccess,
   createTrainerProfileSuccess,
   createUserProfileSuccess,
   getUserProfileSuccess,
@@ -38,6 +39,12 @@ const _profileReducer = createReducer(
     return {
       ...state,
       trainerProfile: action.trainerProfile,
+    };
+  }),
+  on(createNutritionistProfileSuccess, (state, action) => {
+    return {
+      ...state,
+      nutritionistProfile: action.nutritionistProfile,
     };
   })
 );

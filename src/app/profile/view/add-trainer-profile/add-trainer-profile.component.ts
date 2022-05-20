@@ -196,6 +196,7 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         UserType.Trainer,
         firstname,
         lastname,
+        null,
         trainerType,
         gender,
         joinedFinal,

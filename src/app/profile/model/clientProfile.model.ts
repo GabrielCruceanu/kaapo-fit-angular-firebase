@@ -13,6 +13,7 @@ export class ClientProfile {
     public status: UserType,
     public firstName: string,
     public lastName: string,
+    public name: null,
     public email: string,
     public phone: string,
     public gender: GenderType,

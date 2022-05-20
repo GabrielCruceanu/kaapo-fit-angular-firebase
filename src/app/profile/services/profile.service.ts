@@ -86,6 +86,41 @@ export class ProfileService implements OnDestroy {
     return null;
   }
 
+  setClientProfileInLocalStorage(clientProfile: ClientProfile) {
+    localStorage.setItem('clientProfileData', JSON.stringify(clientProfile));
+  }
+
+  getClientProfileFromLocalStorage() {
+    const clientProfileDataString = localStorage.getItem('clientProfileData');
+    if (clientProfileDataString) {
+      const userData = JSON.parse(clientProfileDataString);
+
+      const clientProfile = new ClientProfile(
+        userData.id,
+        userData.status,
+        userData.firstName,
+        userData.lastName,
+        userData.name,
+        userData.email,
+        userData.phone,
+        userData.gender,
+        userData.country,
+        userData.state,
+        userData.city,
+        userData.hasPremium,
+        userData.birth,
+        userData.joined,
+        userData.profilePicture,
+        userData.history,
+        userData.nutritionist,
+        userData.trainer,
+        userData.gym
+      );
+      return clientProfile;
+    }
+    return null;
+  }
+
   public createUserProfileInDb(userProfile: UserProfile) {
     const ref = doc(this.firestore, 'users', userProfile.id);
     setDoc(ref, {
@@ -113,11 +148,23 @@ export class ProfileService implements OnDestroy {
     });
   }
 
+  public getClientProfileFromDb(idProfile: string) {
+    const docRef = doc(this.firestore, 'clients', idProfile);
+
+    return docData(docRef).pipe(traceUntilFirst('firestore'));
+  }
+
   public createGymProfileInDb(gymProfile: GymProfile) {
     const ref = doc(this.firestore, 'gyms', gymProfile.id);
     setDoc(ref, {
       ...gymProfile,
     });
+  }
+
+  public getGymProfileFromDb(idProfile: string) {
+    const docRef = doc(this.firestore, 'gyms', idProfile);
+
+    return docData(docRef).pipe(traceUntilFirst('firestore'));
   }
 
   public createTrainerProfileInDb(trainerProfile: TrainerProfile) {
@@ -127,6 +174,12 @@ export class ProfileService implements OnDestroy {
     });
   }
 
+  public getTrainerProfileFromDb(idProfile: string) {
+    const docRef = doc(this.firestore, 'trainers', idProfile);
+
+    return docData(docRef).pipe(traceUntilFirst('firestore'));
+  }
+
   public createNutritionistProfileInDb(
     nutritionistProfile: NutritionistProfile
   ) {
@@ -134,6 +187,12 @@ export class ProfileService implements OnDestroy {
     setDoc(ref, {
       ...nutritionistProfile,
     });
+  }
+
+  public getNutritionistProfileFromDb(idProfile: string) {
+    const docRef = doc(this.firestore, 'nutritionists', idProfile);
+
+    return docData(docRef).pipe(traceUntilFirst('firestore'));
   }
 
   public disableInput(formGroup: any, disableInput: string, input: string) {

@@ -174,6 +174,8 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
       const gymProfile = new GymProfile(
         this.userAuth.id,
         UserType.Gym,
+        null,
+        null,
         name,
         joinedFinal,
         false,

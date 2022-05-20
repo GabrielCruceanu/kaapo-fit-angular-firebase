@@ -170,6 +170,7 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
         UserType.Client,
         firstname,
         lastname,
+        null,
         this.userAuth.email,
         phone,
         gender,

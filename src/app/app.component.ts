@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './store/app.state';
-import { autoLogin, autoLogout } from './auth/store/auth.actions';
+import { autoLogin } from './auth/store/auth.actions';
 import { getUserProfile } from './profile/store/profile.selector';
-import {
-  createUserProfileStart,
-  getUserProfileStart,
-} from './profile/store/profile.actions';
 import { combineLatest } from 'rxjs';
 import { getUserAuth } from './auth/store/auth.selector';
 import { AuthService } from './auth/services/auth.service';
@@ -25,6 +21,7 @@ export class AppComponent implements OnInit {
   ) {
     this.store.dispatch(autoLogin());
   }
+
   public ngOnInit() {
     combineLatest([
       this.store.select(getUserAuth),

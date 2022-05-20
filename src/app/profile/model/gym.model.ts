@@ -12,6 +12,8 @@ export class GymProfile {
   constructor(
     public id: string,
     public status: UserType.Gym,
+    public firstName: null,
+    public lastName: null,
     public name: string,
     public joined: Birth,
     public hasProPremium: boolean,

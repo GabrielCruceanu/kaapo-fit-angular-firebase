@@ -196,6 +196,7 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         UserType.Nutritionist,
         firstname,
         lastname,
+        null,
         gender,
         joinedFinal,
         birthFinal,
