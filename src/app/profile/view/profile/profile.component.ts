@@ -41,8 +41,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     | NutritionistProfile
     | undefined
     | null;
+  clientProfileDetails: ClientProfile | undefined | null;
 
   profileDetailsSub: Subscription | undefined;
+  userType = UserType;
 
   constructor(
     private store: Store<AppState>,
@@ -70,37 +72,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.store.select(getNutritionistProfile),
     ]).subscribe(
       ([clientProfile, gymProfile, trainerProfile, nutritionistProfile]) => {
-        console.log('this.userProfile.userType', this.userProfile?.userType);
         if (this.userProfile?.userType === UserType.Client) {
-          console.log(
-            'this.userProfile?.userType === UserType.Client',
-            this.userProfile?.userType === UserType.Client
-          );
-          this.profileDetails = clientProfile;
+          this.clientProfileDetails = clientProfile;
         } else if (this.userProfile?.userType === UserType.Gym) {
-          console.log(
-            'this.userProfile?.userType === UserType.Gym',
-            this.userProfile?.userType === UserType.Gym
-          );
           this.profileDetails = gymProfile;
         } else if (this.userProfile?.userType === UserType.Trainer) {
-          console.log(
-            'this.userProfile?.userType === UserType.Trainer',
-            this.userProfile?.userType === UserType.Trainer
-          );
           this.profileDetails = trainerProfile;
         } else if (this.userProfile?.userType === UserType.Nutritionist) {
-          console.log(
-            'this.userProfile?.userType === UserType.Nutritionist',
-            this.userProfile?.userType === UserType.Nutritionist
-          );
-          console.log('nutritionistProfile', nutritionistProfile);
           this.profileDetails = nutritionistProfile;
         }
       }
     );
-
-    console.log('this.profileDetails', this.profileDetails);
   }
 
   ngOnDestroy() {

@@ -4,6 +4,7 @@ import { autoLogout } from '../../auth/store/auth.actions';
 import { getUserAuth } from '../../auth/store/auth.selector';
 import { UserAuth } from '../../auth/model/userAuth.model';
 import { Observable, of } from 'rxjs';
+import { getUserProfileStart } from '../../profile/store/profile.actions';
 
 @Component({
   selector: 'app-home',

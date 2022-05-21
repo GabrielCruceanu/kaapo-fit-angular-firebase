@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { getUserDataMock } from '../../../../data/userDetails';
 import SwiperCore, {
   EffectCoverflow,
@@ -9,6 +15,7 @@ import SwiperCore, {
 } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
 import { ClientDetails } from '../../model/profile-interface';
+import { ClientPhysicalDetails } from '../../model/clientProfile.model';
 
 // install Swiper modules
 SwiperCore.use([Virtual, EffectCards, Navigation]);
@@ -22,6 +29,8 @@ SwiperCore.use([Virtual, EffectCards, Navigation]);
 export class UserProfileImagesComponent implements OnInit {
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
   profile: ClientDetails;
+  @Input()
+  profileDetails: ClientPhysicalDetails | undefined | null;
 
   config: SwiperOptions = {
     nested: true,

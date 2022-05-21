@@ -128,6 +128,10 @@ export class AuthService {
   onLogout() {
     localStorage.removeItem('userAuthData');
     localStorage.removeItem('userProfileData');
+    localStorage.removeItem('clientProfileData');
+    localStorage.removeItem('gymProfileData');
+    localStorage.removeItem('trainerProfileData');
+    localStorage.removeItem('nutritionistProfileData');
     if (this.timeoutInterval) {
       clearTimeout(this.timeoutInterval);
       this.timeoutInterval = null;

@@ -6,8 +6,13 @@ import {
   createNutritionistProfileSuccess,
   createTrainerProfileSuccess,
   createUserProfileSuccess,
+  getClientProfileSuccess,
+  getGymProfileSuccess,
+  getNutritionistProfileSuccess,
+  getTrainerProfileSuccess,
   getUserProfileSuccess,
 } from './profile.actions';
+import { autoLogout } from '../../auth/store/auth.actions';
 
 const _profileReducer = createReducer(
   initialState,
@@ -29,7 +34,19 @@ const _profileReducer = createReducer(
       clientProfile: action.clientProfile,
     };
   }),
+  on(getClientProfileSuccess, (state, action) => {
+    return {
+      ...state,
+      clientProfile: action.clientProfile,
+    };
+  }),
   on(createGymProfileSuccess, (state, action) => {
+    return {
+      ...state,
+      gymProfile: action.gymProfile,
+    };
+  }),
+  on(getGymProfileSuccess, (state, action) => {
     return {
       ...state,
       gymProfile: action.gymProfile,
@@ -41,10 +58,27 @@ const _profileReducer = createReducer(
       trainerProfile: action.trainerProfile,
     };
   }),
+  on(getTrainerProfileSuccess, (state, action) => {
+    return {
+      ...state,
+      trainerProfile: action.trainerProfile,
+    };
+  }),
   on(createNutritionistProfileSuccess, (state, action) => {
     return {
       ...state,
       nutritionistProfile: action.nutritionistProfile,
+    };
+  }),
+  on(getNutritionistProfileSuccess, (state, action) => {
+    return {
+      ...state,
+      nutritionistProfile: action.nutritionistProfile,
+    };
+  }),
+  on(autoLogout, (state, action) => {
+    return {
+      ...initialState,
     };
   })
 );

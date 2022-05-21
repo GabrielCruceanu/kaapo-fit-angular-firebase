@@ -10,7 +10,15 @@ import {
   signupStart,
   signupSuccess,
 } from './auth.actions';
-import { catchError, exhaustMap, map, mergeMap, of, tap } from 'rxjs';
+import {
+  catchError,
+  exhaustMap,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
@@ -22,21 +30,27 @@ import {
 import { ProfileService } from '../../profile/services/profile.service';
 import {
   createUserProfileStart,
+  getClientProfileSuccess,
+  getGymProfileSuccess,
+  getNutritionistProfileSuccess,
+  getTrainerProfileSuccess,
   getUserProfileStart,
   getUserProfileSuccess,
 } from '../../profile/store/profile.actions';
+import { UserType } from '../../profile/model/profile-interface';
 
 @Injectable()
 export class AuthEffects {
   login$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loginStart),
-      exhaustMap((action) => {
+      switchMap((action) => {
         return this.authService.onLogin(action.email, action.password).pipe(
           map((data) => {
             this.store.dispatch(setErrorMessage({ message: '' }));
             const userAuth = this.authService.formatUser(data);
             this.authService.setUserAuthInLocalStorage(userAuth);
+
             this.store.dispatch(
               getUserProfileStart({ userProfileId: userAuth.id })
             );
@@ -136,9 +150,63 @@ export class AuthEffects {
           this.store.dispatch(
             getUserProfileStart({ userProfileId: userProfile.id })
           );
+          switch (userProfile.userType) {
+            case UserType.Client: {
+              const clientProfile =
+                this.profileService.getClientProfileFromLocalStorage();
+              if (clientProfile) {
+                this.store.dispatch(
+                  getClientProfileSuccess({
+                    clientProfile: clientProfile,
+                    redirect: false,
+                  })
+                );
+              }
+              break;
+            }
+            case UserType.Gym: {
+              const gymProfile =
+                this.profileService.getGymProfileFromLocalStorage();
+              if (gymProfile) {
+                this.store.dispatch(
+                  getGymProfileSuccess({
+                    gymProfile: gymProfile,
+                    redirect: false,
+                  })
+                );
+              }
+              break;
+            }
+            case UserType.Trainer: {
+              const trainerProfile =
+                this.profileService.getTrainerProfileFromLocalStorage();
+              if (trainerProfile) {
+                this.store.dispatch(
+                  getTrainerProfileSuccess({
+                    trainerProfile: trainerProfile,
+                    redirect: false,
+                  })
+                );
+              }
+              break;
+            }
+            case UserType.Nutritionist: {
+              const nutritionistProfile =
+                this.profileService.getNutritionistProfileFromLocalStorage();
+              if (nutritionistProfile) {
+                this.store.dispatch(
+                  getNutritionistProfileSuccess({
+                    nutritionistProfile: nutritionistProfile,
+                    redirect: false,
+                  })
+                );
+              }
+              break;
+            }
+          }
 
           this.store.dispatch(
-            getUserProfileSuccess({ userProfile: userProfile, redirect: true })
+            getUserProfileSuccess({ userProfile: userProfile, redirect: false })
           );
 
           return of(loginSuccess({ userAuth: userAuth, redirect: false }));

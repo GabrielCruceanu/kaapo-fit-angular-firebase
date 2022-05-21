@@ -28,6 +28,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { AddNutritionistProfileComponent } from './view/add-nutritionist-profile/add-nutritionist-profile.component';
+import { ClientProfileComponent } from './components/client-profile/client-profile.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AddNutritionistProfileComponent } from './view/add-nutritionist-profile
     AddTrainerProfileComponent,
     AddGymProfileComponent,
     AddNutritionistProfileComponent,
+    ClientProfileComponent,
   ],
   imports: [
     CommonModule,

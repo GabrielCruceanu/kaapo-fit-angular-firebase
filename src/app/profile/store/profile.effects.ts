@@ -17,12 +17,18 @@ import {
   createUserProfileSuccess,
   getClientProfileStart,
   getClientProfileSuccess,
+  getGymProfileStart,
+  getGymProfileSuccess,
+  getNutritionistProfileStart,
+  getNutritionistProfileSuccess,
+  getTrainerProfileStart,
+  getTrainerProfileSuccess,
   getUserProfileStart,
   getUserProfileSuccess,
   updateUserProfileStart,
   updateUserProfileSuccess,
 } from './profile.actions';
-import { exhaustMap, map, tap } from 'rxjs';
+import { exhaustMap, map, switchMap, tap } from 'rxjs';
 import {
   setErrorMessage,
   setLoadingSpinner,
@@ -30,6 +36,10 @@ import {
 import { AuthService } from '../../auth/services/auth.service';
 import { UserProfile } from '../model/userProfile.model';
 import { ClientProfile } from '../model/clientProfile.model';
+import { GymProfile } from '../model/gym.model';
+import { TrainerProfile } from '../model/trainerProfile.model';
+import { NutritionistProfile } from '../model/nutritionistProfile.model';
+import { UserType } from '../model/profile-interface';
 
 @Injectable()
 export class ProfileEffects {
@@ -70,7 +80,7 @@ export class ProfileEffects {
   getUserProfileStart$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getUserProfileStart),
-      exhaustMap((action) => {
+      switchMap((action) => {
         return this.profileService
           .getUserProfileFromDb(action.userProfileId)
           .pipe(
@@ -78,10 +88,40 @@ export class ProfileEffects {
               const userProfile = data as UserProfile;
 
               this.profileService.setUserProfileInLocalStorage(userProfile);
+
+              switch (userProfile.userType) {
+                case UserType.Client: {
+                  this.store.dispatch(
+                    getClientProfileStart({ clientProfileId: userProfile.id })
+                  );
+                  break;
+                }
+                case UserType.Gym: {
+                  this.store.dispatch(
+                    getGymProfileStart({ gymProfileId: userProfile.id })
+                  );
+                  break;
+                }
+                case UserType.Trainer: {
+                  this.store.dispatch(
+                    getTrainerProfileStart({ trainerProfileId: userProfile.id })
+                  );
+                  break;
+                }
+                case UserType.Nutritionist: {
+                  this.store.dispatch(
+                    getNutritionistProfileStart({
+                      nutritionistProfileId: userProfile.id,
+                    })
+                  );
+                  break;
+                }
+              }
+
               this.store.dispatch(setLoadingSpinner({ status: false }));
               return getUserProfileSuccess({
                 userProfile: userProfile,
-                redirect: true,
+                redirect: false,
               });
             })
           );
@@ -89,24 +129,40 @@ export class ProfileEffects {
     );
   });
 
-  getClientProfileStart$ = createEffect(() => {
+  getUserProfileSuccess$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(getClientProfileStart),
-      exhaustMap((action) => {
-        return this.profileService
-          .getUserProfileFromDb(action.clientProfileId)
-          .pipe(
-            map((data) => {
-              const clientProfile = data as ClientProfile;
+      ofType(getUserProfileSuccess),
+      map((action) => {
+        const userProfile = action.userProfile;
 
-              this.profileService.setClientProfileInLocalStorage(clientProfile);
-              this.store.dispatch(setLoadingSpinner({ status: false }));
-              return getClientProfileSuccess({
-                clientProfile: clientProfile,
-                redirect: true,
-              });
-            })
-          );
+        switch (userProfile.userType) {
+          case UserType.Client: {
+            return getClientProfileStart({ clientProfileId: userProfile.id });
+            break;
+          }
+          case UserType.Gym: {
+            return getGymProfileStart({ gymProfileId: userProfile.id });
+
+            break;
+          }
+          case UserType.Trainer: {
+            return getTrainerProfileStart({ trainerProfileId: userProfile.id });
+
+            break;
+          }
+          case UserType.Nutritionist: {
+            return getNutritionistProfileStart({
+              nutritionistProfileId: userProfile.id,
+            });
+
+            break;
+          }
+        }
+
+        return getUserProfileSuccess({
+          userProfile: userProfile,
+          redirect: false,
+        });
       })
     );
   });
@@ -127,6 +183,28 @@ export class ProfileEffects {
     );
   });
 
+  getClientProfileStart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getClientProfileStart),
+      exhaustMap((action) => {
+        return this.profileService
+          .getClientProfileFromDb(action.clientProfileId)
+          .pipe(
+            map((data) => {
+              const clientProfile = data as ClientProfile;
+
+              this.profileService.setClientProfileInLocalStorage(clientProfile);
+              this.store.dispatch(setLoadingSpinner({ status: false }));
+              return getClientProfileSuccess({
+                clientProfile: clientProfile,
+                redirect: false,
+              });
+            })
+          );
+      })
+    );
+  });
+
   createGymProfileStart$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(createGymProfileStart),
@@ -139,6 +217,28 @@ export class ProfileEffects {
           gymProfile: action.gymProfile,
           redirect: true,
         });
+      })
+    );
+  });
+
+  getGymProfileStart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getGymProfileStart),
+      exhaustMap((action) => {
+        return this.profileService
+          .getGymProfileFromDb(action.gymProfileId)
+          .pipe(
+            map((data) => {
+              const gymProfile = data as GymProfile;
+
+              this.profileService.setGymProfileInLocalStorage(gymProfile);
+              this.store.dispatch(setLoadingSpinner({ status: false }));
+              return getGymProfileSuccess({
+                gymProfile: gymProfile,
+                redirect: false,
+              });
+            })
+          );
       })
     );
   });
@@ -159,6 +259,30 @@ export class ProfileEffects {
     );
   });
 
+  getTrainerProfileStart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getTrainerProfileStart),
+      exhaustMap((action) => {
+        return this.profileService
+          .getTrainerProfileFromDb(action.trainerProfileId)
+          .pipe(
+            map((data) => {
+              const trainerProfile = data as TrainerProfile;
+
+              this.profileService.setTrainerProfileInLocalStorage(
+                trainerProfile
+              );
+              this.store.dispatch(setLoadingSpinner({ status: false }));
+              return getTrainerProfileSuccess({
+                trainerProfile: trainerProfile,
+                redirect: false,
+              });
+            })
+          );
+      })
+    );
+  });
+
   createNutritionistProfileStart$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(createNutritionistProfileStart),
@@ -173,6 +297,30 @@ export class ProfileEffects {
           nutritionistProfile: action.nutritionistProfile,
           redirect: true,
         });
+      })
+    );
+  });
+
+  getNutritionistProfileStart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getNutritionistProfileStart),
+      exhaustMap((action) => {
+        return this.profileService
+          .getNutritionistProfileFromDb(action.nutritionistProfileId)
+          .pipe(
+            map((data) => {
+              const nutritionistProfile = data as NutritionistProfile;
+
+              this.profileService.setNutritionistProfileInLocalStorage(
+                nutritionistProfile
+              );
+              this.store.dispatch(setLoadingSpinner({ status: false }));
+              return getNutritionistProfileSuccess({
+                nutritionistProfile: nutritionistProfile,
+                redirect: false,
+              });
+            })
+          );
       })
     );
   });

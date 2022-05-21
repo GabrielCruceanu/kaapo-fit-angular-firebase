@@ -19,15 +19,18 @@
   position: relative;
   max-width: 104px;
   max-height: 104px;
-  height: 100%;
 }
 
 .profile-picture {
   border-radius: 100%;
+  max-width: 70px;
+  max-height: 70px;
   overflow: hidden;
 
   img {
     display: block;
+    max-width: 70px;
+    max-height: 70px;
   }
 }
 

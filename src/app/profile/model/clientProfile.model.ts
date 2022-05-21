@@ -24,7 +24,8 @@ export class ClientProfile {
     public birth: Birth,
     public joined: Birth,
     public profilePicture: string | null,
-    public history: ClientPhysicalDetails[] | null,
+    public currentPhysicalDetails: ClientPhysicalDetails | null,
+    public historyPhysicalDetails: ClientPhysicalDetails[] | null,
     public nutritionist: ProfessionalDetails | null,
     public trainer: ProfessionalDetails | null,
     public gym: GymDetails | null
@@ -34,6 +35,7 @@ export class ClientProfile {
 export class ClientPhysicalDetails {
   constructor(
     public date: Birth,
+    public birth: Birth,
     public weight: string,
     public neck: string,
     public shoulders: string,
