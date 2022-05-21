@@ -1,6 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { getUserDataMock } from '../../../../data/userDetails';
-import { ClientDetails } from '../../model/profile-interface';
+import { ClientDetails, UserType } from '../../model/profile-interface';
+import {
+  ClientPhysicalDetails,
+  ClientProfile,
+} from '../../model/clientProfile.model';
+import { GymProfile } from '../../model/gym.model';
+import { TrainerProfile } from '../../model/trainerProfile.model';
+import { NutritionistProfile } from '../../model/nutritionistProfile.model';
+import { Observable } from 'rxjs';
+import { getClientProfile } from '../../store/profile.selector';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/app.state';
 
 @Component({
   selector: 'app-user-profile-details',
@@ -8,10 +19,11 @@ import { ClientDetails } from '../../model/profile-interface';
   styleUrls: ['./user-profile-details.component.scss'],
 })
 export class UserProfileDetailsComponent implements OnInit {
-  public profile: ClientDetails;
-  constructor() {
-    this.profile = getUserDataMock();
-  }
+  clientProfileDetails$: Observable<ClientProfile | null> | undefined;
 
-  ngOnInit(): void {}
+  constructor(private store: Store<AppState>) {}
+
+  ngOnInit(): void {
+    this.clientProfileDetails$ = this.store.select(getClientProfile);
+  }
 }

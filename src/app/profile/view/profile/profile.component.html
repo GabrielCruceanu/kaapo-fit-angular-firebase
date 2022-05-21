@@ -1,28 +1,5 @@
 <app-layout>
-  <section class="profile-container container">
-    <h1 class="app-title">{{ title }}</h1>
-    <!--   Profile Header-->
-    <div class="row align-items-center justify-content-center my-4 my-md-5">
-      <div class="col-md-6 col-lg-4">
-        <!-- Profile Picture and Name-->
-        <app-user-profile></app-user-profile>
-      </div>
-      <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
-        <!-- Profile PRO -->
-        <app-pro-container></app-pro-container>
-      </div>
-    </div>
-
-    <!-- Profile Details -->
-    <div class="row justify-content-center mb-4 mb-md-0">
-      <!-- Profile Details Text-->
-      <div class="col-lg-4 mb-4 mb-md-5">
-        <app-user-profile-details></app-user-profile-details>
-      </div>
-      <!-- Profile Details Images-->
-      <div class="col-lg-4">
-        <app-user-profile-images></app-user-profile-images>
-      </div>
-    </div>
-  </section>
+  <app-client-profile
+    *ngIf="userProfile?.userType === userType.Client"
+  ></app-client-profile>
 </app-layout>

@@ -1,11 +1,16 @@
-<div class="profile" *ngIf="profile">
+<div
+  class="profile"
+  *ngIf="clientProfileDetails$ | async as clientProfileDetails"
+>
   <div class="profile-picture-name">
     <div class="profile-picture-box">
       <div class="profile-picture-couture"></div>
       <div class="profile-picture">
         <img
           [src]="
-            profile.profilePicture ? profile.profilePicture : sampleImgLink
+            clientProfileDetails.profilePicture
+              ? clientProfileDetails.profilePicture
+              : sampleImgLink
           "
           alt="profile picture"
         />
@@ -13,9 +18,9 @@
     </div>
     <div class="profile-name">
       <h3>
-        <strong *ngIf="profile.firstName">{{ profile.firstName }}</strong>
+        <strong>{{ clientProfileDetails.firstName }}</strong>
         <br />
-        {{ profile.lastName }}
+        {{ clientProfileDetails.lastName }}
       </h3>
       <div class="profile-status-detail">
         <div class="profile-icon-box">
@@ -26,7 +31,10 @@
           >
             map
           </mat-icon>
-          <span>{{ profile.country }} / {{ profile.city }}</span>
+          <span
+            >{{ clientProfileDetails.country }} /
+            {{ clientProfileDetails.city }}</span
+          >
         </div>
         <div class="profile-icon-box">
           <mat-icon
@@ -36,7 +44,7 @@
           >
             badge
           </mat-icon>
-          <span>{{ profile.status }}</span>
+          <span>{{ clientProfileDetails.status }}</span>
         </div>
       </div>
     </div>

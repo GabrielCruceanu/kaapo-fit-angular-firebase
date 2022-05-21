@@ -37,8 +37,7 @@ export class ProfileService implements OnDestroy {
   constructor(
     private store: Store<AppState>,
     private http: HttpClient,
-    private firestore: Firestore,
-    private router: Router
+    private firestore: Firestore
   ) {
     this.userProfileSub = this.store
       .select(getUserProfile)
@@ -62,7 +61,7 @@ export class ProfileService implements OnDestroy {
       })
     );
   }
-
+  // ****************** USER ******************
   setUserProfileInLocalStorage(userProfile: UserProfile) {
     localStorage.setItem('userProfileData', JSON.stringify(userProfile));
   }
@@ -82,41 +81,6 @@ export class ProfileService implements OnDestroy {
         userData.userType
       );
       return userProfile;
-    }
-    return null;
-  }
-
-  setClientProfileInLocalStorage(clientProfile: ClientProfile) {
-    localStorage.setItem('clientProfileData', JSON.stringify(clientProfile));
-  }
-
-  getClientProfileFromLocalStorage() {
-    const clientProfileDataString = localStorage.getItem('clientProfileData');
-    if (clientProfileDataString) {
-      const userData = JSON.parse(clientProfileDataString);
-
-      const clientProfile = new ClientProfile(
-        userData.id,
-        userData.status,
-        userData.firstName,
-        userData.lastName,
-        userData.name,
-        userData.email,
-        userData.phone,
-        userData.gender,
-        userData.country,
-        userData.state,
-        userData.city,
-        userData.hasPremium,
-        userData.birth,
-        userData.joined,
-        userData.profilePicture,
-        userData.history,
-        userData.nutritionist,
-        userData.trainer,
-        userData.gym
-      );
-      return clientProfile;
     }
     return null;
   }
@@ -141,6 +105,7 @@ export class ProfileService implements OnDestroy {
     return docData(docRef).pipe(traceUntilFirst('firestore'));
   }
 
+  // ****************** CLIENT ******************
   public createClientProfileInDb(clientProfile: ClientProfile) {
     const ref = doc(this.firestore, 'clients', clientProfile.id);
     setDoc(ref, {
@@ -154,6 +119,43 @@ export class ProfileService implements OnDestroy {
     return docData(docRef).pipe(traceUntilFirst('firestore'));
   }
 
+  setClientProfileInLocalStorage(clientProfile: ClientProfile) {
+    localStorage.setItem('clientProfileData', JSON.stringify(clientProfile));
+  }
+
+  getClientProfileFromLocalStorage() {
+    const clientProfileDataString = localStorage.getItem('clientProfileData');
+    if (clientProfileDataString) {
+      const clientData = JSON.parse(clientProfileDataString);
+
+      const clientProfile = new ClientProfile(
+        clientData.id,
+        clientData.status,
+        clientData.firstName,
+        clientData.lastName,
+        clientData.name,
+        clientData.email,
+        clientData.phone,
+        clientData.gender,
+        clientData.country,
+        clientData.state,
+        clientData.city,
+        clientData.hasPremium,
+        clientData.birth,
+        clientData.joined,
+        clientData.profilePicture,
+        clientData.currentPhysicalDetails,
+        clientData.historyPhysicalDetails,
+        clientData.nutritionist,
+        clientData.trainer,
+        clientData.gym
+      );
+      return clientProfile;
+    }
+    return null;
+  }
+
+  // ****************** GYM ******************
   public createGymProfileInDb(gymProfile: GymProfile) {
     const ref = doc(this.firestore, 'gyms', gymProfile.id);
     setDoc(ref, {
@@ -167,6 +169,43 @@ export class ProfileService implements OnDestroy {
     return docData(docRef).pipe(traceUntilFirst('firestore'));
   }
 
+  setGymProfileInLocalStorage(gymProfile: GymProfile) {
+    localStorage.setItem('gymProfileData', JSON.stringify(gymProfile));
+  }
+
+  getGymProfileFromLocalStorage() {
+    const gymProfileDataString = localStorage.getItem('gymProfileData');
+    if (gymProfileDataString) {
+      const gymData = JSON.parse(gymProfileDataString);
+
+      const gymProfile = new GymProfile(
+        gymData.id,
+        gymData.status,
+        gymData.firstName,
+        gymData.lastName,
+        gymData.name,
+        gymData.joined,
+        gymData.hasProPremium,
+        gymData.gymType,
+        gymData.country,
+        gymData.state,
+        gymData.city,
+        gymData.street,
+        gymData.strNo,
+        gymData.contact,
+        gymData.shortDescription,
+        gymData.longDescription,
+        gymData.profilePicture,
+        gymData.gallery,
+        gymData.reviews,
+        gymData.personal
+      );
+      return gymProfile;
+    }
+    return null;
+  }
+
+  // ****************** TRAINER ******************
   public createTrainerProfileInDb(trainerProfile: TrainerProfile) {
     const ref = doc(this.firestore, 'trainers', trainerProfile.id);
     setDoc(ref, {
@@ -180,6 +219,46 @@ export class ProfileService implements OnDestroy {
     return docData(docRef).pipe(traceUntilFirst('firestore'));
   }
 
+  setTrainerProfileInLocalStorage(trainerProfile: TrainerProfile) {
+    localStorage.setItem('trainerProfileData', JSON.stringify(trainerProfile));
+  }
+
+  getTrainerProfileFromLocalStorage() {
+    const trainerProfileDataString = localStorage.getItem('trainerProfileData');
+    if (trainerProfileDataString) {
+      const trainerData = JSON.parse(trainerProfileDataString);
+
+      const trainerProfile = new TrainerProfile(
+        trainerData.id,
+        trainerData.status,
+        trainerData.firstName,
+        trainerData.lastName,
+        trainerData.name,
+        trainerData.trainerType,
+        trainerData.gender,
+        trainerData.joined,
+        trainerData.birth,
+        trainerData.hasProPremium,
+        trainerData.certificate,
+        trainerData.experience,
+        trainerData.country,
+        trainerData.state,
+        trainerData.city,
+        trainerData.contact,
+        trainerData.shortDescription,
+        trainerData.longDescription,
+        trainerData.completedClients,
+        trainerData.profilePicture,
+        trainerData.activeClients,
+        trainerData.gallery,
+        trainerData.reviews
+      );
+      return trainerProfile;
+    }
+    return null;
+  }
+
+  // ****************** NUTRITIONIST ******************
   public createNutritionistProfileInDb(
     nutritionistProfile: NutritionistProfile
   ) {
@@ -193,6 +272,51 @@ export class ProfileService implements OnDestroy {
     const docRef = doc(this.firestore, 'nutritionists', idProfile);
 
     return docData(docRef).pipe(traceUntilFirst('firestore'));
+  }
+
+  setNutritionistProfileInLocalStorage(
+    nutritionistProfile: NutritionistProfile
+  ) {
+    localStorage.setItem(
+      'nutritionistProfileData',
+      JSON.stringify(nutritionistProfile)
+    );
+  }
+
+  getNutritionistProfileFromLocalStorage() {
+    const nutritionistProfileDataString = localStorage.getItem(
+      'nutritionistProfileData'
+    );
+    if (nutritionistProfileDataString) {
+      const nutritionistData = JSON.parse(nutritionistProfileDataString);
+
+      const nutritionistProfile = new NutritionistProfile(
+        nutritionistData.id,
+        nutritionistData.status,
+        nutritionistData.firstName,
+        nutritionistData.lastName,
+        nutritionistData.name,
+        nutritionistData.gender,
+        nutritionistData.joined,
+        nutritionistData.birth,
+        nutritionistData.hasProPremium,
+        nutritionistData.certificate,
+        nutritionistData.experience,
+        nutritionistData.country,
+        nutritionistData.state,
+        nutritionistData.city,
+        nutritionistData.contact,
+        nutritionistData.shortDescription,
+        nutritionistData.longDescription,
+        nutritionistData.completedClients,
+        nutritionistData.profilePicture,
+        nutritionistData.activeClients,
+        nutritionistData.gallery,
+        nutritionistData.reviews
+      );
+      return nutritionistProfile;
+    }
+    return null;
   }
 
   public disableInput(formGroup: any, disableInput: string, input: string) {
@@ -230,10 +354,6 @@ export class ProfileService implements OnDestroy {
   }
 
   public checkIfUserHasProfile(): boolean {
-    console.log(
-      '!!this.userProfile?.hasProfile',
-      !!this.userProfile?.hasProfile
-    );
     return !!this.userProfile?.hasProfile;
   }
 

@@ -7,6 +7,14 @@ import { combineLatest } from 'rxjs';
 import { getUserAuth } from './auth/store/auth.selector';
 import { AuthService } from './auth/services/auth.service';
 import { ProfileService } from './profile/services/profile.service';
+import { UserType } from './profile/model/profile-interface';
+import {
+  getClientProfileStart,
+  getGymProfileStart,
+  getNutritionistProfileStart,
+  getTrainerProfileStart,
+  getUserProfileStart,
+} from './profile/store/profile.actions';
 
 @Component({
   selector: 'app-root',
@@ -29,9 +37,6 @@ export class AppComponent implements OnInit {
     ]).subscribe(([userAuth, userProfile]) => {
       console.log('userAuth', userAuth);
       console.log('userProfile', userProfile);
-      if (!userAuth) {
-        console.log('reload');
-      }
     });
   }
 }
