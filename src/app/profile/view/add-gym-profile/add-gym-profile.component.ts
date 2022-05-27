@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserAuth } from '../../../auth/model/userAuth.model';
+import { UserAuth } from '@/app/auth/model/userAuth.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import { UserProfile } from '../../model/userProfile.model';
 import {
@@ -9,18 +9,18 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
+import { AppState } from '@/app/store/app.state';
 import { ProfileService } from '../../services/profile.service';
-import { CountryService } from '../../../shared/services/country.service';
+import { CountryService } from '@/app/shared/services/country.service';
 import {
   setErrorMessage,
   setLoadingSpinner,
-} from '../../../store/shared/shared.actions';
+} from '@/app/store/shared/shared.actions';
 import {
   getErrorMessage,
   getLoading,
-} from '../../../store/shared/shared.selector';
-import { getUserAuth } from '../../../auth/store/auth.selector';
+} from '@/app/store/shared/shared.selector';
+import { getUserAuth } from '@/app/auth/store/auth.selector';
 import { getUserProfile } from '../../store/profile.selector';
 import { Contact, UserType } from '../../model/profile-interface';
 import {
@@ -28,7 +28,7 @@ import {
   updateUserProfileStart,
 } from '../../store/profile.actions';
 import { GymProfile } from '../../model/gym.model';
-import { GymData } from '../../../../data/gymData';
+import { GymData } from '@/data/gymData';
 
 @Component({
   selector: 'app-add-gym-profile',
@@ -201,7 +201,9 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         this.userProfile.dayJoined,
         this.userProfile.monthJoined,
         this.userProfile.yearJoined,
-        UserType.Gym
+        UserType.Gym,
+        null,
+        null
       );
 
       this.store.dispatch(setLoadingSpinner({ status: true }));

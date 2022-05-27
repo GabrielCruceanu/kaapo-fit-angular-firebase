@@ -2,17 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
+import { AppState } from '@/app/store/app.state';
 import {
   KAAPO_FIT_LOGO,
   LOGOUT_ICON,
   NOTIFICATION_ICON,
-} from '../../../../content/icons';
-import { isAuthenticated } from '../../../auth/store/auth.selector';
-import { autoLogout } from '../../../auth/store/auth.actions';
+} from '@/content/icons';
+import { isAuthenticated } from '@/app/auth/store/auth.selector';
+import { autoLogout } from '@/app/auth/store/auth.actions';
 import { Observable, of } from 'rxjs';
-import { getUserDataMock } from '../../../../data/userDetails';
-import { ClientDetails } from '../../../profile/model/profile-interface';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +20,6 @@ import { ClientDetails } from '../../../profile/model/profile-interface';
 export class HeaderComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
   hasNotifications: Observable<boolean>;
-  userDetails: ClientDetails;
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -44,7 +41,6 @@ export class HeaderComponent implements OnInit {
 
     this.isAuthenticated$ = of(false);
     this.hasNotifications = of(true);
-    this.userDetails = getUserDataMock();
   }
 
   ngOnInit(): void {

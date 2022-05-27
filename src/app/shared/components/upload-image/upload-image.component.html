@@ -1,0 +1,40 @@
+<h3
+  mat-dialog-title
+  *ngIf="uploadImageData.typeOfUploadImage === typeOfUploadImage.Profile"
+>
+  Select your profile picture
+</h3>
+<h3
+  mat-dialog-title
+  *ngIf="uploadImageData.typeOfUploadImage === typeOfUploadImage.Cover"
+>
+  Select your cover picture
+</h3>
+<div mat-dialog-content>
+  <div class="upload-image-container">
+    <div class="upload-image-box">
+      <button
+        mat-fab
+        color="primary"
+        aria-label="Icon button with a image icon"
+        (click)="onProfileStartUpload()"
+        *ngIf="uploadImageData.typeOfUploadImage === typeOfUploadImage.Profile"
+      >
+        <mat-icon>image</mat-icon>
+      </button>
+
+      <button
+        mat-fab
+        color="primary"
+        aria-label="Icon button with a image icon"
+        (click)="onCoverStartUpload()"
+        *ngIf="uploadImageData.typeOfUploadImage === typeOfUploadImage.Cover"
+      >
+        <mat-icon>image</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close="">Close</button>
+</div>

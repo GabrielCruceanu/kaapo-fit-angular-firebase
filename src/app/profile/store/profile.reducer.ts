@@ -11,6 +11,8 @@ import {
   getNutritionistProfileSuccess,
   getTrainerProfileSuccess,
   getUserProfileSuccess,
+  setUserCoverImage,
+  setUserProfileImage,
 } from './profile.actions';
 import { autoLogout } from '../../auth/store/auth.actions';
 
@@ -26,6 +28,18 @@ const _profileReducer = createReducer(
     return {
       ...state,
       userProfile: action.userProfile,
+    };
+  }),
+  on(setUserProfileImage, (state, action) => {
+    return {
+      ...state,
+      profileImage: action.profileImage,
+    };
+  }),
+  on(setUserCoverImage, (state, action) => {
+    return {
+      ...state,
+      coverImage: action.coverImage,
     };
   }),
   on(createClientProfileSuccess, (state, action) => {
@@ -76,7 +90,7 @@ const _profileReducer = createReducer(
       nutritionistProfile: action.nutritionistProfile,
     };
   }),
-  on(autoLogout, (state, action) => {
+  on(autoLogout, () => {
     return {
       ...initialState,
     };

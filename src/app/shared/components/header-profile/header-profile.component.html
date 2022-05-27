@@ -1,11 +1,12 @@
 <div class="header-profile">
   <div class="header-profile-picture-box" routerLink="/profile">
     <div class="header-profile-picture">
-      <img
-        *ngIf="userDetails"
-        [src]="userDetails.profilePicture"
-        [alt]="userDetails.firstName + userDetails.lastName + 'picture'"
-      />
+      <ng-container *ngIf="userProfileDetails$ | async as userProfile">
+        <img
+          [src]="userProfile.profileImage.downloadURL"
+          alt="profile picture"
+        />
+      </ng-container>
     </div>
   </div>
   <div class="header-profile-name">

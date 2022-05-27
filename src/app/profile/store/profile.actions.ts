@@ -4,58 +4,63 @@ import { ClientProfile } from '../model/clientProfile.model';
 import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
+import { UserImage } from '@/app/profile/model/profile-interface';
 
 export const CREATE_USER_PROFILE_START =
   '[profile page] create user profile start';
 export const CREATE_USER_PROFILE_SUCCESS =
-  '[profile page] create user profile Success';
+  '[profile page] create user profile success';
 
 export const UPDATE_USER_PROFILE_START =
   '[profile page] update user profile start';
 export const UPDATE_USER_PROFILE_SUCCESS =
-  '[profile page] update user profile Success';
+  '[profile page] update user profile success';
 
 export const GET_USER_PROFILE_START = '[profile page] get user profile start';
 export const GET_USER_PROFILE_SUCCESS =
-  '[profile page] get user profile Success';
+  '[profile page] get user profile success';
+
+export const SET_USER_PROFILE_IMAGE = '[profile page] set user profile image';
+
+export const SET_USER_COVER_IMAGE = '[profile page] set user cover image';
 
 export const CREATE_CLIENT_PROFILE_START =
   '[profile page] create client profile start';
 export const CREATE_CLIENT_PROFILE_SUCCESS =
-  '[profile page] create client profile Success';
+  '[profile page] create client profile success';
 
 export const GET_CLIENT_PROFILE_START =
   '[profile page] get client profile start';
 export const GET_CLIENT_PROFILE_SUCCESS =
-  '[profile page] get client profile Success';
+  '[profile page] get client profile success';
 
 export const CREATE_GYM_PROFILE_START =
   '[profile page] create gym profile start';
 export const CREATE_GYM_PROFILE_SUCCESS =
-  '[profile page] create gym profile Success';
+  '[profile page] create gym profile success';
 
 export const GET_GYM_PROFILE_START = '[profile page] get gym profile start';
-export const GET_GYM_PROFILE_SUCCESS = '[profile page] get gym profile Success';
+export const GET_GYM_PROFILE_SUCCESS = '[profile page] get gym profile success';
 
 export const CREATE_TRAINER_PROFILE_START =
   '[profile page] create trainer profile start';
 export const CREATE_TRAINER_PROFILE_SUCCESS =
-  '[profile page] create trainer profile Success';
+  '[profile page] create trainer profile success';
 
 export const GET_TRAINER_PROFILE_START =
   '[profile page] get trainer profile start';
 export const GET_TRAINER_PROFILE_SUCCESS =
-  '[profile page] get trainer profile Success';
+  '[profile page] get trainer profile success';
 
 export const CREATE_NUTRITIONIST_PROFILE_START =
   '[profile page] create nutritionist profile start';
 export const CREATE_NUTRITIONIST_PROFILE_SUCCESS =
-  '[profile page] create nutritionist profile Success';
+  '[profile page] create nutritionist profile success';
 
 export const GET_NUTRITIONIST_PROFILE_START =
   '[profile page] get nutritionist profile start';
 export const GET_NUTRITIONIST_PROFILE_SUCCESS =
-  '[profile page] get nutritionist profile Success';
+  '[profile page] get nutritionist profile success';
 
 export const createUserProfileStart = createAction(
   CREATE_USER_PROFILE_START,
@@ -85,6 +90,20 @@ export const getUserProfileStart = createAction(
 export const getUserProfileSuccess = createAction(
   GET_USER_PROFILE_SUCCESS,
   props<{ userProfile: UserProfile; redirect: boolean }>()
+);
+
+export const setUserProfileImage = createAction(
+  SET_USER_PROFILE_IMAGE,
+  props<{
+    profileImage: UserImage;
+  }>()
+);
+
+export const setUserCoverImage = createAction(
+  SET_USER_COVER_IMAGE,
+  props<{
+    coverImage: UserImage;
+  }>()
 );
 
 export const createClientProfileStart = createAction(

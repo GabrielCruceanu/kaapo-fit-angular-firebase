@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import { environment } from '@/environments/environment';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { HomeModule } from './home/home.module';
@@ -29,11 +29,14 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { ProfileModule } from './profile/profile.module';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { ProfileEffects } from './profile/store/profile.effects';
 import { AuthService } from './auth/services/auth.service';
 import { ProfileService } from './profile/services/profile.service';
 import { CountryService } from './shared/services/country.service';
+import { EnvironmentService } from '@/app/shared/services/environment/environment.service';
+import { AngularFireModule } from '@angular/fire/compat';
+import { NgxImageCompressService } from 'ngx-image-compress';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 export const firebaseConfig = environment.firebase;
 
@@ -45,7 +48,9 @@ export const firebaseConfig = environment.firebase;
       return getAuth();
     }),
     provideFirestore(() => getFirestore()),
+    AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
+    AngularFireStorageModule,
     AngularFireDatabaseModule,
     BrowserModule,
     AppRoutingModule,
@@ -56,7 +61,6 @@ export const firebaseConfig = environment.firebase;
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
-    GooglePlaceModule,
     AppRoutingModule,
     MatButtonModule,
     MatBadgeModule,
@@ -81,6 +85,8 @@ export const firebaseConfig = environment.firebase;
     AuthService,
     ProfileService,
     CountryService,
+    EnvironmentService,
+    NgxImageCompressService,
   ],
   bootstrap: [AppComponent],
 })

@@ -15,12 +15,13 @@
   width: 24px;
   height: 24px;
   border-radius: 100%;
-  background-color: var(--gray-tint);
+  background-color: var(--soft);
   overflow: hidden;
 
   img {
     width: 100%;
     height: auto;
+    object-fit: cover;
   }
 }
 

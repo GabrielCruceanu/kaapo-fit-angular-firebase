@@ -1,29 +1,67 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { getUserDataMock } from '../../../../data/userDetails';
-import { ClientDetails, UserType } from '../../model/profile-interface';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  CollectionsType,
+  UserImageType,
+  UserType,
+} from '../../model/profile-interface';
 import { ClientProfile } from '../../model/clientProfile.model';
-import { GymProfile } from '../../model/gym.model';
-import { TrainerProfile } from '../../model/trainerProfile.model';
-import { NutritionistProfile } from '../../model/nutritionistProfile.model';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
-import { getClientProfile } from '../../store/profile.selector';
+import { AppState } from '@/app/store/app.state';
+import { getClientProfile, getUserProfile } from '../../store/profile.selector';
 import { Observable, Subscription } from 'rxjs';
+import { SampleUserProfileImage } from '@/data/profileData';
+import { MatDialog } from '@angular/material/dialog';
+import { UploadImageComponent } from '@/app/shared/components/upload-image/upload-image.component';
+import { UserProfile } from '@/app/profile/model/userProfile.model';
+import { TypeOfUploadImage } from '@/app/shared/model/upload-image-interface';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
 })
-export class UserProfileComponent implements OnInit {
-  clientProfileDetails$: Observable<ClientProfile | null> | undefined;
+export class UserProfileComponent implements OnInit, OnDestroy {
+  clientProfileDetails$: Observable<ClientProfile | null>;
+  userProfileSub: Subscription;
+  userProfile: UserProfile | null;
   userType = UserType;
 
-  sampleImgLink =
-    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
-  constructor(private store: Store<AppState>) {}
+  sampleUserProfileImage = SampleUserProfileImage;
+
+  constructor(private store: Store<AppState>, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.clientProfileDetails$ = this.store.select(getClientProfile);
+    this.userProfileSub = this.store
+      .select(getUserProfile)
+      .subscribe((userProfile) => (this.userProfile = userProfile));
+  }
+
+  changeProfilePicture() {
+    this.dialog.open(UploadImageComponent, {
+      data: {
+        id: this.userProfile.id,
+        typeOfUploadImage: TypeOfUploadImage.Profile,
+        imageName: UserImageType.profile,
+        folder: CollectionsType.users,
+      },
+    });
+  }
+
+  changeCoverPicture() {
+    this.dialog.open(UploadImageComponent, {
+      data: {
+        id: this.userProfile.id,
+        typeOfUploadImage: TypeOfUploadImage.Cover,
+        imageName: UserImageType.cover,
+        folder: CollectionsType.users,
+      },
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.userProfileSub) {
+      this.userProfileSub.unsubscribe();
+    }
   }
 }

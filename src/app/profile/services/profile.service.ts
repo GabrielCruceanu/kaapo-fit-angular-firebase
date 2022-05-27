@@ -19,7 +19,6 @@ import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
 import { getUserProfile } from '../store/profile.selector';
-import { Router } from '@angular/router';
 
 export const _filer = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -46,6 +45,10 @@ export class ProfileService implements OnDestroy {
       });
   }
 
+  checkEvent($event) {
+    console.log('check', $event);
+  }
+
   uploadImage(image: File) {
     const uploadData = new FormData();
     uploadData.append('image', image);
@@ -61,6 +64,7 @@ export class ProfileService implements OnDestroy {
       })
     );
   }
+
   // ****************** USER ******************
   setUserProfileInLocalStorage(userProfile: UserProfile) {
     localStorage.setItem('userProfileData', JSON.stringify(userProfile));
@@ -71,16 +75,17 @@ export class ProfileService implements OnDestroy {
     if (userProfileDataString) {
       const userData = JSON.parse(userProfileDataString);
 
-      const userProfile = new UserProfile(
+      return new UserProfile(
         userData.id,
         userData.email,
         userData.hasProfile,
         userData.dayJoined,
         userData.monthJoined,
         userData.yearJoined,
-        userData.userType
+        userData.userType,
+        userData.coverImage,
+        userData.profileImage
       );
-      return userProfile;
     }
     return null;
   }
@@ -128,7 +133,7 @@ export class ProfileService implements OnDestroy {
     if (clientProfileDataString) {
       const clientData = JSON.parse(clientProfileDataString);
 
-      const clientProfile = new ClientProfile(
+      return new ClientProfile(
         clientData.id,
         clientData.status,
         clientData.firstName,
@@ -150,7 +155,6 @@ export class ProfileService implements OnDestroy {
         clientData.trainer,
         clientData.gym
       );
-      return clientProfile;
     }
     return null;
   }
@@ -178,7 +182,7 @@ export class ProfileService implements OnDestroy {
     if (gymProfileDataString) {
       const gymData = JSON.parse(gymProfileDataString);
 
-      const gymProfile = new GymProfile(
+      return new GymProfile(
         gymData.id,
         gymData.status,
         gymData.firstName,
@@ -200,7 +204,6 @@ export class ProfileService implements OnDestroy {
         gymData.reviews,
         gymData.personal
       );
-      return gymProfile;
     }
     return null;
   }
@@ -228,7 +231,7 @@ export class ProfileService implements OnDestroy {
     if (trainerProfileDataString) {
       const trainerData = JSON.parse(trainerProfileDataString);
 
-      const trainerProfile = new TrainerProfile(
+      return new TrainerProfile(
         trainerData.id,
         trainerData.status,
         trainerData.firstName,
@@ -253,7 +256,6 @@ export class ProfileService implements OnDestroy {
         trainerData.gallery,
         trainerData.reviews
       );
-      return trainerProfile;
     }
     return null;
   }
@@ -290,7 +292,7 @@ export class ProfileService implements OnDestroy {
     if (nutritionistProfileDataString) {
       const nutritionistData = JSON.parse(nutritionistProfileDataString);
 
-      const nutritionistProfile = new NutritionistProfile(
+      return new NutritionistProfile(
         nutritionistData.id,
         nutritionistData.status,
         nutritionistData.firstName,
@@ -314,7 +316,6 @@ export class ProfileService implements OnDestroy {
         nutritionistData.gallery,
         nutritionistData.reviews
       );
-      return nutritionistProfile;
     }
     return null;
   }

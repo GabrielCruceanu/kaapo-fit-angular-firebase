@@ -28,7 +28,7 @@ import {
   updateUserProfileStart,
   updateUserProfileSuccess,
 } from './profile.actions';
-import { exhaustMap, map, switchMap, tap } from 'rxjs';
+import { switchMap, map, tap } from 'rxjs';
 import {
   setErrorMessage,
   setLoadingSpinner,
@@ -40,6 +40,7 @@ import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
 import { UserType } from '../model/profile-interface';
+import { UploadImageService } from '@/app/shared/services/upload-image/upload-image.service';
 
 @Injectable()
 export class ProfileEffects {
@@ -86,37 +87,7 @@ export class ProfileEffects {
           .pipe(
             map((data) => {
               const userProfile = data as UserProfile;
-
               this.profileService.setUserProfileInLocalStorage(userProfile);
-
-              switch (userProfile.userType) {
-                case UserType.Client: {
-                  this.store.dispatch(
-                    getClientProfileStart({ clientProfileId: userProfile.id })
-                  );
-                  break;
-                }
-                case UserType.Gym: {
-                  this.store.dispatch(
-                    getGymProfileStart({ gymProfileId: userProfile.id })
-                  );
-                  break;
-                }
-                case UserType.Trainer: {
-                  this.store.dispatch(
-                    getTrainerProfileStart({ trainerProfileId: userProfile.id })
-                  );
-                  break;
-                }
-                case UserType.Nutritionist: {
-                  this.store.dispatch(
-                    getNutritionistProfileStart({
-                      nutritionistProfileId: userProfile.id,
-                    })
-                  );
-                  break;
-                }
-              }
 
               this.store.dispatch(setLoadingSpinner({ status: false }));
               return getUserProfileSuccess({
@@ -138,24 +109,17 @@ export class ProfileEffects {
         switch (userProfile.userType) {
           case UserType.Client: {
             return getClientProfileStart({ clientProfileId: userProfile.id });
-            break;
           }
           case UserType.Gym: {
             return getGymProfileStart({ gymProfileId: userProfile.id });
-
-            break;
           }
           case UserType.Trainer: {
             return getTrainerProfileStart({ trainerProfileId: userProfile.id });
-
-            break;
           }
           case UserType.Nutritionist: {
             return getNutritionistProfileStart({
               nutritionistProfileId: userProfile.id,
             });
-
-            break;
           }
         }
 
@@ -186,7 +150,7 @@ export class ProfileEffects {
   getClientProfileStart$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getClientProfileStart),
-      exhaustMap((action) => {
+      switchMap((action) => {
         return this.profileService
           .getClientProfileFromDb(action.clientProfileId)
           .pipe(
@@ -224,7 +188,7 @@ export class ProfileEffects {
   getGymProfileStart$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getGymProfileStart),
-      exhaustMap((action) => {
+      switchMap((action) => {
         return this.profileService
           .getGymProfileFromDb(action.gymProfileId)
           .pipe(
@@ -262,7 +226,7 @@ export class ProfileEffects {
   getTrainerProfileStart$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getTrainerProfileStart),
-      exhaustMap((action) => {
+      switchMap((action) => {
         return this.profileService
           .getTrainerProfileFromDb(action.trainerProfileId)
           .pipe(
@@ -304,7 +268,7 @@ export class ProfileEffects {
   getNutritionistProfileStart$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getNutritionistProfileStart),
-      exhaustMap((action) => {
+      switchMap((action) => {
         return this.profileService
           .getNutritionistProfileFromDb(action.nutritionistProfileId)
           .pipe(
@@ -351,6 +315,7 @@ export class ProfileEffects {
     private actions$: Actions,
     private store: Store<AppState>,
     private profileService: ProfileService,
+    private uploadImageService: UploadImageService,
     private authService: AuthService,
     private router: Router
   ) {}

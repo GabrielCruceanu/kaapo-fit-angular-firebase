@@ -2,7 +2,7 @@ import {
   GenderType,
   ClientDetails,
   UserType,
-} from '../app/profile/model/profile-interface';
+} from '@/app/profile/model/profile-interface';
 
 export const UserDataMockup: ClientDetails = {
   userId: 'asdas',
@@ -30,15 +30,24 @@ export const UserDataMockup: ClientDetails = {
   gallery: [
     {
       perspective: 'Front',
-      imgSrc: './assets/images/mock/front-mock.jpg',
+      image: {
+        downloadURL: './assets/images/mock/front-mock.jpg',
+        path: './assets/images/mock/front-mock.jpg',
+      },
     },
     {
       perspective: 'Back',
-      imgSrc: './assets/images/mock/back-mock.jpg',
+      image: {
+        downloadURL: './assets/images/mock/back-mock.jpg',
+        path: './assets/images/mock/back-mock.jpg',
+      },
     },
     {
       perspective: 'Side',
-      imgSrc: './assets/images/mock/side-mock.jpg',
+      image: {
+        downloadURL: './assets/images/mock/side-mock.jpg',
+        path: './assets/images/mock/side-mock.jpg',
+      },
     },
   ],
 };

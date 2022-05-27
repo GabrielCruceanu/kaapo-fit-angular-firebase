@@ -1,52 +1,113 @@
 <div
-  class="profile"
+  class="user-profile-header"
   *ngIf="clientProfileDetails$ | async as clientProfileDetails"
 >
-  <div class="profile-picture-name">
-    <div class="profile-picture-box">
-      <div class="profile-picture-couture"></div>
-      <div class="profile-picture">
+  <div class="user-profile-cover">
+    <div class="user-profile-cover-bottom-border"></div>
+    <div class="user-profile-cover-image">
+      <ng-container *ngIf="userProfile.coverImage.downloadURL">
         <img
-          [src]="
-            clientProfileDetails.profilePicture
-              ? clientProfileDetails.profilePicture
-              : sampleImgLink
-          "
-          alt="profile picture"
+          [src]="userProfile.coverImage.downloadURL"
+          alt="cover picture"
+          (click)="changeCoverPicture()"
         />
+      </ng-container>
+    </div>
+    <div class="user-profile-image-box">
+      <div class="user-profile-image" (click)="changeProfilePicture()">
+        <ng-container *ngIf="userProfile.profileImage.downloadURL">
+          <img
+            alt="profile picture"
+            [src]="userProfile.profileImage.downloadURL"
+          />
+        </ng-container>
       </div>
     </div>
-    <div class="profile-name">
-      <h3>
-        <strong>{{ clientProfileDetails.firstName }}</strong>
-        <br />
-        {{ clientProfileDetails.lastName }}
-      </h3>
-      <div class="profile-status-detail">
-        <div class="profile-icon-box">
-          <mat-icon
-            class="icon"
-            aria-hidden="false"
-            aria-label="Icon for profile country"
-          >
-            map
-          </mat-icon>
-          <span
-            >{{ clientProfileDetails.country }} /
-            {{ clientProfileDetails.city }}</span
-          >
-        </div>
-        <div class="profile-icon-box">
-          <mat-icon
-            class="icon"
-            aria-hidden="false"
-            aria-label="Icon for profile status"
-          >
-            badge
-          </mat-icon>
-          <span>{{ clientProfileDetails.status }}</span>
-        </div>
+  </div>
+  <div class="user-profile-name">
+    <h3>
+      <strong>{{ clientProfileDetails.firstName }} </strong>
+      <br />
+      {{ clientProfileDetails.lastName }}
+    </h3>
+    <div class="user-profile-status-detail">
+      <div class="user-profile-icon-box user-profile-icon-box-map">
+        <mat-icon
+          class="icon"
+          aria-hidden="false"
+          aria-label="Icon for profile country"
+        >
+          map
+        </mat-icon>
+        <span
+          >{{ clientProfileDetails.country }} /
+          {{ clientProfileDetails.city }}</span
+        >
+      </div>
+
+      <div class="user-profile-icon-box user-profile-icon-box-client">
+        <mat-icon
+          class="icon"
+          aria-hidden="false"
+          aria-label="Icon for profile status"
+        >
+          badge
+        </mat-icon>
+        <span>{{ clientProfileDetails.status }}</span>
       </div>
     </div>
   </div>
 </div>
+
+<!--<div-->
+<!--  class="profile"-->
+<!--  *ngIf="clientProfileDetails$ | async as clientProfileDetails"-->
+<!--&gt;-->
+<!--  <div class="profile-picture-name">-->
+<!--    <div class="profile-picture-box">-->
+<!--      <div class="profile-picture-couture"></div>-->
+<!--      <div class="profile-picture">-->
+<!--        <img-->
+<!--          [src]="-->
+<!--            clientProfileDetails.profilePicture-->
+<!--              ? clientProfileDetails.profilePicture-->
+<!--              : sampleUserProfileImage-->
+<!--          "-->
+<!--          alt="profile picture"-->
+<!--        />-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="profile-name">-->
+<!--      <h3>-->
+<!--        <strong>{{ clientProfileDetails.firstName }}</strong>-->
+<!--        <br />-->
+<!--        {{ clientProfileDetails.lastName }}-->
+<!--      </h3>-->
+<!--      <div class="profile-status-detail">-->
+<!--        <div class="profile-icon-box">-->
+<!--          <mat-icon-->
+<!--            class="icon"-->
+<!--            aria-hidden="false"-->
+<!--            aria-label="Icon for profile country"-->
+<!--          >-->
+<!--            map-->
+<!--          </mat-icon>-->
+<!--          <span-->
+<!--            >{{ clientProfileDetails.country }} /-->
+<!--            {{ clientProfileDetails.city }}</span-->
+<!--          >-->
+<!--        </div>-->
+<!--        <div class="profile-icon-box">-->
+<!--          <mat-icon-->
+<!--            class="icon"-->
+<!--            aria-hidden="false"-->
+<!--            aria-label="Icon for profile status"-->
+<!--          >-->
+<!--            badge-->
+<!--          </mat-icon>-->
+<!--          <span>{{ clientProfileDetails.status }}</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

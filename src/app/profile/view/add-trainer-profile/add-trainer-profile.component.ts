@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { map, Observable, startWith, Subscription } from 'rxjs';
-import { AuthType } from '../../../auth/model/AuthResponseData.model';
-import { UserAuth } from '../../../auth/model/userAuth.model';
+import { AuthType } from '@/app/auth/model/AuthResponseData.model';
+import { UserAuth } from '@/app/auth/model/userAuth.model';
 import { UserProfile } from '../../model/userProfile.model';
 import {
   FormControl,
@@ -10,18 +10,18 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
+import { AppState } from '@/app/store/app.state';
 import { ProfileService } from '../../services/profile.service';
-import { CountryService } from '../../../shared/services/country.service';
+import { CountryService } from '@/app/shared/services/country.service';
 import {
   setErrorMessage,
   setLoadingSpinner,
-} from '../../../store/shared/shared.actions';
+} from '@/app/store/shared/shared.actions';
 import {
   getErrorMessage,
   getLoading,
-} from '../../../store/shared/shared.selector';
-import { getUserAuth } from '../../../auth/store/auth.selector';
+} from '@/app/store/shared/shared.selector';
+import { getUserAuth } from '@/app/auth/store/auth.selector';
 import { getUserProfile } from '../../store/profile.selector';
 import { Contact, UserType } from '../../model/profile-interface';
 import {
@@ -29,10 +29,7 @@ import {
   updateUserProfileStart,
 } from '../../store/profile.actions';
 import { TrainerProfile } from '../../model/trainerProfile.model';
-import {
-  TrainerData,
-  TrainerExperienceData,
-} from '../../../../data/trainerData';
+import { TrainerData, TrainerExperienceData } from '@/data/trainerData';
 
 @Component({
   selector: 'app-add-trainer-profile',
@@ -224,7 +221,9 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         this.userProfile.dayJoined,
         this.userProfile.monthJoined,
         this.userProfile.yearJoined,
-        UserType.Trainer
+        UserType.Trainer,
+        null,
+        null
       );
 
       this.store.dispatch(setLoadingSpinner({ status: true }));

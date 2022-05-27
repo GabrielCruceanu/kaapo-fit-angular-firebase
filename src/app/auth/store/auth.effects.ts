@@ -104,6 +104,8 @@ export class AuthEffects {
           new Date().getUTCDate(),
           new Date().getUTCMonth() + 1,
           new Date().getUTCFullYear(),
+          null,
+          null,
           null
         );
 
@@ -117,7 +119,7 @@ export class AuthEffects {
       ofType(resetStart),
       exhaustMap((action) => {
         return this.authService.onResetPassword(action.email).pipe(
-          map((data) => {
+          map(() => {
             return resetSuccess({ redirect: false });
           }),
           catchError((errResp) => {
@@ -135,7 +137,7 @@ export class AuthEffects {
   autoLogin$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(autoLogin),
-      mergeMap((action) => {
+      mergeMap(() => {
         const userAuth = this.authService.getUserAuthFromLocalStorage();
         const userProfile =
           this.profileService.getUserProfileFromLocalStorage();
@@ -221,8 +223,8 @@ export class AuthEffects {
     () => {
       return this.actions$.pipe(
         ofType(autoLogout),
-        map((action) => {
-          this.router.navigate(['/']).then((r) => this.authService.onLogout());
+        map(() => {
+          this.router.navigate(['/']).then(() => this.authService.onLogout());
         })
       );
     },

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { getTabsData, TabModel } from './tabs.data';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -8,14 +8,14 @@ import {
   NUTRITION_ICON,
   PROGRESS_ICON,
   WORKOUT_ICON,
-} from '../../../../content/icons';
+} from '@/content/icons';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.scss'],
 })
-export class TabsComponent implements OnInit {
+export class TabsComponent {
   tabs: TabModel[];
 
   constructor(
@@ -44,6 +44,4 @@ export class TabsComponent implements OnInit {
     );
     this.tabs = getTabsData();
   }
-
-  ngOnInit(): void {}
 }

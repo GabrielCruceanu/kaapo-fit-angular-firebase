@@ -21,7 +21,6 @@ import { AddTrainerProfileComponent } from './view/add-trainer-profile/add-train
 import { AddGymProfileComponent } from './view/add-gym-profile/add-gym-profile.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
-import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgxMatIntlTelInputModule } from 'ngx-mat-intl-tel-input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -29,6 +28,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { AddNutritionistProfileComponent } from './view/add-nutritionist-profile/add-nutritionist-profile.component';
 import { ClientProfileComponent } from './components/client-profile/client-profile.component';
+import { UserProfileSidebarComponent } from './components/user-profile-sidebar/user-profile-sidebar.component';
+import { UploadImageComponent } from '../shared/components/upload-image/upload-image.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FileUploadModule } from 'ng2-file-upload';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ComponentsSharedModule } from '@/app/shared/components/components-shared.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +48,8 @@ import { ClientProfileComponent } from './components/client-profile/client-profi
     AddGymProfileComponent,
     AddNutritionistProfileComponent,
     ClientProfileComponent,
+    UserProfileSidebarComponent,
+    UploadImageComponent,
   ],
   imports: [
     CommonModule,
@@ -57,13 +64,16 @@ import { ClientProfileComponent } from './components/client-profile/client-profi
     MatButtonModule,
     MatProgressBarModule,
     MatSelectModule,
-    GooglePlaceModule,
     FormsModule,
     MatAutocompleteModule,
     NgxMatIntlTelInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatMomentDateModule,
+    MatDialogModule,
+    FileUploadModule,
+    MatToolbarModule,
+    ComponentsSharedModule,
   ],
   providers: [ProfileService],
 })

@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TabsComponent } from './tabs/tabs.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HeaderProfileComponent } from './header-profile/header-profile.component';
+import { UploadImageService } from '@/app/shared/services/upload-image/upload-image.service';
 
 @NgModule({
   declarations: [
@@ -28,5 +29,6 @@ import { HeaderProfileComponent } from './header-profile/header-profile.componen
     HeaderProfileComponent,
   ],
   imports: [CommonModule, RouterModule, MatIconModule, MatMenuModule],
+  providers: [UploadImageService],
 })
 export class ComponentsSharedModule {}

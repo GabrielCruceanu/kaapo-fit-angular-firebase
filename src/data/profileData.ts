@@ -1,4 +1,7 @@
-import { ProfileData } from '../app/profile/model/profileData.model';
+import { ProfileData } from '@/app/profile/model/profileData.model';
+
+export const SampleUserProfileImage = './assets/images/user.jpg';
+export const SampleUserProfileCover = './assets/images/cover.jpg';
 
 export const ProfilesData: ProfileData[] = [
   {
