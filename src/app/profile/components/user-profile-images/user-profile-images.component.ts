@@ -1,17 +1,10 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
-import { getUserDataMock } from '../../../../data/userDetails';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { getUserDataMock } from '@/data/userDetails';
 import SwiperCore, {
-  EffectCoverflow,
+  EffectCards,
+  Navigation,
   SwiperOptions,
   Virtual,
-  Navigation,
-  EffectCards,
 } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
 import { ClientDetails } from '../../model/profile-interface';
@@ -26,7 +19,7 @@ SwiperCore.use([Virtual, EffectCards, Navigation]);
   styleUrls: ['./user-profile-images.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class UserProfileImagesComponent implements OnInit {
+export class UserProfileImagesComponent {
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
   profile: ClientDetails;
   @Input()
@@ -41,6 +34,4 @@ export class UserProfileImagesComponent implements OnInit {
   constructor() {
     this.profile = getUserDataMock();
   }
-
-  ngOnInit(): void {}
 }

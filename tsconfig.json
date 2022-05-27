@@ -3,21 +3,38 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "importHelpers": true,
     "outDir": "./dist/out-tsc",
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "es2017",
     "module": "es2020",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "paths": {
+      "@/app/*": [
+        "./src/app/*" // The short path to components
+      ],
+      "@/assets/*": [
+        "./src/assets/*" // The short path to constants
+      ],
+      "@/content/*": [
+        "./src/content/*" // The short path to utils
+      ],
+      "@/data/*": [
+        "./src/data/*" // The short path to styles
+      ],
+      "@/environments/*": [
+        "./src/environments/*" // The short path to themes
+      ],
+      "@/styles/*": [
+        "./src/styles/*" // The short path to lib
+      ]
+    },
     "lib": [
       "es2020",
       "dom"

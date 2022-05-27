@@ -10,10 +10,7 @@
 
     <div class="nav-profile">
       <ng-container *ngIf="isAuthenticate | async; else isNotAuthenticate">
-        <app-header-profile
-          [userDetails]="userDetails"
-          [end]="true"
-        ></app-header-profile>
+        <app-header-profile [end]="true"></app-header-profile>
       </ng-container>
       <ng-template #isNotAuthenticate>
         <ul>

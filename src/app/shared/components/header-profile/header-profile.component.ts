@@ -1,5 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ClientDetails } from '../../../profile/model/profile-interface';
+import { Observable } from 'rxjs';
+import { ClientProfile } from '@/app/profile/model/clientProfile.model';
+import { Store } from '@ngrx/store';
+import { AppState } from '@/app/store/app.state';
+import {
+  getClientProfile,
+  getUserProfile,
+} from '@/app/profile/store/profile.selector';
+import { UserProfile } from '@/app/profile/model/userProfile.model';
+import { SampleUserProfileImage } from '@/data/profileData';
 
 @Component({
   selector: 'app-header-profile',
@@ -8,10 +17,15 @@ import { ClientDetails } from '../../../profile/model/profile-interface';
 })
 export class HeaderProfileComponent implements OnInit {
   @Input()
-  userDetails: ClientDetails | undefined;
-  @Input()
   end: boolean | undefined;
-  constructor() {}
+  clientProfileDetails$: Observable<ClientProfile | null>;
+  userProfileDetails$: Observable<UserProfile | null>;
+  sampleUserProfileImage = SampleUserProfileImage;
 
-  ngOnInit(): void {}
+  constructor(private store: Store<AppState>) {}
+
+  ngOnInit(): void {
+    this.clientProfileDetails$ = this.store.select(getClientProfile);
+    this.userProfileDetails$ = this.store.select(getUserProfile);
+  }
 }

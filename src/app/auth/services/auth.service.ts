@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '@/environments/environment';
 import { UserAuth } from '../model/userAuth.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
@@ -8,7 +8,7 @@ import { autoLogout } from '../store/auth.actions';
 import { AuthResponseData } from '../model/AuthResponseData.model';
 import { Observable } from 'rxjs';
 import { UserProfile } from '../../profile/model/userProfile.model';
-import { UserType } from '../../profile/model/profile-interface';
+import { UserImage, UserType } from '../../profile/model/profile-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -43,13 +43,7 @@ export class AuthService {
     const expirationDate = new Date(
       new Date().getTime() + +data.expiresIn * 1000
     );
-    const user = new UserAuth(
-      data.localId,
-      data.email,
-      data.idToken,
-      expirationDate
-    );
-    return user;
+    return new UserAuth(data.localId, data.email, data.idToken, expirationDate);
   }
 
   formatUserProfileForDb(
@@ -58,21 +52,23 @@ export class AuthService {
     dayJoined: number,
     monthJoined: number,
     yearJoined: number,
-    userType: UserType | null
+    userType: UserType | null,
+    coverImage: UserImage | null,
+    profileImage: UserImage | null
   ) {
     const { id, email } = user;
 
-    const userDb = new UserProfile(
+    return new UserProfile(
       id,
       email,
       hasProfile,
       dayJoined,
       monthJoined,
       yearJoined,
-      userType
+      userType,
+      coverImage,
+      profileImage
     );
-
-    return userDb;
   }
 
   getErrorMessage(message: string) {

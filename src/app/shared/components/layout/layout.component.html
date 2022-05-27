@@ -4,8 +4,8 @@
     <app-header></app-header>
   </div>
   <main
-    [class.m-lg-auto]="!(isAuthenticated$ | async)"
-    [class.isAuth]="!(isAuthenticated$ | async)"
+    [class.m-lg-auto]="(isAuthenticated$ | async) === false"
+    [class.isAuth]="(isAuthenticated$ | async) === false"
   >
     <ng-content></ng-content>
   </main>

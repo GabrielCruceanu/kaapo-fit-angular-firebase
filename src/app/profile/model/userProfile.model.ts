@@ -1,4 +1,4 @@
-import { UserType } from './profile-interface';
+import { UserImage, UserType } from './profile-interface';
 
 export class UserProfile {
   constructor(
@@ -8,6 +8,8 @@ export class UserProfile {
     public dayJoined: number,
     public monthJoined: number,
     public yearJoined: number,
-    public userType: UserType | null
+    public userType: UserType | null,
+    public coverImage: UserImage | null,
+    public profileImage: UserImage | null
   ) {}
 }

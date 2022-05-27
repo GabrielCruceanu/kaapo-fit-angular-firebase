@@ -3,7 +3,7 @@ import { ClientProfile } from '../../model/clientProfile.model';
 import { Observable } from 'rxjs';
 import { getClientProfile } from '../../store/profile.selector';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
+import { AppState } from '@/app/store/app.state';
 
 @Component({
   selector: 'app-client-profile',
@@ -11,7 +11,7 @@ import { AppState } from '../../../store/app.state';
   styleUrls: ['./client-profile.component.scss'],
 })
 export class ClientProfileComponent implements OnInit {
-  clientProfileDetails$: Observable<ClientProfile | null> | undefined;
+  clientProfileDetails$: Observable<ClientProfile | null>;
 
   constructor(private store: Store<AppState>) {}
 

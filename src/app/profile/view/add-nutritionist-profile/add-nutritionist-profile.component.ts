@@ -1,12 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthType } from '../../../auth/model/AuthResponseData.model';
-import { UserAuth } from '../../../auth/model/userAuth.model';
+import { AuthType } from '@/app/auth/model/AuthResponseData.model';
+import { UserAuth } from '@/app/auth/model/userAuth.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import { UserProfile } from '../../model/userProfile.model';
-import {
-  TrainerData,
-  TrainerExperienceData,
-} from '../../../../data/trainerData';
+import { TrainerData, TrainerExperienceData } from '@/data/trainerData';
 import {
   FormControl,
   FormGroup,
@@ -14,24 +11,22 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
+import { AppState } from '@/app/store/app.state';
 import { ProfileService } from '../../services/profile.service';
-import { CountryService } from '../../../shared/services/country.service';
+import { CountryService } from '@/app/shared/services/country.service';
 import {
   setErrorMessage,
   setLoadingSpinner,
-} from '../../../store/shared/shared.actions';
+} from '@/app/store/shared/shared.actions';
 import {
   getErrorMessage,
   getLoading,
-} from '../../../store/shared/shared.selector';
-import { getUserAuth } from '../../../auth/store/auth.selector';
+} from '@/app/store/shared/shared.selector';
+import { getUserAuth } from '@/app/auth/store/auth.selector';
 import { getUserProfile } from '../../store/profile.selector';
 import { Contact, UserType } from '../../model/profile-interface';
-import { TrainerProfile } from '../../model/trainerProfile.model';
 import {
   createNutritionistProfileStart,
-  createTrainerProfileStart,
   updateUserProfileStart,
 } from '../../store/profile.actions';
 import { NutritionistProfile } from '../../model/nutritionistProfile.model';
@@ -223,7 +218,9 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         this.userProfile.dayJoined,
         this.userProfile.monthJoined,
         this.userProfile.yearJoined,
-        UserType.Nutritionist
+        UserType.Nutritionist,
+        null,
+        null
       );
 
       this.store.dispatch(setLoadingSpinner({ status: true }));

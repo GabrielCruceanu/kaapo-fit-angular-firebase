@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthType } from '../../../auth/model/AuthResponseData.model';
+import { AuthType } from '@/app/auth/model/AuthResponseData.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import {
   FormControl,
@@ -8,19 +8,19 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
+import { AppState } from '@/app/store/app.state';
 import {
   setErrorMessage,
   setLoadingSpinner,
-} from '../../../store/shared/shared.actions';
+} from '@/app/store/shared/shared.actions';
 import {
   getErrorMessage,
   getLoading,
-} from '../../../store/shared/shared.selector';
+} from '@/app/store/shared/shared.selector';
 import { ProfileService } from '../../services/profile.service';
-import { UserAuth } from '../../../auth/model/userAuth.model';
-import { getUserAuth } from '../../../auth/store/auth.selector';
-import { CountryService } from '../../../shared/services/country.service';
+import { UserAuth } from '@/app/auth/model/userAuth.model';
+import { getUserAuth } from '@/app/auth/store/auth.selector';
+import { CountryService } from '@/app/shared/services/country.service';
 import { ClientProfile } from '../../model/clientProfile.model';
 import { UserType } from '../../model/profile-interface';
 import { UserProfile } from '../../model/userProfile.model';
@@ -195,7 +195,9 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
         this.userProfile.dayJoined,
         this.userProfile.monthJoined,
         this.userProfile.yearJoined,
-        UserType.Client
+        UserType.Client,
+        null,
+        null
       );
 
       this.store.dispatch(setLoadingSpinner({ status: true }));

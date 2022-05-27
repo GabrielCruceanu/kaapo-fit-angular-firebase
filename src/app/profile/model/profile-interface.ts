@@ -1,6 +1,19 @@
+export enum UserImageType {
+  profile = 'profile',
+  cover = 'cover',
+  clientGallerySide = 'clientGallerySide',
+  clientGalleryFront = 'clientGalleryFront',
+  clientGalleryBack = 'clientGalleryBack',
+  proGallery = 'proGallery',
+}
+export interface UserImage {
+  downloadURL: string;
+  path: string;
+}
+
 export interface ClientGalleryPicture {
   perspective: string;
-  imgSrc: string;
+  image: UserImage;
 }
 
 export interface UserInfo {
@@ -53,6 +66,7 @@ export enum CollectionsType {
   trainers = 'trainers',
   users = 'users',
 }
+
 export enum GenderType {
   Male = 'Male',
   Female = 'Female',

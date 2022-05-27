@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { getUserDataMock } from '../../../../data/userDetails';
 
 import SwiperCore, { EffectFade } from 'swiper';
-import { ClientDetails, UserType } from '../../model/profile-interface';
+import { UserType } from '../../model/profile-interface';
 import { UserProfile } from '../../model/userProfile.model';
 import { combineLatest, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
+import { AppState } from '@/app/store/app.state';
 import { Router } from '@angular/router';
 import {
   getClientProfile,
@@ -31,7 +30,6 @@ SwiperCore.use([EffectFade]);
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   title: string = 'My Profile';
-  profile: ClientDetails;
   userProfile: UserProfile | null | undefined;
   userProfileSub: Subscription | undefined;
   profileDetails:
@@ -50,9 +48,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private profileService: ProfileService,
     private router: Router
-  ) {
-    this.profile = getUserDataMock();
-  }
+  ) {}
 
   ngOnInit() {
     if (!this.profileService.checkIfUserHasProfile()) {
