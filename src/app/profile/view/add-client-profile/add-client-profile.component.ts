@@ -37,20 +37,20 @@ import {
 })
 export class AddClientProfileComponent implements OnInit, OnDestroy {
   authType = AuthType;
-  userAuth: UserAuth | null | undefined;
-  userAuthSub: Subscription | undefined;
-  userProfile: UserProfile | null | undefined;
-  userProfileSub: Subscription | undefined;
-  getLoadingSpinnerSub: Subscription | undefined;
-  errorMessage$: Observable<any> | undefined;
+  userAuth: UserAuth | null;
+  userAuthSub: Subscription;
+  userProfile: UserProfile | null;
+  userProfileSub: Subscription;
+  getLoadingSpinnerSub: Subscription;
+  errorMessage$: Observable<any>;
   onlyCountries = this.countryService.mapCountriesData();
-  filteredCountries: Observable<string[]> | undefined;
+  filteredCountries: Observable<string[]>;
   selectedCountry: string = '';
   onlyStates = this.countryService.mapStatesData();
-  filteredStates: Observable<string[]> | undefined;
+  filteredStates: Observable<string[]>;
   selectedState: string = '';
   onlyCities = this.countryService.mapCitiesData();
-  filteredCities: Observable<string[]> | undefined;
+  filteredCities: Observable<string[]>;
   selectedCity: string = '';
 
   userFormGroup = new FormGroup({
