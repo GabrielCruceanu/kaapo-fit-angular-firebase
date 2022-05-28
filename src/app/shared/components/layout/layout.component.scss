@@ -16,7 +16,7 @@ main {
   height: calc(100vh - 134px);
   width: 100%;
   overflow: auto;
-  padding-bottom: 40px;
+  margin-bottom: 40px;
 
   &.isAuth {
     height: 100vh;

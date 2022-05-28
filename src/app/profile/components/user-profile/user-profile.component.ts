@@ -9,7 +9,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@/app/store/app.state';
 import { getClientProfile, getUserProfile } from '../../store/profile.selector';
 import { Observable, Subscription } from 'rxjs';
-import { SampleUserProfileImage } from '@/data/profileData';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadImageComponent } from '@/app/shared/components/upload-image/upload-image.component';
 import { UserProfile } from '@/app/profile/model/userProfile.model';
@@ -26,7 +25,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   userProfile: UserProfile | null;
   userType = UserType;
 
-  sampleUserProfileImage = SampleUserProfileImage;
+  sampleUserProfileImage = '../../../../assets/images/user.jpg';
+  sampleUserCoverImage = '../../../../assets/images/cover.jpg';
 
   constructor(private store: Store<AppState>, public dialog: MatDialog) {}
 

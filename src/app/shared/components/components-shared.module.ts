@@ -10,6 +10,9 @@ import { TabsComponent } from './tabs/tabs.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HeaderProfileComponent } from './header-profile/header-profile.component';
 import { UploadImageService } from '@/app/shared/services/upload-image/upload-image.service';
+import { UploadImageComponent } from '@/app/shared/components/upload-image/upload-image.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,7 @@ import { UploadImageService } from '@/app/shared/services/upload-image/upload-im
     HeaderComponent,
     TabsComponent,
     HeaderProfileComponent,
+    UploadImageComponent,
   ],
   exports: [
     ButtonComponent,
@@ -28,7 +32,14 @@ import { UploadImageService } from '@/app/shared/services/upload-image/upload-im
     HeaderComponent,
     HeaderProfileComponent,
   ],
-  imports: [CommonModule, RouterModule, MatIconModule, MatMenuModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatDialogModule,
+  ],
   providers: [UploadImageService],
 })
 export class ComponentsSharedModule {}

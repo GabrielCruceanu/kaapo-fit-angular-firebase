@@ -10,7 +10,6 @@ import { UserProfileDetailsComponent } from './components/user-profile-details/u
 import { UserProfileImagesComponent } from './components/user-profile-images/user-profile-images.component';
 import { MatIconModule } from '@angular/material/icon';
 import { AddProfileComponent } from './view/add-profile/add-profile.component';
-import { ProfileService } from './services/profile.service';
 import { MatStepperModule } from '@angular/material/stepper';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,11 +28,9 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { AddNutritionistProfileComponent } from './view/add-nutritionist-profile/add-nutritionist-profile.component';
 import { ClientProfileComponent } from './components/client-profile/client-profile.component';
 import { UserProfileSidebarComponent } from './components/user-profile-sidebar/user-profile-sidebar.component';
-import { UploadImageComponent } from '../shared/components/upload-image/upload-image.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FileUploadModule } from 'ng2-file-upload';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { ComponentsSharedModule } from '@/app/shared/components/components-shared.module';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -49,7 +46,6 @@ import { ComponentsSharedModule } from '@/app/shared/components/components-share
     AddNutritionistProfileComponent,
     ClientProfileComponent,
     UserProfileSidebarComponent,
-    UploadImageComponent,
   ],
   imports: [
     CommonModule,
@@ -71,10 +67,9 @@ import { ComponentsSharedModule } from '@/app/shared/components/components-share
     MatNativeDateModule,
     MatMomentDateModule,
     MatDialogModule,
-    FileUploadModule,
     MatToolbarModule,
     ComponentsSharedModule,
   ],
-  providers: [ProfileService],
+  providers: [],
 })
 export class ProfileModule {}

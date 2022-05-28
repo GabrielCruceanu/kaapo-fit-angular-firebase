@@ -3,7 +3,11 @@
     <div class="header-profile-picture">
       <ng-container *ngIf="userProfileDetails$ | async as userProfile">
         <img
-          [src]="userProfile.profileImage.downloadURL"
+          [src]="
+            userProfile?.profileImage?.downloadURL
+              ? userProfile.profileImage.downloadURL
+              : sampleUserProfileImage
+          "
           alt="profile picture"
         />
       </ng-container>
