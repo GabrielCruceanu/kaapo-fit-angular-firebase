@@ -31,6 +31,7 @@ nav {
   display: flex;
   width: 100%;
   justify-content: center;
+
   mat-icon {
     overflow: visible;
     width: 100%;
@@ -64,6 +65,11 @@ nav {
       }
     }
 
+    li {
+      display: flex;
+      align-items: center;
+    }
+
     li:nth-child(2) {
       margin-left: 1rem;
     }
@@ -76,6 +82,7 @@ nav {
 
     li:hover {
       cursor: pointer;
+
       .mat-icon {
         fill: var(--primary);
         color: var(--primary);
@@ -90,10 +97,12 @@ nav {
   .mat-menu-item {
     color: var(--soft);
     transition: var(--transition);
+
     .mat-icon {
       color: var(--gray);
       transition: var(--transition);
     }
+
     &:hover {
       color: var(--white);
 
