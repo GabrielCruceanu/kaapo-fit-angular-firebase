@@ -5,22 +5,26 @@
   <div class="user-profile-cover">
     <div class="user-profile-cover-bottom-border"></div>
     <div class="user-profile-cover-image">
-      <ng-container *ngIf="userProfile.coverImage.downloadURL">
-        <img
-          [src]="userProfile.coverImage.downloadURL"
-          alt="cover picture"
-          (click)="changeCoverPicture()"
-        />
-      </ng-container>
+      <img
+        [src]="
+          userProfile?.coverImage?.downloadURL
+            ? userProfile.coverImage.downloadURL
+            : sampleUserCoverImage
+        "
+        alt="cover picture"
+        (click)="changeCoverPicture()"
+      />
     </div>
     <div class="user-profile-image-box">
       <div class="user-profile-image" (click)="changeProfilePicture()">
-        <ng-container *ngIf="userProfile.profileImage.downloadURL">
-          <img
-            alt="profile picture"
-            [src]="userProfile.profileImage.downloadURL"
-          />
-        </ng-container>
+        <img
+          alt="profile picture"
+          [src]="
+            userProfile?.profileImage?.downloadURL
+              ? userProfile.profileImage.downloadURL
+              : sampleUserProfileImage
+          "
+        />
       </div>
     </div>
   </div>

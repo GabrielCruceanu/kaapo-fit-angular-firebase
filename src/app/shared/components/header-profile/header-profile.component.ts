@@ -8,7 +8,6 @@ import {
   getUserProfile,
 } from '@/app/profile/store/profile.selector';
 import { UserProfile } from '@/app/profile/model/userProfile.model';
-import { SampleUserProfileImage } from '@/data/profileData';
 
 @Component({
   selector: 'app-header-profile',
@@ -20,7 +19,7 @@ export class HeaderProfileComponent implements OnInit {
   end: boolean | undefined;
   clientProfileDetails$: Observable<ClientProfile | null>;
   userProfileDetails$: Observable<UserProfile | null>;
-  sampleUserProfileImage = SampleUserProfileImage;
+  sampleUserProfileImage = '../../../../assets/images/user.jpg';
 
   constructor(private store: Store<AppState>) {}
 
