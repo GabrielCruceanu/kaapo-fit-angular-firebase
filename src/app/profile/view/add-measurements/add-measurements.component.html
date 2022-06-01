@@ -1,0 +1,394 @@
+<app-layout>
+  <div class="container my-4">
+    <h3>Add your physic details</h3>
+    <form class="row justify-content-center">
+      <div class="col-md-4">
+        <div class="select-picture-box">
+          <h4>Select front picture</h4>
+
+          <ng-container
+            *ngIf="
+              !(
+                clientProfile.currentPhysicalDetails?.clientGalleryFront &&
+                clientProfile.currentPhysicalDetails?.clientGalleryFront
+                  .downloadURL
+              );
+              else clientGalleryFrontPicture
+            "
+          >
+            <button
+              mat-fab
+              color="primary"
+              aria-label="Icon button with a image icon"
+              (click)="onUploadFrontPicture()"
+            >
+              <mat-icon>add_a_photo</mat-icon>
+            </button>
+          </ng-container>
+
+          <ng-template #clientGalleryFrontPicture>
+            <img
+              [src]="
+                clientProfile.currentPhysicalDetails?.clientGalleryFront
+                  .downloadURL
+                  ? clientProfile.currentPhysicalDetails?.clientGalleryFront
+                      .downloadURL
+                  : ''
+              "
+              alt="client gallery front picture"
+            />
+            <button
+              mat-fab
+              color="primary"
+              aria-label="Icon button with a image icon"
+              (click)="onUploadFrontPicture()"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="select-picture-box">
+          <h4>Select side picture</h4>
+          <ng-container
+            *ngIf="
+              !(
+                clientProfile.currentPhysicalDetails?.clientGallerySide &&
+                clientProfile.currentPhysicalDetails?.clientGallerySide
+                  .downloadURL
+              );
+              else clientGallerySidePicture
+            "
+          >
+            <button
+              mat-fab
+              color="primary"
+              aria-label="Icon button with a image icon"
+              (click)="onUploadSidePicture()"
+            >
+              <mat-icon>add_a_photo</mat-icon>
+            </button>
+          </ng-container>
+          <ng-template #clientGallerySidePicture>
+            <img
+              [src]="
+                clientProfile.currentPhysicalDetails?.clientGallerySide
+                  .downloadURL
+                  ? clientProfile.currentPhysicalDetails?.clientGallerySide
+                      .downloadURL
+                  : ''
+              "
+              alt="client gallery front picture"
+            />
+            <button
+              mat-fab
+              color="primary"
+              aria-label="Icon button with a image icon"
+              (click)="onUploadSidePicture()"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="select-picture-box">
+          <h4>Select back picture</h4>
+
+          <ng-container
+            *ngIf="
+              !(
+                clientProfile.currentPhysicalDetails?.clientGalleryBack &&
+                clientProfile.currentPhysicalDetails?.clientGalleryBack
+                  .downloadURL
+              );
+              else clientGalleryBackPicture
+            "
+          >
+            <button
+              mat-fab
+              color="primary"
+              aria-label="Icon button with a image icon"
+              (click)="onUploadBackPicture()"
+            >
+              <mat-icon>add_a_photo</mat-icon>
+            </button>
+          </ng-container>
+          <ng-template #clientGalleryBackPicture>
+            <img
+              [src]="
+                clientProfile.currentPhysicalDetails?.clientGalleryBack
+                  .downloadURL
+                  ? clientProfile.currentPhysicalDetails?.clientGalleryBack
+                      .downloadURL
+                  : ''
+              "
+              alt="client gallery back picture"
+            />
+            <button
+              mat-fab
+              color="primary"
+              aria-label="Icon button with a image icon"
+              (click)="onUploadBackPicture()"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <!--   Details     -->
+        <div class="row" [formGroup]="addMeasurementsFormGroup">
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Weight</mat-label>
+              <input matInput name="weight" formControlName="weight" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['weight'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Weight is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['weight'].hasError(
+                    'pattern'
+                  )
+                "
+              >
+                Number Only
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Neck</mat-label>
+              <input matInput name="neck" formControlName="neck" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['neck'].hasError('required')
+                "
+              >
+                Neck is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['neck'].hasError('pattern')
+                "
+              >
+                Number Only
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Shoulders</mat-label>
+              <input matInput name="shoulders" formControlName="shoulders" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['shoulders'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Shoulders is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['shoulders'].hasError(
+                    'pattern'
+                  )
+                "
+              >
+                Number Only
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Chest</mat-label>
+              <input matInput name="chest" formControlName="chest" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['chest'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Chest is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['chest'].hasError('pattern')
+                "
+              >
+                Number Only
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Arm Left</mat-label>
+              <input matInput name="armLeft" formControlName="armLeft" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['armLeft'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Arm Left is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['armLeft'].hasError(
+                    'pattern'
+                  )
+                "
+              >
+                Number Only
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Arm Right</mat-label>
+              <input matInput name="armRight" formControlName="armRight" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['armRight'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Arm Right is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['armRight'].hasError(
+                    'pattern'
+                  )
+                "
+              >
+                Number Only
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Waist</mat-label>
+              <input matInput name="waist" formControlName="waist" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['waist'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Waist is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['waist'].hasError('pattern')
+                "
+              >
+                Number Only
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Hip</mat-label>
+              <input matInput name="hip" formControlName="hip" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['hip'].hasError('required')
+                "
+              >
+                Hip is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['hip'].hasError('pattern')
+                "
+              >
+                Number Only
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Ass</mat-label>
+              <input matInput name="ass" formControlName="ass" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['ass'].hasError('required')
+                "
+              >
+                Ass is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['ass'].hasError('pattern')
+                "
+              >
+                Number Only
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Thigh</mat-label>
+              <input matInput name="thigh" formControlName="thigh" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['thigh'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Thigh is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['thigh'].hasError('pattern')
+                "
+              >
+                Number Only
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="form-footer col-12 mt-4">
+        <mat-error *ngIf="errorMessage$ | async as errorMessage">
+          {{ errorMessage }}
+        </mat-error>
+        <button
+          mat-raised-button
+          color="primary"
+          [class.disabled]="!addMeasurementsFormGroup.valid"
+          (click)="onAddMeasurements($event)"
+        >
+          Save Details
+        </button>
+      </div>
+    </form>
+  </div>
+</app-layout>

@@ -1,4 +1,10 @@
-import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { getUserDataMock } from '@/data/userDetails';
 import SwiperCore, {
   EffectCards,
@@ -23,7 +29,7 @@ export class UserProfileImagesComponent {
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
   profile: ClientDetails;
   @Input()
-  profileDetails: ClientPhysicalDetails | undefined | null;
+  clientPhysicalDetails: ClientPhysicalDetails | null;
 
   config: SwiperOptions = {
     nested: true,

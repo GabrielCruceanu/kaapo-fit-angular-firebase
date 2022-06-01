@@ -7,10 +7,12 @@ import { AddTrainerProfileComponent } from './view/add-trainer-profile/add-train
 import { AddGymProfileComponent } from './view/add-gym-profile/add-gym-profile.component';
 import { AddNutritionistProfileComponent } from './view/add-nutritionist-profile/add-nutritionist-profile.component';
 import { ProfileGuard } from './services/profile-guard.service';
+import { AddMeasurementsComponent } from '@/app/profile/view/add-measurements/add-measurements.component';
 
 const routes: Routes = [
   { path: '', component: ProfileComponent, canActivate: [ProfileGuard] },
   { path: 'add', component: AddProfileComponent },
+  { path: 'add-measurements', component: AddMeasurementsComponent },
   { path: 'client', component: AddClientProfileComponent },
   { path: 'trainer', component: AddTrainerProfileComponent },
   { path: 'nutritionist', component: AddNutritionistProfileComponent },

@@ -11,8 +11,13 @@ import {
   getNutritionistProfileSuccess,
   getTrainerProfileSuccess,
   getUserProfileSuccess,
+  setClientGalleryBackImage,
+  setClientGalleryFrontImage,
+  setClientGallerySideImage,
+  setClientHistoryPhysicalDetailsSuccess,
   setUserCoverImage,
   setUserProfileImage,
+  setClientCurrentPhysicalDetailsSuccess,
 } from './profile.actions';
 import { autoLogout } from '../../auth/store/auth.actions';
 
@@ -52,6 +57,45 @@ const _profileReducer = createReducer(
     return {
       ...state,
       clientProfile: action.clientProfile,
+    };
+  }),
+  on(setClientGalleryFrontImage, (state, action) => {
+    return {
+      ...state,
+      currentPhysicalDetails: {
+        ...state,
+        clientGalleryFront: action.galleryFrontImage,
+      },
+    };
+  }),
+  on(setClientGallerySideImage, (state, action) => {
+    return {
+      ...state,
+      currentPhysicalDetails: {
+        ...state,
+        clientGallerySide: action.gallerySideImage,
+      },
+    };
+  }),
+  on(setClientGalleryBackImage, (state, action) => {
+    return {
+      ...state,
+      currentPhysicalDetails: {
+        ...state,
+        clientGalleryBack: action.galleryBackImage,
+      },
+    };
+  }),
+  on(setClientCurrentPhysicalDetailsSuccess, (state, action) => {
+    return {
+      ...state,
+      currentPhysicalDetails: action.currentPhysicalDetails,
+    };
+  }),
+  on(setClientHistoryPhysicalDetailsSuccess, (state, action) => {
+    return {
+      ...state,
+      currentPhysicalDetails: action.clientPhysicalDetails,
     };
   }),
   on(createGymProfileSuccess, (state, action) => {

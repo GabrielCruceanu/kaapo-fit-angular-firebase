@@ -1,11 +1,12 @@
 export enum UserImageType {
   profile = 'profile',
   cover = 'cover',
-  clientGallerySide = 'clientGallerySide',
   clientGalleryFront = 'clientGalleryFront',
+  clientGallerySide = 'clientGallerySide',
   clientGalleryBack = 'clientGalleryBack',
   proGallery = 'proGallery',
 }
+
 export interface UserImage {
   downloadURL: string;
   path: string;

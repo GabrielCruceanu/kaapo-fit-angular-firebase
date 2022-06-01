@@ -5,8 +5,9 @@
 ::ng-deep .form {
   position: relative;
 
-  ::placeholder {
-    color: var(--gray);
+  ::placeholder,
+  data-placeholder {
+    color: var(--soft);
   }
 
   .form-footer {
@@ -41,15 +42,21 @@
   width: 100%;
 }
 
-::ng-deep .mat-select-value {
+::ng-deep .mat-select-value,
+::ng-deep .mat-dialog-container {
   color: var(--white);
+  ::placeholder,
+  data-placeholder {
+    color: var(--soft);
+  }
 }
 
 ::ng-deep .mat-form-field-label {
   color: var(--soft);
 }
 
-::ng-deep .mat-select-panel {
+::ng-deep .mat-select-panel,
+::ng-deep .mat-dialog-container {
   background-color: var(--dark-one);
 }
 
