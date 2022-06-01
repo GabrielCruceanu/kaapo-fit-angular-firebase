@@ -31,6 +31,7 @@ import { UserProfileSidebarComponent } from './components/user-profile-sidebar/u
 import { MatDialogModule } from '@angular/material/dialog';
 import { ComponentsSharedModule } from '@/app/shared/components/components-shared.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { AddMeasurementsComponent } from '@/app/profile/view/add-measurements/add-measurements.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     AddNutritionistProfileComponent,
     ClientProfileComponent,
     UserProfileSidebarComponent,
+    AddMeasurementsComponent,
   ],
   imports: [
     CommonModule,

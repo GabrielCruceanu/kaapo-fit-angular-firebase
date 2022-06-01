@@ -5,6 +5,7 @@ import { AppState } from '../../store/app.state';
 import { getToken } from '../../auth/store/auth.selector';
 import { Subscription, switchMap, take } from 'rxjs';
 import {
+  arrayUnion,
   doc,
   docData,
   Firestore,
@@ -12,13 +13,18 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { traceUntilFirst } from '@angular/fire/performance';
-import { ClientProfile } from '../model/clientProfile.model';
+import {
+  ClientPhysicalDetails,
+  ClientProfile,
+} from '../model/clientProfile.model';
 import { UserProfile } from '../model/userProfile.model';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
 import { getUserProfile } from '../store/profile.selector';
+import firebase from 'firebase/compat';
+import FieldValue = firebase.firestore.FieldValue;
 
 export const _filer = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -43,26 +49,6 @@ export class ProfileService implements OnDestroy {
       .subscribe((userProfile) => {
         this.userProfile = userProfile;
       });
-  }
-
-  checkEvent($event) {
-    console.log('check', $event);
-  }
-
-  uploadImage(image: File) {
-    const uploadData = new FormData();
-    uploadData.append('image', image);
-
-    return this.store.select(getToken).pipe(
-      take(1),
-      switchMap((token) => {
-        return this.http.post<{ imageUrl: string; imagePath: string }>(
-          '',
-          uploadData,
-          { headers: { Authorization: 'Bearer ' + token } }
-        );
-      })
-    );
   }
 
   // ****************** USER ******************
@@ -157,6 +143,50 @@ export class ProfileService implements OnDestroy {
       );
     }
     return null;
+  }
+
+  public setCurrentPhysicalDetailsInDb(
+    clientId: string,
+    currentPhysicalDetails: ClientPhysicalDetails
+  ) {
+    console.log(
+      'setCurrentPhysicalDetailsInDb -> clientId',
+      currentPhysicalDetails.clientId
+    );
+    console.log(
+      'setCurrentPhysicalDetailsInDb -> currentPhysicalDetails',
+      currentPhysicalDetails
+    );
+    const ref = doc(this.firestore, 'clients', clientId);
+
+    updateDoc(ref, {
+      currentPhysicalDetails: {
+        ...currentPhysicalDetails,
+      },
+    });
+  }
+
+  public setHistoryPhysicalDetailsInDb(
+    clientId: string,
+    clientPhysicalDetails: ClientPhysicalDetails
+  ) {
+    const ref = doc(
+      this.firestore,
+      'clients',
+      clientId,
+      'historyPhysicalDetails',
+      clientPhysicalDetails.id
+    );
+
+    setDoc(ref, {
+      ...clientPhysicalDetails,
+    });
+  }
+
+  public getHistoryPhysicalDetailsFromDb(clientId: string) {
+    const docRef = doc(this.firestore, 'clients', clientId);
+
+    return docData(docRef).pipe(traceUntilFirst('firestore'));
   }
 
   // ****************** GYM ******************

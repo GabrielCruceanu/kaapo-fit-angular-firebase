@@ -1,14 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import {
   CollectionsType,
   UserImage,
+  UserImageType,
 } from '@/app/profile/model/profile-interface';
 import { doc, Firestore, updateDoc } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import { AppState } from '@/app/store/app.state';
 import {
+  setClientGalleryBackImage,
+  setClientGalleryFrontImage,
+  setClientGallerySideImage,
   setUserCoverImage,
   setUserProfileImage,
 } from '@/app/profile/store/profile.actions';
@@ -21,33 +25,101 @@ import {
 } from 'firebase/storage';
 import { MatDialog } from '@angular/material/dialog';
 import { TypeOfUploadImage } from '@/app/shared/model/upload-image-interface';
+import { DataUrl, NgxImageCompressService } from 'ngx-image-compress';
+import {
+  ClientPhysicalDetails,
+  ClientProfile,
+} from '@/app/profile/model/clientProfile.model';
+import { getClientProfile } from '@/app/profile/store/profile.selector';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UploadImageService {
+export class UploadImageService implements OnDestroy {
   private _percentageSource = new BehaviorSubject<number>(0);
   private percentage$ = this._percentageSource.asObservable();
   private imageForDb: UserImage;
+  clientProfile: ClientProfile;
+  clientProfileSub: Subscription;
 
   constructor(
     private storage: AngularFireStorage,
     private firestore: Firestore,
     private store: Store<AppState>,
+    private imageCompress: NgxImageCompressService,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.clientProfileSub = this.store
+      .select(getClientProfile)
+      .subscribe((clientProfile) => {
+        this.clientProfile = clientProfile;
+        console.log('clientProfileSub', clientProfile);
+      });
+  }
+
+  compressImageBeforeUpload(
+    ratio: number,
+    quality: number,
+    maxWidth: number,
+    maxHeight: number,
+    id: string,
+    imageName: string,
+    typeOfUploadImage: TypeOfUploadImage,
+    folder: CollectionsType
+  ) {
+    return this.imageCompress.uploadFile().then(({ image, orientation }) => {
+      this.imageCompress
+        .compressFile(image, orientation, ratio, quality, maxWidth, maxHeight)
+        .then((result: DataUrl) => {
+          // this.store.dispatch(setLoadingSpinner({ status: true }));
+          const split = result.split(',');
+          const type = split[0].replace('data:', '').replace(';base64', '');
+          const byteString = atob(split[1]);
+          const arrayBuffer = new ArrayBuffer(byteString.length);
+          const ia = new Uint8Array(arrayBuffer);
+          for (let i = 0; i < byteString.length; i += 1) {
+            ia[i] = byteString.charCodeAt(i);
+          }
+          const fileBlob = new Blob([arrayBuffer], { type });
+          console.log('fileBlob', fileBlob);
+          console.log('this.clientProfile startUpload', this.clientProfile);
+          this.startUpload(
+            fileBlob,
+            id,
+            imageName,
+            typeOfUploadImage,
+            folder,
+            this.clientProfile.currentPhysicalDetails?.clientGalleryFront,
+            this.clientProfile.currentPhysicalDetails?.clientGallerySide,
+            this.clientProfile.currentPhysicalDetails?.clientGalleryBack
+          );
+        });
+    });
+  }
 
   public startUpload(
     image: Blob,
     id: string,
     imageName: string,
     typeOfImage: TypeOfUploadImage,
-    folder: CollectionsType
+    folder: CollectionsType,
+    clientGalleryFront?: UserImage,
+    clientGallerySide?: UserImage,
+    clientGalleryBack?: UserImage
   ) {
     const storage = getStorage();
-    // The storage path
 
-    const path = `${id}/${imageName}`;
+    const day = new Date().getUTCDate();
+    const month = new Date().getUTCMonth() + 1;
+    const year = new Date().getUTCFullYear();
+
+    // The storage path
+    let path;
+    if (typeOfImage === TypeOfUploadImage.ClientGallery) {
+      path = `${id}/history/${day}-${month}-${year}/${imageName}`;
+    } else {
+      path = `${id}/${imageName}`;
+    }
 
     // Reference to storage bucket
     // const ref = this.storage.ref(path);
@@ -97,7 +169,7 @@ export class UploadImageService {
             downloadURL: downloadURL,
             path,
           };
-
+          console.log('typeOfImage', typeOfImage);
           switch (typeOfImage) {
             case TypeOfUploadImage.Profile: {
               updateDoc(refDb, {
@@ -125,6 +197,79 @@ export class UploadImageService {
               );
               break;
             }
+            case TypeOfUploadImage.ClientGallery: {
+              console.log('imageName', imageName);
+              if (imageName === UserImageType.clientGalleryFront) {
+                console.log('clientGalleryFront', imageName);
+                updateDoc(refDb, {
+                  currentPhysicalDetails: {
+                    clientGalleryFront: {
+                      downloadURL: downloadURL,
+                      path,
+                    },
+                    clientGallerySide: {
+                      ...clientGallerySide,
+                    },
+                    clientGalleryBack: {
+                      ...clientGalleryBack,
+                    },
+                  },
+                });
+
+                this.store.dispatch(
+                  setClientGalleryFrontImage({
+                    galleryFrontImage: this.imageForDb,
+                  })
+                );
+                break;
+              } else if (imageName === UserImageType.clientGallerySide) {
+                console.log('clientGallerySide', imageName);
+                updateDoc(refDb, {
+                  currentPhysicalDetails: {
+                    clientGalleryFront: {
+                      ...clientGalleryFront,
+                    },
+                    clientGallerySide: {
+                      downloadURL: downloadURL,
+                      path,
+                    },
+                    clientGalleryBack: {
+                      ...clientGalleryBack,
+                    },
+                  },
+                });
+
+                this.store.dispatch(
+                  setClientGallerySideImage({
+                    gallerySideImage: this.imageForDb,
+                  })
+                );
+                break;
+              } else if (imageName === UserImageType.clientGalleryBack) {
+                console.log('clientGalleryBack', imageName);
+                updateDoc(refDb, {
+                  currentPhysicalDetails: {
+                    clientGalleryFront: {
+                      ...clientGalleryFront,
+                    },
+                    clientGallerySide: {
+                      ...clientGallerySide,
+                    },
+                    clientGalleryBack: {
+                      downloadURL: downloadURL,
+                      path,
+                    },
+                  },
+                });
+
+                this.store.dispatch(
+                  setClientGalleryBackImage({
+                    galleryBackImage: this.imageForDb,
+                  })
+                );
+                break;
+              }
+            }
           }
           this.store.dispatch(setLoadingSpinner({ status: false }));
         });
@@ -134,5 +279,11 @@ export class UploadImageService {
 
   public getUploadPercentage(): Observable<number> {
     return this.percentage$;
+  }
+
+  ngOnDestroy() {
+    if (this.clientProfileSub) {
+      this.clientProfileSub.unsubscribe();
+    }
   }
 }

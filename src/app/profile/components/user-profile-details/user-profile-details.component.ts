@@ -1,13 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { getUserDataMock } from '../../../../data/userDetails';
-import { ClientDetails, UserType } from '../../model/profile-interface';
-import {
-  ClientPhysicalDetails,
-  ClientProfile,
-} from '../../model/clientProfile.model';
-import { GymProfile } from '../../model/gym.model';
-import { TrainerProfile } from '../../model/trainerProfile.model';
-import { NutritionistProfile } from '../../model/nutritionistProfile.model';
+import { Component, OnInit } from '@angular/core';
+import { ClientProfile } from '../../model/clientProfile.model';
 import { Observable } from 'rxjs';
 import { getClientProfile } from '../../store/profile.selector';
 import { Store } from '@ngrx/store';
@@ -25,5 +17,8 @@ export class UserProfileDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.clientProfileDetails$ = this.store.select(getClientProfile);
+    this.clientProfileDetails$.subscribe((client) => {
+      console.log('client', client);
+    });
   }
 }

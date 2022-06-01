@@ -25,8 +25,12 @@ import {
   getTrainerProfileSuccess,
   getUserProfileStart,
   getUserProfileSuccess,
+  setClientHistoryPhysicalDetailsStart,
+  setClientHistoryPhysicalDetailsSuccess,
   updateUserProfileStart,
   updateUserProfileSuccess,
+  setClientCurrentPhysicalDetailsStart,
+  setClientCurrentPhysicalDetailsSuccess,
 } from './profile.actions';
 import { switchMap, map, tap } from 'rxjs';
 import {
@@ -169,6 +173,51 @@ export class ProfileEffects {
     );
   });
 
+  setClientHistoryPhysicalDetailsStart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(setClientHistoryPhysicalDetailsStart),
+      map((action) => {
+        this.profileService.setHistoryPhysicalDetailsInDb(
+          action.clientId,
+          action.clientPhysicalDetails
+        );
+
+        // return this.profileService.getClientProfileFromDb(action.clientId).pipe(
+        //   map((clientProfile) => {
+        //     console.log('clientProfile', clientProfile);
+        //     return setClientHistoryPhysicalDetailsSuccess({
+        //       clientPhysicalDetails: action.clientPhysicalDetails,
+        //       redirect: false,
+        //     });
+        //   })
+        // );
+        return setClientHistoryPhysicalDetailsSuccess({
+          clientPhysicalDetails: action.clientPhysicalDetails,
+          redirect: false,
+        });
+      })
+    );
+  });
+
+  setClientCurrentPhysicalDetailsStart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(setClientCurrentPhysicalDetailsStart),
+      map((action) => {
+        this.profileService.setCurrentPhysicalDetailsInDb(
+          action.clientId,
+          action.currentPhysicalDetails
+        );
+
+        this.store.dispatch(setLoadingSpinner({ status: false }));
+
+        return setClientCurrentPhysicalDetailsSuccess({
+          currentPhysicalDetails: action.currentPhysicalDetails,
+          redirect: true,
+        });
+      })
+    );
+  });
+
   createGymProfileStart$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(createGymProfileStart),
@@ -298,6 +347,7 @@ export class ProfileEffects {
             createGymProfileSuccess,
             createTrainerProfileSuccess,
             createNutritionistProfileSuccess,
+            setClientCurrentPhysicalDetailsSuccess,
           ]
         ),
         tap((action) => {

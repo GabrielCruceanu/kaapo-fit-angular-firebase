@@ -5,12 +5,17 @@
   width: 100%;
 
   li {
-    width: calc(50% - 1rem);
+    width: calc(50%);
     height: 43px;
     border-left: 1px solid var(--primary);
     padding: 10px 0 10px 10px;
     margin-bottom: 1rem;
-    margin-left: 1rem;
+
+    &:nth-child(even) {
+      width: calc(50% - 1rem);
+      margin-left: 1rem;
+    }
+
     p {
       font-size: 16px;
       margin-bottom: 0;
@@ -24,6 +29,8 @@
 
 @media screen and (min-width: 768px) {
   .profile-details-text {
+    padding-left: 1rem;
+
     li {
       width: 25%;
       margin-left: 0;

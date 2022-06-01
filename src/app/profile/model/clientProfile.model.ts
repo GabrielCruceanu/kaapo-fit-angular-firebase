@@ -1,9 +1,9 @@
 import {
   Birth,
-  ClientGalleryPicture,
   GenderType,
   GymDetails,
   ProfessionalDetails,
+  UserImage,
   UserType,
 } from './profile-interface';
 
@@ -34,17 +34,21 @@ export class ClientProfile {
 
 export class ClientPhysicalDetails {
   constructor(
+    public clientId: string,
+    public id: string,
     public date: Birth,
-    public birth: Birth,
     public weight: string,
     public neck: string,
     public shoulders: string,
     public chest: string,
-    public arm: string,
+    public armLeft: string,
+    public armRight: string,
     public waist: string,
     public hip: string,
     public ass: string,
     public thigh: string,
-    public gallery: ClientGalleryPicture[]
+    public clientGalleryFront: UserImage,
+    public clientGallerySide: UserImage,
+    public clientGalleryBack: UserImage
   ) {}
 }

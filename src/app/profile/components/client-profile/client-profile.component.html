@@ -12,10 +12,19 @@
         </div>
       </div>
 
-      <div>
-        <button mat-button (click)="onAddMeasurements()">
-          Adauga masuratorile
-        </button>
+      <div *ngIf="!clientProfileDetails?.currentPhysicalDetails" class="row">
+        <div class="col-12">
+          <div class="complete-current-physical-details-banner">
+            <h3>Profil completat <strong>30%</strong></h3>
+            <button
+              mat-raised-button
+              color="primary"
+              routerLink="add-measurements"
+            >
+              Completeaza
+            </button>
+          </div>
+        </div>
       </div>
       <!-- Client Profile Details -->
       <div
@@ -23,12 +32,16 @@
         *ngIf="clientProfileDetails?.currentPhysicalDetails"
       >
         <!-- Client Profile Details Text-->
-        <div class="col-lg-4 mb-4 mb-md-5">
+        <div class="col-lg-7 mb-4 mb-md-5">
           <app-user-profile-details></app-user-profile-details>
         </div>
         <!-- Client Profile Details Images-->
-        <div class="col-lg-4">
-          <app-user-profile-images></app-user-profile-images>
+        <div class="col-lg-5">
+          <app-user-profile-images
+            [clientPhysicalDetails]="
+              clientProfileDetails.currentPhysicalDetails
+            "
+          ></app-user-profile-images>
         </div>
       </div>
     </div>

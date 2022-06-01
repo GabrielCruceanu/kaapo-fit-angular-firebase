@@ -13,7 +13,6 @@ import { UploadImageService } from '@/app/shared/services/upload-image/upload-im
 import { UploadImageComponent } from '@/app/shared/components/upload-image/upload-image.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AddMeasurementsComponent } from './add-measurements/add-measurements.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,7 +26,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TabsComponent,
     HeaderProfileComponent,
     UploadImageComponent,
-    AddMeasurementsComponent,
   ],
   exports: [
     ButtonComponent,

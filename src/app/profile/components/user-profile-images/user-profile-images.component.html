@@ -1,4 +1,4 @@
-<div class="mobile-profile-details-images" *ngIf="profileDetails">
+<div class="mobile-profile-details-images" *ngIf="clientPhysicalDetails">
   <swiper
     #swiper
     [watchSlidesProgress]="true"
@@ -18,14 +18,49 @@
       }
     }"
   >
-    <ng-container *ngFor="let image of profileDetails.gallery; index as i">
+    <ng-container *ngIf="clientPhysicalDetails.clientGalleryFront?.downloadURL">
       <ng-template swiperSlide let-data>
         <div class="profile-details-image">
-          <h3 class="profile-details-image-name">
-            {{ image.perspective }}
-          </h3>
+          <h3 class="profile-details-image-name">Front</h3>
           <div class="profile-details-image-overlay"></div>
-          <img [src]="image.image.downloadURL" alt="" />
+          <img
+            [src]="clientPhysicalDetails.clientGalleryFront.downloadURL"
+            alt="front image"
+          />
+        </div>
+      </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="clientPhysicalDetails.clientGallerySide?.downloadURL">
+      <ng-template
+        swiperSlide
+        let-data
+        [ngIf]="clientPhysicalDetails.clientGallerySide?.downloadURL"
+      >
+        <div class="profile-details-image">
+          <h3 class="profile-details-image-name">Side</h3>
+          <div class="profile-details-image-overlay"></div>
+          <img
+            [src]="clientPhysicalDetails.clientGallerySide.downloadURL"
+            alt="side image"
+          />
+        </div>
+      </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="clientPhysicalDetails.clientGalleryBack?.downloadURL">
+      <ng-template
+        swiperSlide
+        let-data
+        [ngIf]="clientPhysicalDetails.clientGalleryBack?.downloadURL"
+      >
+        <div class="profile-details-image">
+          <h3 class="profile-details-image-name">Back</h3>
+          <div class="profile-details-image-overlay"></div>
+          <img
+            [src]="clientPhysicalDetails.clientGalleryBack.downloadURL"
+            alt="back image"
+          />
         </div>
       </ng-template>
     </ng-container>

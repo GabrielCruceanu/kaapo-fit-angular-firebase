@@ -5,7 +5,7 @@ import { getClientProfile } from '../../store/profile.selector';
 import { Store } from '@ngrx/store';
 import { AppState } from '@/app/store/app.state';
 import { MatDialog } from '@angular/material/dialog';
-import { AddMeasurementsComponent } from '@/app/shared/components/add-measurements/add-measurements.component';
+import { AddMeasurementsComponent } from '@/app/profile/view/add-measurements/add-measurements.component';
 
 @Component({
   selector: 'app-client-profile',
