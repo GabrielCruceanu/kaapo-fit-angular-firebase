@@ -6,11 +6,15 @@ import { getToken } from '../../auth/store/auth.selector';
 import { Subscription, switchMap, take } from 'rxjs';
 import {
   arrayUnion,
+  collection,
   doc,
   docData,
   Firestore,
+  getDocs,
+  query,
   setDoc,
   updateDoc,
+  where,
 } from '@angular/fire/firestore';
 import { traceUntilFirst } from '@angular/fire/performance';
 import {
@@ -23,8 +27,8 @@ import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
 import { getUserProfile } from '../store/profile.selector';
-import firebase from 'firebase/compat';
-import FieldValue = firebase.firestore.FieldValue;
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Review } from '@/app/profile/model/review.model';
 
 export const _filer = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -42,7 +46,8 @@ export class ProfileService implements OnDestroy {
   constructor(
     private store: Store<AppState>,
     private http: HttpClient,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private afs: AngularFirestore
   ) {
     this.userProfileSub = this.store
       .select(getUserProfile)
@@ -149,14 +154,6 @@ export class ProfileService implements OnDestroy {
     clientId: string,
     currentPhysicalDetails: ClientPhysicalDetails
   ) {
-    console.log(
-      'setCurrentPhysicalDetailsInDb -> clientId',
-      currentPhysicalDetails.clientId
-    );
-    console.log(
-      'setCurrentPhysicalDetailsInDb -> currentPhysicalDetails',
-      currentPhysicalDetails
-    );
     const ref = doc(this.firestore, 'clients', clientId);
 
     updateDoc(ref, {
@@ -252,6 +249,31 @@ export class ProfileService implements OnDestroy {
     return docData(docRef).pipe(traceUntilFirst('firestore'));
   }
 
+  public async getReviews(beneficiaryId: string): Promise<Review[] | null> {
+    const docRef = collection(this.firestore, 'reviews');
+
+    const q = query(docRef, where('beneficiaryId', '==', beneficiaryId));
+
+    const querySnapshot = await getDocs(q);
+    let reviews = [];
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      const item = doc.data();
+      const review = new Review(
+        item.beneficiaryId,
+        item.date,
+        item.description,
+        item.stars,
+        item.clientId,
+        item.clientFirstName,
+        item.clientLastName,
+        item.clientPhoto
+      );
+      reviews.push(review);
+    });
+    return reviews;
+  }
+
   setTrainerProfileInLocalStorage(trainerProfile: TrainerProfile) {
     localStorage.setItem('trainerProfileData', JSON.stringify(trainerProfile));
   }
@@ -278,8 +300,7 @@ export class ProfileService implements OnDestroy {
         trainerData.state,
         trainerData.city,
         trainerData.contact,
-        trainerData.shortDescription,
-        trainerData.longDescription,
+        trainerData.description,
         trainerData.completedClients,
         trainerData.profilePicture,
         trainerData.activeClients,

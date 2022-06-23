@@ -11,9 +11,9 @@ export const TabsData: TabModel[] = [
     icon: 'home',
   },
   {
-    name: 'Progress',
-    link: '/progress',
-    icon: 'progress',
+    name: 'Profile',
+    link: '/profile',
+    icon: 'profile',
   },
   {
     name: 'Add',

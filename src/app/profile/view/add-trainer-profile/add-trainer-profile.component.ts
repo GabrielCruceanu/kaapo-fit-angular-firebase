@@ -22,7 +22,10 @@ import {
   getLoading,
 } from '@/app/store/shared/shared.selector';
 import { getUserAuth } from '@/app/auth/store/auth.selector';
-import { getUserProfile } from '../../store/profile.selector';
+import {
+  getTrainerProfile,
+  getUserProfile,
+} from '../../store/profile.selector';
 import { Contact, UserType } from '../../model/profile-interface';
 import {
   createTrainerProfileStart,
@@ -30,6 +33,7 @@ import {
 } from '../../store/profile.actions';
 import { TrainerProfile } from '../../model/trainerProfile.model';
 import { TrainerData, TrainerExperienceData } from '@/data/trainerData';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-trainer-profile',
@@ -38,11 +42,13 @@ import { TrainerData, TrainerExperienceData } from '@/data/trainerData';
 })
 export class AddTrainerProfileComponent implements OnInit, OnDestroy {
   authType = AuthType;
-  userAuth: UserAuth | null | undefined;
-  userAuthSub: Subscription | undefined;
-  userProfile: UserProfile | null | undefined;
-  userProfileSub: Subscription | undefined;
-  getLoadingSpinnerSub: Subscription | undefined;
+  userAuth: UserAuth | null;
+  userAuthSub: Subscription;
+  userProfile: UserProfile | null;
+  userProfileSub: Subscription;
+  trainerProfile: TrainerProfile | null;
+  trainerProfileSub: Subscription;
+  getLoadingSpinnerSub: Subscription;
   errorMessage$: Observable<any> | undefined;
   onlyCountries = this.countryService.mapCountriesData();
   filteredCountries: Observable<string[]> | undefined;
@@ -55,28 +61,7 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
   selectedCity: string = '';
   trainersType = TrainerData;
   trainerExperience = TrainerExperienceData;
-
-  trainerFormGroup = new FormGroup({
-    firstname: new FormControl('', [Validators.required]),
-    lastname: new FormControl('', [Validators.required]),
-    trainerType: new FormControl('', [Validators.required]),
-    birth: new FormControl('', [Validators.required]),
-    gender: new FormControl('', [Validators.required]),
-    experience: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
-    country: new FormControl('', [
-      Validators.required,
-      this.onCountryInputValidation(this.onlyCountries),
-    ]),
-    state: new FormControl('', [
-      Validators.required,
-      this.onStateInputValidation(this.onlyStates),
-    ]),
-    city: new FormControl('', [Validators.required]),
-    facebook: new FormControl('', []),
-    twitter: new FormControl('', []),
-    instagram: new FormControl('', []),
-  });
+  trainerFormGroup: FormGroup;
 
   constructor(
     private store: Store<AppState>,
@@ -87,16 +72,6 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getLoadingSpinnerSub = this.store
-      .select(getLoading)
-      .subscribe((isLoading: boolean) => {
-        if (isLoading) {
-          this.trainerFormGroup.disable();
-        } else {
-          this.trainerFormGroup.enable();
-        }
-      });
-
     this.userAuthSub = this.store.select(getUserAuth).subscribe((userAuth) => {
       this.userAuth = userAuth;
     });
@@ -105,6 +80,103 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
       .select(getUserProfile)
       .subscribe((userProfile) => {
         this.userProfile = userProfile;
+      });
+
+    this.trainerProfileSub = this.store
+      .select(getTrainerProfile)
+      .subscribe((trainerProfile) => {
+        this.trainerProfile = trainerProfile;
+      });
+
+    this.trainerFormGroup = new FormGroup({
+      firstname: new FormControl(
+        this.trainerProfile?.firstName ? this.trainerProfile?.firstName : '',
+        [Validators.required]
+      ),
+      lastname: new FormControl(
+        this.trainerProfile?.lastName ? this.trainerProfile?.lastName : '',
+        [Validators.required]
+      ),
+      description: new FormControl(
+        this.trainerProfile?.description
+          ? this.trainerProfile?.description
+          : '',
+        [
+          Validators.required,
+          Validators.minLength(100),
+          Validators.maxLength(400),
+        ]
+      ),
+      trainerType: new FormControl(
+        this.trainerProfile?.trainerType
+          ? this.trainerProfile?.trainerType
+          : '',
+        [Validators.required]
+      ),
+      birth: new FormControl(
+        this.trainerProfile?.birth.month
+          ? moment([
+              this.trainerProfile?.birth.year,
+              this.trainerProfile?.birth.month - 1,
+              this.trainerProfile?.birth.date,
+            ])
+          : '',
+        [Validators.required]
+      ),
+      gender: new FormControl(
+        this.trainerProfile?.gender ? this.trainerProfile?.gender : '',
+        [Validators.required]
+      ),
+      experience: new FormControl(
+        this.trainerProfile?.experience ? this.trainerProfile?.experience : '',
+        [Validators.required]
+      ),
+      phone: new FormControl(
+        this.trainerProfile?.contact?.phone
+          ? this.trainerProfile?.contact?.phone
+          : '',
+        [Validators.required]
+      ),
+      country: new FormControl(
+        this.trainerProfile?.country ? this.trainerProfile?.country : '',
+        [Validators.required, this.onCountryInputValidation(this.onlyCountries)]
+      ),
+      state: new FormControl(
+        this.trainerProfile?.state ? this.trainerProfile?.state : '',
+        [Validators.required, this.onStateInputValidation(this.onlyStates)]
+      ),
+      city: new FormControl(
+        this.trainerProfile?.city ? this.trainerProfile?.city : '',
+        [Validators.required]
+      ),
+      facebook: new FormControl(
+        this.trainerProfile?.contact?.facebook
+          ? this.trainerProfile?.contact?.facebook
+          : '',
+        []
+      ),
+      twitter: new FormControl(
+        this.trainerProfile?.contact?.twitter
+          ? this.trainerProfile?.contact?.twitter
+          : '',
+        []
+      ),
+      instagram: new FormControl(
+        this.trainerProfile?.contact?.instagram
+          ? this.trainerProfile?.contact?.instagram
+          : '',
+        []
+      ),
+    });
+
+    this.getLoadingSpinnerSub = this.store
+      .select(getLoading)
+      .subscribe((isLoading: boolean) => {
+        if (isLoading) {
+          this.trainerFormGroup.disable();
+        } else {
+          this.trainerFormGroup.enable();
+        }
       });
 
     this.filteredCountries = this.trainerFormGroup.controls[
@@ -155,6 +227,7 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
       const {
         firstname,
         lastname,
+        description,
         trainerType,
         birth,
         gender,
@@ -205,8 +278,7 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         state,
         city,
         contactFinal,
-        null,
-        null,
+        description,
         null,
         null,
         null,

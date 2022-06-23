@@ -1,7 +1,4 @@
-<div
-  class="user-profile-header"
-  *ngIf="clientProfileDetails$ | async as clientProfileDetails"
->
+<div class="user-profile-header">
   <div class="user-profile-cover">
     <div class="user-profile-cover-bottom-border"></div>
     <div class="user-profile-cover-image">
@@ -30,9 +27,14 @@
   </div>
   <div class="user-profile-name">
     <h3>
-      <strong>{{ clientProfileDetails.firstName }} </strong>
-      <br />
-      {{ clientProfileDetails.lastName }}
+      <ng-container *ngIf="firstName && lastName">
+        <strong>{{ firstName }} </strong>
+        <br />
+        {{ lastName }}
+      </ng-container>
+      <ng-container *ngIf="name">
+        {{ name }}
+      </ng-container>
     </h3>
     <div class="user-profile-status-detail">
       <div class="user-profile-icon-box user-profile-icon-box-map">
@@ -43,10 +45,7 @@
         >
           map
         </mat-icon>
-        <span
-          >{{ clientProfileDetails.country }} /
-          {{ clientProfileDetails.city }}</span
-        >
+        <span>{{ country }} / {{ city }}</span>
       </div>
 
       <div class="user-profile-icon-box user-profile-icon-box-client">
@@ -57,61 +56,8 @@
         >
           badge
         </mat-icon>
-        <span>{{ clientProfileDetails.status }}</span>
+        <span>{{ status === 'Trainer' ? 'Antrenor' : status }}</span>
       </div>
     </div>
   </div>
 </div>
-
-<!--<div-->
-<!--  class="profile"-->
-<!--  *ngIf="clientProfileDetails$ | async as clientProfileDetails"-->
-<!--&gt;-->
-<!--  <div class="profile-picture-name">-->
-<!--    <div class="profile-picture-box">-->
-<!--      <div class="profile-picture-couture"></div>-->
-<!--      <div class="profile-picture">-->
-<!--        <img-->
-<!--          [src]="-->
-<!--            clientProfileDetails.profilePicture-->
-<!--              ? clientProfileDetails.profilePicture-->
-<!--              : sampleUserProfileImage-->
-<!--          "-->
-<!--          alt="profile picture"-->
-<!--        />-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="profile-name">-->
-<!--      <h3>-->
-<!--        <strong>{{ clientProfileDetails.firstName }}</strong>-->
-<!--        <br />-->
-<!--        {{ clientProfileDetails.lastName }}-->
-<!--      </h3>-->
-<!--      <div class="profile-status-detail">-->
-<!--        <div class="profile-icon-box">-->
-<!--          <mat-icon-->
-<!--            class="icon"-->
-<!--            aria-hidden="false"-->
-<!--            aria-label="Icon for profile country"-->
-<!--          >-->
-<!--            map-->
-<!--          </mat-icon>-->
-<!--          <span-->
-<!--            >{{ clientProfileDetails.country }} /-->
-<!--            {{ clientProfileDetails.city }}</span-->
-<!--          >-->
-<!--        </div>-->
-<!--        <div class="profile-icon-box">-->
-<!--          <mat-icon-->
-<!--            class="icon"-->
-<!--            aria-hidden="false"-->
-<!--            aria-label="Icon for profile status"-->
-<!--          >-->
-<!--            badge-->
-<!--          </mat-icon>-->
-<!--          <span>{{ clientProfileDetails.status }}</span>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->

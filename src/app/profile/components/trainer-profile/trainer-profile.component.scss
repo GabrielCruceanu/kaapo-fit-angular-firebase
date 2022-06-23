@@ -1,0 +1,69 @@
+.trainer-details-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--dark-three);
+  border-radius: var(--radius);
+  max-width: 400px;
+  margin: auto auto 1rem;
+}
+
+.trainer-details-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  hr {
+    margin: 0.5rem 0;
+    width: 100%;
+    max-width: 50px;
+  }
+
+  h5,
+  h6 {
+    margin-bottom: 0;
+  }
+}
+
+.review-box {
+  padding: 1rem;
+  background: var(--dark-three);
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  img {
+    max-width: 32px;
+    max-height: 32px;
+    object-fit: cover;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 1px solid var(--primary);
+  }
+
+  h5 {
+    margin-bottom: 0;
+    font-weight: bold;
+  }
+}
+.review-stars {
+  border-radius: 4px;
+  padding: 3px 6px;
+  background: var(--primary);
+  margin-bottom: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .trainer-description-box {
+    padding: 1rem;
+  }
+}

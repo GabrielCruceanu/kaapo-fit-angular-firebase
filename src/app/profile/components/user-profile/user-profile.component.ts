@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   CollectionsType,
   UserImageType,
@@ -20,7 +20,19 @@ import { TypeOfUploadImage } from '@/app/shared/model/upload-image-interface';
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
-  clientProfileDetails$: Observable<ClientProfile | null>;
+  @Input()
+  firstName: string | null;
+  @Input()
+  lastName: string | null;
+  @Input()
+  name: string | null;
+  @Input()
+  country: string;
+  @Input()
+  city: string;
+  @Input()
+  status: string;
+
   userProfileSub: Subscription;
   userProfile: UserProfile | null;
   userType = UserType;
@@ -31,7 +43,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.clientProfileDetails$ = this.store.select(getClientProfile);
     this.userProfileSub = this.store
       .select(getUserProfile)
       .subscribe((userProfile) => (this.userProfile = userProfile));

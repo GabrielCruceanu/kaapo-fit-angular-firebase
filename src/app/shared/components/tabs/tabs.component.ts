@@ -4,9 +4,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import {
   ADD_ICON,
+  PROFILE_ICON,
   HOME_ICON,
   NUTRITION_ICON,
-  PROGRESS_ICON,
   WORKOUT_ICON,
 } from '@/content/icons';
 
@@ -27,8 +27,8 @@ export class TabsComponent {
       this.domSanitizer.bypassSecurityTrustHtml(HOME_ICON)
     );
     this.matIconRegistry.addSvgIconLiteral(
-      'progress',
-      this.domSanitizer.bypassSecurityTrustHtml(PROGRESS_ICON)
+      'profile',
+      this.domSanitizer.bypassSecurityTrustHtml(PROFILE_ICON)
     );
     this.matIconRegistry.addSvgIconLiteral(
       'add',

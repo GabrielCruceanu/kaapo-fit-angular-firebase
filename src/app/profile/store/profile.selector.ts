@@ -27,3 +27,7 @@ export const getNutritionistProfile = createSelector(
     return state.nutritionistProfile ? state.nutritionistProfile : null;
   }
 );
+
+export const getReviewsProfile = createSelector(getProfileState, (state) => {
+  return state.reviews ? state.reviews : null;
+});

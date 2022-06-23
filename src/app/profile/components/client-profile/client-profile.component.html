@@ -1,52 +1,61 @@
 <section
-  class="profile-container container"
+  class="profile-container"
   *ngIf="clientProfileDetails$ | async as clientProfileDetails"
 >
-  <div class="row mt-3 mt-md-4">
-    <div class="col-lg-8">
-      <!--   Profile Header-->
-      <div class="row">
-        <div class="col-12">
-          <!-- Profile Picture and Name-->
-          <app-user-profile></app-user-profile>
+  <div class="container">
+    <div class="row mt-3 mt-md-4">
+      <div class="col-lg-8">
+        <!--   Profile Header-->
+        <div class="row">
+          <div class="col-12">
+            <!-- Profile Picture and Name-->
+            <app-user-profile
+              [firstName]="clientProfileDetails.firstName"
+              [lastName]="clientProfileDetails.firstName"
+              [name]="null"
+              [country]="clientProfileDetails.country"
+              [city]="clientProfileDetails.city"
+              [status]="clientProfileDetails.status"
+            ></app-user-profile>
+          </div>
         </div>
-      </div>
 
-      <div *ngIf="!clientProfileDetails?.currentPhysicalDetails" class="row">
-        <div class="col-12">
-          <div class="complete-current-physical-details-banner">
-            <h3>Profil completat <strong>30%</strong></h3>
-            <button
-              mat-raised-button
-              color="primary"
-              routerLink="add-measurements"
-            >
-              Completeaza
-            </button>
+        <div *ngIf="!clientProfileDetails?.currentPhysicalDetails" class="row">
+          <div class="col-12">
+            <div class="complete-current-physical-details-banner">
+              <p>Profil completat <strong>30%</strong></p>
+              <button
+                mat-raised-button
+                color="primary"
+                routerLink="add-measurements"
+              >
+                Completeaza
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Client Profile Details -->
+        <div
+          class="row justify-content-center mb-4 mb-md-0"
+          *ngIf="clientProfileDetails?.currentPhysicalDetails"
+        >
+          <!-- Client Profile Details Text-->
+          <div class="col-lg-7 mb-4 mb-md-5">
+            <app-user-profile-details></app-user-profile-details>
+          </div>
+          <!-- Client Profile Details Images-->
+          <div class="col-lg-5">
+            <app-user-profile-images
+              [clientPhysicalDetails]="
+                clientProfileDetails.currentPhysicalDetails
+              "
+            ></app-user-profile-images>
           </div>
         </div>
       </div>
-      <!-- Client Profile Details -->
-      <div
-        class="row justify-content-center mb-4 mb-md-0"
-        *ngIf="clientProfileDetails?.currentPhysicalDetails"
-      >
-        <!-- Client Profile Details Text-->
-        <div class="col-lg-7 mb-4 mb-md-5">
-          <app-user-profile-details></app-user-profile-details>
-        </div>
-        <!-- Client Profile Details Images-->
-        <div class="col-lg-5">
-          <app-user-profile-images
-            [clientPhysicalDetails]="
-              clientProfileDetails.currentPhysicalDetails
-            "
-          ></app-user-profile-images>
-        </div>
+      <div class="col-lg-4">
+        <app-user-profile-sidebar></app-user-profile-sidebar>
       </div>
-    </div>
-    <div class="col-lg-4">
-      <app-user-profile-sidebar></app-user-profile-sidebar>
     </div>
   </div>
 </section>

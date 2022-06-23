@@ -23,10 +23,15 @@ export interface UserInfo {
 }
 
 export interface Review {
+  beneficiaryId: string;
   date: Date;
   title: string;
   description: string;
   stars: number;
+  clientId: string;
+  clientFirstName: string;
+  clientName: string;
+  clientPhoto: string;
 }
 
 export interface Location {
