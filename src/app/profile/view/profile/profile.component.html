@@ -2,4 +2,8 @@
   <app-client-profile
     *ngIf="userProfile?.userType === userType.Client"
   ></app-client-profile>
+
+  <trainer-profile
+    *ngIf="userProfile?.userType === userType.Trainer"
+  ></trainer-profile>
 </app-layout>

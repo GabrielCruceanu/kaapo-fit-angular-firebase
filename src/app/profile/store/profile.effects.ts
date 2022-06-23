@@ -31,6 +31,8 @@ import {
   updateUserProfileSuccess,
   setClientCurrentPhysicalDetailsStart,
   setClientCurrentPhysicalDetailsSuccess,
+  getReviewsStart,
+  getReviewsSuccess,
 } from './profile.actions';
 import { switchMap, map, tap } from 'rxjs';
 import {
@@ -109,6 +111,8 @@ export class ProfileEffects {
       ofType(getUserProfileSuccess),
       map((action) => {
         const userProfile = action.userProfile;
+
+        this.store.dispatch(getReviewsStart({ beneficiaryId: userProfile.id }));
 
         switch (userProfile.userType) {
           case UserType.Client: {
@@ -334,6 +338,19 @@ export class ProfileEffects {
               });
             })
           );
+      })
+    );
+  });
+
+  getReviewsStart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getReviewsStart),
+      switchMap((action) => {
+        return this.profileService
+          .getReviews(action.beneficiaryId)
+          .then((result) => {
+            return getReviewsSuccess({ reviews: result });
+          });
       })
     );
   });

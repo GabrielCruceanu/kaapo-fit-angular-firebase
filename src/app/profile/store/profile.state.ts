@@ -3,6 +3,7 @@ import { ClientProfile } from '../model/clientProfile.model';
 import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
+import { Review } from '@/app/profile/model/review.model';
 
 export interface ProfileState {
   userProfile: UserProfile | null;
@@ -10,6 +11,7 @@ export interface ProfileState {
   gymProfile: GymProfile | null;
   trainerProfile: TrainerProfile | null;
   nutritionistProfile: NutritionistProfile | null;
+  reviews: Review[] | null;
 }
 
 export const initialState: ProfileState = {
@@ -18,4 +20,5 @@ export const initialState: ProfileState = {
   gymProfile: null,
   trainerProfile: null,
   nutritionistProfile: null,
+  reviews: null,
 };

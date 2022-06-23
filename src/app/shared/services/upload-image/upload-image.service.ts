@@ -83,16 +83,26 @@ export class UploadImageService implements OnDestroy {
           const fileBlob = new Blob([arrayBuffer], { type });
           console.log('fileBlob', fileBlob);
           console.log('this.clientProfile startUpload', this.clientProfile);
-          this.startUpload(
-            fileBlob,
-            id,
-            imageName,
-            typeOfUploadImage,
-            folder,
-            this.clientProfile.currentPhysicalDetails?.clientGalleryFront,
-            this.clientProfile.currentPhysicalDetails?.clientGallerySide,
-            this.clientProfile.currentPhysicalDetails?.clientGalleryBack
-          );
+          if (this.clientProfile) {
+            this.startUpload(
+              fileBlob,
+              id,
+              imageName,
+              typeOfUploadImage,
+              folder,
+              this.clientProfile.currentPhysicalDetails?.clientGalleryFront,
+              this.clientProfile.currentPhysicalDetails?.clientGallerySide,
+              this.clientProfile.currentPhysicalDetails?.clientGalleryBack
+            );
+          } else {
+            this.startUpload(
+              fileBlob,
+              id,
+              imageName,
+              typeOfUploadImage,
+              folder
+            );
+          }
         });
     });
   }
@@ -200,7 +210,6 @@ export class UploadImageService implements OnDestroy {
             case TypeOfUploadImage.ClientGallery: {
               console.log('imageName', imageName);
               if (imageName === UserImageType.clientGalleryFront) {
-                console.log('clientGalleryFront', imageName);
                 updateDoc(refDb, {
                   currentPhysicalDetails: {
                     clientGalleryFront: {
@@ -223,7 +232,6 @@ export class UploadImageService implements OnDestroy {
                 );
                 break;
               } else if (imageName === UserImageType.clientGallerySide) {
-                console.log('clientGallerySide', imageName);
                 updateDoc(refDb, {
                   currentPhysicalDetails: {
                     clientGalleryFront: {
@@ -246,7 +254,6 @@ export class UploadImageService implements OnDestroy {
                 );
                 break;
               } else if (imageName === UserImageType.clientGalleryBack) {
-                console.log('clientGalleryBack', imageName);
                 updateDoc(refDb, {
                   currentPhysicalDetails: {
                     clientGalleryFront: {

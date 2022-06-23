@@ -1,17 +1,19 @@
-.complete-current-physical-details-banner {
-  background: var(--white);
-  color: var(--dark-one);
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-
+//.complete-current-physical-details-banner {
+//  background: var(--white);
+//  color: var(--dark-one);
+//  padding: 1rem;
+//  margin-bottom: 1rem;
+//}
+//
 @media screen and (min-width: 768px) {
   .complete-current-physical-details-banner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    h3 {
+    //display: flex;
+    //justify-content: space-between;
+    //align-items: center;
+    padding-left: 1rem;
+    p {
       margin: 0;
+      margin-bottom: 1rem;
     }
   }
 }
