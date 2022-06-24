@@ -23,13 +23,17 @@ import {
   getLoading,
 } from '@/app/store/shared/shared.selector';
 import { getUserAuth } from '@/app/auth/store/auth.selector';
-import { getUserProfile } from '../../store/profile.selector';
+import {
+  getNutritionistProfile,
+  getUserProfile,
+} from '../../store/profile.selector';
 import { Contact, UserType } from '../../model/profile-interface';
 import {
   createNutritionistProfileStart,
   updateUserProfileStart,
 } from '../../store/profile.actions';
 import { NutritionistProfile } from '../../model/nutritionistProfile.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-nutritionist-profile',
@@ -42,6 +46,8 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
   userAuthSub: Subscription | undefined;
   userProfile: UserProfile | null | undefined;
   userProfileSub: Subscription | undefined;
+  nutritionistProfile: NutritionistProfile | null;
+  nutritionistProfileSub: Subscription;
   getLoadingSpinnerSub: Subscription | undefined;
   errorMessage$: Observable<any> | undefined;
   onlyCountries = this.countryService.mapCountriesData();
@@ -55,27 +61,7 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
   selectedCity: string = '';
   trainersType = TrainerData;
   trainerExperience = TrainerExperienceData;
-
-  nutritionistFormGroup = new FormGroup({
-    firstname: new FormControl('', [Validators.required]),
-    lastname: new FormControl('', [Validators.required]),
-    birth: new FormControl('', [Validators.required]),
-    gender: new FormControl('', [Validators.required]),
-    experience: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
-    country: new FormControl('', [
-      Validators.required,
-      this.onCountryInputValidation(this.onlyCountries),
-    ]),
-    state: new FormControl('', [
-      Validators.required,
-      this.onStateInputValidation(this.onlyStates),
-    ]),
-    city: new FormControl('', [Validators.required]),
-    facebook: new FormControl('', []),
-    twitter: new FormControl('', []),
-    instagram: new FormControl('', []),
-  });
+  nutritionistFormGroup: FormGroup;
 
   constructor(
     private store: Store<AppState>,
@@ -86,16 +72,6 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getLoadingSpinnerSub = this.store
-      .select(getLoading)
-      .subscribe((isLoading: boolean) => {
-        if (isLoading) {
-          this.nutritionistFormGroup.disable();
-        } else {
-          this.nutritionistFormGroup.enable();
-        }
-      });
-
     this.userAuthSub = this.store.select(getUserAuth).subscribe((userAuth) => {
       this.userAuth = userAuth;
     });
@@ -104,6 +80,107 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
       .select(getUserProfile)
       .subscribe((userProfile) => {
         this.userProfile = userProfile;
+      });
+
+    this.nutritionistProfileSub = this.store
+      .select(getNutritionistProfile)
+      .subscribe((nutritionistProfile) => {
+        this.nutritionistProfile = nutritionistProfile;
+      });
+
+    this.nutritionistFormGroup = new FormGroup({
+      firstname: new FormControl(
+        this.nutritionistProfile?.firstName
+          ? this.nutritionistProfile?.firstName
+          : '',
+        [Validators.required]
+      ),
+      lastname: new FormControl(
+        this.nutritionistProfile?.lastName
+          ? this.nutritionistProfile?.lastName
+          : '',
+        [Validators.required]
+      ),
+      description: new FormControl(
+        this.nutritionistProfile?.description
+          ? this.nutritionistProfile?.description
+          : '',
+        [
+          Validators.required,
+          Validators.minLength(100),
+          Validators.maxLength(400),
+        ]
+      ),
+      birth: new FormControl(
+        this.nutritionistProfile?.birth.month
+          ? moment([
+              this.nutritionistProfile?.birth.year,
+              this.nutritionistProfile?.birth.month - 1,
+              this.nutritionistProfile?.birth.date,
+            ])
+          : '',
+        [Validators.required]
+      ),
+      gender: new FormControl(
+        this.nutritionistProfile?.gender
+          ? this.nutritionistProfile?.gender
+          : '',
+        [Validators.required]
+      ),
+      experience: new FormControl(
+        this.nutritionistProfile?.experience
+          ? this.nutritionistProfile?.experience
+          : '',
+        [Validators.required]
+      ),
+      phone: new FormControl(
+        this.nutritionistProfile?.contact?.phone
+          ? this.nutritionistProfile?.contact?.phone
+          : '',
+        [Validators.required]
+      ),
+      country: new FormControl(
+        this.nutritionistProfile?.country
+          ? this.nutritionistProfile?.country
+          : '',
+        [Validators.required, this.onCountryInputValidation(this.onlyCountries)]
+      ),
+      state: new FormControl(
+        this.nutritionistProfile?.state ? this.nutritionistProfile?.state : '',
+        [Validators.required, this.onStateInputValidation(this.onlyStates)]
+      ),
+      city: new FormControl(
+        this.nutritionistProfile?.city ? this.nutritionistProfile?.city : '',
+        [Validators.required]
+      ),
+      facebook: new FormControl(
+        this.nutritionistProfile?.contact?.facebook
+          ? this.nutritionistProfile?.contact?.facebook
+          : '',
+        []
+      ),
+      twitter: new FormControl(
+        this.nutritionistProfile?.contact?.twitter
+          ? this.nutritionistProfile?.contact?.twitter
+          : '',
+        []
+      ),
+      instagram: new FormControl(
+        this.nutritionistProfile?.contact?.instagram
+          ? this.nutritionistProfile?.contact?.instagram
+          : '',
+        []
+      ),
+    });
+
+    this.getLoadingSpinnerSub = this.store
+      .select(getLoading)
+      .subscribe((isLoading: boolean) => {
+        if (isLoading) {
+          this.nutritionistFormGroup.disable();
+        } else {
+          this.nutritionistFormGroup.enable();
+        }
       });
 
     this.filteredCountries = this.nutritionistFormGroup.controls[
@@ -154,6 +231,7 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
       const {
         firstname,
         lastname,
+        description,
         birth,
         gender,
         experience,
@@ -202,8 +280,7 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         state,
         city,
         contactFinal,
-        null,
-        null,
+        description,
         null,
         null,
         null,
@@ -256,6 +333,8 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
       this.userAuthSub.unsubscribe();
     } else if (this.userProfileSub) {
       this.userProfileSub.unsubscribe();
+    } else if (this.nutritionistProfileSub) {
+      this.nutritionistProfileSub.unsubscribe();
     }
   }
 }

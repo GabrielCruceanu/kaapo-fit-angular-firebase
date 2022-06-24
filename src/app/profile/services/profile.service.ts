@@ -2,10 +2,8 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
-import { getToken } from '../../auth/store/auth.selector';
-import { Subscription, switchMap, take } from 'rxjs';
+import { Subscription } from 'rxjs';
 import {
-  arrayUnion,
   collection,
   doc,
   docData,
@@ -224,8 +222,7 @@ export class ProfileService implements OnDestroy {
         gymData.street,
         gymData.strNo,
         gymData.contact,
-        gymData.shortDescription,
-        gymData.longDescription,
+        gymData.description,
         gymData.profilePicture,
         gymData.gallery,
         gymData.reviews,
@@ -271,7 +268,8 @@ export class ProfileService implements OnDestroy {
       );
       reviews.push(review);
     });
-    return reviews;
+    console.log('reviews', reviews);
+    return reviews.length >= 1 ? reviews : null;
   }
 
   setTrainerProfileInLocalStorage(trainerProfile: TrainerProfile) {
@@ -359,8 +357,7 @@ export class ProfileService implements OnDestroy {
         nutritionistData.state,
         nutritionistData.city,
         nutritionistData.contact,
-        nutritionistData.shortDescription,
-        nutritionistData.longDescription,
+        nutritionistData.description,
         nutritionistData.completedClients,
         nutritionistData.profilePicture,
         nutritionistData.activeClients,
@@ -406,6 +403,7 @@ export class ProfileService implements OnDestroy {
   }
 
   public checkIfUserHasProfile(): boolean {
+    console.log('this.userProfile', this.userProfile);
     return !!this.userProfile?.hasProfile;
   }
 

@@ -56,6 +56,47 @@
             </mat-form-field>
           </div>
 
+          <div class="col-md-12">
+            <mat-form-field class="form-control" appearance="outline">
+              <mat-label>Description</mat-label>
+              <textarea
+                matInput
+                placeholder="About you and your experience"
+                name="description"
+                formControlName="description"
+                rows="5"
+              >
+              </textarea>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['description'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Description is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['description'].hasError(
+                    'minlength'
+                  )
+                "
+              >
+                Description is <strong>minimum 100 characters.</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['description'].hasError(
+                    'maxlength'
+                  )
+                "
+              >
+                Description is <strong>maximum 400 characters.</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
           <div class="col-md-6 col-lg-4 mt-3">
             <mat-form-field class="form-control" appearance="outline">
               <mat-label>Experience</mat-label>
@@ -242,15 +283,23 @@
           <div class="col-md-6 col-lg-6 mt-3">
             <mat-form-field class="form-control" appearance="outline">
               <mat-label>Phone Number</mat-label>
-              <ngx-mat-intl-tel-input
-                [required]="true"
-                formControlName="phone"
-                [enablePlaceholder]="true"
-                [enableSearch]="true"
+              <!--              <ngx-mat-intl-tel-input-->
+              <!--                [preferredCountries]="['ro']"-->
+              <!--                [required]="true"-->
+              <!--                formControlName="phone"-->
+              <!--                [enablePlaceholder]="true"-->
+              <!--                [enableSearch]="true"-->
+              <!--                name="phone"-->
+              <!--                class="phone-search-control"-->
+              <!--              >-->
+              <!--              </ngx-mat-intl-tel-input>-->
+
+              <input
+                matInput
+                placeholder="+40770121945"
                 name="phone"
-                class="phone-search-control"
-              >
-              </ngx-mat-intl-tel-input>
+                formControlName="phone"
+              />
               <mat-error
                 *ngIf="
                   nutritionistFormGroup.controls['phone'].hasError('required')

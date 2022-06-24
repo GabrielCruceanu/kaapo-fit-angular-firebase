@@ -35,6 +35,8 @@ import { AddMeasurementsComponent } from '@/app/profile/view/add-measurements/ad
 import { TrainerProfileComponent } from './components/trainer-profile/trainer-profile.component';
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { ProDetailsComponent } from './components/pro-details/pro-details.component';
+import { NutritionistProfileComponent } from './components/nutritionist-profile/nutritionist-profile.component';
+import { GymProfileComponent } from './components/gym-profile/gym-profile.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { ProDetailsComponent } from './components/pro-details/pro-details.compon
     TrainerProfileComponent,
     ReviewsComponent,
     ProDetailsComponent,
+    NutritionistProfileComponent,
+    GymProfileComponent,
   ],
   imports: [
     CommonModule,

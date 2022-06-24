@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-12">
-    <div class="pro-details-box">
+    <div class="pro-details-box" *ngIf="experience || type || certificate">
       <div class="pro-details-item" *ngIf="experience">
         <h6>Experienta</h6>
         <hr />
@@ -11,7 +11,7 @@
         <hr />
         <h5>{{ type }}</h5>
       </div>
-      <div class="pro-details-item">
+      <div class="pro-details-item" *ngIf="certificate">
         <h6>Certificat</h6>
         <hr />
         <h5>{{ certificate ? 'Da' : 'Nu' }}</h5>
