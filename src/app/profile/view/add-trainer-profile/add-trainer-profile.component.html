@@ -289,16 +289,23 @@
           <div class="col-md-6 col-lg-6">
             <mat-form-field class="form-control" appearance="outline">
               <mat-label>Phone Number</mat-label>
-              <ngx-mat-intl-tel-input
-                [preferredCountries]="['ro']"
-                [required]="true"
-                formControlName="phone"
-                [enablePlaceholder]="true"
-                [enableSearch]="true"
+              <!--              <ngx-mat-intl-tel-input-->
+              <!--                [preferredCountries]="['ro']"-->
+              <!--                [required]="true"-->
+              <!--                formControlName="phone"-->
+              <!--                [enablePlaceholder]="true"-->
+              <!--                [enableSearch]="true"-->
+              <!--                name="phone"-->
+              <!--                class="phone-search-control"-->
+              <!--              >-->
+              <!--              </ngx-mat-intl-tel-input>-->
+
+              <input
+                matInput
+                placeholder="+40770121945"
                 name="phone"
-                class="phone-search-control"
-              >
-              </ngx-mat-intl-tel-input>
+                formControlName="phone"
+              />
               <mat-error
                 *ngIf="trainerFormGroup.controls['phone'].hasError('required')"
               >

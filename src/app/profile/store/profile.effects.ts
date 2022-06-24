@@ -145,6 +145,10 @@ export class ProfileEffects {
       map((action) => {
         this.profileService.createClientProfileInDb(action.clientProfile);
 
+        this.store.dispatch(
+          getUserProfileStart({ userProfileId: action.clientProfile.id })
+        );
+
         this.store.dispatch(setLoadingSpinner({ status: false }));
 
         return createClientProfileSuccess({
@@ -228,6 +232,10 @@ export class ProfileEffects {
       map((action) => {
         this.profileService.createGymProfileInDb(action.gymProfile);
 
+        this.store.dispatch(
+          getUserProfileStart({ userProfileId: action.gymProfile.id })
+        );
+
         this.store.dispatch(setLoadingSpinner({ status: false }));
 
         return createGymProfileSuccess({
@@ -265,6 +273,10 @@ export class ProfileEffects {
       ofType(createTrainerProfileStart),
       map((action) => {
         this.profileService.createTrainerProfileInDb(action.trainerProfile);
+
+        this.store.dispatch(
+          getUserProfileStart({ userProfileId: action.trainerProfile.id })
+        );
 
         this.store.dispatch(setLoadingSpinner({ status: false }));
 
@@ -308,6 +320,10 @@ export class ProfileEffects {
           action.nutritionistProfile
         );
 
+        this.store.dispatch(
+          getUserProfileStart({ userProfileId: action.nutritionistProfile.id })
+        );
+
         this.store.dispatch(setLoadingSpinner({ status: false }));
 
         return createNutritionistProfileSuccess({
@@ -334,7 +350,7 @@ export class ProfileEffects {
               this.store.dispatch(setLoadingSpinner({ status: false }));
               return getNutritionistProfileSuccess({
                 nutritionistProfile: nutritionistProfile,
-                redirect: false,
+                redirect: true,
               });
             })
           );

@@ -6,4 +6,8 @@
   <trainer-profile
     *ngIf="userProfile?.userType === userType.Trainer"
   ></trainer-profile>
+
+  <nutritionist-profile
+    *ngIf="userProfile?.userType === userType.Nutritionist"
+  ></nutritionist-profile>
 </app-layout>
