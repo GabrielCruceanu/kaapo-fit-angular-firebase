@@ -72,16 +72,6 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getLoadingSpinnerSub = this.store
-      .select(getLoading)
-      .subscribe((isLoading: boolean) => {
-        if (isLoading) {
-          this.nutritionistFormGroup.disable();
-        } else {
-          this.nutritionistFormGroup.enable();
-        }
-      });
-
     this.userAuthSub = this.store.select(getUserAuth).subscribe((userAuth) => {
       this.userAuth = userAuth;
     });
@@ -182,6 +172,17 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         []
       ),
     });
+
+    this.getLoadingSpinnerSub = this.store
+      .select(getLoading)
+      .subscribe((isLoading: boolean) => {
+        if (isLoading) {
+          this.nutritionistFormGroup.disable();
+        } else {
+          this.nutritionistFormGroup.enable();
+        }
+      });
+
     this.filteredCountries = this.nutritionistFormGroup.controls[
       'country'
     ].valueChanges.pipe(
@@ -332,6 +333,8 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
       this.userAuthSub.unsubscribe();
     } else if (this.userProfileSub) {
       this.userProfileSub.unsubscribe();
+    } else if (this.nutritionistProfileSub) {
+      this.nutritionistProfileSub.unsubscribe();
     }
   }
 }

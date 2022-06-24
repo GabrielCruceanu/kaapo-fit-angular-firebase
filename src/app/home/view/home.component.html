@@ -1,6 +1,8 @@
 <app-layout>
   <h1 class="app-title">Home</h1>
 
-  <h2>User</h2>
-  <pre>{{ userAuth$ | async | json }}</pre>
+  <h2>Bun venit</h2>
+  <ng-container *ngIf="userAuth$ | async as userAuth">
+    <h4>{{ userAuth.email }}</h4>
+  </ng-container>
 </app-layout>

@@ -53,7 +53,6 @@ export class UploadImageService implements OnDestroy {
       .select(getClientProfile)
       .subscribe((clientProfile) => {
         this.clientProfile = clientProfile;
-        console.log('clientProfileSub', clientProfile);
       });
   }
 
@@ -81,8 +80,7 @@ export class UploadImageService implements OnDestroy {
             ia[i] = byteString.charCodeAt(i);
           }
           const fileBlob = new Blob([arrayBuffer], { type });
-          console.log('fileBlob', fileBlob);
-          console.log('this.clientProfile startUpload', this.clientProfile);
+
           if (this.clientProfile) {
             this.startUpload(
               fileBlob,

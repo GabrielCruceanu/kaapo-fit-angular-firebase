@@ -329,6 +329,8 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
       this.userAuthSub.unsubscribe();
     } else if (this.userProfileSub) {
       this.userProfileSub.unsubscribe();
+    } else if (this.trainerProfileSub) {
+      this.trainerProfileSub.unsubscribe();
     }
   }
 }

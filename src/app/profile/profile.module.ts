@@ -36,6 +36,7 @@ import { TrainerProfileComponent } from './components/trainer-profile/trainer-pr
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { ProDetailsComponent } from './components/pro-details/pro-details.component';
 import { NutritionistProfileComponent } from './components/nutritionist-profile/nutritionist-profile.component';
+import { GymProfileComponent } from './components/gym-profile/gym-profile.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { NutritionistProfileComponent } from './components/nutritionist-profile/
     ReviewsComponent,
     ProDetailsComponent,
     NutritionistProfileComponent,
+    GymProfileComponent,
   ],
   imports: [
     CommonModule,

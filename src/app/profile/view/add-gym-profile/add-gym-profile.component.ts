@@ -21,7 +21,7 @@ import {
   getLoading,
 } from '@/app/store/shared/shared.selector';
 import { getUserAuth } from '@/app/auth/store/auth.selector';
-import { getUserProfile } from '../../store/profile.selector';
+import { getGymProfile, getUserProfile } from '../../store/profile.selector';
 import { Contact, UserType } from '../../model/profile-interface';
 import {
   createGymProfileStart,
@@ -40,6 +40,8 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
   userAuthSub: Subscription | undefined;
   userProfile: UserProfile | null | undefined;
   userProfileSub: Subscription | undefined;
+  gymProfile: GymProfile | null;
+  gymProfileSub: Subscription;
   getLoadingSpinnerSub: Subscription | undefined;
   errorMessage$: Observable<any> | undefined;
   onlyCountries = this.countryService.mapCountriesData();
@@ -52,26 +54,7 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
   filteredCities: Observable<string[]> | undefined;
   selectedCity: string = '';
   gymTypes = GymData;
-
-  gymFormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    gymType: new FormControl('', [Validators.required]),
-    country: new FormControl('', [
-      Validators.required,
-      this.onCountryInputValidation(this.onlyCountries),
-    ]),
-    state: new FormControl('', [
-      Validators.required,
-      this.onStateInputValidation(this.onlyStates),
-    ]),
-    city: new FormControl('', [Validators.required]),
-    street: new FormControl('', [Validators.required]),
-    strNo: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
-    facebook: new FormControl('', []),
-    twitter: new FormControl('', []),
-    instagram: new FormControl('', []),
-  });
+  gymFormGroup: FormGroup;
 
   constructor(
     private store: Store<AppState>,
@@ -82,16 +65,6 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getLoadingSpinnerSub = this.store
-      .select(getLoading)
-      .subscribe((isLoading: boolean) => {
-        if (isLoading) {
-          this.gymFormGroup.disable();
-        } else {
-          this.gymFormGroup.enable();
-        }
-      });
-
     this.userAuthSub = this.store.select(getUserAuth).subscribe((userAuth) => {
       this.userAuth = userAuth;
     });
@@ -100,6 +73,84 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
       .select(getUserProfile)
       .subscribe((userProfile) => {
         this.userProfile = userProfile;
+        console.log('this.userProfile', this.userProfile);
+      });
+
+    this.gymProfileSub = this.store
+      .select(getGymProfile)
+      .subscribe((gymProfile) => {
+        this.gymProfile = gymProfile;
+      });
+
+    this.gymFormGroup = new FormGroup({
+      name: new FormControl(
+        this.gymProfile?.name ? this.gymProfile?.name : '',
+        [Validators.required]
+      ),
+      gymType: new FormControl(
+        this.gymProfile?.gymType ? this.gymProfile?.gymType : '',
+        [Validators.required]
+      ),
+      description: new FormControl(
+        this.gymProfile?.description ? this.gymProfile?.description : '',
+        [
+          Validators.required,
+          Validators.minLength(100),
+          Validators.maxLength(400),
+        ]
+      ),
+      country: new FormControl(
+        this.gymProfile?.country ? this.gymProfile?.country : '',
+        [Validators.required, this.onCountryInputValidation(this.onlyCountries)]
+      ),
+      state: new FormControl(
+        this.gymProfile?.state ? this.gymProfile?.state : '',
+        [Validators.required, this.onStateInputValidation(this.onlyStates)]
+      ),
+      city: new FormControl(
+        this.gymProfile?.city ? this.gymProfile?.city : '',
+        [Validators.required]
+      ),
+      street: new FormControl(
+        this.gymProfile?.street ? this.gymProfile?.street : '',
+        [Validators.required]
+      ),
+      strNo: new FormControl(
+        this.gymProfile?.strNo ? this.gymProfile?.strNo : '',
+        [Validators.required]
+      ),
+      phone: new FormControl(
+        this.gymProfile?.contact?.phone ? this.gymProfile?.contact?.phone : '',
+        [Validators.required]
+      ),
+      facebook: new FormControl(
+        this.gymProfile?.contact?.facebook
+          ? this.gymProfile?.contact?.facebook
+          : '',
+        []
+      ),
+      twitter: new FormControl(
+        this.gymProfile?.contact?.twitter
+          ? this.gymProfile?.contact?.twitter
+          : '',
+        []
+      ),
+      instagram: new FormControl(
+        this.gymProfile?.contact?.instagram
+          ? this.gymProfile?.contact?.instagram
+          : '',
+        []
+      ),
+    });
+
+    this.getLoadingSpinnerSub = this.store
+      .select(getLoading)
+      .subscribe((isLoading: boolean) => {
+        if (isLoading) {
+          this.gymFormGroup.disable();
+        } else {
+          this.gymFormGroup.enable();
+        }
       });
 
     this.filteredCountries = this.gymFormGroup.controls[
@@ -146,6 +197,7 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
       const {
         name,
         gymType,
+        description,
         phone,
         country,
         state,
@@ -186,8 +238,7 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         street,
         strNo,
         contactFinal,
-        null,
-        null,
+        description,
         null,
         null,
         null,
@@ -233,6 +284,8 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
       this.userAuthSub.unsubscribe();
     } else if (this.userProfileSub) {
       this.userProfileSub.unsubscribe();
+    } else if (this.gymProfileSub) {
+      this.gymProfileSub.unsubscribe();
     }
   }
 }
