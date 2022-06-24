@@ -19,69 +19,13 @@
             ></app-user-profile>
           </div>
         </div>
-
-        <div *ngIf="trainerProfileDetails" class="row">
-          <div class="col-12">
-            <div class="trainer-details-box">
-              <div class="trainer-details-item">
-                <h6>Experienta</h6>
-                <hr />
-                <h5>{{ trainerProfileDetails.experience }} ani</h5>
-              </div>
-              <div class="trainer-details-item">
-                <h6>Tip Antrenor</h6>
-                <hr />
-                <h5>{{ trainerProfileDetails.trainerType }}</h5>
-              </div>
-              <div class="trainer-details-item">
-                <h6>Certificat</h6>
-                <hr />
-                <h5>{{ trainerProfileDetails.certificate ? 'Da' : 'Nu' }}</h5>
-              </div>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="trainer-description-box">
-              <h3>Descriere</h3>
-              <p>
-                {{ trainerProfileDetails.description }}
-              </p>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="trainer-description-box">
-              <h3>Recenzii</h3>
-              <ng-container *ngIf="reviews$ | async as reviews; else noReviews">
-                <ul *ngFor="let review of reviews; let i = index">
-                  <li class="review-box">
-                    <div class="review-header">
-                      <img
-                        [src]="
-                          review.clientPhoto
-                            ? review.clientPhoto
-                            : sampleUserProfileImage
-                        "
-                        alt="review client image"
-                      />
-                      <h5>
-                        {{ review.clientFirstName }} {{ review.clientLastName }}
-                      </h5>
-                      <p class="review-stars">
-                        {{ review.stars }}
-                      </p>
-                    </div>
-                    <div class="review-body">
-                      <p>{{ review.description }}</p>
-                    </div>
-                  </li>
-                </ul>
-              </ng-container>
-              <ng-template #noReviews>
-                <p>Nu sunnt review-uri</p>
-              </ng-template>
-            </div>
-          </div>
-        </div>
+        <pro-details
+          [experience]="trainerProfileDetails.experience"
+          [type]="trainerProfileDetails.trainerType"
+          [certificate]="trainerProfileDetails.certificate"
+          [description]="trainerProfileDetails.description"
+          [contact]="trainerProfileDetails.contact"
+        ></pro-details>
       </div>
       <div class="col-lg-3">
         <app-user-profile-sidebar></app-user-profile-sidebar>

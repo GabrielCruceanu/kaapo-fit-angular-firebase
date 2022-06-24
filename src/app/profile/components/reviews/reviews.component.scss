@@ -1,0 +1,43 @@
+.review-box {
+  padding: 1rem;
+  background: var(--dark-three);
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  opacity: 0.9;
+  scale: 0.9;
+  cursor: grab;
+  transition: var(--transition);
+}
+
+::ng-deep .swiper-slide-active .review-box {
+  transition: var(--transition);
+  opacity: 1;
+  scale: 1;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  img {
+    max-width: 32px;
+    max-height: 32px;
+    object-fit: cover;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 1px solid var(--primary);
+  }
+
+  h5 {
+    margin-bottom: 0;
+    font-weight: bold;
+  }
+}
+.review-stars {
+  border-radius: 4px;
+  padding: 3px 6px;
+  background: var(--primary);
+  margin-bottom: 0;
+}

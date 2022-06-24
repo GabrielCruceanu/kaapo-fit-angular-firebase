@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-12">
+    <div class="pro-details-box">
+      <div class="pro-details-item" *ngIf="experience">
+        <h6>Experienta</h6>
+        <hr />
+        <h5>{{ experience }} ani</h5>
+      </div>
+      <div class="pro-details-item" *ngIf="type">
+        <h6>Tip Antrenor</h6>
+        <hr />
+        <h5>{{ type }}</h5>
+      </div>
+      <div class="pro-details-item">
+        <h6>Certificat</h6>
+        <hr />
+        <h5>{{ certificate ? 'Da' : 'Nu' }}</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="pro-description-box">
+      <h3>Descriere</h3>
+      <p>
+        {{ description }}
+      </p>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <wide-ads-banner></wide-ads-banner>
+  </div>
+
+  <div class="col-12">
+    <div class="pro-description-box">
+      <reviews [reviews$]="reviews$"></reviews>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="pro-contact-box">
+      <h3>Contact</h3>
+      <ul class="pro-contact-details-text">
+        <li>
+          <p>
+            <span>Telefon:</span>
+            <a [href]="'tel:' + contact.phone"> {{ contact.phone }}</a>
+          </p>
+        </li>
+        <li>
+          <p>
+            <span>Email:</span>
+            <a [href]="'mailto:' + contact.email"> {{ contact.email }}</a>
+          </p>
+        </li>
+      </ul>
+
+      <ul class="pro-contact-social-box">
+        <li *ngIf="contact.facebook">
+          <a [href]="contact.facebook" target="_blank">
+            <mat-icon
+              aria-hidden="true"
+              class="tab-icon"
+              svgIcon="facebook"
+            ></mat-icon>
+          </a>
+        </li>
+        <li *ngIf="contact.instagram">
+          <a [href]="contact.instagram" target="_blank">
+            <mat-icon
+              aria-hidden="true"
+              class="tab-icon"
+              svgIcon="instagram"
+            ></mat-icon>
+          </a>
+        </li>
+        <li *ngIf="contact.twitter">
+          <a [href]="contact.twitter" target="_blank">
+            <mat-icon
+              aria-hidden="true"
+              class="tab-icon"
+              svgIcon="twitter"
+            ></mat-icon>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

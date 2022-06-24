@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { WideAdsBannerComponent } from './wide-ads-banner/wide-ads-banner.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TabsComponent,
     HeaderProfileComponent,
     UploadImageComponent,
+    WideAdsBannerComponent,
   ],
   exports: [
     ButtonComponent,
@@ -34,6 +36,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TabsComponent,
     HeaderComponent,
     HeaderProfileComponent,
+    WideAdsBannerComponent,
   ],
   imports: [
     CommonModule,

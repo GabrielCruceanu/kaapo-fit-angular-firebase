@@ -1,0 +1,41 @@
+<h3>Recenzii</h3>
+<ng-container *ngIf="reviews$ | async as reviews; else noReviews">
+  <swiper
+    #swiper
+    [watchSlidesProgress]="true"
+    [virtual]="true"
+    [navigation]="true"
+    [grabCursor]="true"
+    [centeredSlides]="true"
+    [slidesPerView]="'auto'"
+    [pagination]="{
+      clickable: true
+    }"
+    [breakpoints]="{
+      '@0.00': {
+        slidesPerView: 1
+      },
+      '@0.75': {
+        slidesPerView: 2
+      }
+    }"
+  >
+    <ng-template swiperSlide *ngFor="let review of reviews; index as i">
+      <div class="review-box">
+        <div class="review-header">
+          <img [src]="review.clientPhoto" alt="review client image" />
+          <h5>{{ review.clientFirstName }} {{ review.clientLastName }}</h5>
+          <p class="review-stars">
+            {{ review.stars }}
+          </p>
+        </div>
+        <div class="review-body">
+          <p>{{ review.description }}</p>
+        </div>
+      </div>
+    </ng-template>
+  </swiper>
+</ng-container>
+<ng-template #noReviews>
+  <h5>Nu sunt review-uri</h5>
+</ng-template>

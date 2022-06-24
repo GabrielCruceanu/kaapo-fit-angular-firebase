@@ -33,6 +33,8 @@ import { ComponentsSharedModule } from '@/app/shared/components/components-share
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AddMeasurementsComponent } from '@/app/profile/view/add-measurements/add-measurements.component';
 import { TrainerProfileComponent } from './components/trainer-profile/trainer-profile.component';
+import { ReviewsComponent } from './components/reviews/reviews.component';
+import { ProDetailsComponent } from './components/pro-details/pro-details.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { TrainerProfileComponent } from './components/trainer-profile/trainer-pr
     UserProfileSidebarComponent,
     AddMeasurementsComponent,
     TrainerProfileComponent,
+    ReviewsComponent,
+    ProDetailsComponent,
   ],
   imports: [
     CommonModule,
