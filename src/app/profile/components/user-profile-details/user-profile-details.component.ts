@@ -3,7 +3,7 @@ import { ClientProfile } from '../../model/clientProfile.model';
 import { Observable } from 'rxjs';
 import { getClientProfile } from '../../store/profile.selector';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
+import { AppState } from '@/app/store/app.state';
 
 @Component({
   selector: 'app-user-profile-details',
@@ -17,8 +17,5 @@ export class UserProfileDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.clientProfileDetails$ = this.store.select(getClientProfile);
-    this.clientProfileDetails$.subscribe((client) => {
-      console.log('client', client);
-    });
   }
 }

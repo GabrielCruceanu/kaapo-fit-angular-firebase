@@ -45,6 +45,7 @@
 ::ng-deep .mat-select-value,
 ::ng-deep .mat-dialog-container {
   color: var(--white);
+
   ::placeholder,
   data-placeholder {
     color: var(--soft);
@@ -110,6 +111,7 @@
 ::ng-deep .mat-option {
   font-size: 1rem;
 }
+
 ::ng-deep
   .mat-form-field-appearance-outline.mat-form-field-disabled
   .mat-form-field-outline,
@@ -141,3 +143,12 @@
 // ******************
 // Form End
 // ******************
+
+::ng-deep .swiper-button-next,
+::ng-deep .swiper-button-prev {
+  color: var(--primary);
+}
+
+::ng-deep .swiper-pagination .swiper-pagination-bullet-active {
+  background: var(--primary);
+}
