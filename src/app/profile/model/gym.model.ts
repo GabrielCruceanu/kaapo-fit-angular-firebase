@@ -5,6 +5,7 @@ import {
   ProfessionalDetails,
   ProfessionalGalleryPicture,
   Review,
+  UserImage,
   UserType,
 } from './profile-interface';
 
@@ -25,7 +26,8 @@ export class GymProfile {
     public strNo: string,
     public contact: Contact,
     public description: string | null,
-    public profilePicture: string | null,
+    public coverPicture: UserImage | null,
+    public profilePicture: UserImage | null,
     public gallery: ProfessionalGalleryPicture[] | null,
     public reviews: Review[] | null,
     public personal: ProfessionalDetails[] | null

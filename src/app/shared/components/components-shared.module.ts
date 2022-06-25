@@ -17,6 +17,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WideAdsBannerComponent } from './wide-ads-banner/wide-ads-banner.component';
+import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { WideAdsBannerComponent } from './wide-ads-banner/wide-ads-banner.compon
     HeaderProfileComponent,
     UploadImageComponent,
     WideAdsBannerComponent,
+    SettingsDialogComponent,
   ],
   exports: [
     ButtonComponent,
@@ -49,6 +52,7 @@ import { WideAdsBannerComponent } from './wide-ads-banner/wide-ads-banner.compon
     MatInputModule,
     ReactiveFormsModule,
     FormsModule,
+    MatListModule,
   ],
   providers: [UploadImageService],
 })

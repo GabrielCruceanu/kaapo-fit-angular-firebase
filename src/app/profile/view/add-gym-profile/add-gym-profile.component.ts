@@ -239,7 +239,8 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         strNo,
         contactFinal,
         description,
-        null,
+        this.userProfile.coverImage ? this.userProfile.coverImage : null,
+        this.userProfile.profileImage ? this.userProfile.profileImage : null,
         null,
         null,
         null
@@ -253,8 +254,8 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         this.userProfile.monthJoined,
         this.userProfile.yearJoined,
         UserType.Gym,
-        null,
-        null
+        this.userProfile.coverImage ? this.userProfile.coverImage : null,
+        this.userProfile.profileImage ? this.userProfile.profileImage : null
       );
 
       this.store.dispatch(setLoadingSpinner({ status: true }));

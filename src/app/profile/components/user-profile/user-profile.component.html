@@ -9,11 +9,10 @@
             : sampleUserCoverImage
         "
         alt="cover picture"
-        (click)="changeCoverPicture()"
       />
     </div>
     <div class="user-profile-image-box">
-      <div class="user-profile-image" (click)="changeProfilePicture()">
+      <div class="user-profile-image">
         <img
           alt="profile picture"
           [src]="
@@ -26,38 +25,47 @@
     </div>
   </div>
   <div class="user-profile-name">
-    <h3>
-      <ng-container *ngIf="firstName && lastName">
-        <strong>{{ firstName }} </strong>
-        <br />
-        {{ lastName }}
-      </ng-container>
-      <ng-container *ngIf="name">
-        <strong> {{ name }}</strong>
-      </ng-container>
-    </h3>
-    <div class="user-profile-status-detail">
-      <div class="user-profile-icon-box user-profile-icon-box-map">
-        <mat-icon
-          class="icon"
-          aria-hidden="false"
-          aria-label="Icon for profile country"
-        >
-          map
-        </mat-icon>
-        <span>{{ country }} / {{ city }}</span>
-      </div>
+    <div>
+      <h3>
+        <ng-container *ngIf="firstName && lastName">
+          <strong>{{ firstName }} </strong>
+          {{ lastName }}
+        </ng-container>
+        <ng-container *ngIf="name">
+          <strong> {{ name }}</strong>
+        </ng-container>
+      </h3>
+      <div class="user-profile-status-detail">
+        <div class="user-profile-icon-box user-profile-icon-box-map">
+          <mat-icon
+            class="icon"
+            aria-hidden="false"
+            aria-label="Icon for profile country"
+          >
+            map
+          </mat-icon>
+          <span>{{ country }} / {{ city }}</span>
+        </div>
 
-      <div class="user-profile-icon-box user-profile-icon-box-client">
-        <mat-icon
-          class="icon"
-          aria-hidden="false"
-          aria-label="Icon for profile status"
-        >
-          badge
-        </mat-icon>
-        <span>{{ status === 'Trainer' ? 'Antrenor' : status }}</span>
+        <div class="user-profile-icon-box user-profile-icon-box-client">
+          <mat-icon
+            class="icon"
+            aria-hidden="false"
+            aria-label="Icon for profile status"
+          >
+            badge
+          </mat-icon>
+          <span>{{ status === 'Trainer' ? 'Antrenor' : status }}</span>
+        </div>
       </div>
     </div>
+    <button
+      mat-fab
+      color="primary"
+      aria-label="Icon button with a image icon"
+      (click)="openSettingDialog()"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
   </div>
 </div>

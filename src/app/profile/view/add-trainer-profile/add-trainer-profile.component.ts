@@ -280,7 +280,8 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         contactFinal,
         description,
         null,
-        null,
+        this.userProfile.coverImage ? this.userProfile.coverImage : null,
+        this.userProfile.profileImage ? this.userProfile.profileImage : null,
         null,
         null,
         null
@@ -294,8 +295,8 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         this.userProfile.monthJoined,
         this.userProfile.yearJoined,
         UserType.Trainer,
-        null,
-        null
+        this.userProfile.coverImage ? this.userProfile.coverImage : null,
+        this.userProfile.profileImage ? this.userProfile.profileImage : null
       );
 
       this.store.dispatch(setLoadingSpinner({ status: true }));
