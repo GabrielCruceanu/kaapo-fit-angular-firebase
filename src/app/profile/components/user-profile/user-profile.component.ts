@@ -1,18 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import {
-  CollectionsType,
-  UserImageType,
-  UserType,
-} from '../../model/profile-interface';
-import { ClientProfile } from '../../model/clientProfile.model';
+import { UserType } from '../../model/profile-interface';
 import { Store } from '@ngrx/store';
 import { AppState } from '@/app/store/app.state';
-import { getClientProfile, getUserProfile } from '../../store/profile.selector';
-import { Observable, Subscription } from 'rxjs';
+import { getUserProfile } from '../../store/profile.selector';
+import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { UploadImageComponent } from '@/app/shared/components/upload-image/upload-image.component';
 import { UserProfile } from '@/app/profile/model/userProfile.model';
-import { TypeOfUploadImage } from '@/app/shared/model/upload-image-interface';
+import { SettingsDialogComponent } from '@/app/shared/components/settings-dialog/settings-dialog.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -48,26 +42,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       .subscribe((userProfile) => (this.userProfile = userProfile));
   }
 
-  changeProfilePicture() {
-    this.dialog.open(UploadImageComponent, {
-      data: {
-        id: this.userProfile.id,
-        typeOfUploadImage: TypeOfUploadImage.Profile,
-        imageName: UserImageType.profile,
-        folder: CollectionsType.users,
-      },
-    });
-  }
-
-  changeCoverPicture() {
-    this.dialog.open(UploadImageComponent, {
-      data: {
-        id: this.userProfile.id,
-        typeOfUploadImage: TypeOfUploadImage.Cover,
-        imageName: UserImageType.cover,
-        folder: CollectionsType.users,
-      },
-    });
+  openSettingDialog() {
+    this.dialog.open(SettingsDialogComponent);
   }
 
   ngOnDestroy() {

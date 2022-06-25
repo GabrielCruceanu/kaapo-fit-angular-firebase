@@ -25,7 +25,6 @@ import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
 import { getUserProfile } from '../store/profile.selector';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Review } from '@/app/profile/model/review.model';
 
 export const _filer = (opt: string[], value: string): string[] => {
@@ -44,8 +43,7 @@ export class ProfileService implements OnDestroy {
   constructor(
     private store: Store<AppState>,
     private http: HttpClient,
-    private firestore: Firestore,
-    private afs: AngularFirestore
+    private firestore: Firestore
   ) {
     this.userProfileSub = this.store
       .select(getUserProfile)
@@ -223,6 +221,7 @@ export class ProfileService implements OnDestroy {
         gymData.strNo,
         gymData.contact,
         gymData.description,
+        gymData.coverPicture,
         gymData.profilePicture,
         gymData.gallery,
         gymData.reviews,
@@ -300,6 +299,7 @@ export class ProfileService implements OnDestroy {
         trainerData.contact,
         trainerData.description,
         trainerData.completedClients,
+        trainerData.coverPicture,
         trainerData.profilePicture,
         trainerData.activeClients,
         trainerData.gallery,
@@ -359,6 +359,7 @@ export class ProfileService implements OnDestroy {
         nutritionistData.contact,
         nutritionistData.description,
         nutritionistData.completedClients,
+        nutritionistData.coverPicture,
         nutritionistData.profilePicture,
         nutritionistData.activeClients,
         nutritionistData.gallery,
@@ -369,7 +370,7 @@ export class ProfileService implements OnDestroy {
   }
 
   public disableInput(formGroup: any, disableInput: string, input: string) {
-    formGroup.controls[input].valid
+    formGroup.controls[input].status === 'VALID'
       ? formGroup.controls[disableInput].enable()
       : formGroup.controls[disableInput].disable();
   }

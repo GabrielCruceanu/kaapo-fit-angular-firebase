@@ -4,6 +4,7 @@ import {
   GenderType,
   ProfessionalGalleryPicture,
   Review,
+  UserImage,
   UserType,
 } from './profile-interface';
 import { ClientProfile } from './clientProfile.model';
@@ -27,7 +28,8 @@ export class NutritionistProfile {
     public contact: Contact,
     public description: string,
     public completedClients: number | null,
-    public profilePicture: string | null,
+    public coverPicture: UserImage | null,
+    public profilePicture: UserImage | null,
     public activeClients: ClientProfile[] | null,
     public gallery: ProfessionalGalleryPicture[] | null,
     public reviews: Review[] | null
