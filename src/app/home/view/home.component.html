@@ -1,8 +1,44 @@
 <app-layout>
-  <h1 class="app-title">Home</h1>
+  <h1 class="app-title">
+    Bun venit <br />
+    💪
+  </h1>
 
-  <h2>Bun venit</h2>
-  <ng-container *ngIf="userAuth$ | async as userAuth">
-    <h4>{{ userAuth.email }}</h4>
-  </ng-container>
+  <ul *ngIf="gyms$ | async as gyms">
+    <li *ngFor="let gym of gyms">
+      Gym Name: {{ gym.name }}
+      <img
+        [src]="gym.coverPicture.downloadURL"
+        alt=""
+        *ngIf="gym.coverPicture?.downloadURL"
+        style="display: block; width: 300px"
+      />
+    </li>
+  </ul>
+  <br />
+  <br />
+  <ul *ngIf="trainers$ | async as trainers">
+    <li *ngFor="let trainer of trainers">
+      Trainer Name: {{ trainer.firstName }}
+      <img
+        [src]="trainer.coverPicture.downloadURL"
+        alt=""
+        *ngIf="trainer.coverPicture?.downloadURL"
+        style="display: block; width: 300px"
+      />
+    </li>
+  </ul>
+  <br />
+  <br />
+  <ul *ngIf="nutritionists$ | async as nutritionists">
+    <li *ngFor="let nutritionist of nutritionists">
+      Nutritionist Name: {{ nutritionist.firstName }}
+      <img
+        [src]="nutritionist.coverPicture.downloadURL"
+        alt=""
+        *ngIf="nutritionist.coverPicture?.downloadURL"
+        style="display: block; width: 300px"
+      />
+    </li>
+  </ul>
 </app-layout>

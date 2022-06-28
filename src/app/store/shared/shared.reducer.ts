@@ -1,6 +1,14 @@
-import { Action, createReducer, on} from '@ngrx/store';
-import {initialState, SharedState} from './shared.state';
-import {setErrorMessage, setLoadingSpinner} from './shared.actions';
+import { Action, createReducer, on } from '@ngrx/store';
+import { initialState, SharedState } from './shared.state';
+import {
+  getClientsSuccess,
+  getGymsSuccess,
+  getNutritionistsSuccess,
+  getReviewsSuccess,
+  getTrainersSuccess,
+  setErrorMessage,
+  setLoadingSpinner,
+} from './shared.actions';
 
 const _sharedReducer = createReducer(
   initialState,
@@ -14,6 +22,36 @@ const _sharedReducer = createReducer(
     return {
       ...state,
       errorMessage: action.message,
+    };
+  }),
+  on(getClientsSuccess, (state, action) => {
+    return {
+      ...state,
+      clients: action.clients,
+    };
+  }),
+  on(getGymsSuccess, (state, action) => {
+    return {
+      ...state,
+      gyms: action.gyms,
+    };
+  }),
+  on(getTrainersSuccess, (state, action) => {
+    return {
+      ...state,
+      trainers: action.trainers,
+    };
+  }),
+  on(getNutritionistsSuccess, (state, action) => {
+    return {
+      ...state,
+      nutritionists: action.nutritionists,
+    };
+  }),
+  on(getReviewsSuccess, (state, action) => {
+    return {
+      ...state,
+      reviews: action.reviews,
     };
   })
 );

@@ -37,6 +37,7 @@ import { EnvironmentService } from '@/app/shared/services/environment/environmen
 import { AngularFireModule } from '@angular/fire/compat';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { SharedEffects } from '@/app/store/shared/shared.effects';
 
 export const firebaseConfig = environment.firebase;
 
@@ -66,7 +67,7 @@ export const firebaseConfig = environment.firebase;
     MatBadgeModule,
     ComponentsSharedModule,
     HttpClientModule,
-    EffectsModule.forRoot([AuthEffects, ProfileEffects]),
+    EffectsModule.forRoot([AuthEffects, SharedEffects, ProfileEffects]),
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,

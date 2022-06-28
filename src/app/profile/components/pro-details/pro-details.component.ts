@@ -3,11 +3,11 @@ import { Observable } from 'rxjs';
 import { Review } from '@/app/profile/model/review.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '@/app/store/app.state';
-import { getReviewsProfile } from '@/app/profile/store/profile.selector';
 import { Contact } from '@/app/profile/model/profile-interface';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import { FACEBOOK_ICON, INSTAGRAM_ICON, TWITTER_ICON } from '@/content/icons';
+import { getReviews } from '@/app/store/shared/shared.selector';
 
 @Component({
   selector: 'pro-details',
@@ -42,6 +42,6 @@ export class ProDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.reviews$ = this.store.select(getReviewsProfile);
+    this.reviews$ = this.store.select(getReviews);
   }
 }

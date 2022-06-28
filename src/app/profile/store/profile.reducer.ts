@@ -18,7 +18,6 @@ import {
   setUserCoverImage,
   setUserProfileImage,
   setClientCurrentPhysicalDetailsSuccess,
-  getReviewsSuccess,
 } from './profile.actions';
 import { autoLogout } from '../../auth/store/auth.actions';
 
@@ -133,12 +132,6 @@ const _profileReducer = createReducer(
     return {
       ...state,
       nutritionistProfile: action.nutritionistProfile,
-    };
-  }),
-  on(getReviewsSuccess, (state, action) => {
-    return {
-      ...state,
-      reviews: action.reviews,
     };
   }),
   on(autoLogout, () => {
