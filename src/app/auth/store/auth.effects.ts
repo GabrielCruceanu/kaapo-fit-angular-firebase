@@ -10,15 +10,7 @@ import {
   signupStart,
   signupSuccess,
 } from './auth.actions';
-import {
-  catchError,
-  exhaustMap,
-  map,
-  mergeMap,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
@@ -72,7 +64,7 @@ export class AuthEffects {
   signUp$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(signupStart),
-      exhaustMap((action) => {
+      switchMap((action) => {
         return this.authService.onSignUp(action.email, action.password).pipe(
           map((data) => {
             // Define the user
@@ -98,6 +90,16 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(signupSuccess),
       map((action) => {
+        const coverImage = {
+          downloadURL:
+            'https://firebasestorage.googleapis.com/v0/b/kaapo-fit.appspot.com/o/cover.jpg?alt=media&token=8b6f1f36-17ff-49b4-b00e-155353f7b1f2',
+          path: '/',
+        };
+        const profileImage = {
+          downloadURL:
+            'https://firebasestorage.googleapis.com/v0/b/kaapo-fit.appspot.com/o/user.jpg?alt=media&token=4954929e-51aa-41eb-860e-b7709460428f',
+          path: '/',
+        };
         const userProfile = this.authService.formatUserProfileForDb(
           action.userAuth,
           false,
@@ -105,8 +107,8 @@ export class AuthEffects {
           new Date().getUTCMonth() + 1,
           new Date().getUTCFullYear(),
           null,
-          null,
-          null
+          coverImage,
+          profileImage
         );
 
         return createUserProfileStart({ userProfile: userProfile });
@@ -117,7 +119,7 @@ export class AuthEffects {
   resetPassword$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(resetStart),
-      exhaustMap((action) => {
+      switchMap((action) => {
         return this.authService.onResetPassword(action.email).pipe(
           map(() => {
             return resetSuccess({ redirect: false });
@@ -137,7 +139,7 @@ export class AuthEffects {
   autoLogin$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(autoLogin),
-      mergeMap(() => {
+      switchMap(() => {
         const userAuth = this.authService.getUserAuthFromLocalStorage();
         const userProfile =
           this.profileService.getUserProfileFromLocalStorage();

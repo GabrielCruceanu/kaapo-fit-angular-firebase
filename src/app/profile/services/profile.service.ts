@@ -2,17 +2,13 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
-  collection,
   doc,
   docData,
   Firestore,
-  getDocs,
-  query,
   setDoc,
   updateDoc,
-  where,
 } from '@angular/fire/firestore';
 import { traceUntilFirst } from '@angular/fire/performance';
 import {
@@ -26,6 +22,7 @@ import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
 import { getUserProfile } from '../store/profile.selector';
 import { Review } from '@/app/profile/model/review.model';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 export const _filer = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -43,7 +40,8 @@ export class ProfileService implements OnDestroy {
   constructor(
     private store: Store<AppState>,
     private http: HttpClient,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private afs: AngularFirestore
   ) {
     this.userProfileSub = this.store
       .select(getUserProfile)
@@ -103,6 +101,12 @@ export class ProfileService implements OnDestroy {
     setDoc(ref, {
       ...clientProfile,
     });
+  }
+
+  public getClientsFromDb(): Observable<ClientProfile[]> {
+    const clientsCollection = this.afs.collection<ClientProfile>('clients');
+
+    return clientsCollection.valueChanges();
   }
 
   public getClientProfileFromDb(idProfile: string) {
@@ -190,6 +194,12 @@ export class ProfileService implements OnDestroy {
     });
   }
 
+  public getGymsFromDb(): Observable<GymProfile[]> {
+    const clientsCollection = this.afs.collection<GymProfile>('gyms');
+
+    return clientsCollection.valueChanges();
+  }
+
   public getGymProfileFromDb(idProfile: string) {
     const docRef = doc(this.firestore, 'gyms', idProfile);
 
@@ -239,36 +249,16 @@ export class ProfileService implements OnDestroy {
     });
   }
 
+  public getTrainersFromDb(): Observable<TrainerProfile[]> {
+    const clientsCollection = this.afs.collection<TrainerProfile>('trainers');
+
+    return clientsCollection.valueChanges();
+  }
+
   public getTrainerProfileFromDb(idProfile: string) {
     const docRef = doc(this.firestore, 'trainers', idProfile);
 
     return docData(docRef).pipe(traceUntilFirst('firestore'));
-  }
-
-  public async getReviews(beneficiaryId: string): Promise<Review[] | null> {
-    const docRef = collection(this.firestore, 'reviews');
-
-    const q = query(docRef, where('beneficiaryId', '==', beneficiaryId));
-
-    const querySnapshot = await getDocs(q);
-    let reviews = [];
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      const item = doc.data();
-      const review = new Review(
-        item.beneficiaryId,
-        item.date,
-        item.description,
-        item.stars,
-        item.clientId,
-        item.clientFirstName,
-        item.clientLastName,
-        item.clientPhoto
-      );
-      reviews.push(review);
-    });
-    console.log('reviews', reviews);
-    return reviews.length >= 1 ? reviews : null;
   }
 
   setTrainerProfileInLocalStorage(trainerProfile: TrainerProfile) {
@@ -317,6 +307,13 @@ export class ProfileService implements OnDestroy {
     setDoc(ref, {
       ...nutritionistProfile,
     });
+  }
+
+  public getNutritionistsFromDb(): Observable<NutritionistProfile[]> {
+    const clientsCollection =
+      this.afs.collection<NutritionistProfile>('nutritionists');
+
+    return clientsCollection.valueChanges();
   }
 
   public getNutritionistProfileFromDb(idProfile: string) {
@@ -406,6 +403,12 @@ export class ProfileService implements OnDestroy {
   public checkIfUserHasProfile(): boolean {
     console.log('this.userProfile', this.userProfile);
     return !!this.userProfile?.hasProfile;
+  }
+
+  public getReviewsFromDb(): Observable<Review[]> {
+    const clientsCollection = this.afs.collection<Review>('reviews');
+
+    return clientsCollection.valueChanges();
   }
 
   ngOnDestroy() {

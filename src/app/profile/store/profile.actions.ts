@@ -8,7 +8,6 @@ import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
 import { UserImage } from '@/app/profile/model/profile-interface';
-import { Review } from '@/app/profile/model/review.model';
 
 export const CREATE_USER_PROFILE_START =
   '[profile page] create user profile start';
@@ -83,9 +82,6 @@ export const GET_NUTRITIONIST_PROFILE_START =
   '[profile page] get nutritionist profile start';
 export const GET_NUTRITIONIST_PROFILE_SUCCESS =
   '[profile page] get nutritionist profile success';
-
-export const GET_REVIEWS_START = '[profile page] get reviews start';
-export const GET_REVIEWS_SUCCESS = '[profile page] get reviews success';
 
 export const createUserProfileStart = createAction(
   CREATE_USER_PROFILE_START,
@@ -256,14 +252,4 @@ export const getNutritionistProfileStart = createAction(
 export const getNutritionistProfileSuccess = createAction(
   GET_NUTRITIONIST_PROFILE_SUCCESS,
   props<{ nutritionistProfile: NutritionistProfile; redirect: boolean }>()
-);
-
-export const getReviewsStart = createAction(
-  GET_REVIEWS_START,
-  props<{ beneficiaryId: string }>()
-);
-
-export const getReviewsSuccess = createAction(
-  GET_REVIEWS_SUCCESS,
-  props<{ reviews: Review[] | null }>()
 );
