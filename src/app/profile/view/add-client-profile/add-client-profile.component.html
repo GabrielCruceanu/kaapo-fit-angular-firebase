@@ -91,15 +91,21 @@
           <div class="col-md-6 col-lg-4 mt-3">
             <mat-form-field class="form-control" appearance="outline">
               <mat-label>Phone Number</mat-label>
-              <ngx-mat-intl-tel-input
-                [required]="true"
-                formControlName="phone"
-                [enablePlaceholder]="true"
-                [enableSearch]="true"
+              <!--              <ngx-mat-intl-tel-input-->
+              <!--                [required]="true"-->
+              <!--                formControlName="phone"-->
+              <!--                [enablePlaceholder]="true"-->
+              <!--                [enableSearch]="true"-->
+              <!--                name="phone"-->
+              <!--                class="phone-search-control"-->
+              <!--              >-->
+              <!--              </ngx-mat-intl-tel-input>-->
+              <input
+                matInput
+                placeholder="0770121945"
                 name="phone"
-                class="phone-search-control"
-              >
-              </ngx-mat-intl-tel-input>
+                formControlName="phone"
+              />
               <mat-error
                 *ngIf="userFormGroup.controls['phone'].hasError('required')"
               >

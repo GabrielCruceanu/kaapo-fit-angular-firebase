@@ -13,6 +13,8 @@ import {
   getReviewsSuccess,
   getTrainersStart,
   getTrainersSuccess,
+  getUsersStart,
+  getUsersSuccess,
   setErrorMessage,
   setLoadingSpinner,
 } from '@/app/store/shared/shared.actions';
@@ -21,6 +23,29 @@ import { ProfileService } from '@/app/profile/services/profile.service';
 
 @Injectable()
 export class SharedEffects {
+  getUsers$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getUsersStart),
+      switchMap(() => {
+        this.store.dispatch(setLoadingSpinner({ status: true }));
+
+        return this.profileService.getUsersFromDb().pipe(
+          map((users) => {
+            console.log('getUsersStart > users', users);
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            return getUsersSuccess({ users: users });
+          }),
+          catchError((errResp) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            const errorMessage = errResp.error.error.message;
+
+            return of(setErrorMessage({ message: errorMessage }));
+          })
+        );
+      })
+    );
+  });
+
   getClients$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getClientsStart),

@@ -10,7 +10,15 @@ import {
   signupStart,
   signupSuccess,
 } from './auth.actions';
-import { catchError, map, of, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  exhaustMap,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
@@ -64,7 +72,7 @@ export class AuthEffects {
   signUp$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(signupStart),
-      switchMap((action) => {
+      exhaustMap((action) => {
         return this.authService.onSignUp(action.email, action.password).pipe(
           map((data) => {
             // Define the user
@@ -119,7 +127,7 @@ export class AuthEffects {
   resetPassword$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(resetStart),
-      switchMap((action) => {
+      exhaustMap((action) => {
         return this.authService.onResetPassword(action.email).pipe(
           map(() => {
             return resetSuccess({ redirect: false });
@@ -139,12 +147,13 @@ export class AuthEffects {
   autoLogin$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(autoLogin),
-      switchMap(() => {
+      mergeMap(() => {
         const userAuth = this.authService.getUserAuthFromLocalStorage();
         const userProfile =
           this.profileService.getUserProfileFromLocalStorage();
 
         if (userAuth && !userProfile) {
+          console.log('userAuth && !userProfile');
           this.store.dispatch(
             getUserProfileStart({ userProfileId: userAuth.id })
           );
