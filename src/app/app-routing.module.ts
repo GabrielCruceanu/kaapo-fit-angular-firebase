@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundPageComponent } from './shared/view/not-found-page/not-found-page.component';
 import { AuthGuard } from './auth/services/auth-guard.service';
+import { ProfileDetailsComponent } from '@/app/profile/view/profile-details/profile-details.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: ':id',
+    component: ProfileDetailsComponent,
   },
   {
     path: '**',

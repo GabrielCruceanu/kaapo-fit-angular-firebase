@@ -34,8 +34,10 @@ export const _filer = (opt: string[], value: string): string[] => {
   providedIn: 'root',
 })
 export class ProfileService implements OnDestroy {
-  userProfile?: UserProfile | null;
+  userProfile: UserProfile | null;
   userProfileSub: Subscription | undefined;
+  usersProfile: UserProfile[] | null;
+  usersProfileSub: Subscription | undefined;
 
   constructor(
     private store: Store<AppState>,
@@ -48,6 +50,9 @@ export class ProfileService implements OnDestroy {
       .subscribe((userProfile) => {
         this.userProfile = userProfile;
       });
+    // this.usersProfileSub = this.store.select(getUsers).subscribe((users) => {
+    //   this.usersProfile = users;
+    // });
   }
 
   // ****************** USER ******************
@@ -90,9 +95,26 @@ export class ProfileService implements OnDestroy {
   }
 
   public getUserProfileFromDb(idProfile: string) {
+    console.log('getUserProfileFromDb');
     const docRef = doc(this.firestore, 'users', idProfile);
 
     return docData(docRef).pipe(traceUntilFirst('firestore'));
+    // console.log('getUserProfileFromDb', idProfile);
+    // let userProfile: UserProfile;
+    // this.usersProfile.map((user) => {
+    //   if (user && user.id === idProfile) {
+    //     userProfile = user;
+    //     console.log('user', user);
+    //   }
+    // });
+    // console.log('getUserProfileFromDb > userProfile', userProfile);
+    // return of(userProfile);
+  }
+
+  public getUsersFromDb(): Observable<UserProfile[]> {
+    const clientsCollection = this.afs.collection<UserProfile>('users');
+
+    return clientsCollection.valueChanges();
   }
 
   // ****************** CLIENT ******************
@@ -401,7 +423,7 @@ export class ProfileService implements OnDestroy {
   }
 
   public checkIfUserHasProfile(): boolean {
-    console.log('this.userProfile', this.userProfile);
+    console.log('checkIfUserHasProfile > this.userProfile', this.userProfile);
     return !!this.userProfile?.hasProfile;
   }
 
@@ -414,6 +436,8 @@ export class ProfileService implements OnDestroy {
   ngOnDestroy() {
     if (this.userProfileSub) {
       this.userProfileSub.unsubscribe();
+    } else if (this.usersProfileSub) {
+      this.usersProfileSub.unsubscribe();
     }
   }
 }

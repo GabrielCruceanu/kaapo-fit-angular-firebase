@@ -4,9 +4,13 @@ import { GymProfile } from '@/app/profile/model/gym.model';
 import { TrainerProfile } from '@/app/profile/model/trainerProfile.model';
 import { NutritionistProfile } from '@/app/profile/model/nutritionistProfile.model';
 import { Review } from '@/app/profile/model/review.model';
+import { UserProfile } from '@/app/profile/model/userProfile.model';
 
 export const SET_LOADING_ACTION = '[Shared state] Set loading spinner';
 export const SET_ERROR_MESSAGE = '[Shared state] Set error message';
+
+export const GET_USERS_START = '[Shared page] get users start';
+export const GET_USERS_SUCCESS = '[Shared page] get users success';
 
 export const GET_CLIENTS_START = '[Shared page] get clients start';
 export const GET_CLIENTS_SUCCESS = '[Shared page] get client success';
@@ -32,6 +36,15 @@ export const setLoadingSpinner = createAction(
 export const setErrorMessage = createAction(
   SET_ERROR_MESSAGE,
   props<{ message: string }>()
+);
+
+// ---> Get Users <---
+
+export const getUsersStart = createAction(GET_USERS_START);
+
+export const getUsersSuccess = createAction(
+  GET_USERS_SUCCESS,
+  props<{ users: UserProfile[] | [] }>()
 );
 
 // ---> Get Clients <---

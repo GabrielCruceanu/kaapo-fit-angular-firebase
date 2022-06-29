@@ -6,6 +6,7 @@ import {
   getNutritionistsSuccess,
   getReviewsSuccess,
   getTrainersSuccess,
+  getUsersSuccess,
   setErrorMessage,
   setLoadingSpinner,
 } from './shared.actions';
@@ -22,6 +23,12 @@ const _sharedReducer = createReducer(
     return {
       ...state,
       errorMessage: action.message,
+    };
+  }),
+  on(getUsersSuccess, (state, action) => {
+    return {
+      ...state,
+      users: action.users,
     };
   }),
   on(getClientsSuccess, (state, action) => {

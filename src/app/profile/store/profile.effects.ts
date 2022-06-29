@@ -25,15 +25,16 @@ import {
   getTrainerProfileSuccess,
   getUserProfileStart,
   getUserProfileSuccess,
+  setClientCurrentPhysicalDetailsStart,
+  setClientCurrentPhysicalDetailsSuccess,
   setClientHistoryPhysicalDetailsStart,
   setClientHistoryPhysicalDetailsSuccess,
   updateUserProfileStart,
   updateUserProfileSuccess,
-  setClientCurrentPhysicalDetailsStart,
-  setClientCurrentPhysicalDetailsSuccess,
 } from './profile.actions';
-import { switchMap, map, tap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import {
+  getReviewsStart,
   setErrorMessage,
   setLoadingSpinner,
 } from '../../store/shared/shared.actions';
@@ -86,11 +87,13 @@ export class ProfileEffects {
     return this.actions$.pipe(
       ofType(getUserProfileStart),
       switchMap((action) => {
+        console.log('getUserProfileStart');
         return this.profileService
           .getUserProfileFromDb(action.userProfileId)
           .pipe(
             map((data) => {
               const userProfile = data as UserProfile;
+              console.log('getUserProfileStart > userProfile', userProfile);
               this.profileService.setUserProfileInLocalStorage(userProfile);
 
               this.store.dispatch(setLoadingSpinner({ status: false }));
@@ -127,10 +130,7 @@ export class ProfileEffects {
           }
         }
 
-        return getUserProfileSuccess({
-          userProfile: userProfile,
-          redirect: false,
-        });
+        return getReviewsStart();
       })
     );
   });

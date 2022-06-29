@@ -4,41 +4,147 @@
     💪
   </h1>
 
-  <ul *ngIf="gyms$ | async as gyms">
-    <li *ngFor="let gym of gyms">
-      Gym Name: {{ gym.name }}
-      <img
-        [src]="gym.coverPicture.downloadURL"
-        alt=""
-        *ngIf="gym.coverPicture?.downloadURL"
-        style="display: block; width: 300px"
-      />
-    </li>
-  </ul>
-  <br />
-  <br />
-  <ul *ngIf="trainers$ | async as trainers">
-    <li *ngFor="let trainer of trainers">
-      Trainer Name: {{ trainer.firstName }}
-      <img
-        [src]="trainer.coverPicture.downloadURL"
-        alt=""
-        *ngIf="trainer.coverPicture?.downloadURL"
-        style="display: block; width: 300px"
-      />
-    </li>
-  </ul>
-  <br />
-  <br />
-  <ul *ngIf="nutritionists$ | async as nutritionists">
-    <li *ngFor="let nutritionist of nutritionists">
-      Nutritionist Name: {{ nutritionist.firstName }}
-      <img
-        [src]="nutritionist.coverPicture.downloadURL"
-        alt=""
-        *ngIf="nutritionist.coverPicture?.downloadURL"
-        style="display: block; width: 300px"
-      />
-    </li>
-  </ul>
+  <div class="container">
+    <div class="row" *ngIf="gyms$ | async as gyms">
+      <h2>Sali de antrenament</h2>
+      <div class="col-md-6 col-lg-4" *ngFor="let gym of gyms">
+        <div class="profile-box" (click)="runTo(gym.id)">
+          <div class="profile-box-header">
+            <div class="profile-box-cover">
+              <img
+                [src]="gym.coverPicture.downloadURL"
+                [alt]="gym.name + 'cover'"
+                *ngIf="gym.coverPicture?.downloadURL"
+              />
+            </div>
+            <div class="profile-image">
+              <img
+                [src]="gym.profilePicture.downloadURL"
+                [alt]="gym.name + 'profile picture'"
+                *ngIf="gym.profilePicture?.downloadURL"
+              />
+            </div>
+          </div>
+
+          <div class="profile-box-body">
+            <div class="profile-box-body-text">
+              <h3>{{ gym.name }}</h3>
+
+              <h5>Sala de {{ gym.gymType }}</h5>
+              <h6>Locatie: {{ gym.city }}</h6>
+            </div>
+            <div class="profile-box-body-action">
+              <button class="profile-box-body-action-mobile">{{ '>' }}</button>
+              <button
+                mat-raised-button
+                color="primary"
+                class="profile-box-body-action-lg"
+              >
+                Detalii
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row" *ngIf="trainers$ | async as trainers">
+      <h2>Antrenori</h2>
+      <div class="col-md-6 col-lg-4" *ngFor="let trainer of trainers">
+        <div class="profile-box" (click)="runTo(trainer.id)">
+          <div class="profile-box-header">
+            <div class="profile-box-cover">
+              <img
+                [src]="trainer.coverPicture.downloadURL"
+                [alt]="trainer.firstName + trainer.lastName + 'cover'"
+                *ngIf="trainer.coverPicture?.downloadURL"
+              />
+            </div>
+            <div class="profile-image">
+              <img
+                [src]="trainer.profilePicture.downloadURL"
+                [alt]="trainer.firstName + trainer.lastName + 'profile picture'"
+                *ngIf="trainer.profilePicture?.downloadURL"
+              />
+            </div>
+          </div>
+
+          <div class="profile-box-body">
+            <div class="profile-box-body-text">
+              <h3>{{ trainer.firstName + ' ' + trainer.lastName }}</h3>
+
+              <h5>Sala de {{ trainer.trainerType }}</h5>
+              <h6>Locatie: {{ trainer.city }}</h6>
+            </div>
+            <div class="profile-box-body-action">
+              <button class="profile-box-body-action-mobile">{{ '>' }}</button>
+              <button
+                mat-raised-button
+                color="primary"
+                class="profile-box-body-action-lg"
+              >
+                Detalii
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <br />
+
+    <div class="row" *ngIf="nutritionists$ | async as nutritionists">
+      <h2>Nutritionisti</h2>
+      <div class="col-md-6 col-lg-4" *ngFor="let nutritionist of nutritionists">
+        <div class="profile-box" (click)="runTo(nutritionist.id)">
+          <div class="profile-box-header">
+            <div class="profile-box-cover">
+              <img
+                [src]="nutritionist.coverPicture.downloadURL"
+                [alt]="nutritionist.firstName + nutritionist.lastName + 'cover'"
+                *ngIf="nutritionist.coverPicture?.downloadURL"
+              />
+            </div>
+            <div class="profile-image">
+              <img
+                [src]="nutritionist.profilePicture.downloadURL"
+                [alt]="
+                  nutritionist.firstName +
+                  nutritionist.lastName +
+                  'profile picture'
+                "
+                *ngIf="nutritionist.profilePicture?.downloadURL"
+              />
+            </div>
+          </div>
+
+          <div class="profile-box-body">
+            <div class="profile-box-body-text">
+              <h3>
+                {{ nutritionist.firstName + ' ' + nutritionist.lastName }}
+              </h3>
+
+              <h5>Nutritionist</h5>
+              <h6>Locatie: {{ nutritionist.city }}</h6>
+            </div>
+            <div class="profile-box-body-action">
+              <button class="profile-box-body-action-mobile">{{ '>' }}</button>
+              <button
+                mat-raised-button
+                color="primary"
+                class="profile-box-body-action-lg"
+              >
+                Detalii
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <br />
+  </div>
 </app-layout>

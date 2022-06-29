@@ -29,7 +29,6 @@ SwiperCore.use([EffectFade]);
   encapsulation: ViewEncapsulation.None,
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  title: string = 'My Profile';
   userProfile: UserProfile | null | undefined;
   userProfileSub: Subscription | undefined;
   profileDetails:

@@ -17,6 +17,7 @@ import { NutritionistProfile } from '@/app/profile/model/nutritionistProfile.mod
 import { UserType } from '@/app/profile/model/profile-interface';
 import { getUserProfile } from '@/app/profile/store/profile.selector';
 import { UserProfile } from '@/app/profile/model/userProfile.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +33,7 @@ export class HomeComponent implements OnInit {
   trainers$: Observable<TrainerProfile[] | []>;
   nutritionists$: Observable<NutritionistProfile[] | []>;
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private router: Router) {
     this.userAuth$ = of(null);
   }
 
@@ -48,5 +49,9 @@ export class HomeComponent implements OnInit {
   logout(event: Event) {
     event.preventDefault();
     this.store.dispatch(autoLogout());
+  }
+
+  runTo(id: string) {
+    this.router.navigate([id]);
   }
 }
