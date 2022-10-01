@@ -95,7 +95,6 @@ export class ProfileEffects {
               const userProfile = data as UserProfile;
               console.log('getUserProfileStart > userProfile', userProfile);
               this.profileService.setUserProfileInLocalStorage(userProfile);
-
               this.store.dispatch(setLoadingSpinner({ status: false }));
               return getUserProfileSuccess({
                 userProfile: userProfile,
@@ -112,22 +111,27 @@ export class ProfileEffects {
       ofType(getUserProfileSuccess),
       map((action) => {
         const userProfile = action.userProfile;
-
-        switch (userProfile.userType) {
-          case UserType.Client: {
-            return getClientProfileStart({ clientProfileId: userProfile.id });
+        if (this.profileService.checkIfUserHasProfile(userProfile)) {
+          switch (userProfile.userType) {
+            case UserType.Client: {
+              return getClientProfileStart({ clientProfileId: userProfile.id });
+            }
+            case UserType.Gym: {
+              return getGymProfileStart({ gymProfileId: userProfile.id });
+            }
+            case UserType.Trainer: {
+              return getTrainerProfileStart({
+                trainerProfileId: userProfile.id,
+              });
+            }
+            case UserType.Nutritionist: {
+              return getNutritionistProfileStart({
+                nutritionistProfileId: userProfile.id,
+              });
+            }
           }
-          case UserType.Gym: {
-            return getGymProfileStart({ gymProfileId: userProfile.id });
-          }
-          case UserType.Trainer: {
-            return getTrainerProfileStart({ trainerProfileId: userProfile.id });
-          }
-          case UserType.Nutritionist: {
-            return getNutritionistProfileStart({
-              nutritionistProfileId: userProfile.id,
-            });
-          }
+        } else {
+          this.router.navigate(['/profil/selectare-profil']);
         }
 
         return getReviewsStart();
@@ -369,7 +373,7 @@ export class ProfileEffects {
         tap((action) => {
           this.store.dispatch(setErrorMessage({ message: '' }));
           if (action.redirect) {
-            this.router.navigateByUrl('/home');
+            this.router.navigateByUrl('/profil');
           }
         })
       );

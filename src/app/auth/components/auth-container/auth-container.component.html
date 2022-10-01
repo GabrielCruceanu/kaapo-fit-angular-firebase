@@ -9,19 +9,19 @@
         <ng-container
           *ngIf="authImg === authType.ResetPassword; else loginOrSignUp"
         >
-          <h1>Reset your password</h1>
+          <h1>Resetare parola</h1>
         </ng-container>
         <ng-template #loginOrSignUp>
           <h1>
-            {{ authImg === authType.Login ? 'Welcome back' : 'Welcome' }}
+            {{ authImg === authType.Login ? 'Bine ai revenit' : 'Bun venit' }}
           </h1>
         </ng-template>
         <ul class="auth-tabs">
           <li [class.active]="authImg === authType.Login">
-            <a routerLink="/auth/login">Login</a>
+            <a routerLink="/autentificare/cont">Autentificare</a>
           </li>
           <li [class.active]="authImg === authType.SignUp">
-            <a routerLink="/auth/sign-up">Sign Up</a>
+            <a routerLink="/autentificare/inregistrare">Inregistrare</a>
           </li>
         </ul>
         <div class="container">

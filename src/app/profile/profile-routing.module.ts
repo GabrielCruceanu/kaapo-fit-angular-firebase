@@ -11,12 +11,12 @@ import { AddMeasurementsComponent } from '@/app/profile/view/add-measurements/ad
 
 const routes: Routes = [
   { path: '', component: ProfileComponent, canActivate: [ProfileGuard] },
-  { path: 'add', component: AddProfileComponent },
-  { path: 'add-measurements', component: AddMeasurementsComponent },
+  { path: 'selectare-profil', component: AddProfileComponent },
+  { path: 'adaugare-masuratori', component: AddMeasurementsComponent },
   { path: 'client', component: AddClientProfileComponent },
-  { path: 'trainer', component: AddTrainerProfileComponent },
+  { path: 'antrenor', component: AddTrainerProfileComponent },
   { path: 'nutritionist', component: AddNutritionistProfileComponent },
-  { path: 'gym', component: AddGymProfileComponent },
+  { path: 'sala', component: AddGymProfileComponent },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

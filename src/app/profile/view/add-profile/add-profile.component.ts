@@ -48,9 +48,5 @@ export class AddProfileComponent implements OnInit {
     this.profiles = getProfilesData();
   }
 
-  ngOnInit() {
-    if (this.profileService.checkIfUserHasProfile()) {
-      this.router.navigate(['/profile']);
-    }
-  }
+  ngOnInit() {}
 }

@@ -43,7 +43,6 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.clientProfileSub = this.store
       .select(getClientProfile)
-      .pipe(take(1))
       .subscribe((clientProfile) => {
         this.clientProfile = clientProfile;
         console.log('AddMeasurementsComponent => clientProfile', clientProfile);
@@ -127,8 +126,8 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
     this.uploadImageService.compressImageBeforeUpload(
       100,
       75,
-      1000,
-      1000,
+      400,
+      400,
       this.clientProfile.id,
       UserImageType.clientGalleryFront,
       TypeOfUploadImage.ClientGallery,
@@ -140,8 +139,8 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
     this.uploadImageService.compressImageBeforeUpload(
       100,
       75,
-      1000,
-      1000,
+      400,
+      400,
       this.clientProfile.id,
       UserImageType.clientGallerySide,
       TypeOfUploadImage.ClientGallery,
@@ -153,8 +152,8 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
     this.uploadImageService.compressImageBeforeUpload(
       100,
       75,
-      1000,
-      1000,
+      400,
+      400,
       this.clientProfile.id,
       UserImageType.clientGalleryBack,
       TypeOfUploadImage.ClientGallery,

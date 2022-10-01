@@ -13,48 +13,19 @@ export const CountriesData: Country[] = [
     name: 'Romania',
     states: [
       {
-        name: 'Bucharest',
-        cities: ['Bucharest'],
+        name: 'Bucuresti',
+        cities: [
+          'Sector 1',
+          'Sector 2',
+          'Sector 3',
+          'Sector 4',
+          'Sector 5',
+          'Sector 6',
+        ],
       },
       {
         name: 'Vrancea',
         cities: ['Adjud', 'Focsani', 'Marasesti', 'Odobesti', 'Panciu'],
-      },
-    ],
-  },
-  {
-    name: 'Germany',
-    states: [
-      {
-        name: 'Baden-Württemberg',
-        cities: [
-          'Stuttgart',
-          'Karlsruhe',
-          'Mannheim',
-          'Freiburg im Breisgau',
-          'Heidelberg',
-          'Ulm',
-          'Heilbronn',
-          'Pforzheim',
-          'Reutlingen',
-        ],
-      },
-      {
-        name: 'Bavaria',
-        cities: [
-          'Munich',
-          'Nuremberg',
-          'Augsburg',
-          'Regensburg',
-          'Ingolstadt',
-          'Würzburg',
-          'Fürth',
-          'Erlangen',
-        ],
-      },
-      {
-        name: 'Berlin',
-        cities: ['Berlin'],
       },
     ],
   },

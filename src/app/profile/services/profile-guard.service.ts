@@ -28,8 +28,9 @@ export class ProfileGuard {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    return this.profileService.checkIfUserHasProfile()
-      ? true
-      : this.router.navigate(['/profile/add']);
+    return true;
+    // return this.profileService.checkIfUserHasProfile()
+    //   ? true
+    //   : this.router.navigate(['/profil/selectare-profil']);
   }
 }

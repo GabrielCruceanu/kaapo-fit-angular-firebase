@@ -13,14 +13,15 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'profile',
+    path: 'profil',
     loadChildren: () =>
       import('./profile/profile.module').then((m) => m.ProfileModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+    loadChildren: () =>
+      import('./profile/profile.module').then((m) => m.ProfileModule),
     canActivate: [AuthGuard],
   },
   {
@@ -30,7 +31,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'add',
+    path: 'adauga',
     loadChildren: () =>
       import('./add-information/add-information.module').then(
         (m) => m.AddInformationModule
@@ -38,19 +39,19 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'nutrition',
+    path: 'nutritionisti',
     loadChildren: () =>
       import('./nutrition/nutrition.module').then((m) => m.NutritionModule),
     canActivate: [AuthGuard],
   },
   {
-    path: 'workout',
+    path: 'sali',
     loadChildren: () =>
       import('./workout/workout.module').then((m) => m.WorkoutModule),
     canActivate: [AuthGuard],
   },
   {
-    path: 'auth',
+    path: 'autentificare',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {

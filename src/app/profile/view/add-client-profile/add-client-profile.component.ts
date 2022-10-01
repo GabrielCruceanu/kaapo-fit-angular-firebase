@@ -24,11 +24,12 @@ import { CountryService } from '@/app/shared/services/country.service';
 import { ClientProfile } from '../../model/clientProfile.model';
 import { UserType } from '../../model/profile-interface';
 import { UserProfile } from '../../model/userProfile.model';
-import { getUserProfile } from '../../store/profile.selector';
+import { getClientProfile, getUserProfile } from '../../store/profile.selector';
 import {
   createClientProfileStart,
   updateUserProfileStart,
 } from '../../store/profile.actions';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-client-profile',
@@ -41,6 +42,8 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   userAuthSub: Subscription;
   userProfile: UserProfile | null;
   userProfileSub: Subscription;
+  clientProfile: ClientProfile | null;
+  clientProfileSub: Subscription;
   getLoadingSpinnerSub: Subscription;
   errorMessage$: Observable<any>;
   onlyCountries = this.countryService.mapCountriesData();
@@ -52,23 +55,7 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   onlyCities = this.countryService.mapCitiesData();
   filteredCities: Observable<string[]>;
   selectedCity: string = '';
-
-  userFormGroup = new FormGroup({
-    firstname: new FormControl('', [Validators.required]),
-    lastname: new FormControl('', [Validators.required]),
-    birth: new FormControl('', [Validators.required]),
-    gender: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
-    country: new FormControl('', [
-      Validators.required,
-      this.onCountryInputValidation(this.onlyCountries),
-    ]),
-    state: new FormControl('', [
-      Validators.required,
-      this.onStateInputValidation(this.onlyStates),
-    ]),
-    city: new FormControl('', [Validators.required]),
-  });
+  clientFormGroup: FormGroup;
 
   constructor(
     private store: Store<AppState>,
@@ -79,16 +66,6 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getLoadingSpinnerSub = this.store
-      .select(getLoading)
-      .subscribe((isLoading: boolean) => {
-        if (isLoading) {
-          this.userFormGroup.disable();
-        } else {
-          this.userFormGroup.enable();
-        }
-      });
-
     this.userAuthSub = this.store.select(getUserAuth).subscribe((userAuth) => {
       this.userAuth = userAuth;
     });
@@ -99,10 +76,57 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
         this.userProfile = userProfile;
       });
 
-    this.filteredCountries = this.userFormGroup.controls[
+    this.clientProfileSub = this.store
+      .select(getClientProfile)
+      .subscribe((clientProfile) => {
+        this.clientProfile = clientProfile;
+      });
+
+    this.clientFormGroup = new FormGroup({
+      firstname: new FormControl(
+        this.clientProfile?.firstName ? this.clientProfile?.firstName : '',
+        [Validators.required]
+      ),
+      lastname: new FormControl(
+        this.clientProfile?.lastName ? this.clientProfile?.lastName : '',
+        [Validators.required]
+      ),
+      birth: new FormControl(
+        this.clientProfile?.birth.month
+          ? moment([
+              this.clientProfile?.birth.year,
+              this.clientProfile?.birth.month - 1,
+              this.clientProfile?.birth.date,
+            ])
+          : '',
+        [Validators.required]
+      ),
+      gender: new FormControl(
+        this.clientProfile?.gender ? this.clientProfile?.gender : '',
+        [Validators.required]
+      ),
+      phone: new FormControl(
+        this.clientProfile?.phone ? this.clientProfile?.phone : '',
+        [Validators.required]
+      ),
+      country: new FormControl(
+        this.clientProfile?.country ? this.clientProfile?.country : '',
+        [Validators.required, this.onCountryInputValidation(this.onlyCountries)]
+      ),
+      state: new FormControl(
+        this.clientProfile?.state ? this.clientProfile?.state : '',
+        [Validators.required, this.onStateInputValidation(this.onlyStates)]
+      ),
+      city: new FormControl(
+        this.clientProfile?.city ? this.clientProfile?.city : '',
+        [Validators.required, this.onCityInputValidation(this.onlyCities)]
+      ),
+    });
+
+    this.filteredCountries = this.clientFormGroup.controls[
       'country'
     ].valueChanges.pipe(
-      startWith(''),
+      startWith(this.clientProfile?.country ? this.clientProfile?.country : ''),
       map((value) => {
         this.selectedCountry = value;
         this.onlyStates =
@@ -112,36 +136,48 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.userFormGroup.controls['state'].disable();
-    this.filteredStates = this.userFormGroup.controls[
+    this.clientFormGroup.controls['state'].disable();
+    this.filteredStates = this.clientFormGroup.controls[
       'state'
     ].valueChanges.pipe(
-      startWith(''),
+      startWith(this.clientProfile?.state ? this.clientProfile?.state : ''),
       map((value) => {
         this.selectedState = value;
         return this.countryService._filterData(value, this.onlyStates);
       })
     );
 
-    this.userFormGroup.controls['city'].disable();
-    this.filteredCities = this.userFormGroup.controls['city'].valueChanges.pipe(
-      startWith(''),
+    this.clientFormGroup.controls['city'].disable();
+    this.filteredCities = this.clientFormGroup.controls[
+      'city'
+    ].valueChanges.pipe(
+      startWith(this.clientProfile?.city ? this.clientProfile?.city : ''),
       map((value) => {
         this.selectedCity = value;
         this.onlyCities = this.countryService.mapCityFromSelectedCountryData(
           this.selectedCountry,
           this.selectedState
         );
-
+        console.log('this.onlyCities', this.onlyCities);
+        console.log('value', value);
         return this.countryService._filterData(value, this.onlyCities);
       })
     );
 
+    this.getLoadingSpinnerSub = this.store
+      .select(getLoading)
+      .subscribe((isLoading: boolean) => {
+        if (isLoading) {
+          this.clientFormGroup.disable();
+        } else {
+          this.clientFormGroup.enable();
+        }
+      });
     this.errorMessage$ = this.store.select(getErrorMessage);
   }
 
   onClientSubmit() {
-    if (this.userFormGroup.valid && this.userAuth && this.userProfile) {
+    if (this.clientFormGroup.valid && this.userAuth && this.userProfile) {
       const {
         firstname,
         lastname,
@@ -151,7 +187,7 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
         country,
         state,
         city,
-      } = this.userFormGroup.value;
+      } = this.clientFormGroup.value;
 
       const birthFinal = {
         date: birth.date(),
@@ -177,15 +213,23 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
         country,
         state,
         city,
-        false,
+        this.clientProfile.hasPremium ? this.clientProfile.hasPremium : false,
         birthFinal,
         joinedFinal,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        this.clientProfile.profilePicture
+          ? this.clientProfile.profilePicture
+          : null,
+        this.clientProfile.currentPhysicalDetails
+          ? this.clientProfile.currentPhysicalDetails
+          : null,
+        this.clientProfile.historyPhysicalDetails
+          ? this.clientProfile.historyPhysicalDetails
+          : null,
+        this.clientProfile.nutritionist
+          ? this.clientProfile.nutritionist
+          : null,
+        this.clientProfile.trainer ? this.clientProfile.trainer : null,
+        this.clientProfile.gym ? this.clientProfile.gym : null
       );
 
       const userProfile = new UserProfile(
@@ -196,8 +240,8 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
         this.userProfile.monthJoined,
         this.userProfile.yearJoined,
         UserType.Client,
-        null,
-        null
+        this.userProfile.coverImage ? this.userProfile.coverImage : null,
+        this.userProfile.profileImage ? this.userProfile.profileImage : null
       );
 
       this.store.dispatch(setLoadingSpinner({ status: true }));
@@ -209,7 +253,7 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   }
 
   public onDisableInput(disableInput: string, input: string) {
-    this.profileService.disableInput(this.userFormGroup, disableInput, input);
+    this.profileService.disableInput(this.clientFormGroup, disableInput, input);
   }
 
   public onCountryInputValidation(countries: string[]): ValidatorFn {
@@ -218,6 +262,10 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
 
   public onStateInputValidation(states: string[]): ValidatorFn {
     return this.profileService.stateInputValidation(states);
+  }
+
+  public onCityInputValidation(cites: string[]): ValidatorFn {
+    return this.profileService.cityInputValidation(cites);
   }
 
   ngOnDestroy() {
