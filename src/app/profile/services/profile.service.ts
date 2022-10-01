@@ -23,6 +23,7 @@ import { NutritionistProfile } from '../model/nutritionistProfile.model';
 import { getUserProfile } from '../store/profile.selector';
 import { Review } from '@/app/profile/model/review.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 
 export const _filer = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -43,7 +44,8 @@ export class ProfileService implements OnDestroy {
     private store: Store<AppState>,
     private http: HttpClient,
     private firestore: Firestore,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private router: Router
   ) {
     this.userProfileSub = this.store
       .select(getUserProfile)
@@ -422,9 +424,27 @@ export class ProfileService implements OnDestroy {
     };
   }
 
-  public checkIfUserHasProfile(): boolean {
-    console.log('checkIfUserHasProfile > this.userProfile', this.userProfile);
-    return !!this.userProfile?.hasProfile;
+  public cityInputValidation(cites: string[]): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      console.log('control value', value);
+      if (!value) {
+        return null;
+      }
+
+      const cityValue = cites.find((city) => city === value);
+      console.log('cityValue', cityValue);
+      console.log(
+        '!cityValue ? { isNotCityFromList: true } : null',
+        !cityValue ? { isNotCityFromList: true } : null
+      );
+      return !cityValue ? { isNotCityFromList: true } : null;
+    };
+  }
+
+  public checkIfUserHasProfile(userProfile: UserProfile): boolean {
+    console.log('checkIfUserHasProfile > this.userProfile', userProfile);
+    return !!userProfile.hasProfile;
   }
 
   public getReviewsFromDb(): Observable<Review[]> {

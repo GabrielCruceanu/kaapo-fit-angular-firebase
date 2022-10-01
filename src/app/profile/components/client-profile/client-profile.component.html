@@ -11,7 +11,7 @@
             <!-- Profile Picture and Name-->
             <app-user-profile
               [firstName]="clientProfileDetails.firstName"
-              [lastName]="clientProfileDetails.firstName"
+              [lastName]="clientProfileDetails.lastName"
               [name]="null"
               [country]="clientProfileDetails.country"
               [city]="clientProfileDetails.city"
@@ -23,13 +23,17 @@
         <div *ngIf="!clientProfileDetails?.currentPhysicalDetails" class="row">
           <div class="col-12">
             <div class="complete-current-physical-details-banner">
-              <p>Profil completat <strong>30%</strong></p>
+              <h4>Progress</h4>
+              <p>
+                Pentru a avea un parcurs mai bun trebuie sa-ti poti urmari
+                progresul.
+              </p>
               <button
                 mat-raised-button
                 color="primary"
-                routerLink="add-measurements"
+                routerLink="adaugare-masuratori"
               >
-                Completeaza
+                Adauga progress
               </button>
             </div>
           </div>
@@ -53,7 +57,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4">
+      <div class="mt-4 mt-lg-0 col-lg-4">
         <app-user-profile-sidebar></app-user-profile-sidebar>
       </div>
     </div>

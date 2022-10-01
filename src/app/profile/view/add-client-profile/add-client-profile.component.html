@@ -1,21 +1,25 @@
 <app-layout>
   <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <h1 class="app-title">Client profile</h1>
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <h1 class="app-title">Profil de client</h1>
+        <p>
+          Completeaza campurile de mai jos pentru a finaliza profilul de client
+          si a putea incepe sa-ti adaugi istoricul tau in sport.
+        </p>
       </div>
     </div>
     <form
       (ngSubmit)="onClientSubmit()"
-      class="row form justify-content-center"
-      [formGroup]="userFormGroup"
+      class="row form justify-content-center mt-3"
+      [formGroup]="clientFormGroup"
     >
       <div class="col-lg-8">
         <!--   Details     -->
         <div class="row">
-          <div class="col-12 col-md-6 col-lg-6 mt-3">
+          <div class="col-12 col-md-6 col-lg-6">
             <mat-form-field class="form-control col-md-6" appearance="outline">
-              <mat-label>Firstname</mat-label>
+              <mat-label>Prenume</mat-label>
               <input
                 matInput
                 placeholder="Jon"
@@ -23,16 +27,18 @@
                 formControlName="firstname"
               />
               <mat-error
-                *ngIf="userFormGroup.controls['firstname'].hasError('required')"
+                *ngIf="
+                  clientFormGroup.controls['firstname'].hasError('required')
+                "
               >
-                Firstname is <strong>required</strong>
+                Prenumele este <strong>obligatoriu</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-6 mt-3">
+          <div class="col-md-6 col-lg-6">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Lastname</mat-label>
+              <mat-label>Nume</mat-label>
               <input
                 type="text"
                 matInput
@@ -41,16 +47,18 @@
                 formControlName="lastname"
               />
               <mat-error
-                *ngIf="userFormGroup.controls['lastname'].hasError('required')"
+                *ngIf="
+                  clientFormGroup.controls['lastname'].hasError('required')
+                "
               >
-                Lastname is <strong>required</strong>
+                Numele este <strong>obligatoriu</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-4 mt-3">
+          <div class="col-md-6 col-lg-4">
             <mat-form-field class="example-full-width" appearance="outline">
-              <mat-label>Birth</mat-label>
+              <mat-label>Data nasterii</mat-label>
               <input
                 matInput
                 [matDatepicker]="picker"
@@ -64,33 +72,33 @@
               <!--              ></mat-datepicker-toggle>-->
               <mat-datepicker touchUi #picker></mat-datepicker>
               <mat-error
-                *ngIf="userFormGroup.controls['birth'].hasError('required')"
+                *ngIf="clientFormGroup.controls['birth'].hasError('required')"
               >
-                Birth is <strong>required</strong>
+                Data nasterii este <strong>obligatorie</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-4 mt-3">
+          <div class="col-md-6 col-lg-4">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Gender</mat-label>
+              <mat-label>Gen</mat-label>
 
               <mat-select formControlName="gender">
-                <mat-option value="male">Male</mat-option>
-                <mat-option value="female">Female</mat-option>
-                <mat-option value="other">Other</mat-option>
+                <mat-option value="male">Barbat</mat-option>
+                <mat-option value="female">Femeie</mat-option>
+                <mat-option value="other">Alt gen</mat-option>
               </mat-select>
               <mat-error
-                *ngIf="userFormGroup.controls['gender'].hasError('required')"
+                *ngIf="clientFormGroup.controls['gender'].hasError('required')"
               >
-                Gender is <strong>required</strong>
+                Gen-ul este <strong>obligatoriu</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-4 mt-3">
+          <div class="col-md-6 col-lg-4">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Phone Number</mat-label>
+              <mat-label>Telefon</mat-label>
               <!--              <ngx-mat-intl-tel-input-->
               <!--                [required]="true"-->
               <!--                formControlName="phone"-->
@@ -107,24 +115,24 @@
                 formControlName="phone"
               />
               <mat-error
-                *ngIf="userFormGroup.controls['phone'].hasError('required')"
+                *ngIf="clientFormGroup.controls['phone'].hasError('required')"
               >
-                Phone number is <strong>required</strong>
+                Numarul de telefon este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
-                  userFormGroup.controls['phone'].errors &&
-                  !userFormGroup.controls['phone'].hasError('required')
+                  clientFormGroup.controls['phone'].errors &&
+                  !clientFormGroup.controls['phone'].hasError('required')
                 "
               >
-                Phone number need to have 10 character
+                Numarul de telefon trebuie sa contina 10 cifre
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-4 mt-3">
+          <div class="col-md-6 col-lg-4">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Country</mat-label>
+              <mat-label>Tara</mat-label>
               <input
                 type="text"
                 matInput
@@ -142,25 +150,25 @@
                 </mat-option>
               </mat-autocomplete>
               <mat-error
-                *ngIf="userFormGroup.controls['country'].hasError('required')"
+                *ngIf="clientFormGroup.controls['country'].hasError('required')"
               >
-                Country is <strong>required</strong>
+                Tara este <strong>obligatorie</strong>
               </mat-error>
               <mat-error
                 *ngIf="
-                  userFormGroup.controls['country'].hasError(
+                  clientFormGroup.controls['country'].hasError(
                     'isNotCountryFromList'
-                  ) && !userFormGroup.controls['country'].hasError('required')
+                  ) && !clientFormGroup.controls['country'].hasError('required')
                 "
               >
-                Pick a country from the list
+                Alege o tara din lista.
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-4 mt-3">
+          <div class="col-md-6 col-lg-4">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>State</mat-label>
+              <mat-label>Judet</mat-label>
               <input
                 type="text"
                 matInput
@@ -178,25 +186,25 @@
                 >
               </mat-autocomplete>
               <mat-error
-                *ngIf="userFormGroup.controls['country'].hasError('required')"
+                *ngIf="clientFormGroup.controls['country'].hasError('required')"
               >
-                State is <strong>required</strong>
+                Judetul este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
-                  userFormGroup.controls['state'].hasError(
+                  clientFormGroup.controls['state'].hasError(
                     'isNotStateFromList'
-                  ) && !userFormGroup.controls['state'].hasError('required')
+                  ) && !clientFormGroup.controls['state'].hasError('required')
                 "
               >
-                Pick a state from the list
+                Alege un judet din lista.
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-4 mt-3">
+          <div class="col-md-6 col-lg-4">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>City</mat-label>
+              <mat-label>Oras / Sector</mat-label>
               <input
                 type="text"
                 matInput
@@ -213,24 +221,37 @@
                 >
               </mat-autocomplete>
               <mat-error
-                *ngIf="userFormGroup.controls['city'].hasError('required')"
+                *ngIf="clientFormGroup.controls['city'].hasError('required')"
               >
-                City is <strong>required</strong>
+                Orasul este <strong>obligatoriu</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  clientFormGroup.controls['city'].hasError(
+                    'isNotCityFromList'
+                  ) && !clientFormGroup.controls['city'].hasError('required')
+                "
+              >
+                Alege un oras/sector din lista.
               </mat-error>
             </mat-form-field>
           </div>
         </div>
       </div>
-      <div class="form-footer col-12 col-md-5 mt-4">
-        <mat-error *ngIf="errorMessage$ | async as errorMessage">
-          {{ errorMessage }}
-        </mat-error>
+      <div class="form-footer col-12 col-md-5">
+        <ng-container *ngIf="errorMessage$ | async as errorMessage">
+          <div [class.mt-3]="errorMessage">
+            <mat-error>
+              {{ errorMessage }}
+            </mat-error>
+          </div>
+        </ng-container>
         <button
           mat-button
-          [class.disabled]="!userFormGroup.valid"
+          [class.disabled]="!clientFormGroup.valid"
           type="submit"
         >
-          Save Profile
+          Salvare
         </button>
       </div>
     </form>

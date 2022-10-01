@@ -6,22 +6,22 @@ export const SampleUserProfileCover = './assets/images/cover.jpg';
 export const ProfilesData: ProfileData[] = [
   {
     name: 'Client',
-    link: '/profile/client',
+    link: '/profil/client',
     icon: 'client',
   },
   {
     name: 'Nutritionist',
-    link: '/profile/nutritionist',
+    link: '/profil/nutritionist',
     icon: 'nutrition',
   },
   {
-    name: 'Trainer',
-    link: '/profile/trainer',
+    name: 'Antrenor',
+    link: '/profil/trainer',
     icon: 'trainer',
   },
   {
-    name: 'Gym',
-    link: '/profile/gym',
+    name: 'Sala',
+    link: '/profil/gym',
     icon: 'workout',
   },
 ];

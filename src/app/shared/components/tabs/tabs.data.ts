@@ -6,28 +6,23 @@ export interface TabModel {
 
 export const TabsData: TabModel[] = [
   {
-    name: 'Home',
-    link: '/home',
-    icon: 'home',
-  },
-  {
-    name: 'Profile',
-    link: '/profile',
+    name: 'Profil',
+    link: '/profil',
     icon: 'profile',
   },
   {
-    name: 'Add',
-    link: '/add',
-    icon: 'add',
+    name: 'Antrenori',
+    link: '/antrenori',
+    icon: 'trainer',
   },
   {
-    name: 'Nutrition',
-    link: '/nutrition',
+    name: 'Nutritionisti',
+    link: '/nutritionisti',
     icon: 'nutrition',
   },
   {
-    name: 'Workout',
-    link: '/workout',
+    name: 'Sali',
+    link: '/sali',
     icon: 'workout',
   },
 ];

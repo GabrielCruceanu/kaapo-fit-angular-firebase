@@ -8,6 +8,7 @@ import {
   HOME_ICON,
   NUTRITION_ICON,
   WORKOUT_ICON,
+  TRAINER_ICON,
 } from '@/content/icons';
 
 @Component({
@@ -31,8 +32,8 @@ export class TabsComponent {
       this.domSanitizer.bypassSecurityTrustHtml(PROFILE_ICON)
     );
     this.matIconRegistry.addSvgIconLiteral(
-      'add',
-      this.domSanitizer.bypassSecurityTrustHtml(ADD_ICON)
+      'trainer',
+      this.domSanitizer.bypassSecurityTrustHtml(TRAINER_ICON)
     );
     this.matIconRegistry.addSvgIconLiteral(
       'nutrition',

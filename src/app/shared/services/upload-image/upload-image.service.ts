@@ -70,7 +70,7 @@ export class UploadImageService implements OnDestroy {
       this.imageCompress
         .compressFile(image, orientation, ratio, quality, maxWidth, maxHeight)
         .then((result: DataUrl) => {
-          // this.store.dispatch(setLoadingSpinner({ status: true }));
+          this.store.dispatch(setLoadingSpinner({ status: true }));
           const split = result.split(',');
           const type = split[0].replace('data:', '').replace(';base64', '');
           const byteString = atob(split[1]);
@@ -210,15 +210,10 @@ export class UploadImageService implements OnDestroy {
               if (imageName === UserImageType.clientGalleryFront) {
                 updateDoc(refDb, {
                   currentPhysicalDetails: {
+                    ...this.clientProfile.currentPhysicalDetails,
                     clientGalleryFront: {
                       downloadURL: downloadURL,
                       path,
-                    },
-                    clientGallerySide: {
-                      ...clientGallerySide,
-                    },
-                    clientGalleryBack: {
-                      ...clientGalleryBack,
                     },
                   },
                 });
@@ -232,15 +227,10 @@ export class UploadImageService implements OnDestroy {
               } else if (imageName === UserImageType.clientGallerySide) {
                 updateDoc(refDb, {
                   currentPhysicalDetails: {
-                    clientGalleryFront: {
-                      ...clientGalleryFront,
-                    },
+                    ...this.clientProfile.currentPhysicalDetails,
                     clientGallerySide: {
                       downloadURL: downloadURL,
                       path,
-                    },
-                    clientGalleryBack: {
-                      ...clientGalleryBack,
                     },
                   },
                 });
@@ -254,12 +244,7 @@ export class UploadImageService implements OnDestroy {
               } else if (imageName === UserImageType.clientGalleryBack) {
                 updateDoc(refDb, {
                   currentPhysicalDetails: {
-                    clientGalleryFront: {
-                      ...clientGalleryFront,
-                    },
-                    clientGallerySide: {
-                      ...clientGallerySide,
-                    },
+                    ...this.clientProfile.currentPhysicalDetails,
                     clientGalleryBack: {
                       downloadURL: downloadURL,
                       path,

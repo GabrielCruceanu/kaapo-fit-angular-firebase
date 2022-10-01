@@ -50,13 +50,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    if (!this.profileService.checkIfUserHasProfile()) {
-      this.router.navigate(['/profile/add']);
-    }
-
     this.userProfileSub = this.store
       .select(getUserProfile)
       .subscribe((userProfile) => {
+        console.log('profile component => userProfile', userProfile);
+        if (
+          userProfile &&
+          !this.profileService.checkIfUserHasProfile(userProfile)
+        ) {
+          this.router.navigate(['/profil/selectare-profil']);
+        }
         this.userProfile = userProfile;
       });
 

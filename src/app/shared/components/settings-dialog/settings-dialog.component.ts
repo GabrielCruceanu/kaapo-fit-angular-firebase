@@ -63,22 +63,22 @@ export class SettingsDialogComponent implements OnInit {
     switch (this.userProfile.userType) {
       case UserType.Client:
         this.router
-          .navigateByUrl('/profile/client')
+          .navigateByUrl('/profil/client')
           .then(() => this.dialog.closeAll());
         break;
       case UserType.Nutritionist:
         this.router
-          .navigateByUrl('/profile/nutritionist')
+          .navigateByUrl('/profil/nutritionist')
           .then(() => this.dialog.closeAll());
         break;
       case UserType.Trainer:
         this.router
-          .navigateByUrl('/profile/trainer')
+          .navigateByUrl('/profil/antrenor')
           .then(() => this.dialog.closeAll());
         break;
       case UserType.Gym:
         this.router
-          .navigateByUrl('/profile/gym')
+          .navigateByUrl('/profil/sala')
           .then(() => this.dialog.closeAll());
         break;
     }
