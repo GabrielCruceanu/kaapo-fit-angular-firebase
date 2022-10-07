@@ -10,9 +10,13 @@ export class CountryService {
   constructor() {}
 
   public _filterData(value: string, list: string[]): string[] {
-    const filterValue = value.toLowerCase();
+    if (value && list) {
+      const filterValue = value.toLowerCase();
 
-    return list.filter((item) => item.toLowerCase().includes(filterValue));
+      return list.filter((item) => item.toLowerCase().includes(filterValue));
+    } else {
+      return [];
+    }
   }
 
   // Country

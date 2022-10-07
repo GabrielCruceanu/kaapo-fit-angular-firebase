@@ -1,0 +1,35 @@
+<ng-container *ngIf="historyPhysicalDetails$ | async as historyPhysicalDetails">
+  <swiper
+    class="mySwiper2 swiper-v"
+    [direction]="'vertical'"
+    [spaceBetween]="50"
+    [pagination]="{
+      clickable: true
+    }"
+  >
+    <ng-template
+      swiperSlide
+      *ngFor="let physicalDetails of historyPhysicalDetails; index as i"
+    >
+      <div class="row my-4 mb-md-0">
+        <div class="col-12">
+          <div *ngIf="physicalDetails.date" class="user-profile-history-date">
+            {{ physicalDetails.date.month }}/{{ physicalDetails.date.year }}
+          </div>
+        </div>
+        <!-- Client Profile Details Text-->
+        <div class="col-lg-7 mb-4 mb-md-0">
+          <app-user-profile-details
+            [physicalDetails]="physicalDetails"
+          ></app-user-profile-details>
+        </div>
+        <!-- Client Profile Details Images-->
+        <div class="col-lg-5">
+          <app-user-profile-images
+            [clientPhysicalDetails]="physicalDetails"
+          ></app-user-profile-images>
+        </div>
+      </div>
+    </ng-template>
+  </swiper>
+</ng-container>

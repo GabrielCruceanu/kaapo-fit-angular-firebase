@@ -30,6 +30,7 @@ import {
 import { ProfileService } from '../../profile/services/profile.service';
 import {
   createUserProfileStart,
+  getClientHistoryPhysicalDetails,
   getClientProfileSuccess,
   getGymProfileSuccess,
   getNutritionistProfileSuccess,
@@ -168,6 +169,12 @@ export class AuthEffects {
               const clientProfile =
                 this.profileService.getClientProfileFromLocalStorage();
               if (clientProfile) {
+                console.log('autoLogin > clientProfile', clientProfile);
+                this.store.dispatch(
+                  getClientHistoryPhysicalDetails({
+                    clientId: clientProfile.id,
+                  })
+                );
                 this.store.dispatch(
                   getClientProfileSuccess({
                     clientProfile: clientProfile,

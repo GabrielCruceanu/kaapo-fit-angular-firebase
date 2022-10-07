@@ -165,7 +165,6 @@ export class ProfileService implements OnDestroy {
         clientData.joined,
         clientData.profilePicture,
         clientData.currentPhysicalDetails,
-        clientData.historyPhysicalDetails,
         clientData.nutritionist,
         clientData.trainer,
         clientData.gym
@@ -205,9 +204,20 @@ export class ProfileService implements OnDestroy {
   }
 
   public getHistoryPhysicalDetailsFromDb(clientId: string) {
-    const docRef = doc(this.firestore, 'clients', clientId);
+    // const docRef = doc(
+    //   this.firestore,
+    //   'clients',
+    //   clientId,
+    //   'historyPhysicalDetails'
+    // );
+    const clientsCollection = this.afs
+      .collection('clients')
+      .doc(clientId)
+      .collection('historyPhysicalDetails');
 
-    return docData(docRef).pipe(traceUntilFirst('firestore'));
+    return clientsCollection.valueChanges();
+
+    // return docData(docRef).pipe(traceUntilFirst('firestore'));
   }
 
   // ****************** GYM ******************
@@ -427,19 +437,18 @@ export class ProfileService implements OnDestroy {
   public cityInputValidation(cites: string[]): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
-      console.log('control value', value);
-      if (!value) {
+      if (!value || !cites) {
         return null;
       }
 
       const cityValue = cites.find((city) => city === value);
-      console.log('cityValue', cityValue);
-      console.log(
-        '!cityValue ? { isNotCityFromList: true } : null',
-        !cityValue ? { isNotCityFromList: true } : null
-      );
       return !cityValue ? { isNotCityFromList: true } : null;
     };
+  }
+
+  public cityIsNotFromState(selectedCity: string, cites: string[]): boolean {
+    const cityFound = cites.find((city) => city === selectedCity);
+    return cityFound ? false : true;
   }
 
   public checkIfUserHasProfile(userProfile: UserProfile): boolean {

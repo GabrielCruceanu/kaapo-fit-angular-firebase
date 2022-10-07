@@ -21,7 +21,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   @Input()
   name: string | null;
   @Input()
-  country: string;
+  state: string;
   @Input()
   city: string;
   @Input()

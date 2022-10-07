@@ -37,6 +37,8 @@ export const GET_CLIENT_PROFILE_START =
 export const GET_CLIENT_PROFILE_SUCCESS =
   '[profile page] get client profile success';
 
+export const GET_CLIENT_HISTORY_PHYSICAL_DETAILS =
+  '[profile page] get client history physical details';
 export const SET_CLIENT_HISTORY_PHYSICAL_DETAILS_START =
   '[profile page] set client history physical details start';
 export const SET_CLIENT_HISTORY_PHYSICAL_DETAILS_SUCCESS =
@@ -147,6 +149,13 @@ export const getClientProfileSuccess = createAction(
   props<{ clientProfile: ClientProfile; redirect: boolean }>()
 );
 
+export const getClientHistoryPhysicalDetails = createAction(
+  GET_CLIENT_HISTORY_PHYSICAL_DETAILS,
+  props<{
+    clientId: string;
+  }>()
+);
+
 export const setClientHistoryPhysicalDetailsStart = createAction(
   SET_CLIENT_HISTORY_PHYSICAL_DETAILS_START,
   props<{
@@ -158,7 +167,7 @@ export const setClientHistoryPhysicalDetailsStart = createAction(
 export const setClientHistoryPhysicalDetailsSuccess = createAction(
   SET_CLIENT_HISTORY_PHYSICAL_DETAILS_SUCCESS,
   props<{
-    clientPhysicalDetails: ClientPhysicalDetails;
+    historyPhysicalDetails: ClientPhysicalDetails[];
     redirect: boolean;
   }>()
 );

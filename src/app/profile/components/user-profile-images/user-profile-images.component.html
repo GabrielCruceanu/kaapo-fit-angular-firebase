@@ -21,7 +21,7 @@
     <ng-container *ngIf="clientPhysicalDetails.clientGalleryFront?.downloadURL">
       <ng-template swiperSlide let-data>
         <div class="profile-details-image">
-          <h3 class="profile-details-image-name">Front</h3>
+          <h3 class="profile-details-image-name">Fata</h3>
           <div class="profile-details-image-overlay"></div>
           <img
             [src]="clientPhysicalDetails.clientGalleryFront.downloadURL"
@@ -38,7 +38,7 @@
         [ngIf]="clientPhysicalDetails.clientGallerySide?.downloadURL"
       >
         <div class="profile-details-image">
-          <h3 class="profile-details-image-name">Side</h3>
+          <h3 class="profile-details-image-name">Dintr-o parte</h3>
           <div class="profile-details-image-overlay"></div>
           <img
             [src]="clientPhysicalDetails.clientGallerySide.downloadURL"
@@ -55,7 +55,7 @@
         [ngIf]="clientPhysicalDetails.clientGalleryBack?.downloadURL"
       >
         <div class="profile-details-image">
-          <h3 class="profile-details-image-name">Back</h3>
+          <h3 class="profile-details-image-name">Spate</h3>
           <div class="profile-details-image-overlay"></div>
           <img
             [src]="clientPhysicalDetails.clientGalleryBack.downloadURL"

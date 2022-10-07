@@ -1,10 +1,10 @@
-//.complete-current-physical-details-banner {
-//  background: var(--white);
-//  color: var(--dark-one);
-//  padding: 1rem;
-//  margin-bottom: 1rem;
-//}
-//
+.complete-current-physical-details-banner {
+  background: var(--white);
+  color: var(--dark-one);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
 @media screen and (min-width: 768px) {
   .complete-current-physical-details-banner {
     //display: flex;
@@ -15,5 +15,9 @@
       margin: 0;
       margin-bottom: 1rem;
     }
+  }
+
+  ::ng-deep .mat-tab-body-content {
+    overflow: hidden !important;
   }
 }

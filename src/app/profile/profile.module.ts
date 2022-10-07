@@ -38,6 +38,9 @@ import { ProDetailsComponent } from './components/pro-details/pro-details.compon
 import { NutritionistProfileComponent } from './components/nutritionist-profile/nutritionist-profile.component';
 import { GymProfileComponent } from './components/gym-profile/gym-profile.component';
 import { ProfileDetailsComponent } from './view/profile-details/profile-details.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { UserProfileHistoryComponent } from './components/user-profile-history/user-profile-history.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -60,8 +63,10 @@ import { ProfileDetailsComponent } from './view/profile-details/profile-details.
     NutritionistProfileComponent,
     GymProfileComponent,
     ProfileDetailsComponent,
+    UserProfileHistoryComponent,
   ],
   imports: [
+    BrowserModule,
     CommonModule,
     ProfileRoutingModule,
     SwiperModule,
@@ -83,6 +88,7 @@ import { ProfileDetailsComponent } from './view/profile-details/profile-details.
     MatDialogModule,
     MatToolbarModule,
     ComponentsSharedModule,
+    MatTabsModule,
   ],
   providers: [],
 })

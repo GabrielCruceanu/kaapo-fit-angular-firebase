@@ -1,21 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ClientProfile } from '../../model/clientProfile.model';
-import { Observable } from 'rxjs';
-import { getClientProfile } from '../../store/profile.selector';
-import { Store } from '@ngrx/store';
-import { AppState } from '@/app/store/app.state';
+import { Component, Input } from '@angular/core';
+import { ClientPhysicalDetails } from '../../model/clientProfile.model';
 
 @Component({
   selector: 'app-user-profile-details',
   templateUrl: './user-profile-details.component.html',
   styleUrls: ['./user-profile-details.component.scss'],
 })
-export class UserProfileDetailsComponent implements OnInit {
-  clientProfileDetails$: Observable<ClientProfile | null> | undefined;
-
-  constructor(private store: Store<AppState>) {}
-
-  ngOnInit(): void {
-    this.clientProfileDetails$ = this.store.select(getClientProfile);
-  }
+export class UserProfileDetailsComponent {
+  @Input()
+  physicalDetails: ClientPhysicalDetails | null;
 }

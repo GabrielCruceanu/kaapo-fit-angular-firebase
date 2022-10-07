@@ -95,7 +95,7 @@ const _profileReducer = createReducer(
   on(setClientHistoryPhysicalDetailsSuccess, (state, action) => {
     return {
       ...state,
-      currentPhysicalDetails: action.clientPhysicalDetails,
+      historyPhysicalDetails: action.historyPhysicalDetails,
     };
   }),
   on(createGymProfileSuccess, (state, action) => {

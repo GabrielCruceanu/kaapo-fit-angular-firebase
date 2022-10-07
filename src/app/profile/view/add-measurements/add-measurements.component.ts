@@ -19,7 +19,10 @@ import {
   CollectionsType,
   UserImageType,
 } from '@/app/profile/model/profile-interface';
-import { setClientCurrentPhysicalDetailsStart } from '@/app/profile/store/profile.actions';
+import {
+  setClientCurrentPhysicalDetailsStart,
+  setClientHistoryPhysicalDetailsStart,
+} from '@/app/profile/store/profile.actions';
 
 @Component({
   selector: 'add-measurements',
@@ -55,9 +58,9 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      neck: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.neck
-          ? this.clientProfile?.currentPhysicalDetails?.neck
+      head: new FormControl(
+        this.clientProfile?.currentPhysicalDetails?.head
+          ? this.clientProfile?.currentPhysicalDetails?.head
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
@@ -91,21 +94,33 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
+      highHip: new FormControl(
+        this.clientProfile?.currentPhysicalDetails?.highHip
+          ? this.clientProfile?.currentPhysicalDetails?.highHip
+          : '',
+        [Validators.required, Validators.pattern('^[0-9]*$')]
+      ),
       hip: new FormControl(
         this.clientProfile?.currentPhysicalDetails?.hip
           ? this.clientProfile?.currentPhysicalDetails?.hip
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      ass: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.ass
-          ? this.clientProfile?.currentPhysicalDetails?.ass
+      waistToKnee: new FormControl(
+        this.clientProfile?.currentPhysicalDetails?.waistToKnee
+          ? this.clientProfile?.currentPhysicalDetails?.waistToKnee
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      thigh: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.thigh
-          ? this.clientProfile?.currentPhysicalDetails?.thigh
+      knee: new FormControl(
+        this.clientProfile?.currentPhysicalDetails?.knee
+          ? this.clientProfile?.currentPhysicalDetails?.knee
+          : '',
+        [Validators.required, Validators.pattern('^[0-9]*$')]
+      ),
+      ankle: new FormControl(
+        this.clientProfile?.currentPhysicalDetails?.ankle
+          ? this.clientProfile?.currentPhysicalDetails?.ankle
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
@@ -169,15 +184,17 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
     const year = new Date().getUTCFullYear();
     const {
       weight,
-      neck,
+      head,
       shoulders,
       chest,
       armLeft,
       armRight,
       waist,
       hip,
-      ass,
-      thigh,
+      highHip,
+      waistToKnee,
+      knee,
+      ankle,
     } = this.addMeasurementsFormGroup.value;
 
     if (
@@ -195,15 +212,17 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
           year: year,
         },
         weight,
-        neck,
+        head,
         shoulders,
         chest,
         armLeft,
         armRight,
         waist,
         hip,
-        ass,
-        thigh,
+        highHip,
+        waistToKnee,
+        knee,
+        ankle,
         this.clientProfile.currentPhysicalDetails.clientGalleryFront,
         this.clientProfile.currentPhysicalDetails.clientGallerySide,
         this.clientProfile.currentPhysicalDetails.clientGalleryBack
@@ -215,6 +234,13 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
         setClientCurrentPhysicalDetailsStart({
           clientId: this.clientProfile.id,
           currentPhysicalDetails: currentPhysicalDetails,
+        })
+      );
+
+      this.store.dispatch(
+        setClientHistoryPhysicalDetailsStart({
+          clientId: this.clientProfile.id,
+          clientPhysicalDetails: currentPhysicalDetails,
         })
       );
     }
