@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { AuthType } from '@/app/auth/model/AuthResponseData.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import {
@@ -53,7 +59,8 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   filteredStates: Observable<string[]>;
   selectedState: string = '';
   onlyCities = this.countryService.mapCitiesData();
-  filteredCities: Observable<string[]>;
+  filteredCities$: Observable<string[]>;
+  filteredCities: string[];
   selectedCity: string = '';
   clientFormGroup: FormGroup;
 
@@ -63,6 +70,16 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
     private countryService: CountryService
   ) {
     this.store.dispatch(setErrorMessage({ message: '' }));
+    this.clientFormGroup = new FormGroup({
+      firstname: new FormControl(''),
+      lastname: new FormControl(''),
+      birth: new FormControl(''),
+      gender: new FormControl(''),
+      phone: new FormControl(''),
+      country: new FormControl(''),
+      state: new FormControl(''),
+      city: new FormControl(''),
+    });
   }
 
   ngOnInit(): void {
@@ -81,6 +98,7 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       .subscribe((clientProfile) => {
         this.clientProfile = clientProfile;
       });
+    console.log('this.filteredCities before form ', this.filteredCities);
 
     this.clientFormGroup = new FormGroup({
       firstname: new FormControl(
@@ -136,7 +154,6 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.clientFormGroup.controls['state'].disable();
     this.filteredStates = this.clientFormGroup.controls[
       'state'
     ].valueChanges.pipe(
@@ -147,8 +164,7 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.clientFormGroup.controls['city'].disable();
-    this.filteredCities = this.clientFormGroup.controls[
+    this.filteredCities$ = this.clientFormGroup.controls[
       'city'
     ].valueChanges.pipe(
       startWith(this.clientProfile?.city ? this.clientProfile?.city : ''),
@@ -158,11 +174,16 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
           this.selectedCountry,
           this.selectedState
         );
-        console.log('this.onlyCities', this.onlyCities);
-        console.log('value', value);
-        return this.countryService._filterData(value, this.onlyCities);
+        this.filteredCities = this.countryService._filterData(
+          value,
+          this.onlyCities
+        );
+        return this.filteredCities;
       })
     );
+
+    this.clientFormGroup.controls['state'].disable();
+    this.clientFormGroup.controls['city'].disable();
 
     this.getLoadingSpinnerSub = this.store
       .select(getLoading)
@@ -177,7 +198,21 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   }
 
   onClientSubmit() {
-    if (this.clientFormGroup.valid && this.userAuth && this.userProfile) {
+    if (
+      this.profileService.cityIsNotFromState(
+        this.clientFormGroup.controls['city'].value,
+        this.onlyCities
+      )
+    ) {
+      this.clientFormGroup.controls['city'].markAsTouched();
+      this.clientFormGroup.controls['city'].setErrors({
+        isNotCityFromList: true,
+      });
+    } else if (
+      this.clientFormGroup.valid &&
+      this.userAuth &&
+      this.userProfile
+    ) {
       const {
         firstname,
         lastname,
@@ -221,9 +256,6 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
           : null,
         this.clientProfile.currentPhysicalDetails
           ? this.clientProfile.currentPhysicalDetails
-          : null,
-        this.clientProfile.historyPhysicalDetails
-          ? this.clientProfile.historyPhysicalDetails
           : null,
         this.clientProfile.nutritionist
           ? this.clientProfile.nutritionist

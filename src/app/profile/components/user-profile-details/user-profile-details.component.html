@@ -1,75 +1,74 @@
-<ng-container *ngIf="clientProfileDetails$ | async as clientProfileDetails">
-  <h3 class="px-md-3 mt-4">Istoric luna curenta</h3>
-  <ul
-    class="profile-details-text"
-    *ngIf="clientProfileDetails.currentPhysicalDetails"
-  >
-    <li>
-      <p>
-        <span>Birth:</span> {{ clientProfileDetails.birth.month }}/{{
-          clientProfileDetails.birth.year
-        }}
-      </p>
-    </li>
-    <li>
-      <p>
-        <span>Weight:</span>
-        {{ clientProfileDetails.currentPhysicalDetails.weight }} Kg
-      </p>
-    </li>
-    <li>
-      <p>
-        <span>Neck:</span>
-        {{ clientProfileDetails.currentPhysicalDetails.neck }} cm
-      </p>
-    </li>
-    <li>
-      <p>
-        <span>Shoulders:</span>
-        {{ clientProfileDetails.currentPhysicalDetails.shoulders }} cm
-      </p>
-    </li>
-    <li>
-      <p>
-        <span>Chest:</span>
-        {{ clientProfileDetails.currentPhysicalDetails.chest }} cm
-      </p>
-    </li>
-    <li>
-      <p>
-        <span>Arm left:</span>
-        {{ clientProfileDetails.currentPhysicalDetails.armLeft }} cm
-      </p>
-    </li>
-    <li>
-      <p>
-        <span>Arm right:</span>
-        {{ clientProfileDetails.currentPhysicalDetails.armRight }} cm
-      </p>
-    </li>
-    <li>
-      <p>
-        <span>Waist:</span>
-        {{ clientProfileDetails.currentPhysicalDetails.waist }} cm
-      </p>
-    </li>
-    <li>
-      <p>
-        <span>Hip:</span>
-        {{ clientProfileDetails.currentPhysicalDetails.hip }} cm
-      </p>
-    </li>
-    <li>
-      <p>
-        <span>Ass:</span>
-        {{ clientProfileDetails.currentPhysicalDetails.ass }} cm
-      </p>
-    </li>
-    <li>
-      <p>
-        <span>Thigh:</span>
-        {{ clientProfileDetails.currentPhysicalDetails.thigh }} cm
-      </p>
-    </li>
-  </ul>
-</ng-container>
+<ul class="profile-details-text">
+  <li>
+    <p>
+      <span>Greutate:</span>
+      {{ physicalDetails.weight }}
+    </p>
+  </li>
+  <li>
+    <p>
+      <span>Cap:</span>
+      {{ physicalDetails.head }}
+    </p>
+  </li>
+  <li>
+    <p>
+      <span>Umeri:</span>
+      {{ physicalDetails.shoulders }}
+    </p>
+  </li>
+  <li>
+    <p>
+      <span>Piept:</span>
+      {{ physicalDetails.chest }}
+    </p>
+  </li>
+  <li>
+    <p>
+      <span>Biceps stang:</span>
+      {{ physicalDetails.armLeft }}
+    </p>
+  </li>
+  <li>
+    <p>
+      <span>Biceps drept:</span>
+      {{ physicalDetails.armRight }}
+    </p>
+  </li>
+  <li>
+    <p>
+      <span>Talie:</span>
+      {{ physicalDetails.waist }}
+    </p>
+  </li>
+  <li>
+    <p>
+      <span>Sold inalt:</span>
+      {{ physicalDetails.highHip }}
+    </p>
+  </li>
+  <li>
+    <p>
+      <span>Sold:</span>
+      {{ physicalDetails.hip }}
+    </p>
+  </li>
+  <li>
+    <p>
+      <span>Sold-Genunchi:</span>
+      {{ physicalDetails.waistToKnee }}
+    </p>
+  </li>
+  <li>
+    <p>
+      <span>Genunchi:</span>
+      {{ physicalDetails.knee }}
+    </p>
+  </li>
+  <li>
+    <p>
+      <span>Glezne:</span>
+      {{ physicalDetails.ankle }}
+    </p>
+  </li>
+</ul>

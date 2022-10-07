@@ -1,10 +1,10 @@
 <app-layout>
   <div class="container my-4">
-    <h3>Add your physic details</h3>
+    <h3>Adauga detaliile fizice</h3>
     <form class="row justify-content-center">
       <div class="col-md-4">
         <div class="select-picture-box">
-          <h4>Select front picture</h4>
+          <h4>Imagine din fata</h4>
 
           <ng-container
             *ngIf="
@@ -51,7 +51,7 @@
 
       <div class="col-md-4">
         <div class="select-picture-box">
-          <h4>Select side picture</h4>
+          <h4>Imagine dintr-o parte</h4>
           <ng-container
             *ngIf="
               !(
@@ -96,7 +96,7 @@
 
       <div class="col-md-4">
         <div class="select-picture-box">
-          <h4>Select back picture</h4>
+          <h4>Imagine din spate</h4>
 
           <ng-container
             *ngIf="
@@ -145,7 +145,7 @@
         <div class="row" [formGroup]="addMeasurementsFormGroup">
           <div class="col-6 col-md-4 col-lg-2">
             <mat-form-field appearance="outline">
-              <mat-label>Weight</mat-label>
+              <mat-label>Greutate</mat-label>
               <input matInput name="weight" formControlName="weight" />
               <mat-error
                 *ngIf="
@@ -154,7 +154,7 @@
                   )
                 "
               >
-                Weight is <strong>required</strong>
+                Acest camp este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
@@ -163,35 +163,35 @@
                   )
                 "
               >
-                Number Only
+                Foloseste doar cifre
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-6 col-md-4 col-lg-2">
             <mat-form-field appearance="outline">
-              <mat-label>Neck</mat-label>
-              <input matInput name="neck" formControlName="neck" />
+              <mat-label>Cap</mat-label>
+              <input matInput name="head" formControlName="head" />
               <mat-error
                 *ngIf="
-                  addMeasurementsFormGroup.controls['neck'].hasError('required')
+                  addMeasurementsFormGroup.controls['head'].hasError('required')
                 "
               >
-                Neck is <strong>required</strong>
+                Acest camp este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
-                  addMeasurementsFormGroup.controls['neck'].hasError('pattern')
+                  addMeasurementsFormGroup.controls['head'].hasError('pattern')
                 "
               >
-                Number Only
+                Foloseste doar cifre
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-6 col-md-4 col-lg-2">
             <mat-form-field appearance="outline">
-              <mat-label>Shoulders</mat-label>
+              <mat-label>Umeri</mat-label>
               <input matInput name="shoulders" formControlName="shoulders" />
               <mat-error
                 *ngIf="
@@ -200,7 +200,7 @@
                   )
                 "
               >
-                Shoulders is <strong>required</strong>
+                Acest camp este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
@@ -209,14 +209,14 @@
                   )
                 "
               >
-                Number Only
+                Foloseste doar cifre
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-6 col-md-4 col-lg-2">
             <mat-form-field appearance="outline">
-              <mat-label>Chest</mat-label>
+              <mat-label>Piept</mat-label>
               <input matInput name="chest" formControlName="chest" />
               <mat-error
                 *ngIf="
@@ -225,21 +225,21 @@
                   )
                 "
               >
-                Chest is <strong>required</strong>
+                Acest camp este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
                   addMeasurementsFormGroup.controls['chest'].hasError('pattern')
                 "
               >
-                Number Only
+                Foloseste doar cifre
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-6 col-md-4 col-lg-2">
             <mat-form-field appearance="outline">
-              <mat-label>Arm Left</mat-label>
+              <mat-label>Biceps stang</mat-label>
               <input matInput name="armLeft" formControlName="armLeft" />
               <mat-error
                 *ngIf="
@@ -248,7 +248,7 @@
                   )
                 "
               >
-                Arm Left is <strong>required</strong>
+                Acest camp este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
@@ -257,14 +257,14 @@
                   )
                 "
               >
-                Number Only
+                Foloseste doar cifre
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-6 col-md-4 col-lg-2">
             <mat-form-field appearance="outline">
-              <mat-label>Arm Right</mat-label>
+              <mat-label>Biceps drept</mat-label>
               <input matInput name="armRight" formControlName="armRight" />
               <mat-error
                 *ngIf="
@@ -273,7 +273,7 @@
                   )
                 "
               >
-                Arm Right is <strong>required</strong>
+                Acest camp este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
@@ -282,14 +282,14 @@
                   )
                 "
               >
-                Number Only
+                Foloseste doar cifre
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-6 col-md-4 col-lg-2">
             <mat-form-field appearance="outline">
-              <mat-label>Waist</mat-label>
+              <mat-label>Talie</mat-label>
               <input matInput name="waist" formControlName="waist" />
               <mat-error
                 *ngIf="
@@ -298,85 +298,137 @@
                   )
                 "
               >
-                Waist is <strong>required</strong>
+                Acest camp este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
                   addMeasurementsFormGroup.controls['waist'].hasError('pattern')
                 "
               >
-                Number Only
+                Foloseste doar cifre
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-6 col-md-4 col-lg-2">
             <mat-form-field appearance="outline">
-              <mat-label>Hip</mat-label>
+              <mat-label>Sold inalt</mat-label>
+              <input matInput name="highHip" formControlName="highHip" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['highHip'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Acest camp este <strong>obligatoriu</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['highHip'].hasError(
+                    'pattern'
+                  )
+                "
+              >
+                Foloseste doar cifre
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Sold</mat-label>
               <input matInput name="hip" formControlName="hip" />
               <mat-error
                 *ngIf="
                   addMeasurementsFormGroup.controls['hip'].hasError('required')
                 "
               >
-                Hip is <strong>required</strong>
+                Acest camp este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
                   addMeasurementsFormGroup.controls['hip'].hasError('pattern')
                 "
               >
-                Number Only
+                Foloseste doar cifre
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-6 col-md-4 col-lg-2">
             <mat-form-field appearance="outline">
-              <mat-label>Ass</mat-label>
-              <input matInput name="ass" formControlName="ass" />
+              <mat-label>De la sold la genunchi</mat-label>
+              <input
+                matInput
+                name="waistToKnee"
+                formControlName="waistToKnee"
+              />
               <mat-error
                 *ngIf="
-                  addMeasurementsFormGroup.controls['ass'].hasError('required')
-                "
-              >
-                Ass is <strong>required</strong>
-              </mat-error>
-              <mat-error
-                *ngIf="
-                  addMeasurementsFormGroup.controls['ass'].hasError('pattern')
-                "
-              >
-                Number Only
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="col-6 col-md-4 col-lg-2">
-            <mat-form-field appearance="outline">
-              <mat-label>Thigh</mat-label>
-              <input matInput name="thigh" formControlName="thigh" />
-              <mat-error
-                *ngIf="
-                  addMeasurementsFormGroup.controls['thigh'].hasError(
+                  addMeasurementsFormGroup.controls['waistToKnee'].hasError(
                     'required'
                   )
                 "
               >
-                Thigh is <strong>required</strong>
+                Acest camp este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
-                  addMeasurementsFormGroup.controls['thigh'].hasError('pattern')
+                  addMeasurementsFormGroup.controls['waistToKnee'].hasError(
+                    'pattern'
+                  )
                 "
               >
-                Number Only
+                Foloseste doar cifre
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Genunchi</mat-label>
+              <input matInput name="knee" formControlName="knee" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['knee'].hasError('required')
+                "
+              >
+                Acest camp este <strong>obligatoriu</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['knee'].hasError('pattern')
+                "
+              >
+                Foloseste doar cifre
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Glezne</mat-label>
+              <input matInput name="ankle" formControlName="ankle" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['ankle'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Acest camp este <strong>obligatoriu</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['ankle'].hasError('pattern')
+                "
+              >
+                Foloseste doar cifre
               </mat-error>
             </mat-form-field>
           </div>
         </div>
       </div>
-      <div class="form-footer col-12 mt-4">
+      <div class="form-footer col-12 mt-3">
         <mat-error *ngIf="errorMessage$ | async as errorMessage">
           {{ errorMessage }}
         </mat-error>

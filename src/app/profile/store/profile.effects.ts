@@ -15,6 +15,7 @@ import {
   createTrainerProfileSuccess,
   createUserProfileStart,
   createUserProfileSuccess,
+  getClientHistoryPhysicalDetails,
   getClientProfileStart,
   getClientProfileSuccess,
   getGymProfileStart,
@@ -40,7 +41,10 @@ import {
 } from '../../store/shared/shared.actions';
 import { AuthService } from '../../auth/services/auth.service';
 import { UserProfile } from '../model/userProfile.model';
-import { ClientProfile } from '../model/clientProfile.model';
+import {
+  ClientPhysicalDetails,
+  ClientProfile,
+} from '../model/clientProfile.model';
 import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
@@ -184,25 +188,40 @@ export class ProfileEffects {
   setClientHistoryPhysicalDetailsStart$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(setClientHistoryPhysicalDetailsStart),
-      map((action) => {
+      switchMap((action) => {
         this.profileService.setHistoryPhysicalDetailsInDb(
           action.clientId,
           action.clientPhysicalDetails
         );
+        return this.profileService
+          .getHistoryPhysicalDetailsFromDb(action.clientId)
+          .pipe(
+            map((clientProfileHistory: ClientPhysicalDetails[]) => {
+              return setClientHistoryPhysicalDetailsSuccess({
+                historyPhysicalDetails: clientProfileHistory,
+                redirect: false,
+              });
+            })
+          );
+      })
+    );
+  });
 
-        // return this.profileService.getClientProfileFromDb(action.clientId).pipe(
-        //   map((clientProfile) => {
-        //     console.log('clientProfile', clientProfile);
-        //     return setClientHistoryPhysicalDetailsSuccess({
-        //       clientPhysicalDetails: action.clientPhysicalDetails,
-        //       redirect: false,
-        //     });
-        //   })
-        // );
-        return setClientHistoryPhysicalDetailsSuccess({
-          clientPhysicalDetails: action.clientPhysicalDetails,
-          redirect: false,
-        });
+  getClientHistoryPhysicalDetails$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getClientHistoryPhysicalDetails),
+      switchMap((action) => {
+        return this.profileService
+          .getHistoryPhysicalDetailsFromDb(action.clientId)
+          .pipe(
+            map((clientProfileHistory: ClientPhysicalDetails[]) => {
+              console.log('clientProfileHistory', clientProfileHistory);
+              return setClientHistoryPhysicalDetailsSuccess({
+                historyPhysicalDetails: clientProfileHistory,
+                redirect: false,
+              });
+            })
+          );
       })
     );
   });
