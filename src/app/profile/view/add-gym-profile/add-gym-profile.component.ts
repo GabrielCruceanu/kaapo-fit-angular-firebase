@@ -123,6 +123,12 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         this.gymProfile?.contact?.phone ? this.gymProfile?.contact?.phone : '',
         [Validators.required]
       ),
+      website: new FormControl(
+        this.gymProfile?.contact?.website
+          ? this.gymProfile?.contact?.website
+          : '',
+        []
+      ),
       facebook: new FormControl(
         this.gymProfile?.contact?.facebook
           ? this.gymProfile?.contact?.facebook
@@ -204,6 +210,7 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         city,
         street,
         strNo,
+        website,
         facebook,
         twitter,
         instagram,
@@ -218,6 +225,7 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
       const contactFinal: Contact = {
         phone: phone,
         email: this.userAuth.email,
+        website: website,
         facebook: facebook,
         twitter: twitter,
         instagram: instagram,

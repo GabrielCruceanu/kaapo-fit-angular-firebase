@@ -26,6 +26,13 @@
           [description]="trainerProfileDetails.description"
           [contact]="trainerProfileDetails.contact"
         ></pro-details>
+
+        <!-- Trainer Profile Physical Details -->
+        <user-profile-details-container
+          [currentPhysicalDetails]="
+            trainerProfileDetails?.currentPhysicalDetails
+          "
+        ></user-profile-details-container>
       </div>
       <div class="col-lg-3">
         <app-user-profile-sidebar></app-user-profile-sidebar>

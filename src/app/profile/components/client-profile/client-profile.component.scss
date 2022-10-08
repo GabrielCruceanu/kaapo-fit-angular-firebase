@@ -1,30 +1,8 @@
-.complete-current-physical-details-banner {
-  background: var(--white);
-  color: var(--dark-one);
-  padding: 1rem;
-  margin-bottom: 1rem;
-
-  button {
-    width: 100%;
-  }
-}
-
 ::ng-deep .mat-tab-label-active {
   opacity: 1 !important;
 }
 
 @media screen and (min-width: 768px) {
-  .complete-current-physical-details-banner {
-    //display: flex;
-    //justify-content: space-between;
-    //align-items: center;
-    padding-left: 1rem;
-    p {
-      margin: 0;
-      margin-bottom: 1rem;
-    }
-  }
-
   ::ng-deep .mat-tab-body-content {
     overflow: hidden !important;
   }

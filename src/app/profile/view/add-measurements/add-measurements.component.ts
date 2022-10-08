@@ -3,13 +3,19 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '@/app/store/app.state';
 import { getLoading } from '@/app/store/shared/shared.selector';
-import { Observable, Subscription, take } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   setErrorMessage,
   setLoadingSpinner,
 } from '@/app/store/shared/shared.actions';
 import { UploadImageService } from '@/app/shared/services/upload-image/upload-image.service';
-import { getClientProfile } from '@/app/profile/store/profile.selector';
+import {
+  getClientProfile,
+  getCurrentPhysicalDetails,
+  getNutritionistProfile,
+  getTrainerProfile,
+  getUserProfile,
+} from '@/app/profile/store/profile.selector';
 import {
   ClientPhysicalDetails,
   ClientProfile,
@@ -18,11 +24,15 @@ import { TypeOfUploadImage } from '@/app/shared/model/upload-image-interface';
 import {
   CollectionsType,
   UserImageType,
+  UserType,
 } from '@/app/profile/model/profile-interface';
 import {
-  setClientCurrentPhysicalDetailsStart,
+  setCurrentPhysicalDetailsStart,
   setClientHistoryPhysicalDetailsStart,
 } from '@/app/profile/store/profile.actions';
+import { TrainerProfile } from '@/app/profile/model/trainerProfile.model';
+import { NutritionistProfile } from '@/app/profile/model/nutritionistProfile.model';
+import { UserProfile } from '@/app/profile/model/userProfile.model';
 
 @Component({
   selector: 'add-measurements',
@@ -32,9 +42,17 @@ import {
 export class AddMeasurementsComponent implements OnInit, OnDestroy {
   getLoadingSpinnerSub: Subscription;
   errorMessage$: Observable<any>;
+  currentUserProfile: ClientProfile | TrainerProfile | NutritionistProfile;
+  userProfile: UserProfile;
+  userProfileSub: Subscription;
   clientProfile: ClientProfile;
   clientProfileSub: Subscription;
+  trainerProfile: TrainerProfile;
+  trainerProfileSub: Subscription;
+  nutritionistProfile: NutritionistProfile;
+  nutritionistProfileSub: Subscription;
   addMeasurementsFormGroup: FormGroup;
+  currentPhysicalDetails$: Observable<ClientPhysicalDetails>;
 
   constructor(
     private store: Store<AppState>,
@@ -44,83 +62,120 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.clientProfileSub = this.store
-      .select(getClientProfile)
-      .subscribe((clientProfile) => {
-        this.clientProfile = clientProfile;
-        console.log('AddMeasurementsComponent => clientProfile', clientProfile);
-      });
+    this.userProfileSub = this.store
+      .select(getUserProfile)
+      .subscribe((userProfile) => {
+        this.userProfile = userProfile;
+        console.log('AddMeasurementsComponent => userProfile', userProfile);
+        switch (userProfile.userType) {
+          case UserType.Client:
+            this.clientProfileSub = this.store
+              .select(getClientProfile)
+              .subscribe((clientProfile) => {
+                this.currentUserProfile = clientProfile;
+                console.log(
+                  'AddMeasurementsComponent => clientProfile',
+                  clientProfile
+                );
+              });
+            break;
 
+          case UserType.Trainer:
+            this.trainerProfileSub = this.store
+              .select(getTrainerProfile)
+              .subscribe((trainerProfile) => {
+                this.currentUserProfile = trainerProfile;
+                console.log(
+                  'AddMeasurementsComponent => trainerProfile',
+                  trainerProfile
+                );
+              });
+            break;
+
+          case UserType.Trainer:
+            this.nutritionistProfileSub = this.store
+              .select(getNutritionistProfile)
+              .subscribe((nutritionistProfile) => {
+                this.currentUserProfile = nutritionistProfile;
+                console.log(
+                  'AddMeasurementsComponent => nutritionistProfile',
+                  nutritionistProfile
+                );
+              });
+            break;
+        }
+      });
+    this.currentPhysicalDetails$ = this.store.select(getCurrentPhysicalDetails);
     this.addMeasurementsFormGroup = new FormGroup({
       weight: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.weight
-          ? this.clientProfile?.currentPhysicalDetails?.weight
+        this.currentUserProfile?.currentPhysicalDetails?.weight
+          ? this.currentUserProfile?.currentPhysicalDetails?.weight
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
       head: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.head
-          ? this.clientProfile?.currentPhysicalDetails?.head
+        this.currentUserProfile?.currentPhysicalDetails?.head
+          ? this.currentUserProfile?.currentPhysicalDetails?.head
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
       shoulders: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.shoulders
-          ? this.clientProfile?.currentPhysicalDetails?.shoulders
+        this.currentUserProfile?.currentPhysicalDetails?.shoulders
+          ? this.currentUserProfile?.currentPhysicalDetails?.shoulders
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
       chest: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.chest
-          ? this.clientProfile?.currentPhysicalDetails?.chest
+        this.currentUserProfile?.currentPhysicalDetails?.chest
+          ? this.currentUserProfile?.currentPhysicalDetails?.chest
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
       armLeft: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.armLeft
-          ? this.clientProfile?.currentPhysicalDetails?.armLeft
+        this.currentUserProfile?.currentPhysicalDetails?.armLeft
+          ? this.currentUserProfile?.currentPhysicalDetails?.armLeft
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
       armRight: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.armRight
-          ? this.clientProfile?.currentPhysicalDetails?.armRight
+        this.currentUserProfile?.currentPhysicalDetails?.armRight
+          ? this.currentUserProfile?.currentPhysicalDetails?.armRight
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
       waist: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.waist
-          ? this.clientProfile?.currentPhysicalDetails?.waist
+        this.currentUserProfile?.currentPhysicalDetails?.waist
+          ? this.currentUserProfile?.currentPhysicalDetails?.waist
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
       highHip: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.highHip
-          ? this.clientProfile?.currentPhysicalDetails?.highHip
+        this.currentUserProfile?.currentPhysicalDetails?.highHip
+          ? this.currentUserProfile?.currentPhysicalDetails?.highHip
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
       hip: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.hip
-          ? this.clientProfile?.currentPhysicalDetails?.hip
+        this.currentUserProfile?.currentPhysicalDetails?.hip
+          ? this.currentUserProfile?.currentPhysicalDetails?.hip
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
       waistToKnee: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.waistToKnee
-          ? this.clientProfile?.currentPhysicalDetails?.waistToKnee
+        this.currentUserProfile?.currentPhysicalDetails?.waistToKnee
+          ? this.currentUserProfile?.currentPhysicalDetails?.waistToKnee
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
       knee: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.knee
-          ? this.clientProfile?.currentPhysicalDetails?.knee
+        this.currentUserProfile?.currentPhysicalDetails?.knee
+          ? this.currentUserProfile?.currentPhysicalDetails?.knee
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
       ankle: new FormControl(
-        this.clientProfile?.currentPhysicalDetails?.ankle
-          ? this.clientProfile?.currentPhysicalDetails?.ankle
+        this.currentUserProfile?.currentPhysicalDetails?.ankle
+          ? this.currentUserProfile?.currentPhysicalDetails?.ankle
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
@@ -141,12 +196,17 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
     this.uploadImageService.compressImageBeforeUpload(
       100,
       75,
-      400,
-      400,
-      this.clientProfile.id,
+      1000,
+      500,
+      this.currentUserProfile.id,
       UserImageType.clientGalleryFront,
       TypeOfUploadImage.ClientGallery,
-      CollectionsType.clients
+      this.userProfile.userType === UserType.Client
+        ? CollectionsType.clients
+        : this.userProfile.userType === UserType.Trainer
+        ? CollectionsType.trainers
+        : CollectionsType.nutritionists,
+      this.currentUserProfile
     );
   }
 
@@ -154,12 +214,17 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
     this.uploadImageService.compressImageBeforeUpload(
       100,
       75,
+      1000,
       400,
-      400,
-      this.clientProfile.id,
+      this.currentUserProfile.id,
       UserImageType.clientGallerySide,
       TypeOfUploadImage.ClientGallery,
-      CollectionsType.clients
+      this.userProfile.userType === UserType.Client
+        ? CollectionsType.clients
+        : this.userProfile.userType === UserType.Trainer
+        ? CollectionsType.trainers
+        : CollectionsType.nutritionists,
+      this.currentUserProfile
     );
   }
 
@@ -167,12 +232,17 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
     this.uploadImageService.compressImageBeforeUpload(
       100,
       75,
+      1000,
       400,
-      400,
-      this.clientProfile.id,
+      this.currentUserProfile.id,
       UserImageType.clientGalleryBack,
       TypeOfUploadImage.ClientGallery,
-      CollectionsType.clients
+      this.userProfile.userType === UserType.Client
+        ? CollectionsType.clients
+        : this.userProfile.userType === UserType.Trainer
+        ? CollectionsType.trainers
+        : CollectionsType.nutritionists,
+      this.currentUserProfile
     );
   }
 
@@ -199,13 +269,13 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
 
     if (
       this.addMeasurementsFormGroup.valid &&
-      this.clientProfile.currentPhysicalDetails.clientGalleryFront &&
-      this.clientProfile.currentPhysicalDetails.clientGallerySide &&
-      this.clientProfile.currentPhysicalDetails.clientGalleryBack
+      this.currentUserProfile.currentPhysicalDetails.clientGalleryFront &&
+      this.currentUserProfile.currentPhysicalDetails.clientGallerySide &&
+      this.currentUserProfile.currentPhysicalDetails.clientGalleryBack
     ) {
       const currentPhysicalDetails = new ClientPhysicalDetails(
-        this.clientProfile.id,
-        `${this.clientProfile.id}-${day}-${month}-${year}`,
+        this.currentUserProfile.id,
+        `${this.currentUserProfile.id}-${day}-${month}-${year}`,
         {
           date: day,
           month: month,
@@ -223,17 +293,23 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
         waistToKnee,
         knee,
         ankle,
-        this.clientProfile.currentPhysicalDetails.clientGalleryFront,
-        this.clientProfile.currentPhysicalDetails.clientGallerySide,
-        this.clientProfile.currentPhysicalDetails.clientGalleryBack
+        this.currentUserProfile.currentPhysicalDetails.clientGalleryFront,
+        this.currentUserProfile.currentPhysicalDetails.clientGallerySide,
+        this.currentUserProfile.currentPhysicalDetails.clientGalleryBack
       );
 
       this.store.dispatch(setLoadingSpinner({ status: true }));
 
       this.store.dispatch(
-        setClientCurrentPhysicalDetailsStart({
-          clientId: this.clientProfile.id,
+        setCurrentPhysicalDetailsStart({
+          clientId: this.currentUserProfile.id,
           currentPhysicalDetails: currentPhysicalDetails,
+          folder:
+            this.userProfile.userType === UserType.Client
+              ? CollectionsType.clients
+              : this.userProfile.userType === UserType.Trainer
+              ? CollectionsType.trainers
+              : CollectionsType.nutritionists,
         })
       );
 

@@ -26,7 +26,7 @@ import {
   getTrainerProfileSuccess,
   getUserProfileStart,
   getUserProfileSuccess,
-  setClientCurrentPhysicalDetailsStart,
+  setCurrentPhysicalDetailsStart,
   setClientCurrentPhysicalDetailsSuccess,
   setClientHistoryPhysicalDetailsStart,
   setClientHistoryPhysicalDetailsSuccess,
@@ -228,11 +228,12 @@ export class ProfileEffects {
 
   setClientCurrentPhysicalDetailsStart$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(setClientCurrentPhysicalDetailsStart),
+      ofType(setCurrentPhysicalDetailsStart),
       map((action) => {
         this.profileService.setCurrentPhysicalDetailsInDb(
           action.clientId,
-          action.currentPhysicalDetails
+          action.currentPhysicalDetails,
+          action.folder
         );
 
         this.store.dispatch(setLoadingSpinner({ status: false }));

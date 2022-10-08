@@ -24,6 +24,7 @@ import { getUserProfile } from '../store/profile.selector';
 import { Review } from '@/app/profile/model/review.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { CollectionsType } from '@/app/profile/model/profile-interface';
 
 export const _filer = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -174,11 +175,12 @@ export class ProfileService implements OnDestroy {
   }
 
   public setCurrentPhysicalDetailsInDb(
-    clientId: string,
-    currentPhysicalDetails: ClientPhysicalDetails
+    userId: string,
+    currentPhysicalDetails: ClientPhysicalDetails,
+    folder: CollectionsType
   ) {
-    const ref = doc(this.firestore, 'clients', clientId);
-
+    const ref = doc(this.firestore, folder, userId);
+    console.log('setCurrentPhysicalDetailsInDb', currentPhysicalDetails);
     updateDoc(ref, {
       currentPhysicalDetails: {
         ...currentPhysicalDetails,
@@ -325,6 +327,7 @@ export class ProfileService implements OnDestroy {
         trainerData.completedClients,
         trainerData.coverPicture,
         trainerData.profilePicture,
+        trainerData.currentPhysicalDetails,
         trainerData.activeClients,
         trainerData.gallery,
         trainerData.reviews
@@ -392,6 +395,7 @@ export class ProfileService implements OnDestroy {
         nutritionistData.completedClients,
         nutritionistData.coverPicture,
         nutritionistData.profilePicture,
+        nutritionistData.currentPhysicalDetails,
         nutritionistData.activeClients,
         nutritionistData.gallery,
         nutritionistData.reviews

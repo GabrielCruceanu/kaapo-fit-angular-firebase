@@ -42,6 +42,7 @@ export interface Location {
 export interface Contact {
   phone: string;
   email: string;
+  website: string | null;
   facebook: string | null;
   twitter: string | null;
   instagram: string | null;

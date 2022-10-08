@@ -20,96 +20,10 @@
           </div>
         </div>
 
-        <div *ngIf="!clientProfileDetails?.currentPhysicalDetails" class="row">
-          <div class="col-12">
-            <div class="complete-current-physical-details-banner">
-              <h4>Progress 💪</h4>
-              <p>
-                Pentru a avea un parcurs mai bun trebuie sa-ti poti urmari
-                progresul.
-              </p>
-              <button
-                mat-raised-button
-                color="primary"
-                routerLink="adaugare-masuratori"
-              >
-                Adauga progress
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <section
-          *ngIf="
-            currentDay >=
-              clientProfileDetails?.currentPhysicalDetails.date.date &&
-            currentMonth >
-              clientProfileDetails?.currentPhysicalDetails.date.month &&
-            currentYear >=
-              clientProfileDetails?.currentPhysicalDetails.date.year
-          "
-          class="row"
-        >
-          <div class="col-12">
-            <div class="complete-current-physical-details-banner">
-              <h4>Masuratoare noua 💪</h4>
-              <div class="row">
-                <div class="col-lg-8">
-                  <p>
-                    A trecut ceva timp de la ultima masuratoare. Pentru a avea
-                    un parcurs mai bun trebuie sa-ti poti urmari progresul.
-                  </p>
-                </div>
-                <div class="col-lg-4">
-                  <button
-                    mat-raised-button
-                    color="primary"
-                    routerLink="adaugare-masuratori"
-                  >
-                    Adauga progress
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
         <!-- Client Profile Details -->
-
-        <div class="px-md-3 mt-3 mt-md-0 mb-3">
-          <h3>Masuratori</h3>
-          <p>
-            Toate informatiile de mai jos sunt in centimetrii doar greutatea
-            este in kilograme.
-          </p>
-        </div>
-        <mat-tab-group animationDuration="0ms" mat-align-tabs="center">
-          <mat-tab label="Prezent">
-            <div
-              class="row justify-content-center my-4 mb-md-0"
-              *ngIf="
-                clientProfileDetails?.currentPhysicalDetails as currentPhysicalDetails
-              "
-            >
-              <!-- Client Profile Details Text-->
-              <div class="col-xl-7 mb-4 mb-xl-0">
-                <app-user-profile-details
-                  [physicalDetails]="currentPhysicalDetails"
-                ></app-user-profile-details>
-              </div>
-              <!-- Client Profile Details Images-->
-              <div class="col-md-8 col-xl-5">
-                <app-user-profile-images
-                  [clientPhysicalDetails]="currentPhysicalDetails"
-                ></app-user-profile-images>
-              </div>
-            </div>
-          </mat-tab>
-          <mat-tab label="Istoric">
-            <div class="my-4 mb-md-0">
-              <user-profile-history></user-profile-history>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
+        <user-profile-details-container
+          [currentPhysicalDetails]="clientProfileDetails.currentPhysicalDetails"
+        ></user-profile-details-container>
       </div>
       <div class="mt-4 mt-lg-0 col-lg-4">
         <app-user-profile-sidebar></app-user-profile-sidebar>

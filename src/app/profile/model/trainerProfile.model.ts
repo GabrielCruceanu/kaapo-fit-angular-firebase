@@ -8,7 +8,7 @@ import {
   UserImage,
   UserType,
 } from './profile-interface';
-import { ClientProfile } from './clientProfile.model';
+import { ClientPhysicalDetails, ClientProfile } from './clientProfile.model';
 
 export class TrainerProfile {
   constructor(
@@ -32,6 +32,7 @@ export class TrainerProfile {
     public completedClients: number | null,
     public coverPicture: UserImage | null,
     public profilePicture: UserImage | null,
+    public currentPhysicalDetails: ClientPhysicalDetails | null,
     public activeClients: ClientProfile[] | null,
     public gallery: ProfessionalGalleryPicture[] | null,
     public reviews: Review[] | null

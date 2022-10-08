@@ -13,6 +13,12 @@ export const getClientProfile = createSelector(getProfileState, (state) => {
   return state.clientProfile ? state.clientProfile : null;
 });
 
+export const getCurrentPhysicalDetails = createSelector(
+  getProfileState,
+  (state) => {
+    return state.currentPhysicalDetails ? state.currentPhysicalDetails : null;
+  }
+);
 export const getHistoryPhysicalDetails = createSelector(
   getProfileState,
   (state) => {

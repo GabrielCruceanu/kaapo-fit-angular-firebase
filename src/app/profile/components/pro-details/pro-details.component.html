@@ -52,35 +52,40 @@
             <a [href]="'mailto:' + contact.email"> {{ contact.email }}</a>
           </p>
         </li>
-      </ul>
+        <li *ngIf="contact.website">
+          <p>
+            <span>Website:</span>
+            <a [href]="contact.website" target="_blank">
+              {{ contact.website }}
+            </a>
+          </p>
+        </li>
 
-      <ul class="pro-contact-social-box">
         <li *ngIf="contact.facebook">
-          <a [href]="contact.facebook" target="_blank">
-            <mat-icon
-              aria-hidden="true"
-              class="tab-icon"
-              svgIcon="facebook"
-            ></mat-icon>
-          </a>
+          <p>
+            <span>Facebook:</span>
+            <a [href]="contact.facebook" target="_blank">
+              {{ contact.facebook }}
+            </a>
+          </p>
         </li>
+
         <li *ngIf="contact.instagram">
-          <a [href]="contact.instagram" target="_blank">
-            <mat-icon
-              aria-hidden="true"
-              class="tab-icon"
-              svgIcon="instagram"
-            ></mat-icon>
-          </a>
+          <p>
+            <span>Instagram:</span>
+            <a [href]="contact.instagram" target="_blank">
+              {{ contact.instagram }}</a
+            >
+          </p>
         </li>
+
         <li *ngIf="contact.twitter">
-          <a [href]="contact.twitter" target="_blank">
-            <mat-icon
-              aria-hidden="true"
-              class="tab-icon"
-              svgIcon="twitter"
-            ></mat-icon>
-          </a>
+          <p>
+            <span>Twitter:</span>
+            <a [href]="contact.twitter" target="_blank">
+              {{ contact.twitter }}
+            </a>
+          </p>
         </li>
       </ul>
     </div>

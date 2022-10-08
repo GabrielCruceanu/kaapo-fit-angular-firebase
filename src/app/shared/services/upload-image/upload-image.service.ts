@@ -10,9 +10,9 @@ import { doc, Firestore, updateDoc } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import { AppState } from '@/app/store/app.state';
 import {
-  setClientGalleryBackImage,
-  setClientGalleryFrontImage,
-  setClientGallerySideImage,
+  setGalleryBackImage,
+  setGalleryFrontImage,
+  setGallerySideImage,
   setUserCoverImage,
   setUserProfileImage,
 } from '@/app/profile/store/profile.actions';
@@ -31,6 +31,8 @@ import {
   ClientProfile,
 } from '@/app/profile/model/clientProfile.model';
 import { getClientProfile } from '@/app/profile/store/profile.selector';
+import { TrainerProfile } from '@/app/profile/model/trainerProfile.model';
+import { NutritionistProfile } from '@/app/profile/model/nutritionistProfile.model';
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +66,8 @@ export class UploadImageService implements OnDestroy {
     id: string,
     imageName: string,
     typeOfUploadImage: TypeOfUploadImage,
-    folder: CollectionsType
+    folder: CollectionsType,
+    currentUserProfile?: ClientProfile | TrainerProfile | NutritionistProfile
   ) {
     return this.imageCompress.uploadFile().then(({ image, orientation }) => {
       this.imageCompress
@@ -81,16 +84,18 @@ export class UploadImageService implements OnDestroy {
           }
           const fileBlob = new Blob([arrayBuffer], { type });
 
-          if (this.clientProfile) {
+          if (currentUserProfile) {
+            console.log(
+              'compressImageBeforeUpload > currentUserProfile',
+              currentUserProfile
+            );
             this.startUpload(
               fileBlob,
               id,
               imageName,
               typeOfUploadImage,
               folder,
-              this.clientProfile.currentPhysicalDetails?.clientGalleryFront,
-              this.clientProfile.currentPhysicalDetails?.clientGallerySide,
-              this.clientProfile.currentPhysicalDetails?.clientGalleryBack
+              currentUserProfile
             );
           } else {
             this.startUpload(
@@ -111,9 +116,7 @@ export class UploadImageService implements OnDestroy {
     imageName: string,
     typeOfImage: TypeOfUploadImage,
     folder: CollectionsType,
-    clientGalleryFront?: UserImage,
-    clientGallerySide?: UserImage,
-    clientGalleryBack?: UserImage
+    currentUserProfile?: ClientProfile | TrainerProfile | NutritionistProfile
   ) {
     const storage = getStorage();
 
@@ -210,7 +213,7 @@ export class UploadImageService implements OnDestroy {
               if (imageName === UserImageType.clientGalleryFront) {
                 updateDoc(refDb, {
                   currentPhysicalDetails: {
-                    ...this.clientProfile.currentPhysicalDetails,
+                    ...currentUserProfile.currentPhysicalDetails,
                     clientGalleryFront: {
                       downloadURL: downloadURL,
                       path,
@@ -219,7 +222,7 @@ export class UploadImageService implements OnDestroy {
                 });
 
                 this.store.dispatch(
-                  setClientGalleryFrontImage({
+                  setGalleryFrontImage({
                     galleryFrontImage: this.imageForDb,
                   })
                 );
@@ -227,7 +230,7 @@ export class UploadImageService implements OnDestroy {
               } else if (imageName === UserImageType.clientGallerySide) {
                 updateDoc(refDb, {
                   currentPhysicalDetails: {
-                    ...this.clientProfile.currentPhysicalDetails,
+                    ...currentUserProfile.currentPhysicalDetails,
                     clientGallerySide: {
                       downloadURL: downloadURL,
                       path,
@@ -236,7 +239,7 @@ export class UploadImageService implements OnDestroy {
                 });
 
                 this.store.dispatch(
-                  setClientGallerySideImage({
+                  setGallerySideImage({
                     gallerySideImage: this.imageForDb,
                   })
                 );
@@ -244,7 +247,7 @@ export class UploadImageService implements OnDestroy {
               } else if (imageName === UserImageType.clientGalleryBack) {
                 updateDoc(refDb, {
                   currentPhysicalDetails: {
-                    ...this.clientProfile.currentPhysicalDetails,
+                    ...currentUserProfile.currentPhysicalDetails,
                     clientGalleryBack: {
                       downloadURL: downloadURL,
                       path,
@@ -253,7 +256,7 @@ export class UploadImageService implements OnDestroy {
                 });
 
                 this.store.dispatch(
-                  setClientGalleryBackImage({
+                  setGalleryBackImage({
                     galleryBackImage: this.imageForDb,
                   })
                 );

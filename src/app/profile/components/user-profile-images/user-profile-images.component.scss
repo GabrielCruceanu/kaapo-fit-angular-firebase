@@ -52,8 +52,10 @@
   display: flex;
   justify-content: center;
   overflow: hidden;
-  margin: 0 10px;
+  margin: 0;
   min-width: 210px;
+  max-width: 260px;
+  min-height: 400px;
 
   .profile-details-image-overlay {
     position: absolute;

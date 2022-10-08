@@ -9,8 +9,8 @@
           <ng-container
             *ngIf="
               !(
-                clientProfile.currentPhysicalDetails?.clientGalleryFront &&
-                clientProfile.currentPhysicalDetails?.clientGalleryFront
+                currentUserProfile.currentPhysicalDetails?.clientGalleryFront &&
+                currentUserProfile.currentPhysicalDetails?.clientGalleryFront
                   .downloadURL
               );
               else clientGalleryFrontPicture
@@ -29,10 +29,10 @@
           <ng-template #clientGalleryFrontPicture>
             <img
               [src]="
-                clientProfile.currentPhysicalDetails?.clientGalleryFront
+                currentUserProfile.currentPhysicalDetails?.clientGalleryFront
                   .downloadURL
-                  ? clientProfile.currentPhysicalDetails?.clientGalleryFront
-                      .downloadURL
+                  ? currentUserProfile.currentPhysicalDetails
+                      ?.clientGalleryFront.downloadURL
                   : ''
               "
               alt="client gallery front picture"
@@ -55,8 +55,8 @@
           <ng-container
             *ngIf="
               !(
-                clientProfile.currentPhysicalDetails?.clientGallerySide &&
-                clientProfile.currentPhysicalDetails?.clientGallerySide
+                currentUserProfile.currentPhysicalDetails?.clientGallerySide &&
+                currentUserProfile.currentPhysicalDetails?.clientGallerySide
                   .downloadURL
               );
               else clientGallerySidePicture
@@ -74,9 +74,9 @@
           <ng-template #clientGallerySidePicture>
             <img
               [src]="
-                clientProfile.currentPhysicalDetails?.clientGallerySide
+                currentUserProfile.currentPhysicalDetails?.clientGallerySide
                   .downloadURL
-                  ? clientProfile.currentPhysicalDetails?.clientGallerySide
+                  ? currentUserProfile.currentPhysicalDetails?.clientGallerySide
                       .downloadURL
                   : ''
               "
@@ -101,8 +101,8 @@
           <ng-container
             *ngIf="
               !(
-                clientProfile.currentPhysicalDetails?.clientGalleryBack &&
-                clientProfile.currentPhysicalDetails?.clientGalleryBack
+                currentUserProfile.currentPhysicalDetails?.clientGalleryBack &&
+                currentUserProfile.currentPhysicalDetails?.clientGalleryBack
                   .downloadURL
               );
               else clientGalleryBackPicture
@@ -120,9 +120,9 @@
           <ng-template #clientGalleryBackPicture>
             <img
               [src]="
-                clientProfile.currentPhysicalDetails?.clientGalleryBack
+                currentUserProfile.currentPhysicalDetails?.clientGalleryBack
                   .downloadURL
-                  ? clientProfile.currentPhysicalDetails?.clientGalleryBack
+                  ? currentUserProfile.currentPhysicalDetails?.clientGalleryBack
                       .downloadURL
                   : ''
               "
