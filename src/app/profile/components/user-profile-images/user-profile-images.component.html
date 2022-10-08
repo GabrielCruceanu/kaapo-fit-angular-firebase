@@ -1,6 +1,6 @@
 <div class="mobile-profile-details-images" *ngIf="clientPhysicalDetails">
   <swiper
-    #swiper
+    class="mySwiper2 swiper-v"
     [watchSlidesProgress]="true"
     [config]="config"
     [virtual]="true"
@@ -19,7 +19,7 @@
     }"
   >
     <ng-container *ngIf="clientPhysicalDetails.clientGalleryFront?.downloadURL">
-      <ng-template swiperSlide let-data>
+      <ng-template swiperSlide>
         <div class="profile-details-image">
           <h3 class="profile-details-image-name">Fata</h3>
           <div class="profile-details-image-overlay"></div>
@@ -34,7 +34,6 @@
     <ng-container *ngIf="clientPhysicalDetails.clientGallerySide?.downloadURL">
       <ng-template
         swiperSlide
-        let-data
         [ngIf]="clientPhysicalDetails.clientGallerySide?.downloadURL"
       >
         <div class="profile-details-image">
@@ -51,7 +50,6 @@
     <ng-container *ngIf="clientPhysicalDetails.clientGalleryBack?.downloadURL">
       <ng-template
         swiperSlide
-        let-data
         [ngIf]="clientPhysicalDetails.clientGalleryBack?.downloadURL"
       >
         <div class="profile-details-image">

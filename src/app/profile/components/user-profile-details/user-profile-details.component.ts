@@ -9,4 +9,6 @@ import { ClientPhysicalDetails } from '../../model/clientProfile.model';
 export class UserProfileDetailsComponent {
   @Input()
   physicalDetails: ClientPhysicalDetails | null;
+  @Input()
+  historyDetails: boolean;
 }

@@ -1,4 +1,25 @@
-.user-profile-history-date {
-  margin-bottom: 30px;
-  position: relative;
+.user-profile-history-accordion {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  .mat-expansion-panel {
+    background-color: var(--background-color);
+    color: var(--white);
+  }
+  .mat-accordion > .mat-expansion-panel-spacing:last-child,
+  .mat-accordion
+    > :last-child:not(.mat-expansion-panel)
+    .mat-expansion-panel-spacing {
+    margin-bottom: 1rem;
+  }
+  .mat-expansion-panel-header {
+    box-shadow: var(--dark-shadow);
+    border-left: 1px solid var(--primary);
+  }
+  .mat-expansion-panel-header-title {
+    color: var(--white);
+  }
+  .mat-expansion-panel-header-description,
+  .mat-expansion-indicator::after {
+    color: var(--white);
+  }
 }

@@ -23,7 +23,7 @@
         <div *ngIf="!clientProfileDetails?.currentPhysicalDetails" class="row">
           <div class="col-12">
             <div class="complete-current-physical-details-banner">
-              <h4>Progress</h4>
+              <h4>Progress 💪</h4>
               <p>
                 Pentru a avea un parcurs mai bun trebuie sa-ti poti urmari
                 progresul.
@@ -43,7 +43,7 @@
           *ngIf="
             currentDay >=
               clientProfileDetails?.currentPhysicalDetails.date.date &&
-            currentMonth >=
+            currentMonth >
               clientProfileDetails?.currentPhysicalDetails.date.month &&
             currentYear >=
               clientProfileDetails?.currentPhysicalDetails.date.year
@@ -52,18 +52,24 @@
         >
           <div class="col-12">
             <div class="complete-current-physical-details-banner">
-              <h4>Masuratoare noua</h4>
-              <p>
-                A trecut ceva timp de la ultima masuratoare. Pentru a avea un
-                parcurs mai bun trebuie sa-ti poti urmari progresul.
-              </p>
-              <button
-                mat-raised-button
-                color="primary"
-                routerLink="adaugare-masuratori"
-              >
-                Adauga progress
-              </button>
+              <h4>Masuratoare noua 💪</h4>
+              <div class="row">
+                <div class="col-lg-8">
+                  <p>
+                    A trecut ceva timp de la ultima masuratoare. Pentru a avea
+                    un parcurs mai bun trebuie sa-ti poti urmari progresul.
+                  </p>
+                </div>
+                <div class="col-lg-4">
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    routerLink="adaugare-masuratori"
+                  >
+                    Adauga progress
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -85,13 +91,13 @@
               "
             >
               <!-- Client Profile Details Text-->
-              <div class="col-lg-7 mb-4 mb-md-0">
+              <div class="col-xl-7 mb-4 mb-xl-0">
                 <app-user-profile-details
                   [physicalDetails]="currentPhysicalDetails"
                 ></app-user-profile-details>
               </div>
               <!-- Client Profile Details Images-->
-              <div class="col-lg-5">
+              <div class="col-md-8 col-xl-5">
                 <app-user-profile-images
                   [clientPhysicalDetails]="currentPhysicalDetails"
                 ></app-user-profile-images>
@@ -99,7 +105,9 @@
             </div>
           </mat-tab>
           <mat-tab label="Istoric">
-            <user-profile-history></user-profile-history>
+            <div class="my-4 mb-md-0">
+              <user-profile-history></user-profile-history>
+            </div>
           </mat-tab>
         </mat-tab-group>
       </div>

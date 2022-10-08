@@ -1,26 +1,21 @@
 <ng-container *ngIf="historyPhysicalDetails$ | async as historyPhysicalDetails">
-  <swiper
-    class="mySwiper2 swiper-v"
-    [direction]="'vertical'"
-    [spaceBetween]="50"
-    [pagination]="{
-      clickable: true
-    }"
-  >
-    <ng-template
-      swiperSlide
+  <mat-accordion class="user-profile-history-accordion">
+    <mat-expansion-panel
       *ngFor="let physicalDetails of historyPhysicalDetails; index as i"
+      [expanded]="step === i"
+      (opened)="setStep(i)"
     >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ physicalDetails.date.month }} / {{ physicalDetails.date.year }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
       <div class="row my-4 mb-md-0">
-        <div class="col-12">
-          <div *ngIf="physicalDetails.date" class="user-profile-history-date">
-            {{ physicalDetails.date.month }}/{{ physicalDetails.date.year }}
-          </div>
-        </div>
         <!-- Client Profile Details Text-->
         <div class="col-lg-7 mb-4 mb-md-0">
           <app-user-profile-details
             [physicalDetails]="physicalDetails"
+            [historyDetails]="true"
           ></app-user-profile-details>
         </div>
         <!-- Client Profile Details Images-->
@@ -30,6 +25,27 @@
           ></app-user-profile-images>
         </div>
       </div>
-    </ng-template>
-  </swiper>
+
+      <mat-action-row class="justify-content-center">
+        <button
+          mat-fab
+          color="primary"
+          aria-label="Inapoi"
+          (click)="prevStep()"
+          *ngIf="step > 0"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <button
+          mat-fab
+          color="primary"
+          aria-label="Inainte"
+          (click)="nextStep()"
+          *ngIf="historyPhysicalDetails.length - 1 > i"
+        >
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
 </ng-container>

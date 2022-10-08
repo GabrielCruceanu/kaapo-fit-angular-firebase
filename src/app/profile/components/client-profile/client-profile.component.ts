@@ -28,7 +28,7 @@ export class ClientProfileComponent implements OnInit {
 
   constructor(private store: Store<AppState>, private dialog: MatDialog) {
     this.currentDay = new Date().getUTCDate();
-    this.currentMonth = new Date().getUTCMonth() + 2;
+    this.currentMonth = new Date().getUTCMonth() + 1;
     this.currentYear = new Date().getUTCFullYear();
   }
 

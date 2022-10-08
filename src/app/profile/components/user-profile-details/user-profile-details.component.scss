@@ -31,6 +31,14 @@
 @media screen and (min-width: 768px) {
   .profile-details-text {
     padding-left: 1rem;
+    li {
+      width: 33%;
+
+      &:nth-child(even) {
+        width: 33%;
+        margin-left: 0;
+      }
+    }
   }
 }
 
@@ -38,6 +46,11 @@
   .profile-details-text {
     li {
       width: 50%;
+
+      &:nth-child(even) {
+        width: 50%;
+        margin-left: 0;
+      }
       p {
         font-size: 18px;
       }
