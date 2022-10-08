@@ -40,7 +40,7 @@ import { GymProfileComponent } from './components/gym-profile/gym-profile.compon
 import { ProfileDetailsComponent } from './view/profile-details/profile-details.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UserProfileHistoryComponent } from './components/user-profile-history/user-profile-history.component';
-import { BrowserModule } from '@angular/platform-browser';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -66,7 +66,6 @@ import { BrowserModule } from '@angular/platform-browser';
     UserProfileHistoryComponent,
   ],
   imports: [
-    BrowserModule,
     CommonModule,
     ProfileRoutingModule,
     SwiperModule,
@@ -89,6 +88,7 @@ import { BrowserModule } from '@angular/platform-browser';
     MatToolbarModule,
     ComponentsSharedModule,
     MatTabsModule,
+    MatExpansionModule,
   ],
   providers: [],
 })
