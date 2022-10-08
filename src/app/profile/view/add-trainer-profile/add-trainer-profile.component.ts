@@ -149,6 +149,12 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         this.trainerProfile?.city ? this.trainerProfile?.city : '',
         [Validators.required]
       ),
+      website: new FormControl(
+        this.trainerProfile?.contact?.website
+          ? this.trainerProfile?.contact?.website
+          : '',
+        []
+      ),
       facebook: new FormControl(
         this.trainerProfile?.contact?.facebook
           ? this.trainerProfile?.contact?.facebook
@@ -223,7 +229,21 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
   }
 
   onTrainerSubmit() {
-    if (this.trainerFormGroup.valid && this.userAuth && this.userProfile) {
+    if (
+      this.profileService.cityIsNotFromState(
+        this.trainerFormGroup.controls['city'].value,
+        this.onlyCities
+      )
+    ) {
+      this.trainerFormGroup.controls['city'].markAsTouched();
+      this.trainerFormGroup.controls['city'].setErrors({
+        isNotCityFromList: true,
+      });
+    } else if (
+      this.trainerFormGroup.valid &&
+      this.userAuth &&
+      this.userProfile
+    ) {
       const {
         firstname,
         lastname,
@@ -236,6 +256,7 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         state,
         city,
         phone,
+        website,
         facebook,
         twitter,
         instagram,
@@ -256,6 +277,7 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
       const contactFinal: Contact = {
         phone: phone,
         email: this.userAuth.email,
+        website: website,
         facebook: facebook,
         twitter: twitter,
         instagram: instagram,
@@ -282,6 +304,7 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         null,
         this.userProfile.coverImage ? this.userProfile.coverImage : null,
         this.userProfile.profileImage ? this.userProfile.profileImage : null,
+        null,
         null,
         null,
         null

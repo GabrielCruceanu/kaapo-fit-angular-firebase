@@ -41,6 +41,8 @@ import { ProfileDetailsComponent } from './view/profile-details/profile-details.
 import { MatTabsModule } from '@angular/material/tabs';
 import { UserProfileHistoryComponent } from './components/user-profile-history/user-profile-history.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { PhysicalDetailsBannerComponent } from './components/physical-details-banner/physical-details-banner.component';
+import { UserProfileDetailsContainerComponent } from './components/user-profile-details-container/user-profile-details-container.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     GymProfileComponent,
     ProfileDetailsComponent,
     UserProfileHistoryComponent,
+    PhysicalDetailsBannerComponent,
+    UserProfileDetailsContainerComponent,
   ],
   imports: [
     CommonModule,

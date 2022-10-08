@@ -11,9 +11,9 @@ import {
   getNutritionistProfileSuccess,
   getTrainerProfileSuccess,
   getUserProfileSuccess,
-  setClientGalleryBackImage,
-  setClientGalleryFrontImage,
-  setClientGallerySideImage,
+  setGalleryBackImage,
+  setGalleryFrontImage,
+  setGallerySideImage,
   setClientHistoryPhysicalDetailsSuccess,
   setUserCoverImage,
   setUserProfileImage,
@@ -59,31 +59,22 @@ const _profileReducer = createReducer(
       clientProfile: action.clientProfile,
     };
   }),
-  on(setClientGalleryFrontImage, (state, action) => {
+  on(setGalleryFrontImage, (state, action) => {
     return {
       ...state,
-      currentPhysicalDetails: {
-        ...state,
-        clientGalleryFront: action.galleryFrontImage,
-      },
+      clientGalleryFront: action.galleryFrontImage,
     };
   }),
-  on(setClientGallerySideImage, (state, action) => {
+  on(setGallerySideImage, (state, action) => {
     return {
       ...state,
-      currentPhysicalDetails: {
-        ...state,
-        clientGallerySide: action.gallerySideImage,
-      },
+      clientGallerySide: action.gallerySideImage,
     };
   }),
-  on(setClientGalleryBackImage, (state, action) => {
+  on(setGalleryBackImage, (state, action) => {
     return {
       ...state,
-      currentPhysicalDetails: {
-        ...state,
-        clientGalleryBack: action.galleryBackImage,
-      },
+      clientGalleryBack: action.galleryBackImage,
     };
   }),
   on(setClientCurrentPhysicalDetailsSuccess, (state, action) => {

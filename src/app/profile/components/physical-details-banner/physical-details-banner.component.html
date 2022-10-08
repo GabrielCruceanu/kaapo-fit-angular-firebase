@@ -1,0 +1,49 @@
+<div *ngIf="!currentPhysicalDetails" class="row">
+  <div class="col-12">
+    <div class="complete-current-physical-details-banner">
+      <h4>Progress 💪</h4>
+      <p>
+        Pentru a avea un parcurs mai bun trebuie sa-ti poti urmari progresul.
+      </p>
+      <button
+        color="primary"
+        mat-raised-button
+        routerLink="adaugare-masuratori"
+      >
+        Adauga progress
+      </button>
+    </div>
+  </div>
+</div>
+
+<section
+  *ngIf="
+    currentDay >= currentPhysicalDetails.date.date &&
+    currentMonth > currentPhysicalDetails.date.month &&
+    currentYear >= currentPhysicalDetails.date.year
+  "
+  class="row"
+>
+  <div class="col-12">
+    <div class="complete-current-physical-details-banner">
+      <h4>Masuratoare noua 💪</h4>
+      <div class="row">
+        <div class="col-lg-8">
+          <p>
+            A trecut ceva timp de la ultima masuratoare. Pentru a avea un
+            parcurs mai bun trebuie sa-ti poti urmari progresul.
+          </p>
+        </div>
+        <div class="col-lg-4">
+          <button
+            color="primary"
+            mat-raised-button
+            routerLink="adaugare-masuratori"
+          >
+            Adauga progress
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

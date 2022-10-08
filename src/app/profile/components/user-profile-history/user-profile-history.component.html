@@ -1,4 +1,9 @@
-<ng-container *ngIf="historyPhysicalDetails$ | async as historyPhysicalDetails">
+<ng-container
+  *ngIf="
+    historyPhysicalDetails$ | async as historyPhysicalDetails;
+    else DontHaveHistory
+  "
+>
   <mat-accordion class="user-profile-history-accordion">
     <mat-expansion-panel
       *ngFor="let physicalDetails of historyPhysicalDetails; index as i"
@@ -49,3 +54,8 @@
     </mat-expansion-panel>
   </mat-accordion>
 </ng-container>
+<ng-template #DontHaveHistory>
+  <div class="user-profile-no-history">
+    <p>Nu detii un istoric</p>
+  </div>
+</ng-template>

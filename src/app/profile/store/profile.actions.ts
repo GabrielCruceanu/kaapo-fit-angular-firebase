@@ -7,7 +7,10 @@ import {
 import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
-import { UserImage } from '@/app/profile/model/profile-interface';
+import {
+  CollectionsType,
+  UserImage,
+} from '@/app/profile/model/profile-interface';
 
 export const CREATE_USER_PROFILE_START =
   '[profile page] create user profile start';
@@ -37,6 +40,12 @@ export const GET_CLIENT_PROFILE_START =
 export const GET_CLIENT_PROFILE_SUCCESS =
   '[profile page] get client profile success';
 
+export const SET_CURRENT_PHYSICAL_DETAILS_START =
+  '[profile page] set current physical details start';
+
+export const SET_CURRENT_PHYSICAL_DETAILS_SUCCESS =
+  '[profile page] set current physical details success';
+
 export const GET_CLIENT_HISTORY_PHYSICAL_DETAILS =
   '[profile page] get client history physical details';
 export const SET_CLIENT_HISTORY_PHYSICAL_DETAILS_START =
@@ -44,18 +53,9 @@ export const SET_CLIENT_HISTORY_PHYSICAL_DETAILS_START =
 export const SET_CLIENT_HISTORY_PHYSICAL_DETAILS_SUCCESS =
   '[profile page] set client history physical details success';
 
-export const SET_CLIENT_CURRENT_PHYSICAL_DETAILS_START =
-  '[profile page] set client current physical details start';
-
-export const SET_CLIENT_CURRENT_PHYSICAL_DETAILS_SUCCESS =
-  '[profile page] set client current physical details success';
-
-export const SET_CLIENT_GALLERY_FRONT_IMAGE =
-  '[profile page] set client gallery front image';
-export const SET_CLIENT_GALLERY_SIDE_IMAGE =
-  '[profile page] set client gallery side image';
-export const SET_CLIENT_GALLERY_BACK_IMAGE =
-  '[profile page] set client gallery back image';
+export const SET_GALLERY_FRONT_IMAGE = '[profile page] set gallery front image';
+export const SET_GALLERY_SIDE_IMAGE = '[profile page] set gallery side image';
+export const SET_GALLERY_BACK_IMAGE = '[profile page] set gallery back image';
 
 export const CREATE_GYM_PROFILE_START =
   '[profile page] create gym profile start';
@@ -172,34 +172,35 @@ export const setClientHistoryPhysicalDetailsSuccess = createAction(
   }>()
 );
 
-export const setClientCurrentPhysicalDetailsStart = createAction(
-  SET_CLIENT_CURRENT_PHYSICAL_DETAILS_START,
+export const setCurrentPhysicalDetailsStart = createAction(
+  SET_CURRENT_PHYSICAL_DETAILS_START,
   props<{
     clientId: string;
     currentPhysicalDetails: ClientPhysicalDetails;
+    folder: CollectionsType;
   }>()
 );
 
 export const setClientCurrentPhysicalDetailsSuccess = createAction(
-  SET_CLIENT_CURRENT_PHYSICAL_DETAILS_START,
+  SET_CURRENT_PHYSICAL_DETAILS_SUCCESS,
   props<{
     currentPhysicalDetails: ClientPhysicalDetails;
     redirect: boolean;
   }>()
 );
 
-export const setClientGalleryFrontImage = createAction(
-  SET_CLIENT_GALLERY_FRONT_IMAGE,
+export const setGalleryFrontImage = createAction(
+  SET_GALLERY_FRONT_IMAGE,
   props<{ galleryFrontImage: UserImage }>()
 );
 
-export const setClientGallerySideImage = createAction(
-  SET_CLIENT_GALLERY_SIDE_IMAGE,
+export const setGallerySideImage = createAction(
+  SET_GALLERY_SIDE_IMAGE,
   props<{ gallerySideImage: UserImage }>()
 );
 
-export const setClientGalleryBackImage = createAction(
-  SET_CLIENT_GALLERY_BACK_IMAGE,
+export const setGalleryBackImage = createAction(
+  SET_GALLERY_BACK_IMAGE,
   props<{ galleryBackImage: UserImage }>()
 );
 

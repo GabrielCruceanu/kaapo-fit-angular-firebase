@@ -10,6 +10,7 @@ import { NutritionistProfile } from '../model/nutritionistProfile.model';
 export interface ProfileState {
   userProfile: UserProfile | null;
   clientProfile: ClientProfile | null;
+  currentPhysicalDetails: ClientPhysicalDetails | null;
   historyPhysicalDetails: ClientPhysicalDetails[] | null;
   gymProfile: GymProfile | null;
   trainerProfile: TrainerProfile | null;
@@ -19,6 +20,7 @@ export interface ProfileState {
 export const initialState: ProfileState = {
   userProfile: null,
   clientProfile: null,
+  currentPhysicalDetails: null,
   historyPhysicalDetails: null,
   gymProfile: null,
   trainerProfile: null,

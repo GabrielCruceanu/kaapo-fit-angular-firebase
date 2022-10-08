@@ -153,6 +153,12 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         this.nutritionistProfile?.city ? this.nutritionistProfile?.city : '',
         [Validators.required]
       ),
+      website: new FormControl(
+        this.nutritionistProfile?.contact?.website
+          ? this.nutritionistProfile?.contact?.website
+          : '',
+        []
+      ),
       facebook: new FormControl(
         this.nutritionistProfile?.contact?.facebook
           ? this.nutritionistProfile?.contact?.facebook
@@ -239,6 +245,7 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         state,
         city,
         phone,
+        website,
         facebook,
         twitter,
         instagram,
@@ -259,6 +266,7 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
       const contactFinal: Contact = {
         phone: phone,
         email: this.userAuth.email,
+        website: website,
         facebook: facebook,
         twitter: twitter,
         instagram: instagram,
@@ -284,6 +292,7 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         null,
         this.userProfile.coverImage ? this.userProfile.coverImage : null,
         this.userProfile.profileImage ? this.userProfile.profileImage : null,
+        null,
         null,
         null,
         null
