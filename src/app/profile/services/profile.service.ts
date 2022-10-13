@@ -414,6 +414,20 @@ export class ProfileService {
       return !cityValue ? { isNotCityFromList: true } : null;
     };
   }
+  public websiteInputValidation(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value) {
+        return null;
+      }
+
+      let lc = value.toLowerCase();
+      const isMatch =
+        lc.substr(0, 8) == 'https://' || lc.substr(0, 7) == 'http://';
+
+      return !isMatch ? { isNotHttp: true } : null;
+    };
+  }
 
   public cityIsNotFromState(selectedCity: string, cites: string[]): boolean {
     const cityFound = cites.find((city) => city === selectedCity);

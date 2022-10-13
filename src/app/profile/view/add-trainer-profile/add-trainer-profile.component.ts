@@ -63,6 +63,8 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
   trainersType = TrainerData;
   trainerExperience = TrainerExperienceData;
   trainerFormGroup: FormGroup;
+  urlRegEx =
+    '[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}(.[a-z]{2,4})?\b(/[-a-zA-Z0-9@:%_+.~#?&//=]*)?';
 
   constructor(
     private store: Store<AppState>,
@@ -161,25 +163,22 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         this.trainerProfile?.contact?.website
           ? this.trainerProfile?.contact?.website
           : '',
-        []
+        [this.profileService.websiteInputValidation()]
       ),
       facebook: new FormControl(
         this.trainerProfile?.contact?.facebook
           ? this.trainerProfile?.contact?.facebook
-          : '',
-        []
+          : ''
       ),
       twitter: new FormControl(
         this.trainerProfile?.contact?.twitter
           ? this.trainerProfile?.contact?.twitter
-          : '',
-        []
+          : ''
       ),
       instagram: new FormControl(
         this.trainerProfile?.contact?.instagram
           ? this.trainerProfile?.contact?.instagram
-          : '',
-        []
+          : ''
       ),
     });
 
@@ -237,6 +236,9 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
   }
 
   onTrainerSubmit() {
+    console.log('this.trainerFormGroup', this.trainerFormGroup.valid);
+    console.log('this.userAuth', this.userAuth);
+    console.log('this.userProfile', this.userProfile);
     if (
       this.profileService.cityIsNotFromState(
         this.trainerFormGroup.controls['city'].value,
@@ -247,11 +249,9 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
       this.trainerFormGroup.controls['city'].setErrors({
         isNotCityFromList: true,
       });
-    } else if (
-      this.trainerFormGroup.valid &&
-      this.userAuth &&
-      this.userProfile
-    ) {
+    }
+    if (this.trainerFormGroup.valid && this.userAuth && this.userProfile) {
+      console.log('trainer form');
       const {
         firstname,
         lastname,
@@ -301,21 +301,31 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         gender,
         joinedFinal,
         birthFinal,
-        false,
-        false,
+        this.trainerProfile.hasProPremium
+          ? this.trainerProfile.hasProPremium
+          : false,
+        this.trainerProfile.certificate
+          ? this.trainerProfile.certificate
+          : false,
         experience,
         country,
         state,
         city,
         contactFinal,
         description,
-        null,
+        this.trainerProfile.completedClients
+          ? this.trainerProfile.completedClients
+          : null,
         this.userProfile.coverImage ? this.userProfile.coverImage : null,
         this.userProfile.profileImage ? this.userProfile.profileImage : null,
-        null,
-        null,
-        null,
-        null
+        this.trainerProfile.currentPhysicalDetails
+          ? this.trainerProfile.currentPhysicalDetails
+          : null,
+        this.trainerProfile.activeClients
+          ? this.trainerProfile.activeClients
+          : null,
+        this.trainerProfile.gallery ? this.trainerProfile.gallery : null,
+        this.trainerProfile.reviews ? this.trainerProfile.reviews : null
       );
 
       const userProfile = new UserProfile(
@@ -330,7 +340,8 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         this.userProfile.coverImage ? this.userProfile.coverImage : null,
         this.userProfile.profileImage ? this.userProfile.profileImage : null
       );
-
+      console.log('userProfile On submit', userProfile);
+      console.log('trainerProfile On submit', trainerProfile);
       this.store.dispatch(setLoadingSpinner({ status: true }));
 
       this.store.dispatch(updateUserProfileStart({ userProfile }));

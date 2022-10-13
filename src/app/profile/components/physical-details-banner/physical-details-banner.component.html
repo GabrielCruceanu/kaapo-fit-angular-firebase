@@ -18,6 +18,7 @@
 
 <section
   *ngIf="
+    currentPhysicalDetails &&
     currentDay >= currentPhysicalDetails.date.date &&
     currentMonth > currentPhysicalDetails.date.month &&
     currentYear >= currentPhysicalDetails.date.year
