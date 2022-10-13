@@ -37,6 +37,7 @@ export class ClientPhysicalDetails {
     public id: string,
     public date: Birth,
     public weight: string,
+    public height: string,
     public head: string,
     public shoulders: string,
     public chest: string,

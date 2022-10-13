@@ -9,6 +9,8 @@ import { AuthResponseData } from '../model/AuthResponseData.model';
 import { Observable } from 'rxjs';
 import { UserProfile } from '../../profile/model/userProfile.model';
 import { UserImage, UserType } from '../../profile/model/profile-interface';
+import { doc, Firestore, getDoc } from '@angular/fire/firestore';
+import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,11 @@ import { UserImage, UserType } from '../../profile/model/profile-interface';
 export class AuthService {
   timeoutInterval: any;
 
-  constructor(private http: HttpClient, private store: Store<AppState>) {}
+  constructor(
+    private http: HttpClient,
+    private store: Store<AppState>,
+    private firestore: Firestore
+  ) {}
 
   onLogin(email: string, password: string): Observable<AuthResponseData> {
     return this.http.post<AuthResponseData>(
@@ -32,11 +38,16 @@ export class AuthService {
     );
   }
 
+  async onCheckUsername(username: string): Promise<boolean> {
+    const docRef = doc(this.firestore, 'usernames', username);
+    const docSnap = await getDoc(docRef);
+
+    return !!docSnap.exists();
+  }
+
   onResetPassword(email: string) {
-    return this.http.post(
-      `https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=${environment.FIREBASE_API_KEY}`,
-      { email, requestType: 'PASSWORD_RESET', returnSecureToken: true }
-    );
+    const auth = getAuth();
+    return sendPasswordResetEmail(auth, email);
   }
 
   formatUser(data: AuthResponseData) {
@@ -48,6 +59,7 @@ export class AuthService {
 
   formatUserProfileForDb(
     user: UserAuth,
+    username: string,
     hasProfile: boolean,
     dayJoined: number,
     monthJoined: number,
@@ -61,6 +73,7 @@ export class AuthService {
     return new UserProfile(
       id,
       email,
+      username,
       hasProfile,
       dayJoined,
       monthJoined,
@@ -74,15 +87,15 @@ export class AuthService {
   getErrorMessage(message: string) {
     switch (message) {
       case 'EMAIL_NOT_FOUND':
-        return 'Email Not Found';
+        return 'Adresa de email nu a fost gasita';
       case 'INVALID_PASSWORD':
-        return 'Invalid Password';
+        return 'Parola invalida';
       case 'EMAIL_EXISTS':
-        return 'Email already exists';
+        return 'Adresa de email exista deja';
       case 'MISSING_CUSTOM_TOKEN':
-        return 'Missing custom token';
+        return 'Lipseste simbolul personalizat';
       default:
-        return 'Unknown error occurred. Please try again';
+        return 'A aparut o eroare necunoscuta. Incerca din nou';
     }
   }
 

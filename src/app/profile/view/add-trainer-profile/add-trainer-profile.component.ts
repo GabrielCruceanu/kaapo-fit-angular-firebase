@@ -34,6 +34,7 @@ import {
 import { TrainerProfile } from '../../model/trainerProfile.model';
 import { TrainerData, TrainerExperienceData } from '@/data/trainerData';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-trainer-profile',
@@ -66,7 +67,8 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private profileService: ProfileService,
-    private countryService: CountryService
+    private countryService: CountryService,
+    private router: Router
   ) {
     this.store.dispatch(setErrorMessage({ message: '' }));
   }
@@ -80,6 +82,12 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
       .select(getUserProfile)
       .subscribe((userProfile) => {
         this.userProfile = userProfile;
+        if (
+          userProfile.userType !== UserType.Trainer &&
+          userProfile.hasProfile
+        ) {
+          this.router.navigate(['/profil']);
+        }
       });
 
     this.trainerProfileSub = this.store
@@ -313,6 +321,7 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
       const userProfile = new UserProfile(
         this.userProfile.id,
         this.userProfile.email,
+        this.userProfile.username,
         true,
         this.userProfile.dayJoined,
         this.userProfile.monthJoined,

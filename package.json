@@ -34,6 +34,7 @@
     "firebase": "^9.6.7",
     "google-libphonenumber": "^3.2.27",
     "libphonenumber-js": "^1.9.53",
+    "lodash": "^4.17.21",
     "ng2-file-upload": "^1.4.0",
     "ngrx-store-freeze": "^0.2.4",
     "ngx-image-compress": "^13.1.13",

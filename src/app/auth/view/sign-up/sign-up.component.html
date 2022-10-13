@@ -31,6 +31,62 @@
     </div>
     <div class="col-12">
       <mat-form-field class="form-control" appearance="outline">
+        <mat-label>Nume de utilizator</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Ex. jhon"
+          name="username"
+          formControlName="username"
+          pattern="([A-Za-z0-9_]+)"
+          (focusout)="
+            handleCheckUsername(signUpFormGroup.controls['username'].value)
+          "
+        />
+        <mat-error
+          *ngIf="
+            signUpFormGroup.controls['username'].hasError('pattern') &&
+            !signUpFormGroup.controls['username'].hasError('required')
+          "
+        >
+          Caractere invalide. Poti folosi doar a-z, 0-9 si _
+        </mat-error>
+        <mat-error
+          *ngIf="signUpFormGroup.controls['username'].hasError('required')"
+        >
+          Numele de utilizator este <strong>obligatoriu</strong>
+        </mat-error>
+        <mat-error
+          *ngIf="
+            signUpFormGroup.controls['username'].hasError(
+              'usernameIsNotValid'
+            ) && !signUpFormGroup.controls['username'].hasError('required')
+          "
+        >
+          Numele de utilizator este <strong>nu este valabil</strong>
+        </mat-error>
+        <mat-error
+          *ngIf="
+            signUpFormGroup.controls['username'].hasError('minlength') &&
+            !signUpFormGroup.controls['username'].hasError('required') &&
+            !signUpFormGroup.controls['username'].hasError('pattern')
+          "
+        >
+          Numele de utilizator trebuie să contina minim 4 caractere
+        </mat-error>
+        <mat-error
+          *ngIf="
+            signUpFormGroup.controls['username'].hasError('maxlength') &&
+            !signUpFormGroup.controls['username'].hasError('required') &&
+            !signUpFormGroup.controls['username'].hasError('pattern')
+          "
+        >
+          Numele de utilizator trebuie să contina maxim 15 caractere
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-12">
+      <mat-form-field class="form-control" appearance="outline">
         <mat-label>Parola</mat-label>
         <input
           matInput
@@ -85,7 +141,9 @@
         </mat-error>
         <mat-error
           *ngIf="
-            passwordDontMatch &&
+            signUpFormGroup.controls['confirmPassword'].hasError(
+              'passwordDontMatch'
+            ) &&
             !signUpFormGroup.controls['confirmPassword'].hasError('required')
           "
         >
@@ -94,13 +152,15 @@
       </mat-form-field>
     </div>
 
-    <div class="form-footer col-12">
-      <mat-error *ngIf="errorMessage$ | async as errorMessage">
-        {{ errorMessage }}
-      </mat-error>
+    <div class="form-footer col-12 mt-3">
+      <div class="mb-3" *ngIf="errorMessage$ | async as errorMessage">
+        <mat-error>
+          {{ errorMessage }}
+        </mat-error>
+      </div>
 
       <button mat-button [class.disabled]="!signUpFormGroup.valid">
-        Creare cont
+        Creaza cont
       </button>
     </div>
   </form>

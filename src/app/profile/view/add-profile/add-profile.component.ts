@@ -1,32 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import {
-  ADD_ICON,
   CLIENT_ICON,
   NUTRITION_ICON,
-  PROGRESS_ICON,
   TRAINER_ICON,
   WORKOUT_ICON,
-} from '../../../../content/icons';
-import { getProfilesData } from '../../../../data/profileData';
+} from '@/content/icons';
+import { getProfilesData } from '@/data/profileData';
 import { ProfileData } from '../../model/profileData.model';
-import { ProfileService } from '../../services/profile.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-profile',
   templateUrl: './add-profile.component.html',
   styleUrls: ['./add-profile.component.scss'],
 })
-export class AddProfileComponent implements OnInit {
+export class AddProfileComponent {
   profiles: ProfileData[];
 
   constructor(
     private domSanitizer: DomSanitizer,
-    private matIconRegistry: MatIconRegistry,
-    private profileService: ProfileService,
-    private router: Router
+    private matIconRegistry: MatIconRegistry
   ) {
     this.matIconRegistry.addSvgIconLiteral(
       'client',
@@ -47,6 +41,4 @@ export class AddProfileComponent implements OnInit {
 
     this.profiles = getProfilesData();
   }
-
-  ngOnInit() {}
 }

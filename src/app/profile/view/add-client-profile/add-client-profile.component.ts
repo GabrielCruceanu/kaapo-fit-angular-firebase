@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthType } from '@/app/auth/model/AuthResponseData.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import {
@@ -36,6 +30,7 @@ import {
   updateUserProfileStart,
 } from '../../store/profile.actions';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-client-profile',
@@ -67,7 +62,8 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private profileService: ProfileService,
-    private countryService: CountryService
+    private countryService: CountryService,
+    private router: Router
   ) {
     this.store.dispatch(setErrorMessage({ message: '' }));
     this.clientFormGroup = new FormGroup({
@@ -91,6 +87,12 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       .select(getUserProfile)
       .subscribe((userProfile) => {
         this.userProfile = userProfile;
+        if (
+          userProfile.userType !== UserType.Client &&
+          userProfile.hasProfile
+        ) {
+          this.router.navigate(['/profil']);
+        }
       });
 
     this.clientProfileSub = this.store
@@ -98,7 +100,6 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       .subscribe((clientProfile) => {
         this.clientProfile = clientProfile;
       });
-    console.log('this.filteredCities before form ', this.filteredCities);
 
     this.clientFormGroup = new FormGroup({
       firstname: new FormControl(
@@ -267,6 +268,7 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
       const userProfile = new UserProfile(
         this.userProfile.id,
         this.userProfile.email,
+        this.userProfile.username,
         true,
         this.userProfile.dayJoined,
         this.userProfile.monthJoined,

@@ -34,6 +34,7 @@ import {
 } from '../../store/profile.actions';
 import { NutritionistProfile } from '../../model/nutritionistProfile.model';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-nutritionist-profile',
@@ -66,7 +67,8 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private profileService: ProfileService,
-    private countryService: CountryService
+    private countryService: CountryService,
+    private router: Router
   ) {
     this.store.dispatch(setErrorMessage({ message: '' }));
   }
@@ -80,6 +82,12 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
       .select(getUserProfile)
       .subscribe((userProfile) => {
         this.userProfile = userProfile;
+        if (
+          userProfile.userType !== UserType.Nutritionist &&
+          userProfile.hasProfile
+        ) {
+          this.router.navigate(['/profil']);
+        }
       });
 
     this.nutritionistProfileSub = this.store
@@ -301,6 +309,7 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
       const userProfile = new UserProfile(
         this.userProfile.id,
         this.userProfile.email,
+        this.userProfile.username,
         true,
         this.userProfile.dayJoined,
         this.userProfile.monthJoined,

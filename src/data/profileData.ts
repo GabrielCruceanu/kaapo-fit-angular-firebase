@@ -16,12 +16,12 @@ export const ProfilesData: ProfileData[] = [
   },
   {
     name: 'Antrenor',
-    link: '/profil/trainer',
+    link: '/profil/antrenor',
     icon: 'trainer',
   },
   {
     name: 'Sala',
-    link: '/profil/gym',
+    link: '/profil/sala',
     icon: 'workout',
   },
 ];

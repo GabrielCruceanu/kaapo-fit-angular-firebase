@@ -3,17 +3,18 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth } from '@angular/fire/auth';
 import { AuthType } from '../../model/AuthResponseData.model';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
+import { AppState } from '@/app/store/app.state';
 import {
   setErrorMessage,
   setLoadingSpinner,
-} from '../../../store/shared/shared.actions';
+} from '@/app/store/shared/shared.actions';
 import { signupStart } from '../../store/auth.actions';
 import { Observable, Subscription } from 'rxjs';
 import {
   getErrorMessage,
   getLoading,
-} from '../../../store/shared/shared.selector';
+} from '@/app/store/shared/shared.selector';
+import { AuthService } from '@/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -25,25 +26,36 @@ export class SignUpComponent implements OnInit {
   passwordDontMatch: boolean;
   getLoadingSpinnerSub: Subscription | undefined;
   errorMessage$: Observable<any> | undefined;
+  usernameIsNotValid: boolean;
+  signUpFormGroup: FormGroup;
 
-  signUpFormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-    ]),
-    confirmPassword: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-    ]),
-  });
-
-  constructor(@Optional() private auth: Auth, private store: Store<AppState>) {
+  constructor(
+    @Optional() private auth: Auth,
+    private store: Store<AppState>,
+    private authService: AuthService
+  ) {
     this.passwordDontMatch = true;
     this.store.dispatch(setErrorMessage({ message: '' }));
   }
 
   ngOnInit() {
+    this.signUpFormGroup = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      username: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(15),
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
+    });
+
     this.getLoadingSpinnerSub = this.store
       .select(getLoading)
       .subscribe((isLoading) => {
@@ -59,17 +71,31 @@ export class SignUpComponent implements OnInit {
 
   checkPasswordMatch(pass?: string, confirmPass?: string) {
     if (pass && confirmPass) {
-      pass === confirmPass
-        ? (this.passwordDontMatch = true)
-        : (this.passwordDontMatch = false);
-    } else {
-      this.passwordDontMatch = true;
+      pass !== confirmPass
+        ? this.signUpFormGroup.controls['confirmPassword'].setErrors({
+            passwordDontMatch: true,
+          })
+        : null;
+    }
+  }
+
+  handleCheckUsername(value: string) {
+    if (value.length >= 3) {
+      return this.authService.onCheckUsername(value).then((r) => {
+        if (r) {
+          this.signUpFormGroup.controls['username'].setErrors({
+            usernameIsNotValid: true,
+          });
+        }
+      });
     }
   }
 
   onSubmit(form: FormGroup) {
-    const { email, password } = form.value;
-    this.store.dispatch(setLoadingSpinner({ status: true }));
-    this.store.dispatch(signupStart({ email, password }));
+    const { email, username, password } = form.value;
+    if (form.valid) {
+      this.store.dispatch(setLoadingSpinner({ status: true }));
+      this.store.dispatch(signupStart({ email, username, password }));
+    }
   }
 }

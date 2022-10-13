@@ -29,6 +29,7 @@ import {
 } from '../../store/profile.actions';
 import { GymProfile } from '../../model/gym.model';
 import { GymData } from '@/data/gymData';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-gym-profile',
@@ -59,7 +60,8 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private profileService: ProfileService,
-    private countryService: CountryService
+    private countryService: CountryService,
+    private router: Router
   ) {
     this.store.dispatch(setErrorMessage({ message: '' }));
   }
@@ -73,7 +75,10 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
       .select(getUserProfile)
       .subscribe((userProfile) => {
         this.userProfile = userProfile;
-        console.log('this.userProfile', this.userProfile);
+
+        if (userProfile.userType !== UserType.Gym && userProfile.hasProfile) {
+          this.router.navigate(['/profil']);
+        }
       });
 
     this.gymProfileSub = this.store
@@ -257,6 +262,7 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
       const userProfile = new UserProfile(
         this.userProfile.id,
         this.userProfile.email,
+        this.userProfile.username,
         true,
         this.userProfile.dayJoined,
         this.userProfile.monthJoined,

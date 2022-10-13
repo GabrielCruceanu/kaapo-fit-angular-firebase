@@ -91,13 +91,12 @@ export class ProfileEffects {
     return this.actions$.pipe(
       ofType(getUserProfileStart),
       switchMap((action) => {
-        console.log('getUserProfileStart');
         return this.profileService
           .getUserProfileFromDb(action.userProfileId)
           .pipe(
             map((data) => {
               const userProfile = data as UserProfile;
-              console.log('getUserProfileStart > userProfile', userProfile);
+
               this.profileService.setUserProfileInLocalStorage(userProfile);
               this.store.dispatch(setLoadingSpinner({ status: false }));
               return getUserProfileSuccess({

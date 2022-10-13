@@ -81,7 +81,11 @@ export class AuthEffects {
 
             //Save user local and in Firestore
             this.authService.setUserAuthInLocalStorage(userAuth);
-            return signupSuccess({ userAuth: userAuth, redirect: true });
+            return signupSuccess({
+              userAuth: userAuth,
+              username: action.username,
+              redirect: true,
+            });
           }),
           catchError((errResp) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
@@ -111,6 +115,7 @@ export class AuthEffects {
         };
         const userProfile = this.authService.formatUserProfileForDb(
           action.userAuth,
+          action.username,
           false,
           new Date().getUTCDate(),
           new Date().getUTCMonth() + 1,
@@ -129,18 +134,9 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(resetStart),
       exhaustMap((action) => {
-        return this.authService.onResetPassword(action.email).pipe(
-          map(() => {
-            return resetSuccess({ redirect: false });
-          }),
-          catchError((errResp) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            const errorMessage = this.authService.getErrorMessage(
-              errResp.error.error.message
-            );
-            return of(setErrorMessage({ message: errorMessage }));
-          })
-        );
+        return this.authService.onResetPassword(action.email).then(() => {
+          return resetSuccess({ redirect: true });
+        });
       })
     );
   });
@@ -154,7 +150,6 @@ export class AuthEffects {
           this.profileService.getUserProfileFromLocalStorage();
 
         if (userAuth && !userProfile) {
-          console.log('userAuth && !userProfile');
           this.store.dispatch(
             getUserProfileStart({ userProfileId: userAuth.id })
           );
@@ -169,7 +164,6 @@ export class AuthEffects {
               const clientProfile =
                 this.profileService.getClientProfileFromLocalStorage();
               if (clientProfile) {
-                console.log('autoLogin > clientProfile', clientProfile);
                 this.store.dispatch(
                   getClientHistoryPhysicalDetails({
                     clientId: clientProfile.id,
@@ -257,6 +251,22 @@ export class AuthEffects {
           this.store.dispatch(setErrorMessage({ message: '' }));
           if (action.redirect) {
             this.router.navigate(['/profil']);
+          }
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
+  resetSuccess$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(resetSuccess),
+        tap((action) => {
+          this.store.dispatch(setErrorMessage({ message: '' }));
+          if (action.redirect) {
+            this.store.dispatch(setLoadingSpinner({ status: true }));
+            this.router.navigate(['/autentificare']);
           }
         })
       );

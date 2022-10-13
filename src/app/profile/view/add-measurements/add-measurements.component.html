@@ -167,6 +167,30 @@
               </mat-error>
             </mat-form-field>
           </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Inaltime</mat-label>
+              <input matInput name="weight" formControlName="height" />
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['height'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Acest camp este <strong>obligatoriu</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addMeasurementsFormGroup.controls['height'].hasError(
+                    'pattern'
+                  )
+                "
+              >
+                Foloseste doar cifre
+              </mat-error>
+            </mat-form-field>
+          </div>
 
           <div class="col-6 col-md-4 col-lg-2">
             <mat-form-field appearance="outline">

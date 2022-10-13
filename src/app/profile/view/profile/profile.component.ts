@@ -53,7 +53,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userProfileSub = this.store
       .select(getUserProfile)
       .subscribe((userProfile) => {
-        console.log('profile component => userProfile', userProfile);
         if (
           userProfile &&
           !this.profileService.checkIfUserHasProfile(userProfile)
