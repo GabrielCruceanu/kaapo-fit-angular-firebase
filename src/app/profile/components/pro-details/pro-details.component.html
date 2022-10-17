@@ -96,6 +96,10 @@
             </a>
           </p>
         </li>
+
+        <li *ngIf="street && streetNo">
+          <p><span>Strada:</span> {{ street }} nr. {{ streetNo }}</p>
+        </li>
       </ul>
     </div>
   </div>

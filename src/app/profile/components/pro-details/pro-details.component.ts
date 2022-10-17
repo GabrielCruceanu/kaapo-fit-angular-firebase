@@ -19,6 +19,8 @@ export class ProDetailsComponent implements OnInit {
   @Input() type: string;
   @Input() certificate: boolean;
   @Input() description: string;
+  @Input() street?: string;
+  @Input() streetNo?: string;
   @Input() contact: Contact;
   reviews$: Observable<Review[] | null>;
 

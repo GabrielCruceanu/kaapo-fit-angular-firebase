@@ -13,9 +13,9 @@
       <div class="col-lg-8">
         <!--   Details     -->
         <div class="row">
-          <div class="col-12 col-md-6 col-lg-6 mt-3">
+          <div class="col-12 col-md-6 col-lg-6">
             <mat-form-field class="form-control col-md-6" appearance="outline">
-              <mat-label>Name</mat-label>
+              <mat-label>Nume sala</mat-label>
               <input
                 matInput
                 placeholder="Kaapo Gym"
@@ -25,18 +25,18 @@
               <mat-error
                 *ngIf="gymFormGroup.controls['name'].hasError('required')"
               >
-                Gym name is <strong>required</strong>
+                Numele salii este <strong>obligatoriu</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-6 mt-3">
+          <div class="col-md-6 col-lg-6">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Gym Type</mat-label>
+              <mat-label>Tipul salii</mat-label>
               <input
                 type="text"
                 matInput
-                placeholder="Pick one"
+                placeholder="Alege un tip"
                 aria-label="Calisthenic"
                 name="gymType"
                 formControlName="gymType"
@@ -50,17 +50,17 @@
               <mat-error
                 *ngIf="gymFormGroup.controls['gymType'].hasError('required')"
               >
-                Gym type is <strong>required</strong>
+                Tipul salii este <strong>obligatoriu</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-md-12">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Description</mat-label>
+              <mat-label>Descriere</mat-label>
               <textarea
                 matInput
-                placeholder="About you and your experience"
+                placeholder="Despre sala"
                 name="description"
                 formControlName="description"
                 rows="5"
@@ -71,33 +71,35 @@
                   gymFormGroup.controls['description'].hasError('required')
                 "
               >
-                Description is <strong>required</strong>
+                Descrierea este <strong>obligatorie</strong>
               </mat-error>
               <mat-error
                 *ngIf="
                   gymFormGroup.controls['description'].hasError('minlength')
                 "
               >
-                Description is <strong>minimum 100 characters.</strong>
+                Descrierea trebuie sa contina
+                <strong>minimum 100 caractere.</strong>
               </mat-error>
               <mat-error
                 *ngIf="
                   gymFormGroup.controls['description'].hasError('maxlength')
                 "
               >
-                Description is <strong>maximum 400 characters.</strong>
+                Descrierea trebuie sa contina
+                <strong>minimum 400 caractere.</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Country</mat-label>
+              <mat-label>Tara</mat-label>
               <input
                 type="text"
                 matInput
                 formControlName="country"
-                placeholder="Pick one"
+                placeholder="Romania"
                 aria-label="Country"
                 [matAutocomplete]="countries"
                 (ngModelChange)="onDisableInput('state', 'country')"
@@ -112,7 +114,7 @@
               <mat-error
                 *ngIf="gymFormGroup.controls['country'].hasError('required')"
               >
-                Country is <strong>required</strong>
+                Tara este <strong>obligatorie</strong>
               </mat-error>
               <mat-error
                 *ngIf="
@@ -121,19 +123,19 @@
                   ) && !gymFormGroup.controls['country'].hasError('required')
                 "
               >
-                Pick a country from the list
+                Alege din lista
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>State</mat-label>
+              <mat-label>Judet</mat-label>
               <input
                 type="text"
                 matInput
                 formControlName="state"
-                placeholder="Pick one"
+                placeholder="Vrancea"
                 aria-label="State"
                 [matAutocomplete]="states"
                 (ngModelChange)="onDisableInput('city', 'state')"
@@ -148,7 +150,7 @@
               <mat-error
                 *ngIf="gymFormGroup.controls['country'].hasError('required')"
               >
-                State is <strong>required</strong>
+                Judetul este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
@@ -157,19 +159,19 @@
                   ) && !gymFormGroup.controls['state'].hasError('required')
                 "
               >
-                Pick a state from the list
+                Alege din lista
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>City</mat-label>
+              <mat-label>Oras / Sector</mat-label>
               <input
                 type="text"
                 matInput
                 formControlName="city"
-                placeholder="Pick one"
+                placeholder="Focsani"
                 aria-label="City"
                 [matAutocomplete]="cities"
               />
@@ -183,14 +185,14 @@
               <mat-error
                 *ngIf="gymFormGroup.controls['city'].hasError('required')"
               >
-                City is <strong>required</strong>
+                Orasul / Sectorul este <strong>obligatoriu</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-6 mt-3">
+          <div class="col-12 col-md-6 col-lg-6">
             <mat-form-field class="form-control col-md-6" appearance="outline">
-              <mat-label>Street</mat-label>
+              <mat-label>Strada</mat-label>
               <input
                 matInput
                 placeholder="Longinescu"
@@ -200,14 +202,14 @@
               <mat-error
                 *ngIf="gymFormGroup.controls['street'].hasError('required')"
               >
-                Street name is <strong>required</strong>
+                Strada este <strong>obligatorie</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-6 mt-3">
+          <div class="col-12 col-md-6 col-lg-6">
             <mat-form-field class="form-control col-md-6" appearance="outline">
-              <mat-label>Street Number</mat-label>
+              <mat-label>Numar strada</mat-label>
               <input
                 matInput
                 placeholder="12"
@@ -217,14 +219,14 @@
               <mat-error
                 *ngIf="gymFormGroup.controls['strNo'].hasError('required')"
               >
-                Street number is <strong>required</strong>
+                Numarul strazii este <strong>oblgiatoriu</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-6 mt-3">
+          <div class="col-md-6 col-lg-6">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Phone Number</mat-label>
+              <mat-label>Telefon</mat-label>
               <!--              <ngx-mat-intl-tel-input-->
               <!--                [preferredCountries]="['ro']"-->
               <!--                [required]="true"-->
@@ -245,7 +247,7 @@
               <mat-error
                 *ngIf="gymFormGroup.controls['phone'].hasError('required')"
               >
-                Phone number is <strong>required</strong>
+                Numarul de telefon este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
@@ -253,12 +255,12 @@
                   !gymFormGroup.controls['phone'].hasError('required')
                 "
               >
-                Phone number need to have 10 character
+                Numarul de telefon trebuie sa contina 10 caractere
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-6 mt-3">
+          <div class="col-12 col-md-6 col-lg-6">
             <mat-form-field class="form-control col-md-6" appearance="outline">
               <mat-label>Website</mat-label>
               <input
@@ -270,36 +272,36 @@
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-6 mt-3">
+          <div class="col-12 col-md-6 col-lg-4">
             <mat-form-field class="form-control col-md-6" appearance="outline">
               <mat-label>Facebook</mat-label>
               <input
                 matInput
-                placeholder="Facebook link"
+                placeholder="Nume de utilizator"
                 name="facebook"
                 formControlName="facebook"
               />
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-6 mt-3">
-            <mat-form-field class="form-control col-md-6" appearance="outline">
+          <div class="col-12 col-md-6 col-lg-4">
+            <mat-form-field class="form-control" appearance="outline">
               <mat-label>Twitter</mat-label>
               <input
                 matInput
-                placeholder="Twitter link"
+                placeholder="Nume de utilizator"
                 name="twitter"
                 formControlName="twitter"
               />
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-6 mt-3">
-            <mat-form-field class="form-control col-md-6" appearance="outline">
+          <div class="col-12 col-md-6 col-lg-4">
+            <mat-form-field class="form-control" appearance="outline">
               <mat-label>Instagram</mat-label>
               <input
                 matInput
-                placeholder="Instagram link"
+                placeholder="Nume de utilizator"
                 name="instagram"
                 formControlName="instagram"
               />
@@ -312,7 +314,7 @@
           {{ errorMessage }}
         </mat-error>
         <button mat-button [class.disabled]="!gymFormGroup.valid" type="submit">
-          Save Profile
+          Salvare
         </button>
       </div>
     </form>
