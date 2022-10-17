@@ -241,6 +241,17 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
   }
 
   onNutritionistSubmit() {
+    if (
+      this.profileService.cityIsNotFromState(
+        this.nutritionistFormGroup.controls['city'].value,
+        this.onlyCities
+      )
+    ) {
+      this.nutritionistFormGroup.controls['city'].markAsTouched();
+      this.nutritionistFormGroup.controls['city'].setErrors({
+        isNotCityFromList: true,
+      });
+    }
     if (this.nutritionistFormGroup.valid && this.userAuth && this.userProfile) {
       const {
         firstname,
@@ -280,31 +291,71 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         instagram: instagram,
       };
 
-      const nutritionistProfile = new NutritionistProfile(
-        this.userAuth.id,
-        UserType.Nutritionist,
-        firstname,
-        lastname,
-        null,
-        gender,
-        joinedFinal,
-        birthFinal,
-        false,
-        false,
-        experience,
-        country,
-        state,
-        city,
-        contactFinal,
-        description,
-        null,
-        this.userProfile.coverImage ? this.userProfile.coverImage : null,
-        this.userProfile.profileImage ? this.userProfile.profileImage : null,
-        null,
-        null,
-        null,
-        null
-      );
+      const nutritionistProfile = this.nutritionistProfile
+        ? new NutritionistProfile(
+            this.userAuth.id,
+            UserType.Nutritionist,
+            firstname,
+            lastname,
+            null,
+            gender,
+            joinedFinal,
+            birthFinal,
+            this.nutritionistProfile.hasProPremium,
+            this.nutritionistProfile.certificate,
+            experience,
+            country,
+            state,
+            city,
+            contactFinal,
+            description,
+            this.nutritionistProfile.completedClients
+              ? this.nutritionistProfile.completedClients
+              : null,
+            this.userProfile.coverImage ? this.userProfile.coverImage : null,
+            this.userProfile.profileImage
+              ? this.userProfile.profileImage
+              : null,
+            this.nutritionistProfile.currentPhysicalDetails
+              ? this.nutritionistProfile.currentPhysicalDetails
+              : null,
+            this.nutritionistProfile.activeClients
+              ? this.nutritionistProfile.activeClients
+              : null,
+            this.nutritionistProfile.gallery
+              ? this.nutritionistProfile.gallery
+              : null,
+            this.nutritionistProfile.reviews
+              ? this.nutritionistProfile.reviews
+              : null
+          )
+        : new NutritionistProfile(
+            this.userAuth.id,
+            UserType.Nutritionist,
+            firstname,
+            lastname,
+            null,
+            gender,
+            joinedFinal,
+            birthFinal,
+            false,
+            false,
+            experience,
+            country,
+            state,
+            city,
+            contactFinal,
+            description,
+            null,
+            this.userProfile.coverImage ? this.userProfile.coverImage : null,
+            this.userProfile.profileImage
+              ? this.userProfile.profileImage
+              : null,
+            null,
+            null,
+            null,
+            null
+          );
 
       const userProfile = new UserProfile(
         this.userProfile.id,
@@ -319,6 +370,8 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         this.userProfile.profileImage ? this.userProfile.profileImage : null
       );
 
+      console.log('userProfile On submit', userProfile);
+      console.log('nutritionistProfile On submit', nutritionistProfile);
       this.store.dispatch(setLoadingSpinner({ status: true }));
 
       this.store.dispatch(updateUserProfileStart({ userProfile }));

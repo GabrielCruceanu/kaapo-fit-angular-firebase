@@ -236,9 +236,6 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
   }
 
   onTrainerSubmit() {
-    console.log('this.trainerFormGroup', this.trainerFormGroup.valid);
-    console.log('this.userAuth', this.userAuth);
-    console.log('this.userProfile', this.userProfile);
     if (
       this.profileService.cityIsNotFromState(
         this.trainerFormGroup.controls['city'].value,
@@ -251,7 +248,6 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
       });
     }
     if (this.trainerFormGroup.valid && this.userAuth && this.userProfile) {
-      console.log('trainer form');
       const {
         firstname,
         lastname,
