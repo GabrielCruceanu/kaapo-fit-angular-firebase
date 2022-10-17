@@ -39,6 +39,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'antrenori',
+    loadChildren: () =>
+      import('./trainer/trainer.module').then((m) => m.TrainerModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'nutritionisti',
     loadChildren: () =>
       import('./nutrition/nutrition.module').then((m) => m.NutritionModule),
@@ -46,8 +52,7 @@ const routes: Routes = [
   },
   {
     path: 'sali',
-    loadChildren: () =>
-      import('./workout/workout.module').then((m) => m.WorkoutModule),
+    loadChildren: () => import('./gym/gym.module').then((m) => m.GymModule),
     canActivate: [AuthGuard],
   },
   {
