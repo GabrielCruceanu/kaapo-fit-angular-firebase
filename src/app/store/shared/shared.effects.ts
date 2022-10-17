@@ -31,7 +31,6 @@ export class SharedEffects {
 
         return this.profileService.getUsersFromDb().pipe(
           map((users) => {
-            console.log('getUsersStart > users', users);
             this.store.dispatch(setLoadingSpinner({ status: false }));
             return getUsersSuccess({ users: users });
           }),

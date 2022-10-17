@@ -3,12 +3,15 @@ import { AuthType } from '../../model/AuthResponseData.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
+import { AppState } from '@/app/store/app.state';
 import {
   getErrorMessage,
   getLoading,
-} from '../../../store/shared/shared.selector';
-import {setErrorMessage, setLoadingSpinner} from '../../../store/shared/shared.actions';
+} from '@/app/store/shared/shared.selector';
+import {
+  setErrorMessage,
+  setLoadingSpinner,
+} from '@/app/store/shared/shared.actions';
 import { resetStart } from '../../store/auth.actions';
 
 @Component({
@@ -26,7 +29,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   });
 
   constructor(private store: Store<AppState>) {
-    this.store.dispatch(setErrorMessage({message: ''}))
+    this.store.dispatch(setErrorMessage({ message: '' }));
   }
 
   ngOnInit(): void {
@@ -47,7 +50,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     if (this.resetFormGroup.valid) {
       const { email } = this.resetFormGroup.value;
       this.store.dispatch(setLoadingSpinner({ status: true }));
-      this.store.dispatch(resetStart(email));
+      this.store.dispatch(resetStart({ email: email }));
     }
   }
 

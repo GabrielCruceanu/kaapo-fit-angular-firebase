@@ -50,7 +50,7 @@ export class UserProfileHistoryComponent implements OnInit, OnDestroy {
     this.getClientProfileSub = this.store
       .select(getClientProfile)
       .subscribe((clientProfile) => {
-        if (clientProfile.id) {
+        if (clientProfile && clientProfile.id) {
           this.store.dispatch(
             getClientHistoryPhysicalDetails({ clientId: clientProfile.id })
           );

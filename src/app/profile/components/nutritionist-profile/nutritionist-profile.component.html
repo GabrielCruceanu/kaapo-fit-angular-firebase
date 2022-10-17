@@ -25,6 +25,12 @@
           [description]="nutritionistProfileDetails.description"
           [contact]="nutritionistProfileDetails.contact"
         ></pro-details>
+
+        <user-profile-details-container
+          [currentPhysicalDetails]="
+            nutritionistProfileDetails?.currentPhysicalDetails
+          "
+        ></user-profile-details-container>
       </div>
       <div class="col-lg-3">
         <app-user-profile-sidebar></app-user-profile-sidebar>

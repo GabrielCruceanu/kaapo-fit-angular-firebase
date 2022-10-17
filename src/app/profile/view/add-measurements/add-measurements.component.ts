@@ -27,8 +27,8 @@ import {
   UserType,
 } from '@/app/profile/model/profile-interface';
 import {
-  setCurrentPhysicalDetailsStart,
   setClientHistoryPhysicalDetailsStart,
+  setCurrentPhysicalDetailsStart,
 } from '@/app/profile/store/profile.actions';
 import { TrainerProfile } from '@/app/profile/model/trainerProfile.model';
 import { NutritionistProfile } from '@/app/profile/model/nutritionistProfile.model';
@@ -92,7 +92,7 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
               });
             break;
 
-          case UserType.Trainer:
+          case UserType.Nutritionist:
             this.nutritionistProfileSub = this.store
               .select(getNutritionistProfile)
               .subscribe((nutritionistProfile) => {
@@ -110,6 +110,12 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
       weight: new FormControl(
         this.currentUserProfile?.currentPhysicalDetails?.weight
           ? this.currentUserProfile?.currentPhysicalDetails?.weight
+          : '',
+        [Validators.required, Validators.pattern('^[0-9]*$')]
+      ),
+      height: new FormControl(
+        this.currentUserProfile?.currentPhysicalDetails?.height
+          ? this.currentUserProfile?.currentPhysicalDetails?.height
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
@@ -254,6 +260,7 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
     const year = new Date().getUTCFullYear();
     const {
       weight,
+      height,
       head,
       shoulders,
       chest,
@@ -282,6 +289,7 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
           year: year,
         },
         weight,
+        height,
         head,
         shoulders,
         chest,

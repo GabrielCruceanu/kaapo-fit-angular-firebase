@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <h1 class="app-title">Nutritionist profile</h1>
+        <h1 class="app-title">Nutritionist</h1>
       </div>
     </div>
     <form
@@ -13,9 +13,9 @@
       <div class="col-lg-8">
         <!--   Details     -->
         <div class="row">
-          <div class="col-md-6 mt-3">
+          <div class="col-md-6">
             <mat-form-field class="form-control col-md-6" appearance="outline">
-              <mat-label>Firstname</mat-label>
+              <mat-label>Prenume</mat-label>
               <input
                 matInput
                 placeholder="Jon"
@@ -29,14 +29,14 @@
                   )
                 "
               >
-                Firstname is <strong>required</strong>
+                Prenumele este <strong>obligatoriu</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 mt-3">
+          <div class="col-md-6">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Lastname</mat-label>
+              <mat-label>Nume</mat-label>
               <input
                 type="text"
                 matInput
@@ -51,14 +51,14 @@
                   )
                 "
               >
-                Lastname is <strong>required</strong>
+                Numele este <strong>obligatoriu</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-md-12">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Description</mat-label>
+              <mat-label>Descriere</mat-label>
               <textarea
                 matInput
                 placeholder="About you and your experience"
@@ -74,7 +74,7 @@
                   )
                 "
               >
-                Description is <strong>required</strong>
+                Descrierea este <strong>obligatiorie</strong>
               </mat-error>
               <mat-error
                 *ngIf="
@@ -83,7 +83,8 @@
                   )
                 "
               >
-                Description is <strong>minimum 100 characters.</strong>
+                Descrierea trebuie sa contina
+                <strong>minim 100 caractere.</strong>
               </mat-error>
               <mat-error
                 *ngIf="
@@ -92,14 +93,15 @@
                   )
                 "
               >
-                Description is <strong>maximum 400 characters.</strong>
+                Descrierea trebuie sa contina
+                <strong>maxim 400 caractere.</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Experience</mat-label>
+              <mat-label>Experienta</mat-label>
               <input
                 type="text"
                 matInput
@@ -123,14 +125,14 @@
                   )
                 "
               >
-                Experience is <strong>required</strong>
+                Experienta este <strong>obligatorie</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
             <mat-form-field class="example-full-width" appearance="outline">
-              <mat-label>Birth</mat-label>
+              <mat-label>Data nasterii</mat-label>
               <input
                 matInput
                 [matDatepicker]="picker"
@@ -148,38 +150,38 @@
                   nutritionistFormGroup.controls['birth'].hasError('required')
                 "
               >
-                Birth is <strong>required</strong>
+                Data nasterii este <strong>obligatorie</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Gender</mat-label>
+              <mat-label>Gen</mat-label>
 
               <mat-select formControlName="gender">
-                <mat-option value="male">Male</mat-option>
-                <mat-option value="female">Female</mat-option>
-                <mat-option value="other">Other</mat-option>
+                <mat-option value="male">Masculin</mat-option>
+                <mat-option value="female">Feminin</mat-option>
+                <mat-option value="other">Altu</mat-option>
               </mat-select>
               <mat-error
                 *ngIf="
                   nutritionistFormGroup.controls['gender'].hasError('required')
                 "
               >
-                Gender is <strong>required</strong>
+                Genul este <strong>obligatoriu</strong>
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Country</mat-label>
+              <mat-label>Tara</mat-label>
               <input
                 type="text"
                 matInput
                 formControlName="country"
-                placeholder="Pick one"
+                placeholder="Romania"
                 aria-label="Country"
                 [matAutocomplete]="countries"
                 (ngModelChange)="onDisableInput('state', 'country')"
@@ -196,7 +198,7 @@
                   nutritionistFormGroup.controls['country'].hasError('required')
                 "
               >
-                Country is <strong>required</strong>
+                Tara este <strong>obligatorie</strong>
               </mat-error>
               <mat-error
                 *ngIf="
@@ -208,19 +210,19 @@
                   )
                 "
               >
-                Pick a country from the list
+                Alege o tara din lista
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>State</mat-label>
+              <mat-label>Judet</mat-label>
               <input
                 type="text"
                 matInput
                 formControlName="state"
-                placeholder="Pick one"
+                placeholder="Vrancea"
                 aria-label="State"
                 [matAutocomplete]="states"
                 (ngModelChange)="onDisableInput('city', 'state')"
@@ -237,7 +239,7 @@
                   nutritionistFormGroup.controls['country'].hasError('required')
                 "
               >
-                State is <strong>required</strong>
+                Judetul este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
@@ -247,19 +249,19 @@
                   !nutritionistFormGroup.controls['state'].hasError('required')
                 "
               >
-                Pick a state from the list
+                Alege un judet din lista
               </mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>City</mat-label>
+              <mat-label>Oras / Sector</mat-label>
               <input
                 type="text"
                 matInput
                 formControlName="city"
-                placeholder="Pick one"
+                placeholder="Focsani"
                 aria-label="City"
                 [matAutocomplete]="cities"
               />
@@ -275,14 +277,24 @@
                   nutritionistFormGroup.controls['city'].hasError('required')
                 "
               >
-                City is <strong>required</strong>
+                Orasul este <strong>obligatoriu</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['city'].hasError(
+                    'isNotCityFromList'
+                  ) &&
+                  !nutritionistFormGroup.controls['city'].hasError('required')
+                "
+              >
+                Alege un oras/sector din lista.
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-md-6 col-lg-6 mt-3">
+          <div class="col-md-6 col-lg-6">
             <mat-form-field class="form-control" appearance="outline">
-              <mat-label>Phone Number</mat-label>
+              <mat-label>Numar Telefon</mat-label>
               <!--              <ngx-mat-intl-tel-input-->
               <!--                [preferredCountries]="['ro']"-->
               <!--                [required]="true"-->
@@ -296,7 +308,7 @@
 
               <input
                 matInput
-                placeholder="+40770121945"
+                placeholder="0770121945"
                 name="phone"
                 formControlName="phone"
               />
@@ -305,7 +317,7 @@
                   nutritionistFormGroup.controls['phone'].hasError('required')
                 "
               >
-                Phone number is <strong>required</strong>
+                Numarul de telefon este <strong>obligatoriu</strong>
               </mat-error>
               <mat-error
                 *ngIf="
@@ -313,53 +325,63 @@
                   !nutritionistFormGroup.controls['phone'].hasError('required')
                 "
               >
-                Phone number need to have 10 character
+                Numarul de telefon trebuie sa contina 10 cifre
               </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-6 mt-3">
+          <div class="col-12 col-md-6 col-lg-6">
             <mat-form-field class="form-control col-md-6" appearance="outline">
               <mat-label>Website</mat-label>
               <input
                 matInput
-                placeholder="Website link"
+                placeholder="https://website.ro/"
                 name="website"
                 formControlName="website"
               />
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['website'].hasError(
+                    'isNotHttp'
+                  )
+                "
+              >
+                Website-ul trebuie sa inceapa
+                <strong>http:// sau https://</strong>
+              </mat-error>
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-6 mt-3">
+          <div class="col-12 col-md-6 col-lg-4">
             <mat-form-field class="form-control col-md-6" appearance="outline">
               <mat-label>Facebook</mat-label>
               <input
                 matInput
-                placeholder="Facebook link"
+                placeholder="nume de utilizator"
                 name="facebook"
                 formControlName="facebook"
               />
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-6 mt-3">
+          <div class="col-12 col-md-6 col-lg-4">
             <mat-form-field class="form-control col-md-6" appearance="outline">
               <mat-label>Twitter</mat-label>
               <input
                 matInput
-                placeholder="Twitter link"
+                placeholder="nume de utilizator"
                 name="twitter"
                 formControlName="twitter"
               />
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-6 mt-3">
+          <div class="col-12 col-md-6 col-lg-4">
             <mat-form-field class="form-control col-md-6" appearance="outline">
               <mat-label>Instagram</mat-label>
               <input
                 matInput
-                placeholder="Instagram link"
+                placeholder="nume de utilizator"
                 name="instagram"
                 formControlName="instagram"
               />

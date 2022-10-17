@@ -1,8 +1,8 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   doc,
   docData,
@@ -20,10 +20,8 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
-import { getUserProfile } from '../store/profile.selector';
 import { Review } from '@/app/profile/model/review.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Router } from '@angular/router';
 import { CollectionsType } from '@/app/profile/model/profile-interface';
 
 export const _filer = (opt: string[], value: string): string[] => {
@@ -35,28 +33,13 @@ export const _filer = (opt: string[], value: string): string[] => {
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileService implements OnDestroy {
-  userProfile: UserProfile | null;
-  userProfileSub: Subscription | undefined;
-  usersProfile: UserProfile[] | null;
-  usersProfileSub: Subscription | undefined;
-
+export class ProfileService {
   constructor(
     private store: Store<AppState>,
     private http: HttpClient,
     private firestore: Firestore,
-    private afs: AngularFirestore,
-    private router: Router
-  ) {
-    this.userProfileSub = this.store
-      .select(getUserProfile)
-      .subscribe((userProfile) => {
-        this.userProfile = userProfile;
-      });
-    // this.usersProfileSub = this.store.select(getUsers).subscribe((users) => {
-    //   this.usersProfile = users;
-    // });
-  }
+    private afs: AngularFirestore
+  ) {}
 
   // ****************** USER ******************
   setUserProfileInLocalStorage(userProfile: UserProfile) {
@@ -71,6 +54,7 @@ export class ProfileService implements OnDestroy {
       return new UserProfile(
         userData.id,
         userData.email,
+        userData.username,
         userData.hasProfile,
         userData.dayJoined,
         userData.monthJoined,
@@ -98,20 +82,9 @@ export class ProfileService implements OnDestroy {
   }
 
   public getUserProfileFromDb(idProfile: string) {
-    console.log('getUserProfileFromDb');
     const docRef = doc(this.firestore, 'users', idProfile);
 
     return docData(docRef).pipe(traceUntilFirst('firestore'));
-    // console.log('getUserProfileFromDb', idProfile);
-    // let userProfile: UserProfile;
-    // this.usersProfile.map((user) => {
-    //   if (user && user.id === idProfile) {
-    //     userProfile = user;
-    //     console.log('user', user);
-    //   }
-    // });
-    // console.log('getUserProfileFromDb > userProfile', userProfile);
-    // return of(userProfile);
   }
 
   public getUsersFromDb(): Observable<UserProfile[]> {
@@ -180,7 +153,7 @@ export class ProfileService implements OnDestroy {
     folder: CollectionsType
   ) {
     const ref = doc(this.firestore, folder, userId);
-    console.log('setCurrentPhysicalDetailsInDb', currentPhysicalDetails);
+
     updateDoc(ref, {
       currentPhysicalDetails: {
         ...currentPhysicalDetails,
@@ -206,20 +179,12 @@ export class ProfileService implements OnDestroy {
   }
 
   public getHistoryPhysicalDetailsFromDb(clientId: string) {
-    // const docRef = doc(
-    //   this.firestore,
-    //   'clients',
-    //   clientId,
-    //   'historyPhysicalDetails'
-    // );
     const clientsCollection = this.afs
       .collection('clients')
       .doc(clientId)
       .collection('historyPhysicalDetails');
 
     return clientsCollection.valueChanges();
-
-    // return docData(docRef).pipe(traceUntilFirst('firestore'));
   }
 
   // ****************** GYM ******************
@@ -449,6 +414,20 @@ export class ProfileService implements OnDestroy {
       return !cityValue ? { isNotCityFromList: true } : null;
     };
   }
+  public websiteInputValidation(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value) {
+        return null;
+      }
+
+      let lc = value.toLowerCase();
+      const isMatch =
+        lc.substr(0, 8) == 'https://' || lc.substr(0, 7) == 'http://';
+
+      return !isMatch ? { isNotHttp: true } : null;
+    };
+  }
 
   public cityIsNotFromState(selectedCity: string, cites: string[]): boolean {
     const cityFound = cites.find((city) => city === selectedCity);
@@ -456,7 +435,6 @@ export class ProfileService implements OnDestroy {
   }
 
   public checkIfUserHasProfile(userProfile: UserProfile): boolean {
-    console.log('checkIfUserHasProfile > this.userProfile', userProfile);
     return !!userProfile.hasProfile;
   }
 
@@ -464,13 +442,5 @@ export class ProfileService implements OnDestroy {
     const clientsCollection = this.afs.collection<Review>('reviews');
 
     return clientsCollection.valueChanges();
-  }
-
-  ngOnDestroy() {
-    if (this.userProfileSub) {
-      this.userProfileSub.unsubscribe();
-    } else if (this.usersProfileSub) {
-      this.usersProfileSub.unsubscribe();
-    }
   }
 }

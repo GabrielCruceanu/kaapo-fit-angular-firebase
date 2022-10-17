@@ -29,11 +29,11 @@ export const loginFail = createAction(
 
 export const signupStart = createAction(
   SIGNUP_START,
-  props<{ email: string; password: string }>()
+  props<{ email: string; username: string; password: string }>()
 );
 export const signupSuccess = createAction(
   SIGNUP_SUCCESS,
-  props<{ userAuth: UserAuth; redirect: boolean }>()
+  props<{ userAuth: UserAuth; username: string; redirect: boolean }>()
 );
 
 export const resetStart = createAction(RESET_START, props<{ email: string }>());

@@ -34,6 +34,7 @@ import {
 import { TrainerProfile } from '../../model/trainerProfile.model';
 import { TrainerData, TrainerExperienceData } from '@/data/trainerData';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-trainer-profile',
@@ -62,11 +63,14 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
   trainersType = TrainerData;
   trainerExperience = TrainerExperienceData;
   trainerFormGroup: FormGroup;
+  urlRegEx =
+    '[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}(.[a-z]{2,4})?\b(/[-a-zA-Z0-9@:%_+.~#?&//=]*)?';
 
   constructor(
     private store: Store<AppState>,
     private profileService: ProfileService,
-    private countryService: CountryService
+    private countryService: CountryService,
+    private router: Router
   ) {
     this.store.dispatch(setErrorMessage({ message: '' }));
   }
@@ -80,6 +84,12 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
       .select(getUserProfile)
       .subscribe((userProfile) => {
         this.userProfile = userProfile;
+        if (
+          userProfile.userType !== UserType.Trainer &&
+          userProfile.hasProfile
+        ) {
+          this.router.navigate(['/profil']);
+        }
       });
 
     this.trainerProfileSub = this.store
@@ -153,25 +163,22 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         this.trainerProfile?.contact?.website
           ? this.trainerProfile?.contact?.website
           : '',
-        []
+        [this.profileService.websiteInputValidation()]
       ),
       facebook: new FormControl(
         this.trainerProfile?.contact?.facebook
           ? this.trainerProfile?.contact?.facebook
-          : '',
-        []
+          : ''
       ),
       twitter: new FormControl(
         this.trainerProfile?.contact?.twitter
           ? this.trainerProfile?.contact?.twitter
-          : '',
-        []
+          : ''
       ),
       instagram: new FormControl(
         this.trainerProfile?.contact?.instagram
           ? this.trainerProfile?.contact?.instagram
-          : '',
-        []
+          : ''
       ),
     });
 
@@ -239,11 +246,8 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
       this.trainerFormGroup.controls['city'].setErrors({
         isNotCityFromList: true,
       });
-    } else if (
-      this.trainerFormGroup.valid &&
-      this.userAuth &&
-      this.userProfile
-    ) {
+    }
+    if (this.trainerFormGroup.valid && this.userAuth && this.userProfile) {
       const {
         firstname,
         lastname,
@@ -293,26 +297,37 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         gender,
         joinedFinal,
         birthFinal,
-        false,
-        false,
+        this.trainerProfile.hasProPremium
+          ? this.trainerProfile.hasProPremium
+          : false,
+        this.trainerProfile.certificate
+          ? this.trainerProfile.certificate
+          : false,
         experience,
         country,
         state,
         city,
         contactFinal,
         description,
-        null,
+        this.trainerProfile.completedClients
+          ? this.trainerProfile.completedClients
+          : null,
         this.userProfile.coverImage ? this.userProfile.coverImage : null,
         this.userProfile.profileImage ? this.userProfile.profileImage : null,
-        null,
-        null,
-        null,
-        null
+        this.trainerProfile.currentPhysicalDetails
+          ? this.trainerProfile.currentPhysicalDetails
+          : null,
+        this.trainerProfile.activeClients
+          ? this.trainerProfile.activeClients
+          : null,
+        this.trainerProfile.gallery ? this.trainerProfile.gallery : null,
+        this.trainerProfile.reviews ? this.trainerProfile.reviews : null
       );
 
       const userProfile = new UserProfile(
         this.userProfile.id,
         this.userProfile.email,
+        this.userProfile.username,
         true,
         this.userProfile.dayJoined,
         this.userProfile.monthJoined,
@@ -321,7 +336,8 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         this.userProfile.coverImage ? this.userProfile.coverImage : null,
         this.userProfile.profileImage ? this.userProfile.profileImage : null
       );
-
+      console.log('userProfile On submit', userProfile);
+      console.log('trainerProfile On submit', trainerProfile);
       this.store.dispatch(setLoadingSpinner({ status: true }));
 
       this.store.dispatch(updateUserProfileStart({ userProfile }));

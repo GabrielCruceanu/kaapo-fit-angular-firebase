@@ -29,8 +29,8 @@ SwiperCore.use([EffectFade]);
   encapsulation: ViewEncapsulation.None,
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  userProfile: UserProfile | null | undefined;
-  userProfileSub: Subscription | undefined;
+  userProfile: UserProfile | null;
+  userProfileSub: Subscription;
   profileDetails:
     | ClientProfile
     | GymProfile
@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     | null;
   clientProfileDetails: ClientProfile | undefined | null;
 
-  profileDetailsSub: Subscription | undefined;
+  profileDetailsSub: Subscription;
   userType = UserType;
 
   constructor(
@@ -53,7 +53,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userProfileSub = this.store
       .select(getUserProfile)
       .subscribe((userProfile) => {
-        console.log('profile component => userProfile', userProfile);
         if (
           userProfile &&
           !this.profileService.checkIfUserHasProfile(userProfile)

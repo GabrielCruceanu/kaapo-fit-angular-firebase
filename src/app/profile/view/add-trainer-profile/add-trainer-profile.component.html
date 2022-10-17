@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <h1 class="app-title">Trainer profile</h1>
+        <h1 class="app-title">Antrenor</h1>
       </div>
     </div>
     <form
@@ -338,10 +338,19 @@
               <mat-label>Website</mat-label>
               <input
                 matInput
-                placeholder="Website link"
+                placeholder="https://website.ro/"
                 name="website"
                 formControlName="website"
               />
+
+              <mat-error
+                *ngIf="
+                  trainerFormGroup.controls['website'].hasError('isNotHttp')
+                "
+              >
+                Website-ul trebuie sa inceapa
+                <strong>http:// sau https://</strong>
+              </mat-error>
             </mat-form-field>
           </div>
 
@@ -350,7 +359,7 @@
               <mat-label>Facebook</mat-label>
               <input
                 matInput
-                placeholder="Facebook link"
+                placeholder="nume de utilizator"
                 name="facebook"
                 formControlName="facebook"
               />
@@ -362,7 +371,7 @@
               <mat-label>Twitter</mat-label>
               <input
                 matInput
-                placeholder="Twitter link"
+                placeholder="nume de utilizator"
                 name="twitter"
                 formControlName="twitter"
               />
@@ -374,7 +383,7 @@
               <mat-label>Instagram</mat-label>
               <input
                 matInput
-                placeholder="Instagram link"
+                placeholder="nume de utilizator"
                 name="instagram"
                 formControlName="instagram"
               />
