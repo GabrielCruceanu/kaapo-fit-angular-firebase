@@ -118,9 +118,7 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         ]
       ),
       trainerType: new FormControl(
-        this.trainerProfile?.trainerType
-          ? this.trainerProfile?.trainerType
-          : '',
+        this.trainerProfile?.type ? this.trainerProfile?.type : '',
         [Validators.required]
       ),
       birth: new FormControl(
@@ -297,31 +295,21 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         gender,
         joinedFinal,
         birthFinal,
-        this.trainerProfile.hasProPremium
-          ? this.trainerProfile.hasProPremium
-          : false,
-        this.trainerProfile.certificate
-          ? this.trainerProfile.certificate
-          : false,
+        this.trainerProfile ? this.trainerProfile.hasProPremium : false,
+        this.trainerProfile ? this.trainerProfile.certificate : false,
         experience,
         country,
         state,
         city,
         contactFinal,
         description,
-        this.trainerProfile.completedClients
-          ? this.trainerProfile.completedClients
-          : null,
+        this.trainerProfile ? this.trainerProfile.completedClients : null,
         this.userProfile.coverImage ? this.userProfile.coverImage : null,
         this.userProfile.profileImage ? this.userProfile.profileImage : null,
-        this.trainerProfile.currentPhysicalDetails
-          ? this.trainerProfile.currentPhysicalDetails
-          : null,
-        this.trainerProfile.activeClients
-          ? this.trainerProfile.activeClients
-          : null,
-        this.trainerProfile.gallery ? this.trainerProfile.gallery : null,
-        this.trainerProfile.reviews ? this.trainerProfile.reviews : null
+        this.trainerProfile ? this.trainerProfile.currentPhysicalDetails : null,
+        this.trainerProfile ? this.trainerProfile.activeClients : null,
+        this.trainerProfile ? this.trainerProfile.gallery : null,
+        this.trainerProfile ? this.trainerProfile.reviews : null
       );
 
       const userProfile = new UserProfile(

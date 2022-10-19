@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { Review } from '@/app/profile/model/review.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '@/app/store/app.state';
@@ -22,7 +22,9 @@ export class ProDetailsComponent implements OnInit {
   @Input() street?: string;
   @Input() streetNo?: string;
   @Input() contact: Contact;
+  @Input() viewId: string;
   reviews$: Observable<Review[] | null>;
+  reviewsSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
@@ -44,6 +46,16 @@ export class ProDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.reviews$ = this.store.select(getReviews);
+    this.reviewsSub = this.store.select(getReviews).subscribe((reviews) => {
+      console.log('reviews before', reviews);
+      const reviewsCurrentUser = reviews.filter(
+        (review) => review.beneficiaryId === this.viewId
+      );
+
+      console.log('this.viewId', this.viewId);
+      console.log('reviewsCurrentUser', reviewsCurrentUser);
+
+      this.reviews$ = of(reviewsCurrentUser);
+    });
   }
 }

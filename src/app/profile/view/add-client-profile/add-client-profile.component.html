@@ -133,22 +133,19 @@
           <div class="col-md-6 col-lg-4">
             <mat-form-field class="form-control" appearance="outline">
               <mat-label>Tara</mat-label>
-              <input
+              <mat-select
                 type="text"
-                matInput
                 formControlName="country"
-                placeholder="Pick one"
+                placeholder="Alege una"
                 aria-label="Country"
-                [matAutocomplete]="countries"
                 (ngModelChange)="onDisableInput('state', 'country')"
-              />
-              <mat-autocomplete #countries="matAutocomplete">
+              >
                 <mat-option
                   *ngFor="let option of filteredCountries | async"
                   [value]="option"
                   >{{ option }}
                 </mat-option>
-              </mat-autocomplete>
+              </mat-select>
               <mat-error
                 *ngIf="clientFormGroup.controls['country'].hasError('required')"
               >

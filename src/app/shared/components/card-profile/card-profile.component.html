@@ -1,0 +1,60 @@
+<div class="profile-box" (click)="runTo(userName)">
+  <div class="profile-box-header">
+    <!--    <div class="profile-box-cover">-->
+    <!--      <img-->
+    <!--        [src]="profile.coverPicture.downloadURL"-->
+    <!--        [alt]="profile.firstName + profile.lastName + 'cover'"-->
+    <!--        *ngIf="profile.coverPicture?.downloadURL"-->
+    <!--      />-->
+    <!--    </div>-->
+    <div class="profile-container-image">
+      <div
+        class="profile-box-image"
+        [class.profile-box-certificate]="profile.certificate"
+      >
+        <div class="profile-image">
+          <img
+            [src]="profile.profilePicture.downloadURL"
+            [alt]="profile.firstName + profile.lastName + 'profile picture'"
+            *ngIf="profile.profilePicture?.downloadURL"
+          />
+        </div>
+        <span *ngIf="profile.certificate">
+          <mat-icon> check_circle </mat-icon>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="profile-box-body">
+    <div class="profile-box-body-text">
+      <h3>
+        {{
+          profile.name
+            ? profile.name
+            : profile.firstName + ' ' + profile.lastName
+        }}
+      </h3>
+
+      <h5>
+        {{ profile.type }}
+      </h5>
+      <h6>{{ profile.city }}</h6>
+    </div>
+    <div class="profile-box-body-action">
+      <button
+        mat-icon-button
+        aria-label="Example icon button with a vertical three dot icon"
+        class="profile-box-body-action-mobile"
+      >
+        <mat-icon> arrow_forward_ios </mat-icon>
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="profile-box-body-action-lg"
+      >
+        Detalii
+      </button>
+    </div>
+  </div>
+</div>

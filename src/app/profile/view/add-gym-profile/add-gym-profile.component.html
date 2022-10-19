@@ -33,20 +33,15 @@
           <div class="col-md-6 col-lg-6">
             <mat-form-field class="form-control" appearance="outline">
               <mat-label>Tipul salii</mat-label>
-              <input
-                type="text"
-                matInput
+              <mat-select
                 placeholder="Alege un tip"
                 aria-label="Calisthenic"
-                name="gymType"
                 formControlName="gymType"
-                [matAutocomplete]="gymType"
-              />
-              <mat-autocomplete #gymType="matAutocomplete">
+              >
                 <mat-option *ngFor="let option of gymTypes" [value]="option"
                   >{{ option }}
                 </mat-option>
-              </mat-autocomplete>
+              </mat-select>
               <mat-error
                 *ngIf="gymFormGroup.controls['gymType'].hasError('required')"
               >

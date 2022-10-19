@@ -137,6 +137,7 @@ export class ProfileService {
         clientData.hasPremium,
         clientData.birth,
         clientData.joined,
+        clientData.coverPicture,
         clientData.profilePicture,
         clientData.currentPhysicalDetails,
         clientData.nutritionist,
@@ -224,6 +225,7 @@ export class ProfileService {
         gymData.name,
         gymData.joined,
         gymData.hasProPremium,
+        gymData.certificate,
         gymData.gymType,
         gymData.country,
         gymData.state,
@@ -347,6 +349,7 @@ export class ProfileService {
         nutritionistData.lastName,
         nutritionistData.name,
         nutritionistData.gender,
+        nutritionistData.type,
         nutritionistData.joined,
         nutritionistData.birth,
         nutritionistData.hasProPremium,
@@ -414,6 +417,7 @@ export class ProfileService {
       return !cityValue ? { isNotCityFromList: true } : null;
     };
   }
+
   public websiteInputValidation(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
@@ -431,7 +435,7 @@ export class ProfileService {
 
   public cityIsNotFromState(selectedCity: string, cites: string[]): boolean {
     const cityFound = cites.find((city) => city === selectedCity);
-    return cityFound ? false : true;
+    return !cityFound;
   }
 
   public checkIfUserHasProfile(userProfile: UserProfile): boolean {

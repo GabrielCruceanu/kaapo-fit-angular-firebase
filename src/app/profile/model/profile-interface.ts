@@ -79,6 +79,11 @@ export enum GenderType {
   Female = 'Female',
   Other = 'Other',
 }
+export enum NutritionistType {
+  TerapeutNutritionist = 'Terapeut nutritionist',
+  MedicNutritionist = 'Medic nutritionist',
+  TehnicianNutritie = 'Tehnician nutritie',
+}
 export enum TrainerType {
   Powerlifting = 'Powerlifting',
   Calisthenic = 'Calisthenic',

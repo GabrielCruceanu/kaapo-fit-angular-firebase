@@ -22,6 +22,7 @@ import {
 } from '@/app/profile/model/clientProfile.model';
 import { TypeOfUploadImage } from '@/app/shared/model/upload-image-interface';
 import {
+  Birth,
   CollectionsType,
   UserImageType,
   UserType,
@@ -33,6 +34,7 @@ import {
 import { TrainerProfile } from '@/app/profile/model/trainerProfile.model';
 import { NutritionistProfile } from '@/app/profile/model/nutritionistProfile.model';
 import { UserProfile } from '@/app/profile/model/userProfile.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'add-measurements',
@@ -53,12 +55,20 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
   nutritionistProfileSub: Subscription;
   addMeasurementsFormGroup: FormGroup;
   currentPhysicalDetails$: Observable<ClientPhysicalDetails>;
+  currentDay: number;
+  currentMonth: number;
+  currentYear: number;
 
   constructor(
     private store: Store<AppState>,
-    private uploadImageService: UploadImageService
+    private uploadImageService: UploadImageService,
+    private router: Router
   ) {
     this.store.dispatch(setErrorMessage({ message: '' }));
+
+    this.currentDay = new Date().getUTCDate();
+    this.currentMonth = new Date().getUTCMonth() + 1;
+    this.currentYear = new Date().getUTCFullYear();
   }
 
   ngOnInit(): void {
@@ -66,17 +76,13 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
       .select(getUserProfile)
       .subscribe((userProfile) => {
         this.userProfile = userProfile;
-        console.log('AddMeasurementsComponent => userProfile', userProfile);
+
         switch (userProfile.userType) {
           case UserType.Client:
             this.clientProfileSub = this.store
               .select(getClientProfile)
               .subscribe((clientProfile) => {
                 this.currentUserProfile = clientProfile;
-                console.log(
-                  'AddMeasurementsComponent => clientProfile',
-                  clientProfile
-                );
               });
             break;
 
@@ -85,10 +91,6 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
               .select(getTrainerProfile)
               .subscribe((trainerProfile) => {
                 this.currentUserProfile = trainerProfile;
-                console.log(
-                  'AddMeasurementsComponent => trainerProfile',
-                  trainerProfile
-                );
               });
             break;
 
@@ -97,15 +99,13 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
               .select(getNutritionistProfile)
               .subscribe((nutritionistProfile) => {
                 this.currentUserProfile = nutritionistProfile;
-                console.log(
-                  'AddMeasurementsComponent => nutritionistProfile',
-                  nutritionistProfile
-                );
               });
             break;
         }
       });
+
     this.currentPhysicalDetails$ = this.store.select(getCurrentPhysicalDetails);
+
     this.addMeasurementsFormGroup = new FormGroup({
       weight: new FormControl(
         this.currentUserProfile?.currentPhysicalDetails?.weight
@@ -196,6 +196,14 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
           this.addMeasurementsFormGroup.enable();
         }
       });
+
+    if (
+      !this.checkIfNeedMeasurements(
+        this.currentUserProfile.currentPhysicalDetails.date
+      )
+    ) {
+      this.router.navigate(['/profil']);
+    }
   }
 
   onUploadFrontPicture() {
@@ -323,13 +331,20 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
 
       this.store.dispatch(
         setClientHistoryPhysicalDetailsStart({
-          clientId: this.clientProfile.id,
+          clientId: this.userProfile.id,
           clientPhysicalDetails: currentPhysicalDetails,
         })
       );
     }
   }
 
+  checkIfNeedMeasurements(date: Birth) {
+    return (
+      this.currentDay >= date.date &&
+      this.currentMonth > date.month &&
+      this.currentYear >= date.year
+    );
+  }
   ngOnDestroy() {
     if (this.clientProfileSub) {
       this.clientProfileSub.unsubscribe();

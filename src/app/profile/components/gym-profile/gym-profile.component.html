@@ -13,9 +13,12 @@
               [firstName]="null"
               [lastName]="null"
               [name]="gymProfileDetails.name"
+              [coverImage]="gymProfileDetails.coverPicture.downloadURL"
+              [profileImage]="gymProfileDetails.profilePicture.downloadURL"
               [state]="gymProfileDetails.state"
               [city]="gymProfileDetails.city"
               [status]="gymProfileDetails.status"
+              [viewId]="gymProfileDetails.id"
             ></app-user-profile>
           </div>
         </div>
@@ -24,6 +27,7 @@
           [contact]="gymProfileDetails.contact"
           [street]="gymProfileDetails.street"
           [streetNo]="gymProfileDetails.strNo"
+          [viewId]="gymProfileDetails.id"
         ></pro-details>
       </div>
       <div class="col-lg-3">

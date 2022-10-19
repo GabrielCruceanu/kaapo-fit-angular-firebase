@@ -249,20 +249,15 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
         country,
         state,
         city,
-        this.clientProfile.hasPremium ? this.clientProfile.hasPremium : false,
+        this.clientProfile ? this.clientProfile.hasPremium : false,
         birthFinal,
         joinedFinal,
-        this.clientProfile.profilePicture
-          ? this.clientProfile.profilePicture
-          : null,
-        this.clientProfile.currentPhysicalDetails
-          ? this.clientProfile.currentPhysicalDetails
-          : null,
-        this.clientProfile.nutritionist
-          ? this.clientProfile.nutritionist
-          : null,
-        this.clientProfile.trainer ? this.clientProfile.trainer : null,
-        this.clientProfile.gym ? this.clientProfile.gym : null
+        this.clientProfile ? this.clientProfile.coverPicture : null,
+        this.clientProfile ? this.clientProfile.profilePicture : null,
+        this.clientProfile ? this.clientProfile.currentPhysicalDetails : null,
+        this.clientProfile ? this.clientProfile.nutritionist : null,
+        this.clientProfile ? this.clientProfile.trainer : null,
+        this.clientProfile ? this.clientProfile.gym : null
       );
 
       const userProfile = new UserProfile(

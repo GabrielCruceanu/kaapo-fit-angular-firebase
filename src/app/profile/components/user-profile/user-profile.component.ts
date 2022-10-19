@@ -15,6 +15,10 @@ import { SettingsDialogComponent } from '@/app/shared/components/settings-dialog
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   @Input()
+  coverImage: string | null;
+  @Input()
+  profileImage: string | null;
+  @Input()
   firstName: string | null;
   @Input()
   lastName: string | null;
@@ -26,6 +30,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   city: string;
   @Input()
   status: string;
+  @Input()
+  viewId: string;
 
   userProfileSub: Subscription;
   userProfile: UserProfile | null;

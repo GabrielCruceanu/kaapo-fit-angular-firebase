@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WideAdsBannerComponent } from './wide-ads-banner/wide-ads-banner.component';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 import { MatListModule } from '@angular/material/list';
+import { CardProfileComponent } from './card-profile/card-profile.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MatListModule } from '@angular/material/list';
     UploadImageComponent,
     WideAdsBannerComponent,
     SettingsDialogComponent,
+    CardProfileComponent,
   ],
   exports: [
     ButtonComponent,
@@ -40,6 +42,7 @@ import { MatListModule } from '@angular/material/list';
     HeaderComponent,
     HeaderProfileComponent,
     WideAdsBannerComponent,
+    CardProfileComponent,
   ],
   imports: [
     CommonModule,

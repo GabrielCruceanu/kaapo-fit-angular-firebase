@@ -1,0 +1,17 @@
+<app-layout>
+  <h1 class="app-title">
+    Antrenori <br />
+    💪
+  </h1>
+
+  <div class="container">
+    <div class="row" *ngIf="trainers$ | async as trainers">
+      <div class="col-md-6 col-lg-3" *ngFor="let trainer of trainers">
+        <card-profile
+          [profile]="trainer"
+          [users]="users$ | async"
+        ></card-profile>
+      </div>
+    </div>
+  </div>
+</app-layout>
