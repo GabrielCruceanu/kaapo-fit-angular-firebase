@@ -93,7 +93,7 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         [Validators.required]
       ),
       gymType: new FormControl(
-        this.gymProfile?.gymType ? this.gymProfile?.gymType : '',
+        this.gymProfile?.type ? this.gymProfile?.type : '',
         [Validators.required]
       ),
       description: new FormControl(
@@ -243,7 +243,8 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         null,
         name,
         joinedFinal,
-        false,
+        this.gymProfile ? this.gymProfile.hasProPremium : false,
+        true,
         gymType,
         country,
         state,
@@ -254,9 +255,9 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         description,
         this.userProfile.coverImage ? this.userProfile.coverImage : null,
         this.userProfile.profileImage ? this.userProfile.profileImage : null,
-        null,
-        null,
-        null
+        this.gymProfile ? this.gymProfile.gallery : null,
+        this.gymProfile ? this.gymProfile.reviews : null,
+        this.gymProfile ? this.gymProfile.personal : null
       );
 
       const userProfile = new UserProfile(

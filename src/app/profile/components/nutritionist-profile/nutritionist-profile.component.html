@@ -13,9 +13,14 @@
               [firstName]="nutritionistProfileDetails.firstName"
               [lastName]="nutritionistProfileDetails.lastName"
               [name]="null"
+              [coverImage]="nutritionistProfileDetails.coverPicture.downloadURL"
+              [profileImage]="
+                nutritionistProfileDetails.profilePicture.downloadURL
+              "
               [state]="nutritionistProfileDetails.state"
               [city]="nutritionistProfileDetails.city"
               [status]="nutritionistProfileDetails.status"
+              [viewId]="nutritionistProfileDetails.id"
             ></app-user-profile>
           </div>
         </div>
@@ -24,12 +29,14 @@
           [certificate]="nutritionistProfileDetails.certificate"
           [description]="nutritionistProfileDetails.description"
           [contact]="nutritionistProfileDetails.contact"
+          [viewId]="nutritionistProfileDetails.id"
         ></pro-details>
 
         <user-profile-details-container
           [currentPhysicalDetails]="
             nutritionistProfileDetails?.currentPhysicalDetails
           "
+          [viewId]="nutritionistProfileDetails.id"
         ></user-profile-details-container>
       </div>
       <div class="col-lg-3">

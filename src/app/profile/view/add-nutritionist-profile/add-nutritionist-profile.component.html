@@ -7,20 +7,20 @@
     </div>
     <form
       (ngSubmit)="onNutritionistSubmit()"
-      class="row form justify-content-center"
       [formGroup]="nutritionistFormGroup"
+      class="row form justify-content-center"
     >
       <div class="col-lg-8">
         <!--   Details     -->
         <div class="row">
           <div class="col-md-6">
-            <mat-form-field class="form-control col-md-6" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control col-md-6">
               <mat-label>Prenume</mat-label>
               <input
-                matInput
-                placeholder="Jon"
-                name="firstname"
                 formControlName="firstname"
+                matInput
+                name="firstname"
+                placeholder="Jon"
               />
               <mat-error
                 *ngIf="
@@ -35,14 +35,14 @@
           </div>
 
           <div class="col-md-6">
-            <mat-form-field class="form-control" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control">
               <mat-label>Nume</mat-label>
               <input
-                type="text"
-                matInput
-                placeholder="Doe"
-                name="lastname"
                 formControlName="lastname"
+                matInput
+                name="lastname"
+                placeholder="Doe"
+                type="text"
               />
               <mat-error
                 *ngIf="
@@ -57,13 +57,13 @@
           </div>
 
           <div class="col-md-12">
-            <mat-form-field class="form-control" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control">
               <mat-label>Descriere</mat-label>
               <textarea
-                matInput
-                placeholder="About you and your experience"
-                name="description"
                 formControlName="description"
+                matInput
+                name="description"
+                placeholder="About you and your experience"
                 rows="5"
               >
               </textarea>
@@ -99,25 +99,44 @@
             </mat-form-field>
           </div>
 
+          <div class="col-md-6 col-lg-3">
+            <mat-form-field appearance="outline" class="form-control">
+              <mat-label>Tip Nutritionist</mat-label>
+              <mat-select
+                aria-label="Medic nutritionist"
+                formControlName="type"
+                placeholder="Alege din lista"
+              >
+                <mat-option
+                  *ngFor="let option of nutritionistType"
+                  [value]="option"
+                  >{{ option }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  nutritionistFormGroup.controls['type'].hasError('required')
+                "
+              >
+                Tipul de nutritionist este <strong>obligatoriu</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
           <div class="col-md-6 col-lg-4 mt-3">
-            <mat-form-field class="form-control" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control">
               <mat-label>Experienta</mat-label>
-              <input
-                type="text"
-                matInput
-                placeholder="Experience in years"
+              <mat-select
                 aria-label="20"
-                name="experience"
                 formControlName="experience"
-                [matAutocomplete]="experience"
-              />
-              <mat-autocomplete #experience="matAutocomplete">
+                placeholder="Experience in years"
+              >
                 <mat-option
                   *ngFor="let option of trainerExperience"
                   [value]="option"
                   >{{ option }}
                 </mat-option>
-              </mat-autocomplete>
+              </mat-select>
               <mat-error
                 *ngIf="
                   nutritionistFormGroup.controls['experience'].hasError(
@@ -131,20 +150,20 @@
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
-            <mat-form-field class="example-full-width" appearance="outline">
+            <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Data nasterii</mat-label>
               <input
-                matInput
+                (click)="picker.open()"
                 [matDatepicker]="picker"
                 formControlName="birth"
+                matInput
                 name="birth"
-                (click)="picker.open()"
               />
               <!--              <mat-datepicker-toggle-->
               <!--                matSuffix-->
               <!--                [for]="picker"-->
               <!--              ></mat-datepicker-toggle>-->
-              <mat-datepicker touchUi #picker></mat-datepicker>
+              <mat-datepicker #picker touchUi></mat-datepicker>
               <mat-error
                 *ngIf="
                   nutritionistFormGroup.controls['birth'].hasError('required')
@@ -156,7 +175,7 @@
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
-            <mat-form-field class="form-control" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control">
               <mat-label>Gen</mat-label>
 
               <mat-select formControlName="gender">
@@ -175,16 +194,16 @@
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
-            <mat-form-field class="form-control" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control">
               <mat-label>Tara</mat-label>
               <input
-                type="text"
-                matInput
-                formControlName="country"
-                placeholder="Romania"
-                aria-label="Country"
-                [matAutocomplete]="countries"
                 (ngModelChange)="onDisableInput('state', 'country')"
+                [matAutocomplete]="countries"
+                aria-label="Country"
+                formControlName="country"
+                matInput
+                placeholder="Romania"
+                type="text"
               />
               <mat-autocomplete #countries="matAutocomplete">
                 <mat-option
@@ -216,16 +235,16 @@
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
-            <mat-form-field class="form-control" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control">
               <mat-label>Judet</mat-label>
               <input
-                type="text"
-                matInput
-                formControlName="state"
-                placeholder="Vrancea"
-                aria-label="State"
-                [matAutocomplete]="states"
                 (ngModelChange)="onDisableInput('city', 'state')"
+                [matAutocomplete]="states"
+                aria-label="State"
+                formControlName="state"
+                matInput
+                placeholder="Vrancea"
+                type="text"
               />
               <mat-autocomplete #states="matAutocomplete">
                 <mat-option
@@ -255,15 +274,15 @@
           </div>
 
           <div class="col-md-6 col-lg-4 mt-3">
-            <mat-form-field class="form-control" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control">
               <mat-label>Oras / Sector</mat-label>
               <input
-                type="text"
-                matInput
-                formControlName="city"
-                placeholder="Focsani"
-                aria-label="City"
                 [matAutocomplete]="cities"
+                aria-label="City"
+                formControlName="city"
+                matInput
+                placeholder="Focsani"
+                type="text"
               />
               <mat-autocomplete #cities="matAutocomplete">
                 <mat-option
@@ -293,7 +312,7 @@
           </div>
 
           <div class="col-md-6 col-lg-6">
-            <mat-form-field class="form-control" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control">
               <mat-label>Numar Telefon</mat-label>
               <!--              <ngx-mat-intl-tel-input-->
               <!--                [preferredCountries]="['ro']"-->
@@ -307,10 +326,10 @@
               <!--              </ngx-mat-intl-tel-input>-->
 
               <input
-                matInput
-                placeholder="0770121945"
-                name="phone"
                 formControlName="phone"
+                matInput
+                name="phone"
+                placeholder="0770121945"
               />
               <mat-error
                 *ngIf="
@@ -331,13 +350,13 @@
           </div>
 
           <div class="col-12 col-md-6 col-lg-6">
-            <mat-form-field class="form-control col-md-6" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control col-md-6">
               <mat-label>Website</mat-label>
               <input
-                matInput
-                placeholder="https://website.ro/"
-                name="website"
                 formControlName="website"
+                matInput
+                name="website"
+                placeholder="https://website.ro/"
               />
               <mat-error
                 *ngIf="
@@ -353,37 +372,37 @@
           </div>
 
           <div class="col-12 col-md-6 col-lg-4">
-            <mat-form-field class="form-control col-md-6" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control col-md-6">
               <mat-label>Facebook</mat-label>
               <input
-                matInput
-                placeholder="nume de utilizator"
-                name="facebook"
                 formControlName="facebook"
+                matInput
+                name="facebook"
+                placeholder="nume de utilizator"
               />
             </mat-form-field>
           </div>
 
           <div class="col-12 col-md-6 col-lg-4">
-            <mat-form-field class="form-control col-md-6" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control col-md-6">
               <mat-label>Twitter</mat-label>
               <input
-                matInput
-                placeholder="nume de utilizator"
-                name="twitter"
                 formControlName="twitter"
+                matInput
+                name="twitter"
+                placeholder="nume de utilizator"
               />
             </mat-form-field>
           </div>
 
           <div class="col-12 col-md-6 col-lg-4">
-            <mat-form-field class="form-control col-md-6" appearance="outline">
+            <mat-form-field appearance="outline" class="form-control col-md-6">
               <mat-label>Instagram</mat-label>
               <input
-                matInput
-                placeholder="nume de utilizator"
-                name="instagram"
                 formControlName="instagram"
+                matInput
+                name="instagram"
+                placeholder="nume de utilizator"
               />
             </mat-form-field>
           </div>
@@ -394,8 +413,8 @@
           {{ errorMessage }}
         </mat-error>
         <button
-          mat-button
           [class.disabled]="!nutritionistFormGroup.valid"
+          mat-button
           type="submit"
         >
           Save Profile

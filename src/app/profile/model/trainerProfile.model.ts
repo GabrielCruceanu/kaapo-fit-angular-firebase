@@ -17,7 +17,7 @@ export class TrainerProfile {
     public firstName: string,
     public lastName: string,
     public name: null,
-    public trainerType: TrainerType,
+    public type: TrainerType,
     public gender: GenderType,
     public joined: Birth,
     public birth: Birth,

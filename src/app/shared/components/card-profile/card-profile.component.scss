@@ -1,0 +1,149 @@
+.profile-box {
+  display: flex;
+  align-items: center;
+  background-color: var(--dark-three);
+  border-radius: var(--radius);
+  box-shadow: var(--dark-shadow);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.profile-box-header {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.profile-box-cover {
+  display: none;
+  width: 100%;
+  height: 155px;
+  background-color: var(--soft);
+
+  img {
+    height: auto;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.profile-box-image {
+  height: 64px;
+  width: 64px;
+  border-radius: 100%;
+  margin-right: 1rem;
+  border: 2px solid var(--soft);
+
+  &.profile-box-certificate {
+    border: 2px solid var(--warning);
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      bottom: -10px;
+      color: var(--warning);
+      height: 20px;
+      width: 20px;
+      background: black;
+      overflow: hidden;
+      border-radius: 100%;
+    }
+  }
+}
+
+.profile-image {
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  overflow: hidden;
+  background-color: var(--soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.profile-box-body {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  h3 {
+    font-size: 17px;
+    margin-bottom: 0;
+  }
+
+  h5 {
+    font-size: 12px;
+    margin-bottom: 0;
+    color: var(--soft);
+  }
+
+  h6 {
+    margin-bottom: 0;
+    color: var(--soft);
+  }
+}
+
+.profile-box-body-action-mobile {
+  background-color: transparent;
+  color: var(--primary);
+  border: none;
+}
+
+.profile-box-body-action-lg {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .profile-box {
+    flex-direction: column;
+    padding: 0;
+    margin-top: 50px;
+  }
+
+  .profile-box-cover {
+    display: flex;
+  }
+  .profile-container-image {
+    position: absolute;
+    bottom: -50px;
+  }
+
+  .profile-box-image {
+    height: 100px;
+    width: 100px;
+    margin-right: 0;
+  }
+
+  .profile-box-body {
+    padding: 60px 1rem 1rem 1rem;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .profile-box-body-action {
+    margin-top: 1rem;
+  }
+  .profile-box-body-action-mobile {
+    display: none;
+  }
+
+  .profile-box-body-action-lg {
+    display: block;
+  }
+}

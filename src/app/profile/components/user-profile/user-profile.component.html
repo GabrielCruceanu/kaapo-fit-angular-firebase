@@ -1,22 +1,39 @@
 <div class="user-profile-header">
   <div class="user-profile-cover">
     <div class="user-profile-cover-bottom-border"></div>
-    <div class="user-profile-cover-image">
+
+    <div class="user-profile-cover-image d-md-none">
       <img
         [src]="
-          userProfile?.coverImage?.downloadURL
+          profileImage
+            ? profileImage
+            : userProfile.profileImage.downloadURL
+            ? userProfile.profileImage.downloadURL
+            : sampleUserProfileImage
+        "
+        alt="profile picture"
+      />
+    </div>
+    <div class="user-profile-cover-image d-none d-md-block">
+      <img
+        [src]="
+          coverImage
+            ? coverImage
+            : userProfile.coverImage.downloadURL
             ? userProfile.coverImage.downloadURL
             : sampleUserCoverImage
         "
         alt="cover picture"
       />
     </div>
-    <div class="user-profile-image-box">
+    <div class="user-profile-image-box d-none d-md-flex">
       <div class="user-profile-image">
         <img
           alt="profile picture"
           [src]="
-            userProfile?.profileImage?.downloadURL
+            profileImage
+              ? profileImage
+              : userProfile.profileImage.downloadURL
               ? userProfile.profileImage.downloadURL
               : sampleUserProfileImage
           "
@@ -46,7 +63,6 @@
           </mat-icon>
           <span>{{ state }} / {{ city }}</span>
         </div>
-
         <div class="user-profile-icon-box user-profile-icon-box-client">
           <mat-icon
             class="icon"
@@ -64,6 +80,7 @@
       color="primary"
       aria-label="Icon button with a image icon"
       (click)="openSettingDialog()"
+      *ngIf="userProfile.id === viewId"
     >
       <mat-icon>edit</mat-icon>
     </button>

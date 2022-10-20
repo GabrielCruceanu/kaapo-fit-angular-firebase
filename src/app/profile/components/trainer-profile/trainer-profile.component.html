@@ -13,18 +13,22 @@
               [firstName]="trainerProfileDetails.firstName"
               [lastName]="trainerProfileDetails.lastName"
               [name]="null"
+              [coverImage]="trainerProfileDetails.coverPicture.downloadURL"
+              [profileImage]="trainerProfileDetails.profilePicture.downloadURL"
               [state]="trainerProfileDetails.state"
               [city]="trainerProfileDetails.city"
               [status]="trainerProfileDetails.status"
+              [viewId]="trainerProfileDetails.id"
             ></app-user-profile>
           </div>
         </div>
         <pro-details
           [experience]="trainerProfileDetails.experience"
-          [type]="trainerProfileDetails.trainerType"
+          [type]="trainerProfileDetails.type"
           [certificate]="trainerProfileDetails.certificate"
           [description]="trainerProfileDetails.description"
           [contact]="trainerProfileDetails.contact"
+          [viewId]="trainerProfileDetails.id"
         ></pro-details>
 
         <!-- Trainer Profile Physical Details -->
@@ -32,6 +36,7 @@
           [currentPhysicalDetails]="
             trainerProfileDetails?.currentPhysicalDetails
           "
+          [viewId]="trainerProfileDetails.id"
         ></user-profile-details-container>
       </div>
       <div class="col-lg-3">

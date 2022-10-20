@@ -16,13 +16,17 @@
               [state]="clientProfileDetails.state"
               [city]="clientProfileDetails.city"
               [status]="clientProfileDetails.status"
+              [viewId]="clientProfileDetails.id"
             ></app-user-profile>
           </div>
         </div>
 
         <!-- Client Profile Details -->
         <user-profile-details-container
-          [currentPhysicalDetails]="clientProfileDetails.currentPhysicalDetails"
+          [currentPhysicalDetails]="
+            clientProfileDetails?.currentPhysicalDetails
+          "
+          [viewId]="clientProfileDetails.id"
         ></user-profile-details-container>
       </div>
       <div class="mt-4 mt-lg-0 col-lg-4">

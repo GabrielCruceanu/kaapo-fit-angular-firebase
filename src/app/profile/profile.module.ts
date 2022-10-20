@@ -95,5 +95,11 @@ import { UserProfileDetailsContainerComponent } from './components/user-profile-
     MatExpansionModule,
   ],
   providers: [],
+  exports: [
+    UserProfileSidebarComponent,
+    UserProfileComponent,
+    ProDetailsComponent,
+    UserProfileDetailsContainerComponent,
+  ],
 })
 export class ProfileModule {}

@@ -1,10 +1,11 @@
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import {
   CollectionsType,
   UserImage,
   UserImageType,
+  UserType,
 } from '@/app/profile/model/profile-interface';
 import { doc, Firestore, updateDoc } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
@@ -26,13 +27,11 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { TypeOfUploadImage } from '@/app/shared/model/upload-image-interface';
 import { DataUrl, NgxImageCompressService } from 'ngx-image-compress';
-import {
-  ClientPhysicalDetails,
-  ClientProfile,
-} from '@/app/profile/model/clientProfile.model';
+import { ClientProfile } from '@/app/profile/model/clientProfile.model';
 import { getClientProfile } from '@/app/profile/store/profile.selector';
 import { TrainerProfile } from '@/app/profile/model/trainerProfile.model';
 import { NutritionistProfile } from '@/app/profile/model/nutritionistProfile.model';
+import { GymProfile } from '@/app/profile/model/gym.model';
 
 @Injectable({
   providedIn: 'root',
@@ -67,7 +66,12 @@ export class UploadImageService implements OnDestroy {
     imageName: string,
     typeOfUploadImage: TypeOfUploadImage,
     folder: CollectionsType,
-    currentUserProfile?: ClientProfile | TrainerProfile | NutritionistProfile
+    currentUserProfile?: ClientProfile | TrainerProfile | NutritionistProfile,
+    imageProfile?:
+      | ClientProfile
+      | TrainerProfile
+      | NutritionistProfile
+      | GymProfile
   ) {
     return this.imageCompress.uploadFile().then(({ image, orientation }) => {
       this.imageCompress
@@ -97,13 +101,16 @@ export class UploadImageService implements OnDestroy {
               folder,
               currentUserProfile
             );
-          } else {
+          } else if (imageProfile) {
+            console.log('redas');
             this.startUpload(
               fileBlob,
               id,
               imageName,
               typeOfUploadImage,
-              folder
+              folder,
+              undefined,
+              imageProfile
             );
           }
         });
@@ -116,7 +123,12 @@ export class UploadImageService implements OnDestroy {
     imageName: string,
     typeOfImage: TypeOfUploadImage,
     folder: CollectionsType,
-    currentUserProfile?: ClientProfile | TrainerProfile | NutritionistProfile
+    currentUserProfile?: ClientProfile | TrainerProfile | NutritionistProfile,
+    imageProfile?:
+      | ClientProfile
+      | TrainerProfile
+      | NutritionistProfile
+      | GymProfile
   ) {
     const storage = getStorage();
 
@@ -174,6 +186,7 @@ export class UploadImageService implements OnDestroy {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('folder', folder);
           const refDb = doc(this.firestore, folder, id);
 
           this.imageForDb = {
@@ -189,7 +202,43 @@ export class UploadImageService implements OnDestroy {
                   path,
                 },
               });
-
+              if (imageProfile.status === UserType.Client) {
+                const clientDb = doc(this.firestore, 'clients', id);
+                updateDoc(clientDb, {
+                  ...imageProfile,
+                  profilePicture: {
+                    downloadURL: downloadURL,
+                    path,
+                  },
+                });
+              } else if (imageProfile.status === UserType.Trainer) {
+                const clientDb = doc(this.firestore, 'trainers', id);
+                updateDoc(clientDb, {
+                  ...imageProfile,
+                  profilePicture: {
+                    downloadURL: downloadURL,
+                    path,
+                  },
+                });
+              } else if (imageProfile.status === UserType.Nutritionist) {
+                const clientDb = doc(this.firestore, 'nutritionists', id);
+                updateDoc(clientDb, {
+                  ...imageProfile,
+                  profilePicture: {
+                    downloadURL: downloadURL,
+                    path,
+                  },
+                });
+              } else if (imageProfile.status === UserType.Gym) {
+                const clientDb = doc(this.firestore, 'gyms', id);
+                updateDoc(clientDb, {
+                  ...imageProfile,
+                  profilePicture: {
+                    downloadURL: downloadURL,
+                    path,
+                  },
+                });
+              }
               this.store.dispatch(
                 setUserProfileImage({ profileImage: this.imageForDb })
               );
@@ -202,7 +251,43 @@ export class UploadImageService implements OnDestroy {
                   path,
                 },
               });
-
+              if (imageProfile.status === UserType.Client) {
+                const clientDb = doc(this.firestore, 'clients', id);
+                updateDoc(clientDb, {
+                  ...imageProfile,
+                  coverPicture: {
+                    downloadURL: downloadURL,
+                    path,
+                  },
+                });
+              } else if (imageProfile.status === UserType.Trainer) {
+                const clientDb = doc(this.firestore, 'trainers', id);
+                updateDoc(clientDb, {
+                  ...imageProfile,
+                  coverPicture: {
+                    downloadURL: downloadURL,
+                    path,
+                  },
+                });
+              } else if (imageProfile.status === UserType.Nutritionist) {
+                const clientDb = doc(this.firestore, 'nutritionists', id);
+                updateDoc(clientDb, {
+                  ...imageProfile,
+                  coverPicture: {
+                    downloadURL: downloadURL,
+                    path,
+                  },
+                });
+              } else if (imageProfile.status === UserType.Gym) {
+                const clientDb = doc(this.firestore, 'gyms', id);
+                updateDoc(clientDb, {
+                  ...imageProfile,
+                  coverPicture: {
+                    downloadURL: downloadURL,
+                    path,
+                  },
+                });
+              }
               this.store.dispatch(
                 setUserCoverImage({ coverImage: this.imageForDb })
               );
