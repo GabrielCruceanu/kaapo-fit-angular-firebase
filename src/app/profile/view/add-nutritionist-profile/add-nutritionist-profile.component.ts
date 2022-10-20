@@ -170,7 +170,7 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         this.nutritionistProfile?.contact?.website
           ? this.nutritionistProfile?.contact?.website
           : '',
-        []
+        [this.profileService.websiteInputValidation()]
       ),
       facebook: new FormControl(
         this.nutritionistProfile?.contact?.facebook
