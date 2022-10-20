@@ -47,13 +47,14 @@ export class ProDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.reviewsSub = this.store.select(getReviews).subscribe((reviews) => {
-      console.log('reviews before', reviews);
-      const reviewsCurrentUser = reviews.filter(
-        (review) => review.beneficiaryId === this.viewId
-      );
-
-      console.log('this.viewId', this.viewId);
-      console.log('reviewsCurrentUser', reviewsCurrentUser);
+      let reviewsCurrentUser;
+      if (reviews.length > 0) {
+        reviewsCurrentUser = reviews.filter((review) => {
+          if (review.beneficiaryId === this.viewId) {
+            return review;
+          }
+        });
+      }
 
       this.reviews$ = of(reviewsCurrentUser);
     });
