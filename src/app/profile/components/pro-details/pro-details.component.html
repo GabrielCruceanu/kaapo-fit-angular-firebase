@@ -65,10 +65,13 @@
           <p>
             <span>Facebook:</span>
             <a
-              [href]="'https://facebook.com/' + contact.facebook"
+              [href]="
+                'https://www.facebook.com/' +
+                handleFacebookUsernameFormatted(contact.facebook)
+              "
               target="_blank"
             >
-              {{ contact.facebook }}
+              {{ handleFacebookUsernameFormatted(contact.facebook) }}
             </a>
           </p>
         </li>
@@ -77,7 +80,7 @@
           <p>
             <span>Instagram:</span>
             <a
-              [href]="'https://instagram.com/' + contact.instagram"
+              [href]="'https://www.instagram.com/' + contact.instagram"
               target="_blank"
             >
               {{ contact.instagram }}</a
@@ -89,7 +92,7 @@
           <p>
             <span>Twitter:</span>
             <a
-              [href]="'https://twitter.com/' + contact.twitter"
+              [href]="'https://www.twitter.com/' + contact.twitter"
               target="_blank"
             >
               {{ contact.twitter }}

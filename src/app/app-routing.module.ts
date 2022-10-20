@@ -7,10 +7,7 @@ import { ProfileDetailsComponent } from '@/app/profile/view/profile-details/prof
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./landing-page/landing-page.module').then(
-        (m) => m.LandingPageModule
-      ),
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'profil',
@@ -54,14 +51,6 @@ const routes: Routes = [
     path: 'sali',
     loadChildren: () => import('./gym/gym.module').then((m) => m.GymModule),
     canActivate: [AuthGuard],
-  },
-  {
-    path: 'autentificare',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-  },
-  {
-    path: ':id',
-    component: ProfileDetailsComponent,
   },
   {
     path: '**',
