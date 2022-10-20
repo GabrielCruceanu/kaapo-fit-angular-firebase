@@ -30,13 +30,14 @@ export class TrainerComponent implements OnInit, OnDestroy {
       .select(getTrainers)
       .subscribe((trainers) => {
         this.findTrainer(trainers);
-        console.log('trainer', this.trainerProfile);
       });
   }
 
   ngOnDestroy() {
     if (this.userProfileSub) {
       this.userProfileSub.unsubscribe();
+    } else if (this.trainerProfileSub) {
+      this.trainerProfileSub.unsubscribe();
     }
   }
 

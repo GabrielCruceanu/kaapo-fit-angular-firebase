@@ -124,6 +124,7 @@ export class AuthEffects {
           coverImage,
           profileImage
         );
+        this.authService.createUsernameInDb(userProfile);
 
         return createUserProfileStart({ userProfile: userProfile });
       })

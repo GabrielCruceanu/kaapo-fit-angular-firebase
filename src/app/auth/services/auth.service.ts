@@ -9,7 +9,7 @@ import { AuthResponseData } from '../model/AuthResponseData.model';
 import { Observable } from 'rxjs';
 import { UserProfile } from '../../profile/model/userProfile.model';
 import { UserImage, UserType } from '../../profile/model/profile-interface';
-import { doc, Firestore, getDoc } from '@angular/fire/firestore';
+import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
 
 @Injectable({
@@ -43,6 +43,15 @@ export class AuthService {
     const docSnap = await getDoc(docRef);
 
     return !!docSnap.exists();
+  }
+
+  createUsernameInDb(userProfile: UserProfile) {
+    const ref = doc(this.firestore, 'usernames', userProfile.username);
+    setDoc(ref, {
+      username: userProfile.username,
+      userId: userProfile.id,
+      email: userProfile.email,
+    });
   }
 
   onResetPassword(email: string) {

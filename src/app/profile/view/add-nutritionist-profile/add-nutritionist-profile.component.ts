@@ -170,7 +170,7 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         this.nutritionistProfile?.contact?.website
           ? this.nutritionistProfile?.contact?.website
           : '',
-        []
+        [this.profileService.websiteInputValidation()]
       ),
       facebook: new FormControl(
         this.nutritionistProfile?.contact?.facebook
@@ -345,8 +345,6 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         this.userProfile.profileImage ? this.userProfile.profileImage : null
       );
 
-      console.log('userProfile On submit', userProfile);
-      console.log('nutritionistProfile On submit', nutritionistProfile);
       this.store.dispatch(setLoadingSpinner({ status: true }));
 
       this.store.dispatch(updateUserProfileStart({ userProfile }));

@@ -102,7 +102,6 @@ export class UploadImageService implements OnDestroy {
               currentUserProfile
             );
           } else if (imageProfile) {
-            console.log('redas');
             this.startUpload(
               fileBlob,
               id,
@@ -186,14 +185,13 @@ export class UploadImageService implements OnDestroy {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('folder', folder);
           const refDb = doc(this.firestore, folder, id);
 
           this.imageForDb = {
             downloadURL: downloadURL,
             path,
           };
-          console.log('typeOfImage', typeOfImage);
+
           switch (typeOfImage) {
             case TypeOfUploadImage.Profile: {
               updateDoc(refDb, {
@@ -294,7 +292,6 @@ export class UploadImageService implements OnDestroy {
               break;
             }
             case TypeOfUploadImage.ClientGallery: {
-              console.log('imageName', imageName);
               if (imageName === UserImageType.clientGalleryFront) {
                 updateDoc(refDb, {
                   currentPhysicalDetails: {

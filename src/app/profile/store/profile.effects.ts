@@ -214,7 +214,6 @@ export class ProfileEffects {
           .getHistoryPhysicalDetailsFromDb(action.clientId)
           .pipe(
             map((clientProfileHistory: ClientPhysicalDetails[]) => {
-              console.log('clientProfileHistory', clientProfileHistory);
               return setClientHistoryPhysicalDetailsSuccess({
                 historyPhysicalDetails: clientProfileHistory,
                 redirect: false,

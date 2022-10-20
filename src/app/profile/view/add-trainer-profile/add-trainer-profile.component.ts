@@ -324,8 +324,7 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         this.userProfile.coverImage ? this.userProfile.coverImage : null,
         this.userProfile.profileImage ? this.userProfile.profileImage : null
       );
-      console.log('userProfile On submit', userProfile);
-      console.log('trainerProfile On submit', trainerProfile);
+
       this.store.dispatch(setLoadingSpinner({ status: true }));
 
       this.store.dispatch(updateUserProfileStart({ userProfile }));

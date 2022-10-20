@@ -56,6 +56,8 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
   selectedCity: string = '';
   gymTypes = GymData;
   gymFormGroup: FormGroup;
+  urlRegEx =
+    '[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}(.[a-z]{2,4})?\b(/[-a-zA-Z0-9@:%_+.~#?&//=]*)?';
 
   constructor(
     private store: Store<AppState>,
@@ -132,7 +134,7 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         this.gymProfile?.contact?.website
           ? this.gymProfile?.contact?.website
           : '',
-        []
+        [this.profileService.websiteInputValidation()]
       ),
       facebook: new FormControl(
         this.gymProfile?.contact?.facebook

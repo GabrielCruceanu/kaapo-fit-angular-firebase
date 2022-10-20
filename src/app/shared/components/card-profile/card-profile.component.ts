@@ -4,6 +4,7 @@ import { GymProfile } from '@/app/profile/model/gym.model';
 import { TrainerProfile } from '@/app/profile/model/trainerProfile.model';
 import { NutritionistProfile } from '@/app/profile/model/nutritionistProfile.model';
 import { UserProfile } from '@/app/profile/model/userProfile.model';
+import { UserType } from '@/app/profile/model/profile-interface';
 
 @Component({
   selector: 'card-profile',
@@ -22,7 +23,17 @@ export class CardProfileComponent implements OnInit {
   }
 
   runTo(id: string) {
-    this.router.navigate(['antrenori/', id]);
+    switch (this.profile.status) {
+      case UserType.Gym:
+        this.router.navigate(['sali/', id]);
+        break;
+      case UserType.Trainer:
+        this.router.navigate(['antrenori/', id]);
+        break;
+      case UserType.Nutritionist:
+        this.router.navigate(['nutritionisti/', id]);
+        break;
+    }
   }
 
   findUserName(users) {

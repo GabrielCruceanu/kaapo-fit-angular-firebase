@@ -1,1 +1,46 @@
-<app-layout> <h1 class="app-title">Nutrition</h1></app-layout>
+<app-layout>
+  <section class="profile-container" *ngIf="nutritionistProfile">
+    <div class="container">
+      <div class="row mt-3 mt-md-4">
+        <div class="col-lg-9">
+          <!--   Profile Header-->
+          <div class="row">
+            <div class="col-12">
+              <!-- Profile Picture and Name-->
+              <app-user-profile
+                [firstName]="nutritionistProfile.firstName"
+                [lastName]="nutritionistProfile.lastName"
+                [coverImage]="nutritionistProfile.coverPicture.downloadURL"
+                [profileImage]="nutritionistProfile.profilePicture.downloadURL"
+                [name]="null"
+                [state]="nutritionistProfile.state"
+                [city]="nutritionistProfile.city"
+                [status]="nutritionistProfile.status"
+                [viewId]="nutritionistProfile.id"
+              ></app-user-profile>
+            </div>
+          </div>
+          <pro-details
+            [experience]="nutritionistProfile.experience"
+            [type]="nutritionistProfile.type"
+            [certificate]="nutritionistProfile.certificate"
+            [description]="nutritionistProfile.description"
+            [contact]="nutritionistProfile.contact"
+            [viewId]="nutritionistProfile.id"
+          ></pro-details>
+
+          <!-- Trainer Profile Physical Details -->
+          <user-profile-details-container
+            [currentPhysicalDetails]="
+              nutritionistProfile?.currentPhysicalDetails
+            "
+            [viewId]="nutritionistProfile.id"
+          ></user-profile-details-container>
+        </div>
+        <div class="col-lg-3">
+          <app-user-profile-sidebar></app-user-profile-sidebar>
+        </div>
+      </div>
+    </div>
+  </section>
+</app-layout>

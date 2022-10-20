@@ -1,18 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  ClientPhysicalDetails,
-  ClientProfile,
-} from '../../model/clientProfile.model';
+import { ClientProfile } from '../../model/clientProfile.model';
 import { Observable } from 'rxjs';
-import {
-  getClientProfile,
-  getHistoryPhysicalDetails,
-} from '../../store/profile.selector';
+import { getClientProfile } from '../../store/profile.selector';
 import { Store } from '@ngrx/store';
 import { AppState } from '@/app/store/app.state';
 import { MatDialog } from '@angular/material/dialog';
 import { AddMeasurementsComponent } from '@/app/profile/view/add-measurements/add-measurements.component';
-import { getClientHistoryPhysicalDetails } from '@/app/profile/store/profile.actions';
 
 @Component({
   selector: 'app-client-profile',
@@ -34,9 +27,6 @@ export class ClientProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.clientProfileDetails$ = this.store.select(getClientProfile);
-    this.clientProfileDetails$.subscribe((clientProfileDetails) => {
-      console.log('clientProfileDetails', clientProfileDetails);
-    });
   }
 
   public onAddMeasurements() {
