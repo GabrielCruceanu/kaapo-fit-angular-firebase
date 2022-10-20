@@ -101,20 +101,6 @@ Variables
   --bp-xxl: 1400px;
 }
 
-body {
-  min-height: 100vh; /* fall-back */
-  min-height: -moz-available;
-  min-height: -webkit-fill-available;
-  min-height: fill-available;
-}
-
-/* Avoid Chrome to see Safari hack */
-@supports (-webkit-touch-callout: none) {
-  body {
-    /* The hack for Safari */
-    height: -webkit-fill-available;
-  }
-}
 p {
   overflow-wrap: break-word;
 }

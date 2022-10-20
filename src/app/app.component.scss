@@ -142,6 +142,11 @@
   background-color: var(--dark-two);
 }
 
+::ng-deep
+  .mat-expansion-panel:not(.mat-expanded):not([aria-disabled='true'])
+  .mat-expansion-panel-header:hover {
+  background: var(--dark-one);
+}
 // ******************
 // Form End
 // ******************

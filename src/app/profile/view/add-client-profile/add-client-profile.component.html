@@ -99,15 +99,6 @@
           <div class="col-md-6 col-lg-4">
             <mat-form-field class="form-control" appearance="outline">
               <mat-label>Telefon</mat-label>
-              <!--              <ngx-mat-intl-tel-input-->
-              <!--                [required]="true"-->
-              <!--                formControlName="phone"-->
-              <!--                [enablePlaceholder]="true"-->
-              <!--                [enableSearch]="true"-->
-              <!--                name="phone"-->
-              <!--                class="phone-search-control"-->
-              <!--              >-->
-              <!--              </ngx-mat-intl-tel-input>-->
               <input
                 matInput
                 placeholder="0770121945"
@@ -149,19 +140,6 @@
                   >{{ option }}
                 </mat-option>
               </mat-autocomplete>
-              <mat-select
-                type="text"
-                formControlName="country"
-                placeholder="Romania"
-                aria-label="Country"
-                (ngModelChange)="onDisableInput('state', 'country')"
-              >
-                <mat-option
-                  *ngFor="let option of filteredCountries | async"
-                  [value]="option"
-                  >{{ option }}
-                </mat-option>
-              </mat-select>
               <mat-error
                 *ngIf="clientFormGroup.controls['country'].hasError('required')"
               >

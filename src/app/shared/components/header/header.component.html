@@ -25,13 +25,16 @@
         <!--          ></mat-icon>-->
         <!--        </li>-->
         <li>
-          <mat-icon
-            class="icon"
-            aria-hidden="false"
-            [matMenuTriggerFor]="appMenu"
-            aria-label="Icon button for menu"
-            >dehaze
-          </mat-icon>
+          <!--          <mat-icon-->
+          <!--            class="icon"-->
+          <!--            aria-hidden="false"-->
+          <!--            [matMenuTriggerFor]="appMenu"-->
+          <!--            aria-label="Icon button for menu"-->
+          <!--            >dehaze-->
+          <!--          </mat-icon>-->
+          <mat-icon (click)="onLogout($event)" aria-label="logout"
+            >logout</mat-icon
+          >
         </li>
       </ul>
       <mat-menu #appMenu="matMenu" xPosition="before">

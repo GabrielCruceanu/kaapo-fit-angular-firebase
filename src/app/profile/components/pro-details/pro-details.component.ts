@@ -25,6 +25,9 @@ export class ProDetailsComponent implements OnInit {
   @Input() viewId: string;
   reviews$: Observable<Review[] | null>;
   reviewsSub: Subscription;
+  facebookFormated: string | null;
+  twitterFormated: string | null;
+  instaFormated: string | null;
 
   constructor(
     private store: Store<AppState>,
@@ -58,5 +61,48 @@ export class ProDetailsComponent implements OnInit {
 
       this.reviews$ = of(reviewsCurrentUser);
     });
+  }
+
+  handleFacebookUsernameFormatted(link?: string) {
+    const facebookLinkHttps = 'https://www.facebook.com/';
+    const facebookLinkHttp = 'http://www.facebook.com/';
+    const facebookLinkWww = 'www.facebook.com/';
+    let username;
+    if (link && link.includes(facebookLinkHttps)) {
+      username = link.slice(25);
+    } else if (link && link.includes(facebookLinkHttp)) {
+      username = link.slice(24);
+    } else if (link && link.includes(facebookLinkWww)) {
+      username = link.slice(17);
+    }
+    return username;
+  }
+  handleInstagramUsernameFormatted(link?: string) {
+    const instagramLinkHttps = 'https://www.instagram.com/';
+    const instagramLinkHttp = 'http://www.instagram.com/';
+    const instagramLinkWww = 'www.instagram.com/';
+    let username;
+    if (link && link.includes(instagramLinkHttps)) {
+      username = link.slice(26);
+    } else if (link && link.includes(instagramLinkHttp)) {
+      username = link.slice(25);
+    } else if (link && link.includes(instagramLinkWww)) {
+      username = link.slice(18);
+    }
+    return username;
+  }
+  handleTwitterUsernameFormatted(link?: string) {
+    const twitterLinkHttps = 'https://www.twitter.com/';
+    const twitterLinkHttp = 'http://www.twitter.com/';
+    const twitterLinkWww = 'www.twitter.com/';
+    let username;
+    if (link && link.includes(twitterLinkHttps)) {
+      username = link.slice(26);
+    } else if (link && link.includes(twitterLinkHttp)) {
+      username = link.slice(25);
+    } else if (link && link.includes(twitterLinkWww)) {
+      username = link.slice(18);
+    }
+    return username;
   }
 }
