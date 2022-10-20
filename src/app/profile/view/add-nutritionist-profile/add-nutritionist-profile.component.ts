@@ -345,8 +345,6 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         this.userProfile.profileImage ? this.userProfile.profileImage : null
       );
 
-      console.log('userProfile On submit', userProfile);
-      console.log('nutritionistProfile On submit', nutritionistProfile);
       this.store.dispatch(setLoadingSpinner({ status: true }));
 
       this.store.dispatch(updateUserProfileStart({ userProfile }));

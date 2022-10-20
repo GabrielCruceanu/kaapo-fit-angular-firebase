@@ -97,7 +97,6 @@ export class SharedEffects {
 
         return this.profileService.getTrainersFromDb().pipe(
           map((trainers) => {
-            console.log('trainers', trainers);
             this.store.dispatch(setLoadingSpinner({ status: false }));
             return getTrainersSuccess({ trainers: trainers });
           }),

@@ -50,7 +50,7 @@ export class ProDetailsComponent implements OnInit {
       let reviewsCurrentUser;
       if (reviews.length > 0) {
         reviewsCurrentUser = reviews.filter((review) => {
-          if (review.beneficiaryId === this.viewId) {
+          if (review && review.beneficiaryId === this.viewId) {
             return review;
           }
         });

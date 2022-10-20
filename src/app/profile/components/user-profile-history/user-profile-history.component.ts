@@ -57,9 +57,6 @@ export class UserProfileHistoryComponent implements OnInit, OnDestroy {
         }
       });
     this.historyPhysicalDetails$ = this.store.select(getHistoryPhysicalDetails);
-    this.historyPhysicalDetails$.subscribe((historyPhysicalDetails) => {
-      console.log('historyPhysicalDetails', historyPhysicalDetails);
-    });
   }
   ngOnDestroy() {
     if (this.getClientProfileSub) {

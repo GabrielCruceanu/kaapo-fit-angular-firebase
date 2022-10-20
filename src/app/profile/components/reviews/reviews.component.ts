@@ -8,7 +8,7 @@ import { SwiperComponent } from 'swiper/angular';
 SwiperCore.use([Virtual, Navigation, Pagination]);
 
 @Component({
-  selector: 'reviews',
+  selector: 'app-reviews',
   templateUrl: './reviews.component.html',
   styleUrls: ['./reviews.component.scss'],
 })
