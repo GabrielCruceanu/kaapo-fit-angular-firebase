@@ -10,6 +10,7 @@ import {
   getGyms,
   getNutritionists,
   getTrainers,
+  getUsers,
 } from '@/app/store/shared/shared.selector';
 import { GymProfile } from '@/app/profile/model/gym.model';
 import { TrainerProfile } from '@/app/profile/model/trainerProfile.model';
@@ -25,6 +26,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  users$: Observable<UserProfile[] | []>;
   userType = UserType;
   userAuth$: Observable<UserAuth | null>;
   userProfile$: Observable<UserProfile | null>;
@@ -44,6 +46,7 @@ export class HomeComponent implements OnInit {
     this.gyms$ = this.store.select(getGyms);
     this.trainers$ = this.store.select(getTrainers);
     this.nutritionists$ = this.store.select(getNutritionists);
+    this.users$ = this.store.select(getUsers);
   }
 
   logout(event: Event) {

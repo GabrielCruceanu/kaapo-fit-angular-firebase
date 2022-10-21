@@ -74,6 +74,8 @@ export class ProDetailsComponent implements OnInit {
       username = link.slice(24);
     } else if (link && link.includes(facebookLinkWww)) {
       username = link.slice(17);
+    } else {
+      username = this.contact.facebook;
     }
     return username;
   }
@@ -88,6 +90,8 @@ export class ProDetailsComponent implements OnInit {
       username = link.slice(25);
     } else if (link && link.includes(instagramLinkWww)) {
       username = link.slice(18);
+    } else {
+      username = this.contact.instagram;
     }
     return username;
   }
@@ -102,6 +106,8 @@ export class ProDetailsComponent implements OnInit {
       username = link.slice(25);
     } else if (link && link.includes(twitterLinkWww)) {
       username = link.slice(18);
+    } else {
+      username = this.contact.twitter;
     }
     return username;
   }

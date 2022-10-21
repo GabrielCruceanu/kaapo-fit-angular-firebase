@@ -7,7 +7,7 @@
         <h5>{{ experience }} ani</h5>
       </div>
       <div class="pro-details-item" *ngIf="type">
-        <h6>Tip Antrenor</h6>
+        <h6>Tip</h6>
         <hr />
         <h5>{{ type }}</h5>
       </div>
@@ -80,10 +80,13 @@
           <p>
             <span>Instagram:</span>
             <a
-              [href]="'https://www.instagram.com/' + contact.instagram"
+              [href]="
+                'https://www.instagram.com/' +
+                handleInstagramUsernameFormatted(contact.instagram)
+              "
               target="_blank"
             >
-              {{ contact.instagram }}</a
+              {{ handleInstagramUsernameFormatted(contact.instagram) }}</a
             >
           </p>
         </li>
@@ -92,10 +95,13 @@
           <p>
             <span>Twitter:</span>
             <a
-              [href]="'https://www.twitter.com/' + contact.twitter"
+              [href]="
+                'https://www.twitter.com/' +
+                handleTwitterUsernameFormatted(contact.twitter)
+              "
               target="_blank"
             >
-              {{ contact.twitter }}
+              {{ handleTwitterUsernameFormatted(contact.twitter) }}
             </a>
           </p>
         </li>

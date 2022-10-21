@@ -12,7 +12,7 @@ import { UserType } from '@/app/profile/model/profile-interface';
   styleUrls: ['./card-profile.component.scss'],
 })
 export class CardProfileComponent implements OnInit {
-  @Input() profile: GymProfile | TrainerProfile | NutritionistProfile;
+  @Input() profile: GymProfile | TrainerProfile | NutritionistProfile | any;
   @Input() users: UserProfile[];
   userName: string;
 

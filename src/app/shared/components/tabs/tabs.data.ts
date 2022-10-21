@@ -6,6 +6,11 @@ export interface TabModel {
 
 export const TabsData: TabModel[] = [
   {
+    name: 'Acasa',
+    link: '/acasa',
+    icon: 'home',
+  },
+  {
     name: 'Profil',
     link: '/profil',
     icon: 'profile',
