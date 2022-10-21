@@ -134,7 +134,7 @@ export class ProfileEffects {
             }
           }
         } else {
-          this.router.navigate(['/profil/selectare-profil']);
+          this.router.navigate(['/acasa']);
         }
 
         return getReviewsStart();
