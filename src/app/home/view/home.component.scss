@@ -1,4 +1,19 @@
+.home {
+  text-align: center;
+  .col-md-6 {
+    min-height: 118px;
+  }
+}
+
 .app-title {
   text-align: center;
   margin: 1rem 0;
+}
+
+@media screen and (min-width: 768px) {
+  .home {
+    .col-md-6 {
+      min-height: 284px;
+    }
+  }
 }
