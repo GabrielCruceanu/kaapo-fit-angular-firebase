@@ -28,6 +28,7 @@ export class SignUpComponent implements OnInit {
   errorMessage$: Observable<any> | undefined;
   usernameIsNotValid: boolean;
   signUpFormGroup: FormGroup;
+  termsAndConditions = false;
 
   constructor(
     @Optional() private auth: Auth,
@@ -93,7 +94,7 @@ export class SignUpComponent implements OnInit {
 
   onSubmit(form: FormGroup) {
     const { email, username, password } = form.value;
-    if (form.valid) {
+    if (form.valid && this.termsAndConditions) {
       this.store.dispatch(setLoadingSpinner({ status: true }));
       this.store.dispatch(signupStart({ email, username, password }));
     }

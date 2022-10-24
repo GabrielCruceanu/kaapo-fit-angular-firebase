@@ -13,7 +13,7 @@ import { LogoutConfirmationDialogComponent } from './components/logout-confirmat
 import { MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordComponent } from './view/reset-password/reset-password.component';
 import { LayoutModule } from '../shared/components/layout/layout.module';
-import { AuthService } from './services/auth.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -34,6 +34,7 @@ import { AuthService } from './services/auth.service';
     ReactiveFormsModule,
     MatDialogModule,
     LayoutModule,
+    MatCheckboxModule,
   ],
   providers: [],
 })

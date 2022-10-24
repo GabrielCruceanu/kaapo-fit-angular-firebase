@@ -266,7 +266,7 @@ export class AuthEffects {
         tap((action) => {
           this.store.dispatch(setErrorMessage({ message: '' }));
           if (action.redirect) {
-            this.store.dispatch(setLoadingSpinner({ status: true }));
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             this.router.navigate(['/autentificare']);
           }
         })

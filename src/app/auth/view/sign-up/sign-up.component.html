@@ -158,8 +158,31 @@
           {{ errorMessage }}
         </mat-error>
       </div>
+      <div class="form-footer-checkbox">
+        <mat-checkbox
+          color="primary"
+          [checked]="termsAndConditions"
+          (change)="termsAndConditions = !termsAndConditions"
+          ><small
+            >Am citit si sunt de acord cu
+            <a href="https://www.kaapo.fit/termeni-si-conditii" target="_blank"
+              >Termenii si conditiile</a
+            >,
+            <a href="https://www.kaapo.fit/cookies" target="_blank"
+              >Politica cookie-uri</a
+            >
+            si cu
+            <a href="https://www.kaapo.fit/prelucrarea-datelor" target="_blank"
+              >Prelucrarea datelor</a
+            >.
+          </small>
+        </mat-checkbox>
+      </div>
 
-      <button mat-button [class.disabled]="!signUpFormGroup.valid">
+      <button
+        mat-button
+        [class.disabled]="!signUpFormGroup.valid || !termsAndConditions"
+      >
         Creaza cont
       </button>
     </div>
