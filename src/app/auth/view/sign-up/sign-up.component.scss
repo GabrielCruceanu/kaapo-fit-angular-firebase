@@ -1,0 +1,15 @@
+.form-footer-checkbox {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 1rem;
+
+  ::ng-deep .mat-checkbox-layout {
+    max-width: 327px;
+    vertical-align: top;
+    white-space: break-spaces;
+  }
+  a {
+    color: var(--primary);
+  }
+}

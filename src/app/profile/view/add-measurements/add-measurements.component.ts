@@ -198,6 +198,7 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
       });
 
     if (
+      this.currentUserProfile?.currentPhysicalDetails?.date &&
       !this.checkIfNeedMeasurements(
         this.currentUserProfile.currentPhysicalDetails.date
       )
