@@ -8,13 +8,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddMeasurementsComponent } from '@/app/profile/view/add-measurements/add-measurements.component';
 
 @Component({
-  selector: 'app-client-profile',
+  selector: 'client-profile',
   templateUrl: './client-profile.component.html',
   styleUrls: ['./client-profile.component.scss'],
 })
 export class ClientProfileComponent implements OnInit {
   clientProfileDetails$: Observable<ClientProfile | null>;
-  clientProfileDetails: ClientProfile | null;
   public currentDay: number;
   public currentMonth: number;
   public currentYear: number;

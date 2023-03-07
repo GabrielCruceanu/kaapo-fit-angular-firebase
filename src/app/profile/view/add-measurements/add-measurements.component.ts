@@ -341,9 +341,10 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
 
   checkIfNeedMeasurements(date: Birth) {
     return (
-      this.currentDay >= date.date &&
-      this.currentMonth > date.month &&
-      this.currentYear >= date.year
+      (this.currentDay >= date.date &&
+        this.currentMonth > date.month &&
+        this.currentYear >= date.year) ||
+      this.currentYear > date.year
     );
   }
   ngOnDestroy() {

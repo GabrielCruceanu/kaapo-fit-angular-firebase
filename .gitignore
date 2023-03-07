@@ -48,3 +48,5 @@ yarn.lock
 .firebase
 *-debug.log
 .runtimeconfig.json
+.vercel
+.env

@@ -1,15 +1,18 @@
 <app-layout>
-  <app-client-profile
-    *ngIf="userProfile?.userType === userType.Client"
-  ></app-client-profile>
+  <ng-container [ngSwitch]="userProfile.userType">
+    <client-profile *ngSwitchCase="userType.Client"
+    ></client-profile>
 
-  <trainer-profile
-    *ngIf="userProfile?.userType === userType.Trainer"
-  ></trainer-profile>
+    <trainer-profile
+      *ngSwitchCase="userType.Trainer"
+    ></trainer-profile>
 
-  <nutritionist-profile
-    *ngIf="userProfile?.userType === userType.Nutritionist"
-  ></nutritionist-profile>
+    <nutritionist-profile
+      *ngSwitchCase="userType.Nutritionist"
+    ></nutritionist-profile>
 
-  <gym-profile *ngIf="userProfile?.userType === userType.Gym"></gym-profile>
+    <gym-profile
+      *ngSwitchCase="userType.Gym"></gym-profile>
+  </ng-container>
+
 </app-layout>

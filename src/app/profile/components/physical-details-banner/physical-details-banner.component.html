@@ -18,10 +18,10 @@
 
 <section
   *ngIf="
-    currentPhysicalDetails &&
+    currentPhysicalDetails &&( (
     currentDay >= currentPhysicalDetails.date.date &&
     currentMonth > currentPhysicalDetails.date.month &&
-    currentYear >= currentPhysicalDetails.date.year
+    currentYear >= currentPhysicalDetails.date.year) || currentYear > currentPhysicalDetails.date.year)
   "
   class="row"
 >
