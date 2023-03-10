@@ -32,7 +32,10 @@ import {
   updateUserProfileStart,
 } from '../../store/profile.actions';
 import { TrainerProfile } from '../../model/trainerProfile.model';
-import { TrainerData, TrainerExperienceData } from '@/data/trainerData';
+import {
+  TrainerData,
+  TrainerExperienceData,
+} from '@/app/profile/data/trainerData';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 

@@ -16,9 +16,9 @@ export const TabsData: TabModel[] = [
     icon: 'profile',
   },
   {
-    name: 'Antrenori',
-    link: '/antrenori',
-    icon: 'trainer',
+    name: 'Adauga',
+    link: '/adauga',
+    icon: 'add',
   },
   {
     name: 'Nutritionisti',

@@ -7,7 +7,7 @@ import {
   TRAINER_ICON,
   WORKOUT_ICON,
 } from '@/content/icons';
-import { getProfilesData } from '@/data/profileData';
+import { getProfilesData } from '@/app/profile/data/profileData';
 import { ProfileData } from '../../model/profileData.model';
 import { getUserProfile } from '@/app/profile/store/profile.selector';
 import { UserType } from '@/app/profile/model/profile-interface';

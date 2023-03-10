@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
-import { getUserDataMock } from '@/data/userDetails';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import SwiperCore, {
   EffectCards,
   Navigation,
@@ -13,7 +6,6 @@ import SwiperCore, {
   Virtual,
 } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
-import { ClientDetails } from '../../model/profile-interface';
 import { ClientPhysicalDetails } from '../../model/clientProfile.model';
 
 // install Swiper modules
@@ -27,7 +19,6 @@ SwiperCore.use([Virtual, EffectCards, Navigation]);
 })
 export class UserProfileImagesComponent {
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
-  profile: ClientDetails;
   @Input()
   clientPhysicalDetails: ClientPhysicalDetails | null;
 
@@ -36,8 +27,4 @@ export class UserProfileImagesComponent {
     pagination: { clickable: true },
     scrollbar: { draggable: true },
   };
-
-  constructor() {
-    this.profile = getUserDataMock();
-  }
 }

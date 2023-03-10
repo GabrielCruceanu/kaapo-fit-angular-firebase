@@ -28,7 +28,7 @@ import {
   updateUserProfileStart,
 } from '../../store/profile.actions';
 import { GymProfile } from '../../model/gym.model';
-import { GymData } from '@/data/gymData';
+import { GymData } from '@/app/profile/data/gymData';
 import { Router } from '@angular/router';
 
 @Component({

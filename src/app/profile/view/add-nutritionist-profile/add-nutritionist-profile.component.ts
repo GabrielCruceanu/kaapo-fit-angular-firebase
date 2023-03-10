@@ -3,7 +3,7 @@ import { AuthType } from '@/app/auth/model/AuthResponseData.model';
 import { UserAuth } from '@/app/auth/model/userAuth.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import { UserProfile } from '../../model/userProfile.model';
-import { TrainerExperienceData } from '@/data/trainerData';
+import { TrainerExperienceData } from '@/app/profile/data/trainerData';
 import {
   FormControl,
   FormGroup,
@@ -35,7 +35,7 @@ import {
 import { NutritionistProfile } from '../../model/nutritionistProfile.model';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
-import { NutritionistData } from '@/data/nutritionistData';
+import { NutritionistData } from '@/app/profile/data/nutritionistData';
 
 @Component({
   selector: 'app-add-nutritionist-profile',

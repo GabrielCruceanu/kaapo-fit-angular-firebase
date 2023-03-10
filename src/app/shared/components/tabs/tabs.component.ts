@@ -32,8 +32,8 @@ export class TabsComponent {
       this.domSanitizer.bypassSecurityTrustHtml(PROFILE_ICON)
     );
     this.matIconRegistry.addSvgIconLiteral(
-      'trainer',
-      this.domSanitizer.bypassSecurityTrustHtml(TRAINER_ICON)
+      'add',
+      this.domSanitizer.bypassSecurityTrustHtml(ADD_ICON)
     );
     this.matIconRegistry.addSvgIconLiteral(
       'nutrition',

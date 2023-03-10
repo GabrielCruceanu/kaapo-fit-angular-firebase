@@ -1,0 +1,36 @@
+<app-layout>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <h1 class="app-title">Adauga</h1>
+
+        <p class="app-description">
+          Alege ce doresti sa adaugi.
+        </p>
+      </div>
+      <div class="col-12">
+        <div class="add-info-container">
+          <ul class="add-info-list">
+            <li
+              *ngFor="let info of addInfoData"
+              [routerLink]="info.link"
+              [queryParams]="{ mode: info.mode }"
+              queryParamsHandling="merge"
+            >
+              <div class="add-info-item">
+                <div class="add-info-icon-box">
+                  <mat-icon
+                    aria-hidden="true"
+                    class="add-info-icon"
+                    [svgIcon]="info.icon"
+                  ></mat-icon>
+                </div>
+                <p>{{ info.name }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-layout>
