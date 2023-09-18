@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthType } from '@/app/auth/model/AuthResponseData.model';
-import { UserAuth } from '@/app/auth/model/userAuth.model';
+import { AuthType } from '@/app/features/auth/model/AuthResponseData.model';
+import { UserAuth } from '@/app/features/auth/model/userAuth.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import { UserProfile } from '../../model/userProfile.model';
 import { TrainerExperienceData } from '@/app/profile/data/trainerData';
@@ -22,7 +22,7 @@ import {
   getErrorMessage,
   getLoading,
 } from '@/app/store/shared/shared.selector';
-import { getUserAuth } from '@/app/auth/store/auth.selector';
+import { getUserAuth } from '@/app/features/auth/store/auth.selector';
 import {
   getNutritionistProfile,
   getUserProfile,

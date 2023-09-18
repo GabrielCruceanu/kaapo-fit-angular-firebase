@@ -8,8 +8,8 @@ import {
   LOGOUT_ICON,
   NOTIFICATION_ICON,
 } from '@/content/icons';
-import { isAuthenticated } from '@/app/auth/store/auth.selector';
-import { autoLogout } from '@/app/auth/store/auth.actions';
+import { isAuthenticated } from '@/app/features/auth/store/auth.selector';
+import { autoLogout } from '@/app/features/auth/store/auth.actions';
 import { Observable, of } from 'rxjs';
 
 @Component({

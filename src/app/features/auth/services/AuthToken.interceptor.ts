@@ -5,7 +5,7 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { AppState } from '../../store/app.state';
+import { AppState } from '../../../store/app.state';
 import { Store } from '@ngrx/store';
 import { exhaustMap, Observable, take } from 'rxjs';
 import { getToken } from '../store/auth.selector';

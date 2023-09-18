@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BaseHttpService } from '@/app/auth/services/base-http.service';
+import { BaseHttpService } from '@/app/features/auth/services/base-http.service';
 import { map } from 'rxjs';
-import { UserAuth } from '@/app/auth/model/userAuth.model';
+import { UserAuth } from '@/app/features/auth/model/userAuth.model';
 
 @Injectable({
   providedIn: 'root',

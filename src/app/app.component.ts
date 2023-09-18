@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from './store/app.state';
 import { SwUpdate } from '@angular/service-worker';
 import { interval } from 'rxjs';
-import { autoLogin } from '@/app/auth/store/auth.actions';
+import { autoLogin } from '@/app/features/auth/store/auth.actions';
 
 @Component({
   selector: 'app-root',

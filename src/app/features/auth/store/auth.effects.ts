@@ -4,14 +4,14 @@ import { loginStart } from './auth.actions';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/app.state';
+import { AppState } from '../../../store/app.state';
 import { Router } from '@angular/router';
 import {
   setErrorMessage,
   setLoadingSpinner,
-} from '../../store/shared/shared.actions';
-import { ProfileService } from '../../profile/services/profile.service';
-import { AuthNextJsService } from '@/app/auth/services/auth-nextjs.service';
+} from '../../../store/shared/shared.actions';
+import { ProfileService } from '../../../profile/services/profile.service';
+import { AuthNextJsService } from '@/app/features/auth/services/auth-nextjs.service';
 
 @Injectable()
 export class AuthEffects {

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './view/login/login.component';
 import { SignUpComponent } from './view/sign-up/sign-up.component';
-import { ComponentsSharedModule } from '../shared/components/components-shared.module';
+import { ComponentsSharedModule } from '../../shared/components/components-shared.module';
 import { AuthContainerComponent } from './components/auth-container/auth-container.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -12,10 +12,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogoutConfirmationDialogComponent } from './components/logout-confirmation-dialog/logout-confirmation-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordComponent } from './view/reset-password/reset-password.component';
-import { LayoutModule } from '../shared/components/layout/layout.module';
+import { LayoutModule } from '../../shared/components/layout/layout.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { BaseHttpService } from '@/app/auth/services/base-http.service';
-import { AuthNextJsService } from '@/app/auth/services/auth-nextjs.service';
+import { BaseHttpService } from '@/app/features/auth/services/base-http.service';
+import { AuthNextJsService } from '@/app/features/auth/services/auth-nextjs.service';
 
 @NgModule({
   declarations: [

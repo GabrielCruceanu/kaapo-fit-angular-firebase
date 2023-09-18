@@ -14,7 +14,7 @@ import {
   getErrorMessage,
   getLoading,
 } from '@/app/store/shared/shared.selector';
-import { AuthService } from '@/app/auth/services/auth.service';
+import { AuthService } from '@/app/features/auth/services/auth.service';
 
 @Component({
   selector: 'app-sign-up',

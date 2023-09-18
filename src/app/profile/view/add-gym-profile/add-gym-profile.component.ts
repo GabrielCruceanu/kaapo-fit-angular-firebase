@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserAuth } from '@/app/auth/model/userAuth.model';
+import { UserAuth } from '@/app/features/auth/model/userAuth.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import { UserProfile } from '../../model/userProfile.model';
 import {
@@ -20,7 +20,7 @@ import {
   getErrorMessage,
   getLoading,
 } from '@/app/store/shared/shared.selector';
-import { getUserAuth } from '@/app/auth/store/auth.selector';
+import { getUserAuth } from '@/app/features/auth/store/auth.selector';
 import { getGymProfile, getUserProfile } from '../../store/profile.selector';
 import { Contact, UserType } from '../../model/profile-interface';
 import {

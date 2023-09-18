@@ -1,4 +1,4 @@
-import { User } from '#/app/shared/interfaces/user.interface';
+import { User } from '@/app/features/auth/interfaces/user.interface';
 
 export enum AuthType {
   LOGIN = 'LOGIN',

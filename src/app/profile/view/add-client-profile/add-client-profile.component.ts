@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthType } from '@/app/auth/model/AuthResponseData.model';
+import { AuthType } from '@/app/features/auth/model/AuthResponseData.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import {
   FormControl,
@@ -18,8 +18,8 @@ import {
   getLoading,
 } from '@/app/store/shared/shared.selector';
 import { ProfileService } from '../../services/profile.service';
-import { UserAuth } from '@/app/auth/model/userAuth.model';
-import { getUserAuth } from '@/app/auth/store/auth.selector';
+import { UserAuth } from '@/app/features/auth/model/userAuth.model';
+import { getUserAuth } from '@/app/features/auth/store/auth.selector';
 import { CountryService } from '@/app/shared/services/country.service';
 import { ClientProfile } from '../../model/clientProfile.model';
 import { UserType } from '../../model/profile-interface';

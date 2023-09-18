@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '@/environments/environment';
 import { UserAuth } from '../model/userAuth.model';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/app.state';
+import { AppState } from '../../../store/app.state';
 import { autoLogout } from '../store/auth.actions';
 import { AuthResponseData } from '../model/AuthResponseData.model';
 import { Observable } from 'rxjs';
-import { UserProfile } from '../../profile/model/userProfile.model';
-import { UserImage, UserType } from '../../profile/model/profile-interface';
+import { UserProfile } from '../../../profile/model/userProfile.model';
+import { UserImage, UserType } from '../../../profile/model/profile-interface';
 import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
 
 @Injectable({

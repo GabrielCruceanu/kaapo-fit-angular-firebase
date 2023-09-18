@@ -19,7 +19,7 @@ import {
   setUserProfileImage,
   setClientCurrentPhysicalDetailsSuccess,
 } from './profile.actions';
-import { autoLogout } from '../../auth/store/auth.actions';
+import { autoLogout } from '@/app/features/auth/store/auth.actions';
 
 const _profileReducer = createReducer(
   initialState,

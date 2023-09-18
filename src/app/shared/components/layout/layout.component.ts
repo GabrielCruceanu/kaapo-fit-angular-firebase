@@ -6,8 +6,8 @@ import {
   getErrorMessage,
   getLoading,
 } from '../../../store/shared/shared.selector';
-import { isAuthenticated } from '../../../auth/store/auth.selector';
-import { autoLogin } from '../../../auth/store/auth.actions';
+import { isAuthenticated } from '@/app/features/auth/store/auth.selector';
+import { autoLogin } from '@/app/features/auth/store/auth.actions';
 
 @Component({
   selector: 'app-layout',

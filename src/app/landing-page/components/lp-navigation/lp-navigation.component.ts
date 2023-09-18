@@ -5,8 +5,8 @@ import { KAAPO_FIT_LOGO } from '../../../../content/icons';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { Observable } from 'rxjs';
-import { isAuthenticated } from '../../../auth/store/auth.selector';
-import { autoLogout } from '../../../auth/store/auth.actions';
+import { isAuthenticated } from '@/app/features/auth/store/auth.selector';
+import { autoLogout } from '@/app/features/auth/store/auth.actions';
 import { getUserDataMock } from '../../../../data/userDetails';
 import { ClientDetails } from '../../../profile/model/profile-interface';
 

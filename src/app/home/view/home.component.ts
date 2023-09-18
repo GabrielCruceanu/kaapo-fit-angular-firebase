@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { autoLogout } from '../../auth/store/auth.actions';
-import { getUserAuth } from '../../auth/store/auth.selector';
-import { UserAuth } from '../../auth/model/userAuth.model';
+import { autoLogout } from '@/app/features/auth/store/auth.actions';
+import { getUserAuth } from '@/app/features/auth/store/auth.selector';
+import { UserAuth } from '@/app/features/auth/model/userAuth.model';
 import { Observable, of } from 'rxjs';
 import { ClientProfile } from '@/app/profile/model/clientProfile.model';
 import {

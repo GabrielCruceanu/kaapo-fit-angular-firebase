@@ -4,7 +4,7 @@ import { AppState } from '../../store/app.state';
 import { ProfileService } from '../services/profile.service';
 import { Actions } from '@ngrx/effects';
 import { Router } from '@angular/router';
-import { AuthService } from '../../auth/services/auth.service';
+import { AuthService } from '@/app/features/auth/services/auth.service';
 import { UploadImageService } from '@/app/shared/services/upload-image/upload-image.service';
 
 @Injectable()
