@@ -2,9 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundPageComponent } from './shared/view/not-found-page/not-found-page.component';
 import { AuthGuard } from './auth/services/auth-guard.service';
-import { LoginGuard } from '@/app/auth/services/login.guard';
 
 const routes: Routes = [
+  {
+    path: 'landing',
+    loadChildren: () =>
+      import('./landing-page/landing-page.module').then(
+        (m) => m.LandingPageModule
+      ),
+  },
   {
     path: '',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
@@ -13,7 +19,6 @@ const routes: Routes = [
   {
     path: 'autentificare',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-    canActivate: [LoginGuard],
   },
   {
     path: 'acasa',

@@ -31,4 +31,5 @@ export const environment: EnvironmentMap = {
     cloud_name: 'kaapo',
     upload_preset: 'ml_default',
   },
+  FRONTEND_APP_BASE_URL: 'https://kaapo.fit',
 };

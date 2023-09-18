@@ -1,8 +1,8 @@
 <nav>
   <div class="header-wrap container">
-    <!--    <div class="header-profile-container">-->
-    <!--      <app-header-profile *ngIf="isAuthenticated$ | async"></app-header-profile>-->
-    <!--    </div>-->
+<!--    <div class="header-profile-container">-->
+<!--      <app-header-profile *ngIf="isAuthenticated$ | async"></app-header-profile>-->
+<!--    </div>-->
 
     <div class="header-brand" routerLink="/">
       <mat-icon
@@ -14,35 +14,47 @@
 
     <div class="header-links">
       <ul>
-        <!--        <li class="notification-box">-->
-        <!--          <span *ngIf="hasNotifications | async"></span>-->
-        <!--          <mat-icon-->
-        <!--            aria-hidden="false"-->
-        <!--            class="icon"-->
-        <!--            svgIcon="notification"-->
-        <!--            matBadge="15"-->
-        <!--            matBadgeColor="warn"-->
-        <!--          ></mat-icon>-->
-        <!--        </li>-->
+<!--        <li class="notification-box">-->
+<!--          <span *ngIf="hasNotifications | async"></span>-->
+<!--          <mat-icon-->
+<!--            aria-hidden="false"-->
+<!--            class="icon"-->
+<!--            matBadge="15"-->
+<!--            matBadgeColor="warn"-->
+<!--            svgIcon="notification"-->
+<!--          ></mat-icon>-->
+<!--        </li>-->
+
+<!--        <li>-->
+<!--          <mat-icon (click)="onLogout($event)"-->
+<!--                    aria-label="logout"-->
+<!--                    class="icon"-->
+<!--          >logout-->
+<!--          </mat-icon-->
+<!--          >-->
+<!--        </li>-->
         <li>
-          <!--          <mat-icon-->
-          <!--            class="icon"-->
-          <!--            aria-hidden="false"-->
-          <!--            [matMenuTriggerFor]="appMenu"-->
-          <!--            aria-label="Icon button for menu"-->
-          <!--            >dehaze-->
-          <!--          </mat-icon>-->
-          <mat-icon (click)="onLogout($event)" aria-label="logout"
-            >logout</mat-icon
-          >
+          <mat-icon
+            [matMenuTriggerFor]="appMenu"
+            aria-hidden="false"
+            aria-label="Icon button for menu"
+            class="icon"
+          >dehaze
+          </mat-icon>
         </li>
       </ul>
       <mat-menu #appMenu="matMenu" xPosition="before">
         <ng-template matMenuContent>
           <button mat-menu-item>
-            <mat-icon aria-hidden="false" class="icon" svgIcon="notification">
+            <app-header-profile *ngIf="isAuthenticated$ | async"></app-header-profile>
+            <span>Profile</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon aria-hidden="false" class="icon" svgIcon="notification"
+                      matBadge="15"
+                      matBadgeColor="warn">
               <span *ngIf="hasNotifications | async"></span
-            ></mat-icon>
+              ></mat-icon>
             <span>Notifications</span>
           </button>
           <button mat-menu-item>
@@ -53,7 +65,7 @@
             <mat-icon>feed</mat-icon>
             <span>Blog</span>
           </button>
-          <button mat-menu-item (click)="onLogout($event)">
+          <button (click)="onLogout($event)" mat-menu-item>
             <mat-icon>logout</mat-icon>
             <span>Logout</span>
           </button>

@@ -6,17 +6,9 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './store/app.state';
-import { autoLogin } from './auth/store/auth.actions';
-import {
-  getClientsStart,
-  getGymsStart,
-  getNutritionistsStart,
-  getReviewsStart,
-  getTrainersStart,
-  getUsersStart,
-} from '@/app/store/shared/shared.actions';
 import { SwUpdate } from '@angular/service-worker';
 import { interval } from 'rxjs';
+import { autoLogin } from '@/app/auth/store/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -36,12 +28,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(autoLogin());
-    this.store.dispatch(getUsersStart());
-    this.store.dispatch(getClientsStart());
-    this.store.dispatch(getGymsStart());
-    this.store.dispatch(getTrainersStart());
-    this.store.dispatch(getNutritionistsStart());
-    this.store.dispatch(getReviewsStart());
+    // this.store.dispatch(getUsersStart());
+    // this.store.dispatch(getClientsStart());
+    // this.store.dispatch(getGymsStart());
+    // this.store.dispatch(getTrainersStart());
+    // this.store.dispatch(getNutritionistsStart());
+    // this.store.dispatch(getReviewsStart());
   }
 
   updateClient() {

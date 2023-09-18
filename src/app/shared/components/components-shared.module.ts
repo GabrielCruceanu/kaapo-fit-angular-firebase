@@ -20,6 +20,7 @@ import { WideAdsBannerComponent } from './wide-ads-banner/wide-ads-banner.compon
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 import { MatListModule } from '@angular/material/list';
 import { CardProfileComponent } from './card-profile/card-profile.component';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { CardProfileComponent } from './card-profile/card-profile.component';
     ReactiveFormsModule,
     FormsModule,
     MatListModule,
+    MatBadgeModule,
   ],
   providers: [UploadImageService],
 })

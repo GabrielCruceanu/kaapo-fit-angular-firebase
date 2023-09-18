@@ -9,7 +9,6 @@ import { AuthResponseData } from '../model/AuthResponseData.model';
 import { Observable } from 'rxjs';
 import { UserProfile } from '../../profile/model/userProfile.model';
 import { UserImage, UserType } from '../../profile/model/profile-interface';
-import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
 
 @Injectable({
@@ -18,40 +17,45 @@ import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
 export class AuthService {
   timeoutInterval: any;
 
-  constructor(
-    private http: HttpClient,
-    private store: Store<AppState>,
-    private firestore: Firestore
-  ) {}
+  constructor(private http: HttpClient, private store: Store<AppState>) {}
 
   onLogin(email: string, password: string): Observable<AuthResponseData> {
     return this.http.post<AuthResponseData>(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.FIREBASE_API_KEY}`,
-      { email, password, returnSecureToken: true }
+      {
+        email,
+        password,
+        returnSecureToken: true,
+      }
     );
   }
 
   onSignUp(email: string, password: string): Observable<AuthResponseData> {
     return this.http.post<AuthResponseData>(
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.FIREBASE_API_KEY}`,
-      { email, password, returnSecureToken: true }
+      {
+        email,
+        password,
+        returnSecureToken: true,
+      }
     );
   }
 
   async onCheckUsername(username: string): Promise<boolean> {
-    const docRef = doc(this.firestore, 'usernames', username);
-    const docSnap = await getDoc(docRef);
+    // const docRef = doc(this.firestore, 'usernames', username);
+    // const docSnap = await getDoc(docRef);
 
-    return !!docSnap.exists();
+    return false;
   }
 
   createUsernameInDb(userProfile: UserProfile) {
-    const ref = doc(this.firestore, 'usernames', userProfile.username);
-    setDoc(ref, {
-      username: userProfile.username,
-      userId: userProfile.id,
-      email: userProfile.email,
-    });
+    // const ref = doc(this.firestore, 'usernames', userProfile.username);
+    // setDoc(ref, {
+    //   username: userProfile.username,
+    //   userId: userProfile.id,
+    //   email: userProfile.email,
+    // });
+    console.log('createUsernameInDb');
   }
 
   onResetPassword(email: string) {

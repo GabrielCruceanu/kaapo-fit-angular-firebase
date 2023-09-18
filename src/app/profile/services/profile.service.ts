@@ -4,14 +4,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { Observable } from 'rxjs';
 import {
-  doc,
-  docData,
-  Firestore,
-  setDoc,
-  updateDoc,
-} from '@angular/fire/firestore';
-import { traceUntilFirst } from '@angular/fire/performance';
-import {
   ClientPhysicalDetails,
   ClientProfile,
 } from '../model/clientProfile.model';
@@ -21,7 +13,6 @@ import { GymProfile } from '../model/gym.model';
 import { TrainerProfile } from '../model/trainerProfile.model';
 import { NutritionistProfile } from '../model/nutritionistProfile.model';
 import { Review } from '@/app/profile/model/review.model';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { CollectionsType } from '@/app/profile/model/profile-interface';
 
 export const _filer = (opt: string[], value: string): string[] => {
@@ -34,12 +25,7 @@ export const _filer = (opt: string[], value: string): string[] => {
   providedIn: 'root',
 })
 export class ProfileService {
-  constructor(
-    private store: Store<AppState>,
-    private http: HttpClient,
-    private firestore: Firestore,
-    private afs: AngularFirestore
-  ) {}
+  constructor(private store: Store<AppState>, private http: HttpClient) {}
 
   // ****************** USER ******************
   setUserProfileInLocalStorage(userProfile: UserProfile) {
@@ -68,49 +54,52 @@ export class ProfileService {
   }
 
   public createUserProfileInDb(userProfile: UserProfile) {
-    const ref = doc(this.firestore, 'users', userProfile.id);
-    setDoc(ref, {
-      ...userProfile,
-    });
+    // const ref = doc(this.firestore, 'users', userProfile.id);
+    // setDoc(ref, {
+    //   ...userProfile,
+    // });
   }
 
   public updateUserProfileInDb(userProfile: UserProfile) {
-    const ref = doc(this.firestore, 'users', userProfile.id);
-    updateDoc(ref, {
-      ...userProfile,
-    });
+    // const ref = doc(this.firestore, 'users', userProfile.id);
+    // updateDoc(ref, {
+    //   ...userProfile,
+    // });
   }
 
   public getUserProfileFromDb(idProfile: string) {
-    const docRef = doc(this.firestore, 'users', idProfile);
-
-    return docData(docRef).pipe(traceUntilFirst('firestore'));
+    // const docRef = doc(this.firestore, 'users', idProfile);
+    //
+    // return docData(docRef).pipe(traceUntilFirst('firestore'));
   }
 
   public getUsersFromDb(): Observable<UserProfile[]> {
-    const clientsCollection = this.afs.collection<UserProfile>('users');
-
-    return clientsCollection.valueChanges();
+    // const clientsCollection = this.afs.collection<UserProfile>('users');
+    //
+    // return clientsCollection.valueChanges();
+    return;
   }
 
   // ****************** CLIENT ******************
   public createClientProfileInDb(clientProfile: ClientProfile) {
-    const ref = doc(this.firestore, 'clients', clientProfile.id);
-    setDoc(ref, {
-      ...clientProfile,
-    });
+    // const ref = doc(this.firestore, 'clients', clientProfile.id);
+    // setDoc(ref, {
+    //   ...clientProfile,
+    // });
   }
 
   public getClientsFromDb(): Observable<ClientProfile[]> {
-    const clientsCollection = this.afs.collection<ClientProfile>('clients');
-
-    return clientsCollection.valueChanges();
+    // const clientsCollection = this.afs.collection<ClientProfile>('clients');
+    //
+    // return clientsCollection.valueChanges();
+    return;
   }
 
   public getClientProfileFromDb(idProfile: string) {
-    const docRef = doc(this.firestore, 'clients', idProfile);
-
-    return docData(docRef).pipe(traceUntilFirst('firestore'));
+    // const docRef = doc(this.firestore, 'clients', idProfile);
+    //
+    // return docData(docRef).pipe(traceUntilFirst('firestore'));
+    return;
   }
 
   setClientProfileInLocalStorage(clientProfile: ClientProfile) {
@@ -153,59 +142,62 @@ export class ProfileService {
     currentPhysicalDetails: ClientPhysicalDetails,
     folder: CollectionsType
   ) {
-    const ref = doc(this.firestore, folder, userId);
-
-    updateDoc(ref, {
-      currentPhysicalDetails: {
-        ...currentPhysicalDetails,
-      },
-    });
+    // const ref = doc(this.firestore, folder, userId);
+    //
+    // updateDoc(ref, {
+    //   currentPhysicalDetails: {
+    //     ...currentPhysicalDetails,
+    //   },
+    // });
+    return;
   }
 
   public setHistoryPhysicalDetailsInDb(
     clientId: string,
     clientPhysicalDetails: ClientPhysicalDetails
   ) {
-    const ref = doc(
-      this.firestore,
-      'clients',
-      clientId,
-      'historyPhysicalDetails',
-      clientPhysicalDetails.id
-    );
-
-    setDoc(ref, {
-      ...clientPhysicalDetails,
-    });
+    // const ref = doc(
+    //   this.firestore,
+    //   'clients',
+    //   clientId,
+    //   'historyPhysicalDetails',
+    //   clientPhysicalDetails.id
+    // );
+    //
+    // setDoc(ref, {
+    //   ...clientPhysicalDetails,
+    // });
   }
 
   public getHistoryPhysicalDetailsFromDb(clientId: string) {
-    const clientsCollection = this.afs
-      .collection('clients')
-      .doc(clientId)
-      .collection('historyPhysicalDetails');
-
-    return clientsCollection.valueChanges();
+    // const clientsCollection = this.afs
+    //   .collection('clients')
+    //   .doc(clientId)
+    //   .collection('historyPhysicalDetails');
+    //
+    // return clientsCollection.valueChanges();
   }
 
   // ****************** GYM ******************
   public createGymProfileInDb(gymProfile: GymProfile) {
-    const ref = doc(this.firestore, 'gyms', gymProfile.id);
-    setDoc(ref, {
-      ...gymProfile,
-    });
+    // const ref = doc(this.firestore, 'gyms', gymProfile.id);
+    // setDoc(ref, {
+    //   ...gymProfile,
+    // });
   }
 
   public getGymsFromDb(): Observable<GymProfile[]> {
-    const clientsCollection = this.afs.collection<GymProfile>('gyms');
-
-    return clientsCollection.valueChanges();
+    // const clientsCollection = this.afs.collection<GymProfile>('gyms');
+    //
+    // return clientsCollection.valueChanges();
+    return;
   }
 
   public getGymProfileFromDb(idProfile: string) {
-    const docRef = doc(this.firestore, 'gyms', idProfile);
-
-    return docData(docRef).pipe(traceUntilFirst('firestore'));
+    // const docRef = doc(this.firestore, 'gyms', idProfile);
+    //
+    // return docData(docRef).pipe(traceUntilFirst('firestore'));
+    return;
   }
 
   setGymProfileInLocalStorage(gymProfile: GymProfile) {
@@ -246,22 +238,25 @@ export class ProfileService {
 
   // ****************** TRAINER ******************
   public createTrainerProfileInDb(trainerProfile: TrainerProfile) {
-    const ref = doc(this.firestore, 'trainers', trainerProfile.id);
-    setDoc(ref, {
-      ...trainerProfile,
-    });
+    // const ref = doc(this.firestore, 'trainers', trainerProfile.id);
+    // setDoc(ref, {
+    //   ...trainerProfile,
+    // });
+    return;
   }
 
   public getTrainersFromDb(): Observable<TrainerProfile[]> {
-    const clientsCollection = this.afs.collection<TrainerProfile>('trainers');
-
-    return clientsCollection.valueChanges();
+    // const clientsCollection = this.afs.collection<TrainerProfile>('trainers');
+    //
+    // return clientsCollection.valueChanges();
+    return;
   }
 
   public getTrainerProfileFromDb(idProfile: string) {
-    const docRef = doc(this.firestore, 'trainers', idProfile);
-
-    return docData(docRef).pipe(traceUntilFirst('firestore'));
+    // const docRef = doc(this.firestore, 'trainers', idProfile);
+    //
+    // return docData(docRef).pipe(traceUntilFirst('firestore'));
+    return;
   }
 
   setTrainerProfileInLocalStorage(trainerProfile: TrainerProfile) {
@@ -307,23 +302,26 @@ export class ProfileService {
   public createNutritionistProfileInDb(
     nutritionistProfile: NutritionistProfile
   ) {
-    const ref = doc(this.firestore, 'nutritionists', nutritionistProfile.id);
-    setDoc(ref, {
-      ...nutritionistProfile,
-    });
+    // const ref = doc(this.firestore, 'nutritionists', nutritionistProfile.id);
+    // setDoc(ref, {
+    //   ...nutritionistProfile,
+    // });
+    return;
   }
 
   public getNutritionistsFromDb(): Observable<NutritionistProfile[]> {
-    const clientsCollection =
-      this.afs.collection<NutritionistProfile>('nutritionists');
-
-    return clientsCollection.valueChanges();
+    // const clientsCollection =
+    //   this.afs.collection<NutritionistProfile>('nutritionists');
+    //
+    // return clientsCollection.valueChanges();
+    return;
   }
 
   public getNutritionistProfileFromDb(idProfile: string) {
-    const docRef = doc(this.firestore, 'nutritionists', idProfile);
-
-    return docData(docRef).pipe(traceUntilFirst('firestore'));
+    // const docRef = doc(this.firestore, 'nutritionists', idProfile);
+    //
+    // return docData(docRef).pipe(traceUntilFirst('firestore'));
+    return;
   }
 
   setNutritionistProfileInLocalStorage(
@@ -443,8 +441,9 @@ export class ProfileService {
   }
 
   public getReviewsFromDb(): Observable<Review[]> {
-    const clientsCollection = this.afs.collection<Review>('reviews');
-
-    return clientsCollection.valueChanges();
+    // const clientsCollection = this.afs.collection<Review>('reviews');
+    //
+    // return clientsCollection.valueChanges();
+    return;
   }
 }

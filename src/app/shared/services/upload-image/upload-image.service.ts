@@ -1,5 +1,4 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import {
   CollectionsType,
@@ -7,7 +6,6 @@ import {
   UserImageType,
   UserType,
 } from '@/app/profile/model/profile-interface';
-import { doc, Firestore, updateDoc } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import { AppState } from '@/app/store/app.state';
 import {
@@ -37,15 +35,13 @@ import { GymProfile } from '@/app/profile/model/gym.model';
   providedIn: 'root',
 })
 export class UploadImageService implements OnDestroy {
+  clientProfile: ClientProfile;
+  clientProfileSub: Subscription;
   private _percentageSource = new BehaviorSubject<number>(0);
   private percentage$ = this._percentageSource.asObservable();
   private imageForDb: UserImage;
-  clientProfile: ClientProfile;
-  clientProfileSub: Subscription;
 
   constructor(
-    private storage: AngularFireStorage,
-    private firestore: Firestore,
     private store: Store<AppState>,
     private imageCompress: NgxImageCompressService,
     public dialog: MatDialog
@@ -185,7 +181,7 @@ export class UploadImageService implements OnDestroy {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const refDb = doc(this.firestore, folder, id);
+          // const refDb = doc(this.firestore, folder, id);
 
           this.imageForDb = {
             downloadURL: downloadURL,
@@ -194,48 +190,48 @@ export class UploadImageService implements OnDestroy {
 
           switch (typeOfImage) {
             case TypeOfUploadImage.Profile: {
-              updateDoc(refDb, {
-                profileImage: {
+              // updateDoc(refDb, {
+              //   profileImage: {
+              //     downloadURL: downloadURL,
+              //     path,
+              //   },
+              // });
+              if (imageProfile.status === UserType.Client) {
+                // const clientDb = doc(this.firestore, 'clients', id);
+                // updateDoc(clientDb, {
+                //   ...imageProfile,
+                //   profilePicture: {
+                //     downloadURL: downloadURL,
+                //     path,
+                //   },
+                // });
+              } else if (imageProfile.status === UserType.Trainer) {
+                // const clientDb = doc(this.firestore, 'trainers', id);
+                // updateDoc(clientDb, {
+                //   ...imageProfile,
+                //   profilePicture: {
+                //     downloadURL: downloadURL,
+                //     path,
+                //   },
+                // });
+              } else if (imageProfile.status === UserType.Nutritionist) {
+                /* const clientDb = doc(this.firestore, 'nutritionists', id);
+              updateDoc(clientDb, {
+                ...imageProfile,
+                profilePicture: {
                   downloadURL: downloadURL,
                   path,
                 },
-              });
-              if (imageProfile.status === UserType.Client) {
-                const clientDb = doc(this.firestore, 'clients', id);
-                updateDoc(clientDb, {
-                  ...imageProfile,
-                  profilePicture: {
-                    downloadURL: downloadURL,
-                    path,
-                  },
-                });
-              } else if (imageProfile.status === UserType.Trainer) {
-                const clientDb = doc(this.firestore, 'trainers', id);
-                updateDoc(clientDb, {
-                  ...imageProfile,
-                  profilePicture: {
-                    downloadURL: downloadURL,
-                    path,
-                  },
-                });
-              } else if (imageProfile.status === UserType.Nutritionist) {
-                const clientDb = doc(this.firestore, 'nutritionists', id);
-                updateDoc(clientDb, {
-                  ...imageProfile,
-                  profilePicture: {
-                    downloadURL: downloadURL,
-                    path,
-                  },
-                });
+              });*/
               } else if (imageProfile.status === UserType.Gym) {
-                const clientDb = doc(this.firestore, 'gyms', id);
-                updateDoc(clientDb, {
-                  ...imageProfile,
-                  profilePicture: {
-                    downloadURL: downloadURL,
-                    path,
-                  },
-                });
+                // const clientDb = doc(this.firestore, 'gyms', id);
+                // updateDoc(clientDb, {
+                //   ...imageProfile,
+                //   profilePicture: {
+                //     downloadURL: downloadURL,
+                //     path,
+                //   },
+                // });
               }
               this.store.dispatch(
                 setUserProfileImage({ profileImage: this.imageForDb })
@@ -243,48 +239,48 @@ export class UploadImageService implements OnDestroy {
               break;
             }
             case TypeOfUploadImage.Cover: {
-              updateDoc(refDb, {
-                coverImage: {
-                  downloadURL: downloadURL,
-                  path,
-                },
-              });
+              // updateDoc(refDb, {
+              //   coverImage: {
+              //     downloadURL: downloadURL,
+              //     path,
+              //   },
+              // });
               if (imageProfile.status === UserType.Client) {
-                const clientDb = doc(this.firestore, 'clients', id);
-                updateDoc(clientDb, {
-                  ...imageProfile,
-                  coverPicture: {
-                    downloadURL: downloadURL,
-                    path,
-                  },
-                });
+                // const clientDb = doc(this.firestore, 'clients', id);
+                // updateDoc(clientDb, {
+                //   ...imageProfile,
+                //   coverPicture: {
+                //     downloadURL: downloadURL,
+                //     path,
+                //   },
+                // });
               } else if (imageProfile.status === UserType.Trainer) {
-                const clientDb = doc(this.firestore, 'trainers', id);
-                updateDoc(clientDb, {
-                  ...imageProfile,
-                  coverPicture: {
-                    downloadURL: downloadURL,
-                    path,
-                  },
-                });
+                // const clientDb = doc(this.firestore, 'trainers', id);
+                // updateDoc(clientDb, {
+                //   ...imageProfile,
+                //   coverPicture: {
+                //     downloadURL: downloadURL,
+                //     path,
+                //   },
+                // });
               } else if (imageProfile.status === UserType.Nutritionist) {
-                const clientDb = doc(this.firestore, 'nutritionists', id);
-                updateDoc(clientDb, {
-                  ...imageProfile,
-                  coverPicture: {
-                    downloadURL: downloadURL,
-                    path,
-                  },
-                });
+                // const clientDb = doc(this.firestore, 'nutritionists', id);
+                // updateDoc(clientDb, {
+                //   ...imageProfile,
+                //   coverPicture: {
+                //     downloadURL: downloadURL,
+                //     path,
+                //   },
+                // });
               } else if (imageProfile.status === UserType.Gym) {
-                const clientDb = doc(this.firestore, 'gyms', id);
-                updateDoc(clientDb, {
-                  ...imageProfile,
-                  coverPicture: {
-                    downloadURL: downloadURL,
-                    path,
-                  },
-                });
+                // const clientDb = doc(this.firestore, 'gyms', id);
+                // updateDoc(clientDb, {
+                //   ...imageProfile,
+                //   coverPicture: {
+                //     downloadURL: downloadURL,
+                //     path,
+                //   },
+                // });
               }
               this.store.dispatch(
                 setUserCoverImage({ coverImage: this.imageForDb })
@@ -293,15 +289,15 @@ export class UploadImageService implements OnDestroy {
             }
             case TypeOfUploadImage.ClientGallery: {
               if (imageName === UserImageType.clientGalleryFront) {
-                updateDoc(refDb, {
-                  currentPhysicalDetails: {
-                    ...currentUserProfile.currentPhysicalDetails,
-                    clientGalleryFront: {
-                      downloadURL: downloadURL,
-                      path,
-                    },
-                  },
-                });
+                // updateDoc(refDb, {
+                //   currentPhysicalDetails: {
+                //     ...currentUserProfile.currentPhysicalDetails,
+                //     clientGalleryFront: {
+                //       downloadURL: downloadURL,
+                //       path,
+                //     },
+                //   },
+                // });
 
                 this.store.dispatch(
                   setGalleryFrontImage({
@@ -310,15 +306,15 @@ export class UploadImageService implements OnDestroy {
                 );
                 break;
               } else if (imageName === UserImageType.clientGallerySide) {
-                updateDoc(refDb, {
-                  currentPhysicalDetails: {
-                    ...currentUserProfile.currentPhysicalDetails,
-                    clientGallerySide: {
-                      downloadURL: downloadURL,
-                      path,
-                    },
-                  },
-                });
+                // updateDoc(refDb, {
+                //   currentPhysicalDetails: {
+                //     ...currentUserProfile.currentPhysicalDetails,
+                //     clientGallerySide: {
+                //       downloadURL: downloadURL,
+                //       path,
+                //     },
+                //   },
+                // });
 
                 this.store.dispatch(
                   setGallerySideImage({
@@ -327,15 +323,15 @@ export class UploadImageService implements OnDestroy {
                 );
                 break;
               } else if (imageName === UserImageType.clientGalleryBack) {
-                updateDoc(refDb, {
-                  currentPhysicalDetails: {
-                    ...currentUserProfile.currentPhysicalDetails,
-                    clientGalleryBack: {
-                      downloadURL: downloadURL,
-                      path,
-                    },
-                  },
-                });
+                // updateDoc(refDb, {
+                //   currentPhysicalDetails: {
+                //     ...currentUserProfile.currentPhysicalDetails,
+                //     clientGalleryBack: {
+                //       downloadURL: downloadURL,
+                //       path,
+                //     },
+                //   },
+                // });
 
                 this.store.dispatch(
                   setGalleryBackImage({

@@ -28,4 +28,5 @@ export interface EnvironmentMap {
     cloud_name: string;
     upload_preset: string;
   };
+  FRONTEND_APP_BASE_URL: string;
 }

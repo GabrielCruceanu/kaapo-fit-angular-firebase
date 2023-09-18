@@ -14,6 +14,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordComponent } from './view/reset-password/reset-password.component';
 import { LayoutModule } from '../shared/components/layout/layout.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { BaseHttpService } from '@/app/auth/services/base-http.service';
+import { AuthNextJsService } from '@/app/auth/services/auth-nextjs.service';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     LayoutModule,
     MatCheckboxModule,
   ],
-  providers: [],
+  providers: [BaseHttpService, AuthNextJsService],
 })
 export class AuthModule {}
