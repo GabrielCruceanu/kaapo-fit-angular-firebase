@@ -4,8 +4,8 @@ import { AuthType } from '@/app/auth/model/AuthResponseData.model';
 import { UserAuth } from '@/app/auth/model/userAuth.model';
 import { UserProfile } from '../../model/userProfile.model';
 import {
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
@@ -65,7 +65,7 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
   selectedCity: string = '';
   trainersType = TrainerData;
   trainerExperience = TrainerExperienceData;
-  trainerFormGroup: FormGroup;
+  trainerFormGroup: UntypedFormGroup;
   urlRegEx =
     '[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}(.[a-z]{2,4})?\b(/[-a-zA-Z0-9@:%_+.~#?&//=]*)?';
 
@@ -101,16 +101,16 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
         this.trainerProfile = trainerProfile;
       });
 
-    this.trainerFormGroup = new FormGroup({
-      firstname: new FormControl(
+    this.trainerFormGroup = new UntypedFormGroup({
+      firstname: new UntypedFormControl(
         this.trainerProfile?.firstName ? this.trainerProfile?.firstName : '',
         [Validators.required]
       ),
-      lastname: new FormControl(
+      lastname: new UntypedFormControl(
         this.trainerProfile?.lastName ? this.trainerProfile?.lastName : '',
         [Validators.required]
       ),
-      description: new FormControl(
+      description: new UntypedFormControl(
         this.trainerProfile?.description
           ? this.trainerProfile?.description
           : '',
@@ -120,11 +120,11 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
           Validators.maxLength(400),
         ]
       ),
-      trainerType: new FormControl(
+      trainerType: new UntypedFormControl(
         this.trainerProfile?.type ? this.trainerProfile?.type : '',
         [Validators.required]
       ),
-      birth: new FormControl(
+      birth: new UntypedFormControl(
         this.trainerProfile?.birth.month
           ? moment([
               this.trainerProfile?.birth.year,
@@ -134,49 +134,49 @@ export class AddTrainerProfileComponent implements OnInit, OnDestroy {
           : '',
         [Validators.required]
       ),
-      gender: new FormControl(
+      gender: new UntypedFormControl(
         this.trainerProfile?.gender ? this.trainerProfile?.gender : '',
         [Validators.required]
       ),
-      experience: new FormControl(
+      experience: new UntypedFormControl(
         this.trainerProfile?.experience ? this.trainerProfile?.experience : '',
         [Validators.required]
       ),
-      phone: new FormControl(
+      phone: new UntypedFormControl(
         this.trainerProfile?.contact?.phone
           ? this.trainerProfile?.contact?.phone
           : '',
         [Validators.required]
       ),
-      country: new FormControl(
+      country: new UntypedFormControl(
         this.trainerProfile?.country ? this.trainerProfile?.country : '',
         [Validators.required, this.onCountryInputValidation(this.onlyCountries)]
       ),
-      state: new FormControl(
+      state: new UntypedFormControl(
         this.trainerProfile?.state ? this.trainerProfile?.state : '',
         [Validators.required, this.onStateInputValidation(this.onlyStates)]
       ),
-      city: new FormControl(
+      city: new UntypedFormControl(
         this.trainerProfile?.city ? this.trainerProfile?.city : '',
         [Validators.required]
       ),
-      website: new FormControl(
+      website: new UntypedFormControl(
         this.trainerProfile?.contact?.website
           ? this.trainerProfile?.contact?.website
           : '',
         [this.profileService.websiteInputValidation()]
       ),
-      facebook: new FormControl(
+      facebook: new UntypedFormControl(
         this.trainerProfile?.contact?.facebook
           ? this.trainerProfile?.contact?.facebook
           : ''
       ),
-      twitter: new FormControl(
+      twitter: new UntypedFormControl(
         this.trainerProfile?.contact?.twitter
           ? this.trainerProfile?.contact?.twitter
           : ''
       ),
-      instagram: new FormControl(
+      instagram: new UntypedFormControl(
         this.trainerProfile?.contact?.instagram
           ? this.trainerProfile?.contact?.instagram
           : ''

@@ -5,8 +5,8 @@ import { map, Observable, startWith, Subscription } from 'rxjs';
 import { UserProfile } from '../../model/userProfile.model';
 import { TrainerExperienceData } from '@/app/profile/data/trainerData';
 import {
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
@@ -63,7 +63,7 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
   selectedCity: string = '';
   nutritionistType = NutritionistData;
   trainerExperience = TrainerExperienceData;
-  nutritionistFormGroup: FormGroup;
+  nutritionistFormGroup: UntypedFormGroup;
 
   constructor(
     private store: Store<AppState>,
@@ -97,20 +97,20 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
         this.nutritionistProfile = nutritionistProfile;
       });
 
-    this.nutritionistFormGroup = new FormGroup({
-      firstname: new FormControl(
+    this.nutritionistFormGroup = new UntypedFormGroup({
+      firstname: new UntypedFormControl(
         this.nutritionistProfile?.firstName
           ? this.nutritionistProfile?.firstName
           : '',
         [Validators.required]
       ),
-      lastname: new FormControl(
+      lastname: new UntypedFormControl(
         this.nutritionistProfile?.lastName
           ? this.nutritionistProfile?.lastName
           : '',
         [Validators.required]
       ),
-      description: new FormControl(
+      description: new UntypedFormControl(
         this.nutritionistProfile?.description
           ? this.nutritionistProfile?.description
           : '',
@@ -120,11 +120,11 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
           Validators.maxLength(400),
         ]
       ),
-      type: new FormControl(
+      type: new UntypedFormControl(
         this.nutritionistProfile?.type ? this.nutritionistProfile?.type : '',
         [Validators.required]
       ),
-      birth: new FormControl(
+      birth: new UntypedFormControl(
         this.nutritionistProfile?.birth.month
           ? moment([
               this.nutritionistProfile?.birth.year,
@@ -134,57 +134,57 @@ export class AddNutritionistProfileComponent implements OnInit, OnDestroy {
           : '',
         [Validators.required]
       ),
-      gender: new FormControl(
+      gender: new UntypedFormControl(
         this.nutritionistProfile?.gender
           ? this.nutritionistProfile?.gender
           : '',
         [Validators.required]
       ),
-      experience: new FormControl(
+      experience: new UntypedFormControl(
         this.nutritionistProfile?.experience
           ? this.nutritionistProfile?.experience
           : '',
         [Validators.required]
       ),
-      phone: new FormControl(
+      phone: new UntypedFormControl(
         this.nutritionistProfile?.contact?.phone
           ? this.nutritionistProfile?.contact?.phone
           : '',
         [Validators.required]
       ),
-      country: new FormControl(
+      country: new UntypedFormControl(
         this.nutritionistProfile?.country
           ? this.nutritionistProfile?.country
           : '',
         [Validators.required, this.onCountryInputValidation(this.onlyCountries)]
       ),
-      state: new FormControl(
+      state: new UntypedFormControl(
         this.nutritionistProfile?.state ? this.nutritionistProfile?.state : '',
         [Validators.required, this.onStateInputValidation(this.onlyStates)]
       ),
-      city: new FormControl(
+      city: new UntypedFormControl(
         this.nutritionistProfile?.city ? this.nutritionistProfile?.city : '',
         [Validators.required]
       ),
-      website: new FormControl(
+      website: new UntypedFormControl(
         this.nutritionistProfile?.contact?.website
           ? this.nutritionistProfile?.contact?.website
           : '',
         [this.profileService.websiteInputValidation()]
       ),
-      facebook: new FormControl(
+      facebook: new UntypedFormControl(
         this.nutritionistProfile?.contact?.facebook
           ? this.nutritionistProfile?.contact?.facebook
           : '',
         []
       ),
-      twitter: new FormControl(
+      twitter: new UntypedFormControl(
         this.nutritionistProfile?.contact?.twitter
           ? this.nutritionistProfile?.contact?.twitter
           : '',
         []
       ),
-      instagram: new FormControl(
+      instagram: new UntypedFormControl(
         this.nutritionistProfile?.contact?.instagram
           ? this.nutritionistProfile?.contact?.instagram
           : '',

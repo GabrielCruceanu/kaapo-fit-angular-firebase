@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '@/app/store/app.state';
 import { getLoading } from '@/app/store/shared/shared.selector';
@@ -53,7 +53,7 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
   trainerProfileSub: Subscription;
   nutritionistProfile: NutritionistProfile;
   nutritionistProfileSub: Subscription;
-  addMeasurementsFormGroup: FormGroup;
+  addMeasurementsFormGroup: UntypedFormGroup;
   currentPhysicalDetails$: Observable<ClientPhysicalDetails>;
   currentDay: number;
   currentMonth: number;
@@ -106,80 +106,80 @@ export class AddMeasurementsComponent implements OnInit, OnDestroy {
 
     this.currentPhysicalDetails$ = this.store.select(getCurrentPhysicalDetails);
 
-    this.addMeasurementsFormGroup = new FormGroup({
-      weight: new FormControl(
+    this.addMeasurementsFormGroup = new UntypedFormGroup({
+      weight: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.weight
           ? this.currentUserProfile?.currentPhysicalDetails?.weight
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      height: new FormControl(
+      height: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.height
           ? this.currentUserProfile?.currentPhysicalDetails?.height
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      head: new FormControl(
+      head: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.head
           ? this.currentUserProfile?.currentPhysicalDetails?.head
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      shoulders: new FormControl(
+      shoulders: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.shoulders
           ? this.currentUserProfile?.currentPhysicalDetails?.shoulders
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      chest: new FormControl(
+      chest: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.chest
           ? this.currentUserProfile?.currentPhysicalDetails?.chest
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      armLeft: new FormControl(
+      armLeft: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.armLeft
           ? this.currentUserProfile?.currentPhysicalDetails?.armLeft
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      armRight: new FormControl(
+      armRight: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.armRight
           ? this.currentUserProfile?.currentPhysicalDetails?.armRight
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      waist: new FormControl(
+      waist: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.waist
           ? this.currentUserProfile?.currentPhysicalDetails?.waist
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      highHip: new FormControl(
+      highHip: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.highHip
           ? this.currentUserProfile?.currentPhysicalDetails?.highHip
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      hip: new FormControl(
+      hip: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.hip
           ? this.currentUserProfile?.currentPhysicalDetails?.hip
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      waistToKnee: new FormControl(
+      waistToKnee: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.waistToKnee
           ? this.currentUserProfile?.currentPhysicalDetails?.waistToKnee
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      knee: new FormControl(
+      knee: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.knee
           ? this.currentUserProfile?.currentPhysicalDetails?.knee
           : '',
         [Validators.required, Validators.pattern('^[0-9]*$')]
       ),
-      ankle: new FormControl(
+      ankle: new UntypedFormControl(
         this.currentUserProfile?.currentPhysicalDetails?.ankle
           ? this.currentUserProfile?.currentPhysicalDetails?.ankle
           : '',

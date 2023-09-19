@@ -1,16 +1,23 @@
 import { Component, OnDestroy, OnInit, Optional } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Auth } from '@angular/fire/auth';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { AppState } from '../../../store/app.state';
+import { AppState } from '@/app/store/app.state';
 import { loginStart } from '../../store/auth.actions';
 import { AuthType } from '../../model/AuthResponseData.model';
-import {setErrorMessage, setLoadingSpinner} from '../../../store/shared/shared.actions';
+import {
+  setErrorMessage,
+  setLoadingSpinner,
+} from '@/app/store/shared/shared.actions';
 import {
   getErrorMessage,
   getLoading,
-} from '../../../store/shared/shared.selector';
+} from '@/app/store/shared/shared.selector';
 
 @Component({
   selector: 'app-login',
@@ -22,16 +29,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   getLoadingSpinnerSub: Subscription | undefined;
   errorMessage$: Observable<any> | undefined;
 
-  loginFormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [
+  loginFormGroup = new UntypedFormGroup({
+    email: new UntypedFormControl('', [Validators.required, Validators.email]),
+    password: new UntypedFormControl('', [
       Validators.required,
       Validators.minLength(8),
     ]),
   });
 
   constructor(@Optional() private auth: Auth, private store: Store<AppState>) {
-    this.store.dispatch(setErrorMessage({message: ''}))
+    this.store.dispatch(setErrorMessage({ message: '' }));
   }
 
   ngOnInit() {

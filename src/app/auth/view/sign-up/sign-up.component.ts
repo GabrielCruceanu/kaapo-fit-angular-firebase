@@ -1,5 +1,5 @@
 import { Component, OnInit, Optional } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Auth } from '@angular/fire/auth';
 import { AuthType } from '../../model/AuthResponseData.model';
 import { Store } from '@ngrx/store';
@@ -27,7 +27,7 @@ export class SignUpComponent implements OnInit {
   getLoadingSpinnerSub: Subscription | undefined;
   errorMessage$: Observable<any> | undefined;
   usernameIsNotValid: boolean;
-  signUpFormGroup: FormGroup;
+  signUpFormGroup: UntypedFormGroup;
   termsAndConditions = false;
 
   constructor(
@@ -40,18 +40,18 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.signUpFormGroup = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      username: new FormControl('', [
+    this.signUpFormGroup = new UntypedFormGroup({
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      username: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(30),
       ]),
-      password: new FormControl('', [
+      password: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(8),
       ]),
-      confirmPassword: new FormControl('', [
+      confirmPassword: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(8),
       ]),
@@ -92,7 +92,7 @@ export class SignUpComponent implements OnInit {
     }
   }
 
-  onSubmit(form: FormGroup) {
+  onSubmit(form: UntypedFormGroup) {
     const { email, username, password } = form.value;
     if (form.valid && this.termsAndConditions) {
       this.store.dispatch(setLoadingSpinner({ status: true }));

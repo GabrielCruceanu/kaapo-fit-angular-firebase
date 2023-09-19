@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import {
@@ -8,8 +12,6 @@ import {
   TRAINER_ICON,
   WORKOUT_ICON,
 } from '@/content/icons';
-import { getProfilesData } from '@/app/profile/data/profileData';
-import { ProfileData } from '@/app/profile/model/profileData.model';
 import { getAddInfoData } from '@/app/add-information/data/addInfoData';
 import { AddInfoDataModel } from '@/app/add-information/model/addInfoData.model';
 
@@ -20,12 +22,12 @@ import { AddInfoDataModel } from '@/app/add-information/model/addInfoData.model'
 })
 export class AddInformationComponent implements OnInit {
   addInfoData: AddInfoDataModel[];
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  firstFormGroup: UntypedFormGroup;
+  secondFormGroup: UntypedFormGroup;
   isOptional = false;
 
   constructor(
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private domSanitizer: DomSanitizer,
     private matIconRegistry: MatIconRegistry
   ) {

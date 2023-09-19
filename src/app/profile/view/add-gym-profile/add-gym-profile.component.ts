@@ -3,8 +3,8 @@ import { UserAuth } from '@/app/auth/model/userAuth.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import { UserProfile } from '../../model/userProfile.model';
 import {
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
@@ -55,7 +55,7 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
   filteredCities: Observable<string[]> | undefined;
   selectedCity: string = '';
   gymTypes = GymData;
-  gymFormGroup: FormGroup;
+  gymFormGroup: UntypedFormGroup;
   urlRegEx =
     '[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}(.[a-z]{2,4})?\b(/[-a-zA-Z0-9@:%_+.~#?&//=]*)?';
 
@@ -89,16 +89,16 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
         this.gymProfile = gymProfile;
       });
 
-    this.gymFormGroup = new FormGroup({
-      name: new FormControl(
+    this.gymFormGroup = new UntypedFormGroup({
+      name: new UntypedFormControl(
         this.gymProfile?.name ? this.gymProfile?.name : '',
         [Validators.required]
       ),
-      gymType: new FormControl(
+      gymType: new UntypedFormControl(
         this.gymProfile?.type ? this.gymProfile?.type : '',
         [Validators.required]
       ),
-      description: new FormControl(
+      description: new UntypedFormControl(
         this.gymProfile?.description ? this.gymProfile?.description : '',
         [
           Validators.required,
@@ -106,49 +106,49 @@ export class AddGymProfileComponent implements OnInit, OnDestroy {
           Validators.maxLength(400),
         ]
       ),
-      country: new FormControl(
+      country: new UntypedFormControl(
         this.gymProfile?.country ? this.gymProfile?.country : '',
         [Validators.required, this.onCountryInputValidation(this.onlyCountries)]
       ),
-      state: new FormControl(
+      state: new UntypedFormControl(
         this.gymProfile?.state ? this.gymProfile?.state : '',
         [Validators.required, this.onStateInputValidation(this.onlyStates)]
       ),
-      city: new FormControl(
+      city: new UntypedFormControl(
         this.gymProfile?.city ? this.gymProfile?.city : '',
         [Validators.required]
       ),
-      street: new FormControl(
+      street: new UntypedFormControl(
         this.gymProfile?.street ? this.gymProfile?.street : '',
         [Validators.required]
       ),
-      strNo: new FormControl(
+      strNo: new UntypedFormControl(
         this.gymProfile?.strNo ? this.gymProfile?.strNo : '',
         [Validators.required]
       ),
-      phone: new FormControl(
+      phone: new UntypedFormControl(
         this.gymProfile?.contact?.phone ? this.gymProfile?.contact?.phone : '',
         [Validators.required]
       ),
-      website: new FormControl(
+      website: new UntypedFormControl(
         this.gymProfile?.contact?.website
           ? this.gymProfile?.contact?.website
           : '',
         [this.profileService.websiteInputValidation()]
       ),
-      facebook: new FormControl(
+      facebook: new UntypedFormControl(
         this.gymProfile?.contact?.facebook
           ? this.gymProfile?.contact?.facebook
           : '',
         []
       ),
-      twitter: new FormControl(
+      twitter: new UntypedFormControl(
         this.gymProfile?.contact?.twitter
           ? this.gymProfile?.contact?.twitter
           : '',
         []
       ),
-      instagram: new FormControl(
+      instagram: new UntypedFormControl(
         this.gymProfile?.contact?.instagram
           ? this.gymProfile?.contact?.instagram
           : '',

@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthType } from '@/app/auth/model/AuthResponseData.model';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import {
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
@@ -57,7 +57,7 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
   filteredCities$: Observable<string[]>;
   filteredCities: string[];
   selectedCity: string = '';
-  clientFormGroup: FormGroup;
+  clientFormGroup: UntypedFormGroup;
 
   constructor(
     private store: Store<AppState>,
@@ -66,15 +66,15 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.store.dispatch(setErrorMessage({ message: '' }));
-    this.clientFormGroup = new FormGroup({
-      firstname: new FormControl(''),
-      lastname: new FormControl(''),
-      birth: new FormControl(''),
-      gender: new FormControl(''),
-      phone: new FormControl(''),
-      country: new FormControl(''),
-      state: new FormControl(''),
-      city: new FormControl(''),
+    this.clientFormGroup = new UntypedFormGroup({
+      firstname: new UntypedFormControl(''),
+      lastname: new UntypedFormControl(''),
+      birth: new UntypedFormControl(''),
+      gender: new UntypedFormControl(''),
+      phone: new UntypedFormControl(''),
+      country: new UntypedFormControl(''),
+      state: new UntypedFormControl(''),
+      city: new UntypedFormControl(''),
     });
   }
 
@@ -101,16 +101,16 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
         this.clientProfile = clientProfile;
       });
 
-    this.clientFormGroup = new FormGroup({
-      firstname: new FormControl(
+    this.clientFormGroup = new UntypedFormGroup({
+      firstname: new UntypedFormControl(
         this.clientProfile?.firstName ? this.clientProfile?.firstName : '',
         [Validators.required]
       ),
-      lastname: new FormControl(
+      lastname: new UntypedFormControl(
         this.clientProfile?.lastName ? this.clientProfile?.lastName : '',
         [Validators.required]
       ),
-      birth: new FormControl(
+      birth: new UntypedFormControl(
         this.clientProfile?.birth.month
           ? moment([
               this.clientProfile?.birth.year,
@@ -120,23 +120,23 @@ export class AddClientProfileComponent implements OnInit, OnDestroy {
           : '',
         [Validators.required]
       ),
-      gender: new FormControl(
+      gender: new UntypedFormControl(
         this.clientProfile?.gender ? this.clientProfile?.gender : '',
         [Validators.required]
       ),
-      phone: new FormControl(
+      phone: new UntypedFormControl(
         this.clientProfile?.phone ? this.clientProfile?.phone : '',
         [Validators.required]
       ),
-      country: new FormControl(
+      country: new UntypedFormControl(
         this.clientProfile?.country ? this.clientProfile?.country : '',
         [Validators.required, this.onCountryInputValidation(this.onlyCountries)]
       ),
-      state: new FormControl(
+      state: new UntypedFormControl(
         this.clientProfile?.state ? this.clientProfile?.state : '',
         [Validators.required, this.onStateInputValidation(this.onlyStates)]
       ),
-      city: new FormControl(
+      city: new UntypedFormControl(
         this.clientProfile?.city ? this.clientProfile?.city : '',
         [Validators.required, this.onCityInputValidation(this.onlyCities)]
       ),

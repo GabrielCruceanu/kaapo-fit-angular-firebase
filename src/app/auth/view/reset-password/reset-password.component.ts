@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthType } from '../../model/AuthResponseData.model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@/app/store/app.state';
@@ -24,8 +24,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   getLoadingSpinnerSub: Subscription | undefined;
   errorMessage$: Observable<any> | undefined;
 
-  resetFormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+  resetFormGroup = new UntypedFormGroup({
+    email: new UntypedFormControl('', [Validators.required, Validators.email]),
   });
 
   constructor(private store: Store<AppState>) {
