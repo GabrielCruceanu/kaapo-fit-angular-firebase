@@ -114,13 +114,9 @@
   font-size: 1rem;
 }
 
-::ng-deep
-  .mat-form-field-appearance-outline.mat-form-field-disabled
-  .mat-form-field-outline,
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-outline,
 ::ng-deep .mat-input-element:disabled,
-::ng-deep
-  .mat-form-field-appearance-outline.mat-form-field-disabled
-  .mat-form-field-label {
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
   color: var(--gray);
 }
 
@@ -142,9 +138,7 @@
   background-color: var(--dark-two);
 }
 
-::ng-deep
-  .mat-expansion-panel:not(.mat-expanded):not([aria-disabled='true'])
-  .mat-expansion-panel-header:hover {
+::ng-deep .mat-expansion-panel:not(.mat-expanded):not([aria-disabled='true']) .mat-expansion-panel-header:hover {
   background: var(--dark-one);
 }
 // ******************
@@ -158,4 +152,8 @@
 
 ::ng-deep .swiper-pagination .swiper-pagination-bullet-active {
   background: var(--primary);
+}
+
+::ng-deep .mat-checkbox-frame {
+  border-color: var(--primary);
 }

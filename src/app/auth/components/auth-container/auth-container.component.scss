@@ -85,9 +85,14 @@
   .auth-container {
     flex-direction: row;
     height: 100%;
-    max-width: 1320px;
+    max-height: 780px;
+    max-width: 1230px;
+    border-radius: var(--radius);
+    overflow: hidden;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: var(--dark-shadow);
+    padding-bottom: 0;
   }
 
   .auth-img {
