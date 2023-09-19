@@ -11,34 +11,35 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es2020",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
     "paths": {
       "@/app/*": [
-        "./src/app/*" // The short path to components
+        "./src/app/*"
       ],
       "@/assets/*": [
-        "./src/assets/*" // The short path to constants
+        "./src/assets/*"
       ],
       "@/content/*": [
-        "./src/content/*" // The short path to utils
+        "./src/content/*"
       ],
       "@/data/*": [
-        "./src/data/*" // The short path to styles
+        "./src/data/*"
       ],
       "@/environments/*": [
-        "./src/environments/*" // The short path to themes
+        "./src/environments/*"
       ],
       "@/styles/*": [
-        "./src/styles/*" // The short path to lib
+        "./src/styles/*"
       ]
     },
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
