@@ -30,7 +30,7 @@
     "@ngrx/store-devtools": "^13.0.2",
     "@types/intl-tel-input": "^17.0.4",
     "@types/moment": "^2.13.0",
-    "firebase": "^9.6.7",
+    "firebase": "^10.8.0",
     "google-libphonenumber": "^3.2.27",
     "libphonenumber-js": "^1.9.53",
     "lodash": "^4.17.21",
